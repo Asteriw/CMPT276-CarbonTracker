@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Carbon Footprint Tracker</string>
+    <string name="btn_splash_start">Start</string>
+    <string name="btn_new_journey">Create New Journey</string>
+    <string name="btn_view_tracked">View Tracked Journeys</string>
+    <string name="btn_calculate_footprint">Calculate Footprint</string>
+    <string name="btn_select_route">Select Route</string>
+</resources>
