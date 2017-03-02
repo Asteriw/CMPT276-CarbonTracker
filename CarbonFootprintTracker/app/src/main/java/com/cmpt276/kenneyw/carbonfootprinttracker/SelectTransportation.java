@@ -85,7 +85,7 @@ public class SelectTransportation extends AppCompatActivity {
                     car.setCityEmissions(1);
                 }
                 if(tokens.length >=6 && tokens[5].length() > 0){
-                    car.setYear(Integer.parseInt(tokens[5]));//Year
+                    car.setYear(Integer.parseInt(tokens[12]));//Year
                 } else {
                     car.setYear(0);
                 }
