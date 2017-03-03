@@ -11,11 +11,123 @@
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.SelectRoute">
 
     <Button
-        android:text="@string/btn_calculate_footprint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/btncalculation" />
+        android:id="@+id/btncalculation"
+        android:text="@string/btn_calculate_footprint" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerForRoutes"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btnDelete"
+        android:layout_toStartOf="@+id/btnDelete" />
+
+    <TextView
+        android:text="@string/txt_KM_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtRouteName"
+        android:layout_alignRight="@+id/txtRouteName"
+        android:layout_alignEnd="@+id/txtRouteName"
+        android:layout_marginTop="22dp"
+        android:id="@+id/txtCity" />
+
+    <TextView
+        android:text="@string/txt_route_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtRouteName"
+        android:layout_marginTop="54dp"
+        android:layout_below="@+id/btnDelete"
+        android:layout_toLeftOf="@+id/btncalculation"
+        android:layout_toStartOf="@+id/btncalculation"
+        android:layout_marginRight="34dp"
+        android:layout_marginEnd="34dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_above="@+id/txtCity"
+        android:layout_toRightOf="@+id/txtRouteName"
+        android:layout_toEndOf="@+id/txtRouteName"
+        android:id="@+id/editTextName"
+        android:layout_alignTop="@+id/txtRouteName" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:layout_alignLeft="@+id/editTextName"
+        android:layout_alignStart="@+id/editTextName"
+        android:id="@+id/editTextCity"
+        android:layout_alignTop="@+id/txtCity"
+        android:layout_alignBottom="@+id/txtCity" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:layout_alignTop="@+id/txtHighway"
+        android:layout_toEndOf="@+id/txtHighway"
+        android:id="@+id/editTextHighway"
+        android:layout_alignBottom="@+id/txtHighway"
+        android:layout_alignLeft="@+id/editTextCity"
+        android:layout_alignStart="@+id/editTextCity" />
+
+    <Button
+        android:text="@android:string/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/txtHighway"
+        android:layout_alignStart="@+id/txtHighway"
+        android:id="@+id/btnBack" />
+
+    <Button
+        android:text="@string/btn_save_route"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btncalculation"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/btnAddRoute" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/btnBack"
+        android:layout_alignRight="@+id/txtHighway"
+        android:layout_alignEnd="@+id/txtHighway"
+        android:layout_marginRight="32dp"
+        android:layout_marginEnd="32dp">
+
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtHighway"
+        android:text="@string/txt_KM_highway"
+        android:layout_marginTop="27dp"
+        android:layout_below="@+id/txtCity"
+        android:layout_alignRight="@+id/txtCity"
+        android:layout_alignEnd="@+id/txtCity" />
+
+    <Button
+        android:text="@string/btn_delete_route"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnDelete"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
