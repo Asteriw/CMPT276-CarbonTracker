@@ -46,7 +46,6 @@ public class DBAdapter extends AppCompatActivity{
 	public static final String KEY_CO2TAILPIPEGPM = "CO2TailpipeGPM";
 	public static final String KEY_CYLINDERS = "cylinders";
 	public static final String KEY_ENGINELITERS = "engineLiters";
-	public static final String KEY_DRIVE = "drive";
 	public static final String KEY_FUELTYPE = "fuelType";
 	public static final String KEY_HYBRID = "hybrid";
 	public static final String KEY_TRANSMISSION = "transmission";
@@ -73,17 +72,16 @@ public class DBAdapter extends AppCompatActivity{
 	public static final int COL_CO2TAILGATEGPM = 14;
 	public static final int COL_CYLINDERS = 15;
 	public static final int COL_ENGINELITERS = 16;
-	public static final int COL_DRIVE = 17;
-	public static final int COL_FUELTYPE = 18;
-	public static final int COL_HYBRID = 19;
-	public static final int COL_TRANSMISSION = 20;
-	public static final int COL_VEHICLECLASS = 21;
-	public static final int COL_YEAR = 22;
-	public static final int COL_TURBOCHARGER = 23;
-	public static final int COL_SUPERCHARGER = 24;
-	public static final int DIFFERENTFUEL = 25;
+	public static final int COL_FUELTYPE = 17;
+	public static final int COL_HYBRID = 18;
+	public static final int COL_TRANSMISSION = 19;
+	public static final int COL_VEHICLECLASS = 20;
+	public static final int COL_YEAR = 21;
+	public static final int COL_TURBOCHARGER = 22;
+	public static final int COL_SUPERCHARGER = 23;
+	public static final int COL_DIFFERENTFUEL = 24;
 
-	
+
 	public static final String[] ALL_KEYS = new String[] {
             KEY_ROWID, KEY_ID,
             KEY_MAKE, KEY_MODEL,
@@ -93,17 +91,17 @@ public class DBAdapter extends AppCompatActivity{
             KEY_CITYKWH_E, KEY_HIGHWAYKWH_E,
             KEY_COMBKWH_E, KEY_FUELCOST,
             KEY_CO2TAILPIPEGPM, KEY_CYLINDERS,
-            KEY_ENGINELITERS, KEY_DRIVE,
-            KEY_FUELTYPE, KEY_HYBRID,
-            KEY_TRANSMISSION, KEY_VEHICLECLASS,
-            KEY_YEAR, KEY_TURBOCHARGER,
-            KEY_SUPERCHARGER, KEY_DIFFERENTFUEL};
+            KEY_ENGINELITERS, KEY_FUELTYPE,
+            KEY_HYBRID, KEY_TRANSMISSION,
+            KEY_VEHICLECLASS, KEY_YEAR,
+            KEY_TURBOCHARGER, KEY_SUPERCHARGER,
+            KEY_DIFFERENTFUEL};
 	
 	// DB info: it's name, and the table we are using (just one).
 	public static final String DATABASE_NAME = "CarDB";
 	public static final String DATABASE_TABLE = "mainTable";
 	// Track DB version if a new version of your app changes the format.
-	public static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 3;
 	
 	private static final String DATABASE_CREATE_SQL = 
 			"create table " + DATABASE_TABLE 
@@ -119,32 +117,30 @@ public class DBAdapter extends AppCompatActivity{
 			//		(http://www.sqlite.org/datatype3.html)
 			//  - "not null" means it is a required field (must be given a value).
 			// NOTE: All must be comma separated (end of line!) Last one must have NO comma!!
-			+ KEY_ROWID + " text not null, "
 			+ KEY_ID + " integer not null, "
 			+ KEY_MAKE + " string not null, "
 			+ KEY_MODEL + " string not null, "
-			+ KEY_CITYMPG + " real not null, "
-			+ KEY_HIGHWAYMPG + " real not null, "
-			+ KEY_COMBMPG + " real not null, "
-			+ KEY_CITYMPG_CD + " real not null, "
-			+ KEY_HIGHWAYMPG_CD + " real not null, "
-			+ KEY_COMBMPG_CD + " real not null, "
-			+ KEY_CITYKWH_E + " real not null, "
-			+ KEY_HIGHWAYKWH_E + " real not null, "
-			+ KEY_COMBKWH_E + " real not null, "
-			+ KEY_FUELCOST + " integer not null, "
+			+ KEY_CITYMPG + " real, "
+			+ KEY_HIGHWAYMPG + " real, "
+			+ KEY_COMBMPG + " real, "
+			+ KEY_CITYMPG_CD + " real, "
+			+ KEY_HIGHWAYMPG_CD + " real, "
+			+ KEY_COMBMPG_CD + " real, "
+			+ KEY_CITYKWH_E + " real, "
+			+ KEY_HIGHWAYKWH_E + " real, "
+			+ KEY_COMBKWH_E + " real, "
+			+ KEY_FUELCOST + " integer, "
 			+ KEY_CO2TAILPIPEGPM + " real not null, "
-			+ KEY_CYLINDERS + " integer not null, "
-			+ KEY_ENGINELITERS + " real not null, "
-			+ KEY_DRIVE + " string not null, "
-			+ KEY_FUELTYPE + " string not null, "
-			+ KEY_HYBRID + " string not null, "
-			+ KEY_TRANSMISSION + " string not null, "
-			+ KEY_VEHICLECLASS + " string not null, "
+			+ KEY_CYLINDERS + " integer, "
+			+ KEY_ENGINELITERS + " real, "
+			+ KEY_FUELTYPE + " string, "
+			+ KEY_HYBRID + " string, "
+			+ KEY_TRANSMISSION + " string, "
+			+ KEY_VEHICLECLASS + " string, "
 			+ KEY_YEAR + " integer not null, "
-			+ KEY_TURBOCHARGER + " string not null, "
-			+ KEY_SUPERCHARGER + " string not null, "
-			+ KEY_DIFFERENTFUEL + " string not null"
+			+ KEY_TURBOCHARGER + " string, "
+			+ KEY_SUPERCHARGER + " string, "
+			+ KEY_DIFFERENTFUEL + " string"
 			// Rest  of creation:
 			+ ");";
 	
@@ -180,10 +176,9 @@ public class DBAdapter extends AppCompatActivity{
                           float cityMPG_CD, float highwayMPG_CD, float combinedMPG_CD,
                           float cityKWH_E, float highwayKWH_E, float combinedKWH_E,
                           int fuelCost, float co2TailpipeGPM, int cylinders,
-                          float engineLiters, String drive, String fuelType,
-                          String hybrid, String transmission, String vehicleClass,
-                          int year, String turbocharger, String supercharger,
-                          String differentFuel) {
+                          float engineLiters, String fuelType, String hybrid,
+                          String transmission, String vehicleClass, int year,
+                          String turbocharger, String supercharger, String differentFuel) {
 		/*
 		 * CHANGE 3:
 		 */		
@@ -207,7 +202,6 @@ public class DBAdapter extends AppCompatActivity{
 		initialValues.put(KEY_CO2TAILPIPEGPM, co2TailpipeGPM);
 		initialValues.put(KEY_CYLINDERS, cylinders);
 		initialValues.put(KEY_ENGINELITERS, engineLiters);
-		initialValues.put(KEY_DRIVE, drive);
 		initialValues.put(KEY_FUELTYPE, fuelType);
 		initialValues.put(KEY_HYBRID, hybrid);
 		initialValues.put(KEY_TRANSMISSION, transmission);
@@ -266,10 +260,9 @@ public class DBAdapter extends AppCompatActivity{
                              float cityMPG_CD, float highwayMPG_CD, float combinedMPG_CD,
                              float cityKWH_E, float highwayKWH_E, float combinedKWH_E,
                              int fuelCost, float co2TailpipeGPM, int cylinders,
-                             float engineLiters, String drive, String fuelType,
-                             String hybrid, String transmission, String vehicleClass,
-                             int year, String turbocharger, String supercharger,
-                             String differentFuel){
+                             float engineLiters, String fuelType, String hybrid,
+                             String transmission, String vehicleClass, int year,
+                             String turbocharger, String supercharger, String differentFuel){
 		String where = KEY_ROWID + "=" + rowId;
 
 		/*
@@ -295,7 +288,6 @@ public class DBAdapter extends AppCompatActivity{
         newValues.put(KEY_CO2TAILPIPEGPM, co2TailpipeGPM);
         newValues.put(KEY_CYLINDERS, cylinders);
         newValues.put(KEY_ENGINELITERS, engineLiters);
-        newValues.put(KEY_DRIVE, drive);
         newValues.put(KEY_FUELTYPE, fuelType);
         newValues.put(KEY_HYBRID, hybrid);
         newValues.put(KEY_TRANSMISSION, transmission);

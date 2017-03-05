@@ -2,6 +2,7 @@ package com.cmpt276.kenneyw.carbonfootprinttracker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,14 +21,29 @@ public class SelectTransportation extends AppCompatActivity {
 
     Car car;
     private List<Car> carList = new ArrayList<>();
+    DBAdapter database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_transportation);
 
+        openDatabase();
         setupRouteButton();
-        readCarData();
+        setupDatabase();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        closeDatabase();
+    }
+
+    private void openDatabase() {
+        database = new DBAdapter(this);
+        database.open();
+    }
+    private void closeDatabase() {
+        database.close();
     }
 
 
@@ -42,57 +58,47 @@ public class SelectTransportation extends AppCompatActivity {
         });
     }
 
-    private void readCarData() {
+    private void setupDatabase() {
         InputStream stream = getResources().openRawResource(R.raw.vehicles);
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(stream, Charset.forName("UTF-8"))
         );
-
         String line = "";
         try {
             //Step over headers
             reader.readLine();
-
             while ((line = reader.readLine()) != null) {
                 //Split by ','
                 String[] tokens = line.split(",");
-
-                //Read the data - Maybe make this setters.
-                Car car = new Car();
-                if(tokens[0].length() > 0){
-                    car.setName(tokens[0]); //Name
-                } else {
-                    car.setName("Untitled");
-                }
-                if(tokens[1].length() > 0){
-                    car.setMake(tokens[1]); //Make
-                } else {
-                    car.setMake("Other");
-                }
-                if(tokens[2].length() > 0){
-                    car.setModel(tokens[2]); //Model
-                } else {
-                    car.setModel("Other");
-                }
-                if(tokens[3].length() > 0){
-                    car.setHighwayEmissions(Integer.parseInt(tokens[3])); //Highway Emissions
-                } else {
-                    car.setHighwayEmissions(1);
-                }
-                if(tokens[4].length() > 0){
-                    car.setCityEmissions(Integer.parseInt(tokens[4])); //City Emission
-                } else {
-                    car.setCityEmissions(1);
-                }
-                if(tokens.length >=6 && tokens[5].length() > 0){
-                    car.setYear(Integer.parseInt(tokens[12]));//Year
-                } else {
-                    car.setYear(0);
-                }
-                carList.add(car);
-
-                Log.d("CarbonFootprintReader", "Just created: " + car);
+                Log.i("CarbonFootprintTracker", ""+tokens[0] + " ");
+                long newID = database.insertRow(
+                        Integer.parseInt(tokens[0]),
+                        tokens[1],
+                        tokens[2],
+                        Float.parseFloat(tokens[3]),
+                        Float.parseFloat(tokens[4]),
+                        Float.parseFloat(tokens[5]),
+                        Float.parseFloat(tokens[6]),
+                        Float.parseFloat(tokens[7]),
+                        Float.parseFloat(tokens[8]),
+                        Float.parseFloat(tokens[9]),
+                        Float.parseFloat(tokens[10]),
+                        Float.parseFloat(tokens[11]),
+                        Integer.parseInt(tokens[12]),
+                        Float.parseFloat(tokens[13]),
+                        Integer.parseInt(tokens[14]),
+                        Float.parseFloat(tokens[15]),
+                        tokens[16],
+                        tokens[17],
+                        tokens[18],
+                        tokens[19],
+                        Integer.parseInt(tokens[20]),
+                        tokens[21],
+                        tokens[22],
+                        tokens[23]
+                );
             }
+            Log.i("CarbonFootprintReader", "Created database");
         } catch (IOException e){
             Log.wtf("CarbonFootprintReader", "Error reading vehicles database on line " + line, e);
             e.printStackTrace();
