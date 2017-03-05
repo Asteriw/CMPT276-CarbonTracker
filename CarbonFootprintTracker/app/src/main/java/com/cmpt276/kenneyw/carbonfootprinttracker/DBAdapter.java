@@ -11,6 +11,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 
 // TO USE:
 // Change the package (at top) to match your project.
@@ -300,7 +302,23 @@ public class DBAdapter extends AppCompatActivity{
 		// Insert it into the database.
 		return db.update(DATABASE_TABLE, newValues, where, null) != 0;
 	}
-	
+
+    public ArrayList<Integer> getYearValues(){
+        ArrayList<Integer> yearsToReturn = new ArrayList<>();
+        String years = "year";
+        String[] year = {KEY_YEAR};
+        Cursor cursor = db.query(true, DATABASE_TABLE, year,
+                null, null, null, null, years, null);
+        int i = 0;
+        cursor.moveToFirst();
+        while(!cursor.isLast()){
+            yearsToReturn.add(cursor.getInt(i));
+            i++;
+            cursor.moveToNext();
+        }
+        yearsToReturn.add(cursor.getInt(i));
+        return yearsToReturn;
+    }
 	
 	
 	/////////////////////////////////////////////////////////////////////

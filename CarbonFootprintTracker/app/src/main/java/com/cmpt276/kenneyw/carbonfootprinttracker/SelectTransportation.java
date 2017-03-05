@@ -34,7 +34,9 @@ public class SelectTransportation extends AppCompatActivity {
         openDatabase();
         setupRouteButton();
         setupDatabase();
+        queryDatabase();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -62,7 +64,6 @@ public class SelectTransportation extends AppCompatActivity {
     }
 
     private void setupDatabase() {
-        SQLiteDatabase checkDB = null;
         InputStream stream = getResources().openRawResource(R.raw.vehicles);
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(stream, Charset.forName("UTF-8"))
@@ -73,6 +74,7 @@ public class SelectTransportation extends AppCompatActivity {
             Log.i("CarbonFootprintTracker", "File exists!");
         } else {
             /*try {
+                SQLiteDatabase checkDB = null;
                 checkDB = SQLiteDatabase.openDatabase(DB_FULL_PATH, null,
                         SQLiteDatabase.OPEN_READONLY);
                 checkDB.close();
@@ -118,6 +120,11 @@ public class SelectTransportation extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void queryDatabase() {
+        ArrayList<Integer> temp = database.getYearValues();
+        Log.i("CarbonFootprintTracker", temp.toString());
     }
 
 
