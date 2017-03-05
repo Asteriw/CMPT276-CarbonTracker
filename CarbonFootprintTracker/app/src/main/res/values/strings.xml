@@ -5,7 +5,7 @@
     <string name="btn_view_tracked">View Tracked Journeys</string>
     <string name="btn_calculate_footprint">Calculate Footprint</string>
     <string name="btn_select_route">Select Route</string>
-    <string name="year_string">Select a Year</string>
-    <string name="make_string">Select a Make</string>
-    <string name="model_string">Select a Model</string>
+    <string name="year_string">Select a Year:</string>
+    <string name="make_string">Select a Make:</string>
+    <string name="model_string">Select a Model:</string>
 </resources>

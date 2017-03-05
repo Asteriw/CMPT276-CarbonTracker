@@ -309,18 +309,50 @@ public class DBAdapter extends AppCompatActivity{
         String[] year = {KEY_YEAR};
         Cursor cursor = db.query(true, DATABASE_TABLE, year,
                 null, null, null, null, years, null);
-        int i = 0;
         cursor.moveToFirst();
         while(!cursor.isLast()){
-            yearsToReturn.add(cursor.getInt(i));
-            i++;
+            Log.i("CarbonFootprintTracker", "");
+            yearsToReturn.add(cursor.getInt(0));
             cursor.moveToNext();
         }
-        yearsToReturn.add(cursor.getInt(i));
+        yearsToReturn.add(cursor.getInt(0));
         return yearsToReturn;
     }
-	
-	
+
+    public ArrayList<String> getMakeValues(){
+        ArrayList<String> makesToReturn = new ArrayList<>();
+        String make = "make";
+        String[] makes = {KEY_MAKE};
+        Cursor cursor = db.query(true, DATABASE_TABLE, makes,
+                null, null, null, null, make, null);
+        cursor.moveToFirst();
+        while(!cursor.isLast()){
+            Log.i("CarbonFootprintTracker", "");
+            makesToReturn.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        makesToReturn.add(cursor.getString(0));
+        return makesToReturn;
+    }
+
+    public ArrayList<String> getModelValues(){
+        ArrayList<String> modelsToReturn = new ArrayList<>();
+        String model = "model";
+        String[] models = {KEY_MODEL};
+        Cursor cursor = db.query(true, DATABASE_TABLE, models,
+                null, null, null, null, model, null);
+        cursor.moveToFirst();
+        while(!cursor.isLast()){
+            Log.i("CarbonFootprintTracker", "");
+            modelsToReturn.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        modelsToReturn.add(cursor.getString(0));
+        db.close();
+        return modelsToReturn;
+    }
+
+
 	/////////////////////////////////////////////////////////////////////
 	//	Private Helper Classes:
 	/////////////////////////////////////////////////////////////////////

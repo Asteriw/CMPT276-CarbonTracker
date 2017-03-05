@@ -9,7 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,7 +27,13 @@ public class SelectTransportation extends AppCompatActivity {
 
     Car car;
     private List<Car> carList = new ArrayList<>();
+    private ArrayList<Integer> yearList = new ArrayList<>();
+    private ArrayList<String> makeList = new ArrayList<>();
+    private ArrayList<String> modelList = new ArrayList<>();
     DBAdapter database;
+    int yearSelected;
+    int makeSelected;
+    int modelSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +44,7 @@ public class SelectTransportation extends AppCompatActivity {
         setupRouteButton();
         setupDatabase();
         queryDatabase();
+        setupSpinners();
     }
 
     @Override
@@ -73,13 +83,6 @@ public class SelectTransportation extends AppCompatActivity {
         if (path.exists()){
             Log.i("CarbonFootprintTracker", "File exists!");
         } else {
-            /*try {
-                SQLiteDatabase checkDB = null;
-                checkDB = SQLiteDatabase.openDatabase(DB_FULL_PATH, null,
-                        SQLiteDatabase.OPEN_READONLY);
-                checkDB.close();
-            } catch (SQLiteException e) {*/
-                // database doesn't exist yet.
             try {
                 //Step over headers
                 reader.readLine();
@@ -123,9 +126,59 @@ public class SelectTransportation extends AppCompatActivity {
     }
 
     private void queryDatabase() {
-        ArrayList<Integer> temp = database.getYearValues();
-        Log.i("CarbonFootprintTracker", temp.toString());
+        File path = getDatabasePath("CarDB");
+        if (path.exists()){
+            yearList = database.getYearValues();
+            makeList = database.getMakeValues();
+            modelList = database.getModelValues();
+        }
     }
+
+    private void setupSpinners() {
+        Spinner yearSpinner = (Spinner) findViewById(R.id.yearSpinner);
+        ArrayAdapter<CharSequence> yearAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, yearList);
+        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        yearSpinner.setOnItemSelectedListener(new SpinnerListener1());
+        yearSpinner.setAdapter(yearAdapter);
+        yearSpinner.setSelection(yearSelected);
+
+        Spinner makeSpinner = (Spinner) findViewById(R.id.makeSpinner);
+        ArrayAdapter<CharSequence> makeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, makeList);
+        makeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        makeSpinner.setOnItemSelectedListener(new SpinnerListener2());
+        makeSpinner.setAdapter(makeAdapter);
+        makeSpinner.setSelection(makeSelected);
+
+        Spinner modelSpinner = (Spinner) findViewById(R.id.modelSpinner);
+        ArrayAdapter<CharSequence> modelAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, modelList);
+        modelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        modelSpinner.setOnItemSelectedListener(new SpinnerListener3());
+        modelSpinner.setAdapter(modelAdapter);
+        modelSpinner.setSelection(modelSelected);
+    }
+
+    private class SpinnerListener1 implements AdapterView.OnItemSelectedListener {
+        public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
+
+        }
+        public void onNothingSelected (AdapterView<?> parent) {
+        }
+    }
+    private class SpinnerListener2 implements AdapterView.OnItemSelectedListener {
+        public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
+
+        }
+        public void onNothingSelected (AdapterView<?> parent) {
+        }
+    }
+    private class SpinnerListener3 implements AdapterView.OnItemSelectedListener {
+        public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
+
+        }
+        public void onNothingSelected (AdapterView<?> parent) {
+        }
+    }
+
 
 
     public static Intent makeIntent(Context context) {
