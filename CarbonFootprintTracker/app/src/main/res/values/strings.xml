@@ -11,4 +11,6 @@
     <string name="btn_edit_route">Edit Route</string>
     <string name="btn_save_route">Save route</string>
     <string name="txt_route_name">Route Name:</string>
+    <string name="App_name">Carbon Tracker</string>
+    <string name="authors_text">Authors: Team Honeydew</string>
 </resources>
