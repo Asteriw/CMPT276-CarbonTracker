@@ -5,4 +5,10 @@
     <string name="btn_view_tracked">View Tracked Journeys</string>
     <string name="btn_calculate_footprint">Calculate Footprint</string>
     <string name="btn_select_route">Select Route</string>
+    <string name="btn_delete_route">Delete Route</string>
+    <string name="txt_KM_city" >KM drove in City</string>
+    <string name="txt_KM_highway" >KM drove on Highway</string>
+    <string name="btn_edit_route">Edit Route</string>
+    <string name="btn_save_route">Save route</string>
+    <string name="txt_route_name">Route Name:</string>
 </resources>
