@@ -27,3 +27,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.1'
     testCompile 'junit:junit:4.12'
 }
+// For graph features
+dependencies {
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+}
