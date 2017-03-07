@@ -74,7 +74,7 @@ public class SelectTransportation extends AppCompatActivity {
     }
 
     private void setupDatabase() {
-        InputStream stream = getResources().openRawResource(R.raw.vehicles);
+        InputStream stream = getResources().openRawResource(R.raw.cardb);
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(stream, Charset.forName("UTF-8"))
         );
