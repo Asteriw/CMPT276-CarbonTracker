@@ -16,7 +16,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainMenu" />
-        <activity android:name=".SelectTransportation" />
+        <activity android:name=".SelectTransportation">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".SelectRoute" />
         <activity android:name=".CalculationScreen" />
         <activity android:name=".ViewTracked"></activity>
