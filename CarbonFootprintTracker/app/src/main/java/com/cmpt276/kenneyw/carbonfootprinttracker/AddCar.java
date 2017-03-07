@@ -2,6 +2,7 @@ package com.cmpt276.kenneyw.carbonfootprinttracker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -21,28 +22,35 @@ import java.util.List;
 public class AddCar extends AppCompatActivity{
 
     Car car;
-    private List<Car> carList = new ArrayList<>();
     private ArrayList<Integer> yearList = new ArrayList<>();
     private ArrayList<String> makeList = new ArrayList<>();
     private ArrayList<String> modelList = new ArrayList<>();
     int yearSelected;
     int makeSelected;
     int modelSelected;
-    ArrayAdapter<CharSequence> yearAdapter;
     ArrayAdapter<CharSequence> makeAdapter;
     ArrayAdapter<CharSequence> modelAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_select_transportation);
+
+        getYearData();
+        setupSpinners();
+
+        //setupRouteButton();
+    }
 
     private void getYearData() {
         InputStream stream = getResources().openRawResource(R.raw.vehicles);
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(stream, Charset.forName("UTF-8"))
         );
-
         String line = "";
         try {
             //Step over headers
             reader.readLine();
-
             while ((line = reader.readLine()) != null) {
                 //Split by ','
                 String[] tokens = line.split(",");
@@ -152,9 +160,10 @@ public class AddCar extends AppCompatActivity{
 
     private void setupSpinners() {
         Spinner yearSpinner = (Spinner) findViewById(R.id.yearSpinner);
-        yearAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, yearList);
+        ArrayAdapter<CharSequence> yearAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, yearList);
         yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        yearSpinner.setOnItemSelectedListener(new yearSpinnerActivity());
+        yearSpinner.setOnItemSelectedListener(new yearSpinnerActivity());//Problem line
+        Log.i("CarbonFootprintTracker", "Testing");
         yearSpinner.setAdapter(yearAdapter);
         yearSpinner.setSelection(yearSelected);
     }
@@ -177,8 +186,7 @@ public class AddCar extends AppCompatActivity{
 
     private class yearSpinnerActivity implements AdapterView.OnItemSelectedListener {
         public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
-            //yearSelected = 1984+position;
-            getMakeData(yearSelected);
+            yearSelected = 1984+position;
             setupSpinners();
         }
         public void onNothingSelected (AdapterView<?> parent) {

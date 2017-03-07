@@ -9,9 +9,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SelectTransportation extends AppCompatActivity {
 
     CarCollection CarList;
+    private List<Car> carList = new ArrayList<>();
     String[] arrayOfCars = {};
     ArrayAdapter<String> adapter;
 
@@ -26,16 +30,16 @@ public class SelectTransportation extends AppCompatActivity {
         //setupRouteButton();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     private void setupListView() {
         adapter = new ArrayAdapter<>(this, R.layout.listview_layout, arrayOfCars);
         ListView list = (ListView) findViewById(R.id.car_listview);
         list.setAdapter(adapter);
         registerForContextMenu(list);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     private void setupAddCarButton() {
