@@ -127,7 +127,10 @@ public class AddCar extends AppCompatActivity{
         }
     }
 
-    public void makeCar(){
+    public void makeCar(String userName, String name, String make, String model, int highwayEmissions, int cityEmissions, int year){
+        if(userName != ""){
+            car = new Car(userName, name, make, model, highwayEmissions, cityEmissions, year);
+        }
         //Read the data - Maybe make this setters.
     }
 
