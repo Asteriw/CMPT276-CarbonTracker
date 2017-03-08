@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class EditRouteFragment extends AppCompatDialogFragment {
@@ -20,11 +21,10 @@ public class EditRouteFragment extends AppCompatDialogFragment {
 
         final int pos=getArguments().getInt("pos");
 
-
-
         //create view
         View viewer= LayoutInflater.from(getActivity())
                 .inflate(R.layout.fragment_edit_route,null);
+
         final EditText editName=(EditText)viewer.findViewById(R.id.editName);
         final EditText editCity=(EditText)viewer.findViewById(R.id.editCity);
         final EditText editHighway=(EditText)viewer.findViewById(R.id.editHighway);
@@ -45,24 +45,25 @@ public class EditRouteFragment extends AppCompatDialogFragment {
                 switch(which) {
                     case DialogInterface.BUTTON_POSITIVE:
 
-
-
                         String name=editName.getText().toString();
-                        int city=Integer.parseInt(editCity.getText().toString());
-                        int highway=Integer.parseInt(editHighway.getText().toString());
+                        String city=editCity.getText().toString();
+                        String highway=editHighway.getText().toString();
 
-                        if(name.equals("")||city<0||highway<0){
+                        if(name.equals("")||city.equals("")||highway.equals("")){
+                            Toast.makeText(getActivity(),"Fields cannot be empty.",Toast.LENGTH_SHORT).show();
                             break;
                         }
-
-                        ((SelectRoute)getActivity()).changeRoute(pos,name,city,highway);
+                        else if(Integer.parseInt(city)<0||Integer.parseInt(highway)<0) {
+                            Toast.makeText(getActivity(),"Values cannot be negative.",Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                        ((SelectRoute)getActivity()).changeRoute(pos,name,Integer.parseInt(city),Integer.parseInt(highway));
                         ((SelectRoute)getActivity()).setUpSpinner();
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
 
                         break;
                 }
-
 
             }
         };
