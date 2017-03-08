@@ -30,11 +30,6 @@ public class SelectTransportation extends AppCompatActivity {
         //setupRouteButton();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     private void setupListView() {
         adapter = new ArrayAdapter<>(this, R.layout.listview_layout, arrayOfCars);
         ListView list = (ListView) findViewById(R.id.car_listview);
