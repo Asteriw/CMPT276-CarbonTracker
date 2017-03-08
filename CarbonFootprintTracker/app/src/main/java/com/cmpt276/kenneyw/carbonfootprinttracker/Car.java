@@ -5,13 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.Arrays;
 
 public class Car extends AppCompatActivity {
+    private String userName;
     private String name;
     private String make;
     private int year;
     private String model;
     private int[] Emissions =  new int[2];
 
-    Car(String name, String make, String model, int highway, int city, int year){
+    Car(String userName, String name, String make, String model, int highway, int city, int year){
+        this.userName = userName;
         this.name = name;
         this.make = make;
         this.model = model;
@@ -27,6 +29,13 @@ public class Car extends AppCompatActivity {
     }
     void setName(String name){
         this.name = name;
+    }
+
+    String getUserName(){
+        return userName;
+    }
+    void setUserName(String username){
+        this.userName = name;
     }
 
     String getMake(){
