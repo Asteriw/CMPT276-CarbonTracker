@@ -21,8 +21,15 @@ public class SelectRoute extends AppCompatActivity {
 
     private static final String TAG = "CarbonFootprintTracker";
     ArrayList<Route> routes=new ArrayList<>();
-
-
+    Intent i=getIntent();
+/*
+    private final String carName=i.getStringExtra("carName");
+    private final String carMake=i.getStringExtra("carMake");
+    private final String carModel=i.getStringExtra("carModel");
+    private final String carYear=i.getStringExtra("carYear");
+    private final int mpgCity=i.getIntExtra("mpgCity",0);
+    private final int mpgHighway=i.getIntExtra("mpgHighway",0);
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,17 +93,29 @@ public class SelectRoute extends AppCompatActivity {
                 EditText editName=(EditText)findViewById(R.id.editName);
                 EditText editCity=(EditText)findViewById(R.id.editCity);
                 EditText editHighway=(EditText)findViewById(R.id.editHighway);
+
                 String nameToPass=editName.getText().toString();
-                int cityToPass=Integer.parseInt(editCity.getText().toString());
-                int highwayToPass=Integer.parseInt(editHighway.getText().toString());
+                String cityToPass=editCity.getText().toString();
+                String highwayToPass=editHighway.getText().toString();
 
-                calculateIntent.putExtra("name",nameToPass);
-                calculateIntent.putExtra("city",cityToPass);
-                calculateIntent.putExtra("highway",highwayToPass);
+                if(nameToPass.equals("")){
+                    Toast.makeText(SelectRoute.this,"Name cannot be empty",Toast.LENGTH_SHORT).show();
+                }
 
-                startActivity(calculateIntent);
-                finish();
+                else if(cityToPass.equals("") || highwayToPass.equals("")) {
+                    Toast.makeText(SelectRoute.this,"Length cannot be empty",Toast.LENGTH_SHORT).show();
+                }
+                else if(Integer.parseInt(cityToPass)<0||Integer.parseInt(highwayToPass)<0){
+                    Toast.makeText(SelectRoute.this,"Length cannot be negative",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    calculateIntent.putExtra("name", nameToPass);
+                    calculateIntent.putExtra("city", Integer.parseInt(cityToPass));
+                    calculateIntent.putExtra("highway", Integer.parseInt(highwayToPass));
 
+                    startActivity(calculateIntent);
+                    finish();
+                }
             }
         });
 
@@ -161,17 +180,21 @@ public class SelectRoute extends AppCompatActivity {
                 EditText editHighway=(EditText)findViewById(R.id.editHighway);
 
                 String nameToAdd=editName.getText().toString();
-                int cityToAdd=Integer.parseInt(editCity.getText().toString());
-                int highwayToAdd=Integer.parseInt(editHighway.getText().toString());
+                String cityToAdd=editCity.getText().toString();
+                String highwayToAdd=editHighway.getText().toString();
 
                 if(nameToAdd.equals("")){
                     Toast.makeText(SelectRoute.this,"Name cannot be empty",Toast.LENGTH_SHORT).show();
                 }
-                else if(cityToAdd<0 || highwayToAdd<0) {
+
+                else if(cityToAdd.equals("") || highwayToAdd.equals("")) {
+                    Toast.makeText(SelectRoute.this,"Length cannot be empty",Toast.LENGTH_SHORT).show();
+                }
+                else if(Integer.parseInt(cityToAdd)<0||Integer.parseInt(highwayToAdd)<0){
                     Toast.makeText(SelectRoute.this,"Length cannot be negative",Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Route r=new Route(nameToAdd,cityToAdd,highwayToAdd);
+                    Route r=new Route(nameToAdd,Integer.parseInt(cityToAdd),Integer.parseInt(highwayToAdd));
                     routes.add(r);
                     setUpSpinner();
                 }
