@@ -34,42 +34,6 @@ import java.text.DecimalFormat;
 *  Negative values are not allowed.
 * */
 
-/*
-public class CalculationScreen extends AppCompatDialogFragment {
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState){
-        // Create the view to show
-        View v = LayoutInflater.from(getActivity())
-                .inflate(R.layout.activity_calculation_screen, null);
-
-        // Create a button listener
-        DialogInterface.OnClickListener listner = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which){
-                    case DialogInterface.BUTTON_POSITIVE:
-                        TextView calculation_result = (TextView) getActivity().findViewById(R.id.calculation_result);
-                        calculation_result.setText("Temporary");
-                        break;
-
-                    case DialogInterface.BUTTON_NEGATIVE:
-                    //Don't do anything just end.
-                    break;
-                }
-            }
-        };
-
-        // Build the alert dialog
-        return new AlertDialog.Builder(getActivity())
-                .setTitle("CO2 Emission Calculation Result")
-                .setView(v)
-                .setPositiveButton(android.R.string.ok, listner)
-                .setNegativeButton(android.R.string.cancel, listner)
-                .create();
-
-    }
-*/
-
 public class CalculationScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
