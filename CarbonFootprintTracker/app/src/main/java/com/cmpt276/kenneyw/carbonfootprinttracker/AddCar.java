@@ -17,7 +17,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class AddCar extends AppCompatActivity{
 
@@ -28,13 +27,13 @@ public class AddCar extends AppCompatActivity{
     int yearSelected;
     int makeSelected;
     int modelSelected;
-    ArrayAdapter<CharSequence> makeAdapter;
-    ArrayAdapter<CharSequence> modelAdapter;
+    ArrayAdapter<String> makeAdapter;
+    ArrayAdapter<String> modelAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_transportation);
+        setContentView(R.layout.activity_add_car);
 
         getYearData();
         setupSpinners();
@@ -121,63 +120,28 @@ public class AddCar extends AppCompatActivity{
 
     public void makeCar(){
         //Read the data - Maybe make this setters.
-        //Car car = new Car();
-                /*if(tokens[0].length() > 0){
-                    car.setName(tokens[0]); //Name
-                } else {
-                    car.setName("Untitled");
-                }
-                if(tokens[1].length() > 0){
-                    car.setMake(tokens[1]); //Make
-                } else {
-                    car.setMake("Other");
-                }
-                if(tokens[2].length() > 0){
-                    car.setModel(tokens[2]); //Model
-                } else {
-                    car.setModel("Other");
-                }
-                if(tokens[3].length() > 0){
-                    car.setHighwayEmissions(Integer.parseInt(tokens[3])); //Highway Emissions
-                } else {
-                    car.setHighwayEmissions(1);
-                }
-                if(tokens[4].length() > 0){
-                    car.setCityEmissions(Integer.parseInt(tokens[4])); //City Emission
-                } else {
-                    car.setCityEmissions(1);
-                }
-                if(tokens.length >=6 && tokens[5].length() > 0){
-                    car.setYear(Integer.parseInt(tokens[5]));//Year
-                } else {
-                    car.setYear(0);
-                }
-                carList.add(car);
-
-                Log.d("CarbonFootprintReader", "Just created: " + car);
-                */
     }
 
     private void setupSpinners() {
         Spinner yearSpinner = (Spinner) findViewById(R.id.yearSpinner);
-        ArrayAdapter<CharSequence> yearAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, yearList);
+        ArrayAdapter<Integer> yearAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, yearList);
         yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        yearSpinner.setOnItemSelectedListener(new yearSpinnerActivity());//Problem line
         Log.i("CarbonFootprintTracker", "Testing");
         yearSpinner.setAdapter(yearAdapter);
         yearSpinner.setSelection(yearSelected);
+        yearSpinner.setOnItemSelectedListener(new yearSpinnerActivity());//Problem line
     }
 
     private void updateSpinners() {
         Spinner makeSpinner = (Spinner) findViewById(R.id.makeSpinner);
-        makeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, makeList);
+        makeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, makeList);
         makeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         makeSpinner.setOnItemSelectedListener(new makeSpinnerActivity());
         makeSpinner.setAdapter(makeAdapter);
         makeSpinner.setSelection(makeSelected);
 
         Spinner modelSpinner = (Spinner) findViewById(R.id.modelSpinner);
-        modelAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, modelList);
+        modelAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, modelList);
         modelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         modelSpinner.setOnItemSelectedListener(new modelSpinnerActivity());
         modelSpinner.setAdapter(modelAdapter);
@@ -185,25 +149,31 @@ public class AddCar extends AppCompatActivity{
     }
 
     private class yearSpinnerActivity implements AdapterView.OnItemSelectedListener {
+        @Override
         public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
-            yearSelected = 1984+position;
+            //yearSelected = 1984+position;
             setupSpinners();
         }
+        @Override
         public void onNothingSelected (AdapterView<?> parent) {
         }
     }
     private class makeSpinnerActivity implements AdapterView.OnItemSelectedListener {
+        @Override
         public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
             //getModelData(yearSelected, "Toyota");
             //updateSpinners();
         }
+        @Override
         public void onNothingSelected (AdapterView<?> parent) {
         }
     }
     private class modelSpinnerActivity implements AdapterView.OnItemSelectedListener {
+        @Override
         public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
 
         }
+        @Override
         public void onNothingSelected (AdapterView<?> parent) {
         }
     }
