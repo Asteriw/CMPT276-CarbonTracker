@@ -28,18 +28,4 @@
         android:layout_above="@+id/btnviewtracked"
         android:layout_centerHorizontal="true" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/btncreatenew"
-        android:id="@+id/chart_layout">
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/chart"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"/>
-
-    </RelativeLayout>
-
 </RelativeLayout>

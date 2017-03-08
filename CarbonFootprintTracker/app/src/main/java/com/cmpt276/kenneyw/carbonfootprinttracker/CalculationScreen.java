@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
@@ -40,9 +39,6 @@ public class CalculationScreen extends AppCompatActivity {
 
     /*Convert CO2 Emission from gallons to kilograms*/
     public double calculate_C02_Emission_of_Diesel_from_gallon_to_kg(double var_in_gal){
-        if (is_negative(var_in_gal))
-            return 0;
-
         double result_in_kg;
         result_in_kg = var_in_gal * diesel_CO2_emission_kg_per_gal;
         df2.setRoundingMode(RoundingMode.UP); // round a double to 2 decimaal places
@@ -51,9 +47,6 @@ public class CalculationScreen extends AppCompatActivity {
     }
 
     public double calculate_CO2_Emission_of_Gasolline_from_gallon_to_kg(double var_in_gal){
-        if (is_negative(var_in_gal))
-            return 0;
-
         double result_in_kg;
         result_in_kg = var_in_gal * gasoline_CO2_emission_kg_per_gal;
         df2.setRoundingMode(RoundingMode.UP); // round a double to 2 decimaal places
@@ -63,9 +56,6 @@ public class CalculationScreen extends AppCompatActivity {
 
     /*Convert CO2 Emission from kilograms to gallons*/
     public double calculate_C02_Emission_of_Diesel_from_kg_to_gallon(double var_in_kg){
-        if (is_negative(var_in_kg))
-            return 0;
-
         double result_in_gal;
         result_in_gal = var_in_kg / diesel_CO2_emission_kg_per_gal;
         df2.setRoundingMode(RoundingMode.UP); // round a double to 2 decimaal places
@@ -74,18 +64,11 @@ public class CalculationScreen extends AppCompatActivity {
     }
 
     public double calculate_CO2_Emission_of_Gasolline_from_kg_to_gallon(double var_in_kg){
-        if (is_negative(var_in_kg))
-            return 0;
-
         double result_in_gal;
         result_in_gal = var_in_kg / gasoline_CO2_emission_kg_per_gal;
         df2.setRoundingMode(RoundingMode.UP); // round a double to 2 decimaal places
         df2.format(result_in_gal);
         return result_in_gal; // return with 2 decimal places
-    }
-
-    boolean is_negative(double var){
-        return ( var < 0);
     }
 
     public static Intent makeIntent(Context context) {
