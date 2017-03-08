@@ -65,5 +65,17 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/modelSpinner" />
+        android:layout_below="@+id/modelSpinner"
+        android:id="@+id/car_listview"
+        android:layout_marginBottom="70dp" />
+
+    <Button
+        android:text="CANCEL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/cancel_button" />
 </RelativeLayout>

@@ -5,37 +5,58 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.Arrays;
 
 public class Car extends AppCompatActivity {
-    private String userName;
     private String name;
     private String make;
     private int year;
     private String model;
-    private int[] Emissions =  new int[2];
+    private double[] Emissions =  new double[2];
+    private String transmission;
+    private double literEngine;
 
-    Car(String userName, String name, String make, String model, int highway, int city, int year){
-        this.userName = userName;
-        this.name = name;
-        this.make = make;
-        this.model = model;
-        this.Emissions[0] = highway;
-        this.Emissions[1] = city;
-        this.year = year;
+    Car(String name_temp, String make_temp, String model_temp, double highway_temp, double city_temp, int year_temp, String transmission_temp, double literEngine_temp ){
+        name = name_temp;
+        make = make_temp;
+        model = model_temp;
+        Emissions[0] = highway_temp;
+        Emissions[1] = city_temp;
+        year = year_temp;
+        transmission = transmission_temp;
+        literEngine = literEngine_temp;
     }
 
-    Car(){}
+    Car(){
+        name = "";
+        make = "";
+        model = "";
+        Emissions[0] = 0;
+        Emissions[1] = 0;
+        year = 0;
+        transmission = "";
+        literEngine = 0;
+    }
+
+    public double getLiterEngine() {
+        return literEngine;
+    }
+
+    public void setLiterEngine(double literEngine) {
+        this.literEngine = literEngine;
+    }
+    public String getTransmission() {
+        return transmission;
+    }
+
+    public void setTransmission(String transmission) {
+        this.transmission = transmission;
+    }
+
+
 
     String getName(){
         return name;
     }
     void setName(String name){
         this.name = name;
-    }
-
-    String getUserName(){
-        return userName;
-    }
-    void setUserName(String username){
-        this.userName = name;
     }
 
     String getMake(){
@@ -59,17 +80,17 @@ public class Car extends AppCompatActivity {
         this.year = year;
     }
 
-    int getHighwayEmissions(){
+    double getHighwayEmissions(){
         return Emissions[0];
     }
-    void setHighwayEmissions(int highway){
+    void setHighwayEmissions(double highway){
         this.Emissions[0] = highway;
     }
 
-    int getCityEmissions(){
+    double getCityEmissions(){
         return Emissions[1];
     }
-    void setCityEmissions(int city){
+    void setCityEmissions(double city){
         this.Emissions[1] = city;
     }
 
