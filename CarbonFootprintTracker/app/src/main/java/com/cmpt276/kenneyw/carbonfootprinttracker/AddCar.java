@@ -194,23 +194,18 @@ public class AddCar extends AppCompatActivity{
         }
     }
 
-    private void setupTextview() {
+    private void setupListView() {
         carList = listOfCars.getCarsDescriptions();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.listview_layout, carList);
         ListView list = (ListView) findViewById(R.id.car_listview);
         list.setAdapter(adapter);
-    }
-
-    public void display_car_list(){
-        ListView list = (ListView) findViewById(R.id.car_listview);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
                 TextView textView = (TextView)viewClicked;
-
-
             }
         });
+        //registerForContextMenu(list);
     }
 
     public void makeCar(){
@@ -282,7 +277,7 @@ public class AddCar extends AppCompatActivity{
             Log.i("modelSelected_str = ", modelSelected_str);
 
             getCarData(yearSelected, makeSelected_str, modelSelected_str);
-            setupTextview();
+            setupListView();
         }
         @Override
         public void onNothingSelected (AdapterView<?> parent) {
