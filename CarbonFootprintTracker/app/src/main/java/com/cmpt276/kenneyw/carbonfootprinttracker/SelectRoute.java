@@ -88,7 +88,7 @@ public class SelectRoute extends AppCompatActivity {
             public void onClick(View v) {
                 Log.e(TAG, " Moving on to calculation activity.");
 
-                Intent calculateIntent = ViewTracked.makeIntent(SelectRoute.this);
+                Intent calculateIntent = CalculationScreen.makeIntent(SelectRoute.this);
 
                 EditText editName=(EditText)findViewById(R.id.editName);
                 EditText editCity=(EditText)findViewById(R.id.editCity);
