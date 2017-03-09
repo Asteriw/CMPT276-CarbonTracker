@@ -18,6 +18,18 @@
         android:elevation="0dp"
         tools:elevation="0dp" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/image4"
+        android:layout_centerVertical="true"
+        android:id="@+id/splashbackground"
+        android:adjustViewBounds="false"
+        android:alpha="0.8"
+        android:elevation="1dp"
+        tools:elevation="1dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
