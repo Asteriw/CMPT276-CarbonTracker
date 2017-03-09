@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Carbon Footprint Tracker</string>
+    <string name="app_name">Carbon Tracker</string>
     <string name="btn_splash_start">Start</string>
     <string name="btn_new_journey">Create New Journey</string>
     <string name="btn_view_tracked">View Tracked Journeys</string>
@@ -20,4 +20,14 @@
     <string name="calculation_result">calculation result</string>
     <string name="cancel">CANCEL</string>
     <string name="authors_text">Authors: Team Honeydew</string>
+    <string name="trip_emissions">Your Carbon Emissions for this trip are:</string>
+    <string name="calc_save_trip">Save Trip</string>
+    <string name="calc_cancel">Cancel</string>
+    <string name="view_table_pie_chart">View Table/Pie Chart</string>
+    <string name="vehicle_name">Vehicle Name</string>
+    <string name="distance_on_highway">Distance on Highway</string>
+    <string name="distance_in_city">Distance in City</string>
+    <string name="emissions_per_km_travelled">Emissions per KM travelled</string>
+    <string name="total_emissions">Total Emissions</string>
+    <string name="date">date</string>
 </resources>

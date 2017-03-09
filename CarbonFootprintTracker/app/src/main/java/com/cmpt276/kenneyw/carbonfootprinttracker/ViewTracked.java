@@ -6,8 +6,11 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ViewFlipper;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -27,8 +30,19 @@ public class ViewTracked extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_tracked);
         setupChart();
+        setupFlipper();
     }
 
+    private void setupFlipper() {
+        final ViewFlipper viewflip = (ViewFlipper) findViewById(R.id.viewFlipper);
+        Button flipbutton = (Button) findViewById(R.id.view_flip);
+        flipbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewflip.showNext();
+            }
+        });
+    }
 
     private void setupChart() {
         //Populate a list of Pie entries
@@ -48,7 +62,7 @@ public class ViewTracked extends AppCompatActivity {
         data.setValueTextSize(20);
 
         // If clicked, turn a table view
-        PieChart chart = (PieChart) findViewById(R.id.chart);
+        PieChart chart = (PieChart) findViewById(R.id.piechart);
         // Get the chart;
         chart.setData(data);
         chart.animateY(2000);
@@ -57,6 +71,7 @@ public class ViewTracked extends AppCompatActivity {
         chart.setCenterTextColor(Color.DKGRAY);
         chart.setCenterTextOffset(0,5);
         chart.setVisibility(View.VISIBLE);
+        chart.setDescription(null);
         chart.invalidate();
 
         /*

@@ -22,7 +22,6 @@ public class SelectRoute extends AppCompatActivity {
 
     private static final String TAG = "CarbonFootprintTracker";
     ArrayList<Route> routes=new ArrayList<>();
-    Intent i=getIntent();
     private static final String SHAREDPREF_SET = "CarbonFootprintTracker";
     private static final String SHAREDPREF_ITEM_ROUTENAME = "RouteName";
     private static final String SHAREDPREF_ITEM_ROUTEARRAY = "RouteArray";
@@ -221,6 +220,14 @@ public class SelectRoute extends AppCompatActivity {
                     routes.add(r);
                     setUpSpinner();
                 }
+            }
+        });
+
+        Button cancel = (Button) findViewById(R.id.btnBack);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

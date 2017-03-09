@@ -23,6 +23,12 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/*
+* CLASS DESCRIPTION:
+*  Class for the addCar activity. This reads data from provided CSV and populates it in the spinners.
+*  Also provides logic for the creation of a car, calling on Car.java and CarCollection.Java
+* */
+
 public class AddCar extends AppCompatActivity{
 
     private ArrayList<Integer> yearList = new ArrayList<>();
