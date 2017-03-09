@@ -22,6 +22,7 @@ public class SelectRoute extends AppCompatActivity {
     private static final String TAG = "CarbonFootprintTracker";
     ArrayList<Route> routes=new ArrayList<>();
     Intent i=getIntent();
+
 /*
     private final String carName=i.getStringExtra("carName");
     private final String carMake=i.getStringExtra("carMake");

@@ -35,6 +35,22 @@ import java.text.DecimalFormat;
 * */
 
 public class CalculationScreen extends AppCompatActivity {
+    private static final String SHAREDPREF_SET = "CarbonFootprintTracker";
+    private static final String SHAREDPREF_ITEM_CARNAME = "CarName";
+    private static final String SHAREDPREF_ITEM_MAKE = "CarMake";
+    private static final String SHAREDPREF_ITEM_MODEL = "CarModel";
+    private static final String SHAREDPREF_ITEM_CITYMPG = "CityMPG";
+    private static final String SHAREDPREF_ITEM_HIGHWAYMPG = "HighwayMPG";
+    private static final String SHAREDPREF_ITEM_ROUTENAME = "RouteName";
+    private static final String SHAREDPREF_ITEM_AMOUNTOFROUTES = "AmountOfRoutes";
+    private static final String SHAREDPREF_ITEM_AMOUNTOFTRIPS = "AmountOfTrips";
+    private static final String SHAREDPREF_ITEM_CO2EMISSIONS = "CO2Emissions";
+    private static final String SHAREDPREF_ITEM_AMOUNTOFCARS = "AmountOfCars";
+    private static final String SHAREDPREF_ITEM_CITYDISTANCE = "CityDistance";
+    private static final String SHAREDPREF_ITEM_HIGHWAYDISTANCE = "HighwayDistance";
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
