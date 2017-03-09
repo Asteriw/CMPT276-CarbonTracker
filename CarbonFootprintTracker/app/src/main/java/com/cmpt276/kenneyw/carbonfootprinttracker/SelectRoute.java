@@ -2,6 +2,7 @@ package com.cmpt276.kenneyw.carbonfootprinttracker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,8 +23,13 @@ public class SelectRoute extends AppCompatActivity {
     private static final String TAG = "CarbonFootprintTracker";
     ArrayList<Route> routes=new ArrayList<>();
     Intent i=getIntent();
+    private static final String SHAREDPREF_SET = "CarbonFootprintTracker";
+    private static final String SHAREDPREF_ITEM_ROUTENAME = "RouteName";
+    private static final String SHAREDPREF_ITEM_ROUTEARRAY = "RouteArray";
+    private static final String SHAREDPREF_ITEM_AMOUNTOFROUTES = "AmountOfRoutes";
+    int routeAmount = 0;
 
-/*
+    /*
     private final String carName=i.getStringExtra("carName");
     private final String carMake=i.getStringExtra("carMake");
     private final String carModel=i.getStringExtra("carModel");
@@ -80,7 +86,23 @@ public class SelectRoute extends AppCompatActivity {
         });
 
     }
+   /* private void loadPreferences() {
+        SharedPreferences preferences = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        routeAmount = preferences.getInt(SHAREDPREF_ITEM_AMOUNTOFROUTES, 6);
+        String tempRouteArray = preferences.getString(SHAREDPREF_ITEM_ROUTEARRAY, "");
+        routeArray = tempRouteArray.split(",");
+    }
 
+    private void savePreferences(){
+        SharedPreferences preferences = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(SHAREDPREF_ITEM_AMOUNTOFROUTES, routeAmount);
+        StringBuilder tempArray = new StringBuilder();
+        String routesSaved= routes.toString();
+
+        editor.putString(SHAREDPREF_ITEM_ROUTEARRAY, routesSaved);
+        editor.apply();
+    }*/
     private void setupButtons() {
 
         Button calculateButton = (Button) findViewById(R.id.btncalculation);

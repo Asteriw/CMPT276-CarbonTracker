@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -30,13 +31,15 @@ public class SelectTransportation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_transportation);
 
-        loadPreferences();
+        //loadPreferences();
         setupAddCarButton();
         setupCancelButton();
         setupListView();
         //setupRouteButton();
     }
-
+    private void saveDataInIntent(Intent i,int position){
+       // i.putExtra();
+    }
     private void loadPreferences() {
         SharedPreferences preferences = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
         carAmount = preferences.getInt(SHAREDPREF_ITEM_AMOUNTOFCARS, 6);
@@ -62,6 +65,14 @@ public class SelectTransportation extends AppCompatActivity {
         ListView list = (ListView) findViewById(R.id.car_listview);
         list.setAdapter(adapter);
         registerForContextMenu(list);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i= SelectRoute.makeIntent(SelectTransportation.this);
+                saveDataInIntent(i,position);
+                startActivity(i);
+            }
+        });
     }
 
     private void setupAddCarButton() {
