@@ -13,7 +13,11 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+* CLASS DESCRIPTION:
+*  This is the Class for the SelectTransportation activity. THis class allows a user to select a car from their list of cars,
+*  and create a car if they so choose. Relies on CarCollection and Car.java
+* */
 public class SelectTransportation extends AppCompatActivity {
 
     private static final String SHAREDPREF_SET = "CarbonFootprintTracker";

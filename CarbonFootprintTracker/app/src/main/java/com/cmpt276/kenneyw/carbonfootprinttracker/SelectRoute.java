@@ -1,8 +1,13 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
+/*
 
+This Class Lets the user select, edit and delete a saved route,
+and set values or choose a route to advance to the Calculation Screen
+
+ */
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+//import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,7 +27,6 @@ public class SelectRoute extends AppCompatActivity {
 
     private static final String TAG = "CarbonFootprintTracker";
     ArrayList<Route> routes=new ArrayList<>();
-    Intent i=getIntent();
     private static final String SHAREDPREF_SET = "CarbonFootprintTracker";
     private static final String SHAREDPREF_ITEM_ROUTENAME = "RouteName";
     private static final String SHAREDPREF_ITEM_ROUTEARRAY = "RouteArray";
@@ -81,7 +85,9 @@ public class SelectRoute extends AppCompatActivity {
         });
 
     }
-   /* private void loadPreferences() {
+   /*
+   for next iteration::
+   private void loadPreferences() {
         SharedPreferences preferences = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
         routeAmount = preferences.getInt(SHAREDPREF_ITEM_AMOUNTOFROUTES, 6);
         String tempRouteArray = preferences.getString(SHAREDPREF_ITEM_ROUTEARRAY, "");
@@ -238,6 +244,14 @@ public class SelectRoute extends AppCompatActivity {
                     routes.add(r);
                     setUpSpinner();
                 }
+            }
+        });
+
+        Button cancel = (Button) findViewById(R.id.btnBack);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

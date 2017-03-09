@@ -3,6 +3,11 @@ package com.cmpt276.kenneyw.carbonfootprinttracker;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.Arrays;
+/*
+* CLASS DESCRIPTION:
+*  Class for the class for the Car object. Creates a Car from the CSV values and user input. If user inputs an empty name,
+*  "Default Name" will be set as the car name.
+* */
 
 public class Car extends AppCompatActivity {
     private String name;
