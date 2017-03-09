@@ -7,6 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/*
+* CLASS DESCRIPTION:
+*  Simple class that sets up the buttons to go to the "View Tracked" and "New Journey" pages.
+*  Image of the background is Image4 from Professor Brian Fraser's folder of photos.
+*  http://www.cs.sfu.ca/CourseCentral/276/bfraser/solutions/images/Images/Image-4.jpg
+* */
+
 public class MainMenu extends AppCompatActivity {
 
     @Override

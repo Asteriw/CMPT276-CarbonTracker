@@ -10,6 +10,15 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 
+/*
+* CLASS DESCRIPTION:
+*  Class for the Splash Screen. The code just wires up the button to go to the main menu.
+*  Apart from that, there is code for an horizontal slide animation, that is then wired up to the
+*  car image.
+*  Image of the background is Image4 from Professor Brian Fraser's folder of photos.
+*  http://www.cs.sfu.ca/CourseCentral/276/bfraser/solutions/images/Images/Image-4.jpg
+* */
+
 public class SplashScreen extends AppCompatActivity {
 
     @Override
