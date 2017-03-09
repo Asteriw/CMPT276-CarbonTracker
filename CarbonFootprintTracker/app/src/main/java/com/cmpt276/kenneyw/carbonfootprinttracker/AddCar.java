@@ -212,8 +212,28 @@ public class AddCar extends AppCompatActivity{
                 dialog.show(manager,"Enter Car Name");
                 Log.i("TAG", "Launched GetCarNameFragment Dialog");
 
+                Log.i("Final name = ", listOfCars.getCar(position).getName());
+
+
+                if (listOfCars.getCar(position).getName().contentEquals("Default Name")){
+                    Toast.makeText(getApplicationContext(), "Name was not set", Toast.LENGTH_SHORT).show();
+                }else {
+                    // Check if name was set properly
+                    Intent intent2SelectTransportation = SelectTransportation.makeIntent(AddCar.this);
+                    intent2SelectTransportation.putExtra("CarDataName", listOfCars.getCar(position).getName());
+                    intent2SelectTransportation.putExtra("CarDataCityEmissions", listOfCars.getCar(position).getCityEmissions());
+                    intent2SelectTransportation.putExtra("CarDataGasType", listOfCars.getCar(position).getGasType());
+                    intent2SelectTransportation.putExtra("CarDataHighwayEmissions", listOfCars.getCar(position).getHighwayEmissions());
+                    intent2SelectTransportation.putExtra("CarDataLiterEngine", listOfCars.getCar(position).getLiterEngine());
+                    intent2SelectTransportation.putExtra("CarDataMake", listOfCars.getCar(position).getMake());
+                    intent2SelectTransportation.putExtra("CarDataModel", listOfCars.getCar(position).getModel());
+                    intent2SelectTransportation.putExtra("CarDataTransmission", listOfCars.getCar(position).getTransmission());
+                    intent2SelectTransportation.putExtra("CarDataYear", listOfCars.getCar(position).getYear());
+                    startActivity(intent2SelectTransportation);
+                }
             }
         });
+
     }
 
     private void setupYearSpinner() {

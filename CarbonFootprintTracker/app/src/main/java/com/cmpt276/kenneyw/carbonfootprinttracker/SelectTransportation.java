@@ -21,10 +21,8 @@ public class SelectTransportation extends AppCompatActivity {
     private static final String SHAREDPREF_ITEM_CARARRAY = "CarArray";
     private static final String SHAREDPREF_ITEM_AMOUNTOFCARS = "AmountOfCars";
     int carAmount = 0;
-    String[] carArray;
-    CarCollection carList = new CarCollection();
-    CarCollection CarList;
-    String[] arrayOfCars = {"Temporary"};
+
+    //CarCollection carList = new CarCollection();
     ArrayAdapter<String> adapter;
 
     @Override
@@ -64,11 +62,25 @@ public class SelectTransportation extends AppCompatActivity {
     }
 */
     private void setupListView() {
+        Intent intent=getIntent();
+        Car car = new Car();
+        car.setName( intent.getStringExtra("CarDataName" ));
+        car.setYear( intent.getIntExtra("CarDataYear",0 ));
+        car.setTransmission( intent.getStringExtra("CarDateTransmission" ));
+        car.setCityEmissions( intent.getDoubleExtra("CarDataCityEmissions", 0 ));
+        car.setGasType( intent.getStringExtra("CarDataGasType" ));
+        car.setHighwayEmissions( intent.getDoubleExtra("CarDataHighwayEmissions", 0 ));
+        car.setLiterEngine( intent.getDoubleExtra("CarDataLiterEngine", 0 ));
+        car.setMake( intent.getStringExtra("CarDataMake" ));
+        car.setModel( intent.getStringExtra("CarDataModel"));
+        CarCollection cars = new CarCollection();
+        cars.addCar(car);
+
         //build adapter
         adapter = new ArrayAdapter<String>(
                 this,
                 R.layout.listview_layout,
-                arrayOfCars);
+                cars.getCarsDescriptionsWithName());
         // Configure the list view
         ListView list = (ListView) findViewById(R.id.car_listview);
         list.setAdapter(adapter);
