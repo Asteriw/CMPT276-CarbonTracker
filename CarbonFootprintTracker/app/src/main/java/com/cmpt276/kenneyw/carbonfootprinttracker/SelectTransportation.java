@@ -27,8 +27,8 @@ public class SelectTransportation extends AppCompatActivity {
     int carAmount = 0;
 
     //CarCollection carList = new CarCollection();
-    ArrayAdapter<String> adapter;
     CarCollection cars = new CarCollection();
+    String[] carInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +68,7 @@ public class SelectTransportation extends AppCompatActivity {
     private void setupListView() {
         Intent intent = getIntent();
         Car car = new Car();
-        cars = new CarCollection();
+
         car.setName( intent.getStringExtra("CarDataName" ));
         car.setYear( intent.getIntExtra("CarDataYear",0 ));
         car.setTransmission( intent.getStringExtra("CarDateTransmission" ));
@@ -80,12 +80,14 @@ public class SelectTransportation extends AppCompatActivity {
         car.setModel( intent.getStringExtra("CarDataModel"));
         cars.addCar(car);
 
+        carInfo = cars.getCarsDescriptionsWithName();
+
         //build adapter
-        adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 R.layout.listview_layout,
-                cars.getCarsDescriptionsWithName());
-       
+                carInfo);
+
         // Configure the list view
         ListView list = (ListView) findViewById(R.id.car_listview);
         list.setAdapter(adapter);
