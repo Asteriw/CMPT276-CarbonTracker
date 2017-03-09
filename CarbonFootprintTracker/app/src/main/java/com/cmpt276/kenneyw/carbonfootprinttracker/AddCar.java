@@ -3,6 +3,7 @@ package com.cmpt276.kenneyw.carbonfootprinttracker;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -186,6 +188,7 @@ public class AddCar extends AppCompatActivity{
                     Log.i("setHighwayEmissions = ", "" + Double.parseDouble(tokens[4]));
                     Log.i("setCityEmissions = ", "" + Double.parseDouble(tokens[3]));
                     listOfCars.addCar(tempCar);
+                    setupDataListView();
                 }
             }
         } catch (IOException e){
@@ -194,7 +197,7 @@ public class AddCar extends AppCompatActivity{
         }
     }
 
-    private void setupListView() {
+    private void setupDataListView() {
         carList = listOfCars.getCarsDescriptions();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.listview_layout, carList);
         ListView list = (ListView) findViewById(R.id.car_listview);
@@ -202,10 +205,13 @@ public class AddCar extends AppCompatActivity{
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                TextView textView = (TextView)viewClicked;
+                // display a dialog, get name from user
+                FragmentManager manager = getSupportFragmentManager();
+                GetCarNameFragment dialog = new GetCarNameFragment();
+                dialog.show(manager,"Enter Car Name");
+                Log.i("TAG", "Launched GetCarNameFragment Dialog");
             }
         });
-        //registerForContextMenu(list);
     }
 
     public void makeCar(){
@@ -217,7 +223,7 @@ public class AddCar extends AppCompatActivity{
     private void setupYearSpinner() {
         Spinner yearSpinner = (Spinner) findViewById(R.id.yearSpinner);
         ArrayAdapter<Integer> yearAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, yearList);
-        yearAdapter.setDropDownViewResource(R.layout.custom_spinner);
+        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Log.i("CarbonFootprintTracker", "Testing");
         yearSpinner.setAdapter(yearAdapter);
         yearSpinner.setSelection(yearSelected);
@@ -277,7 +283,6 @@ public class AddCar extends AppCompatActivity{
             Log.i("modelSelected_str = ", modelSelected_str);
 
             getCarData(yearSelected, makeSelected_str, modelSelected_str);
-            setupListView();
         }
         @Override
         public void onNothingSelected (AdapterView<?> parent) {

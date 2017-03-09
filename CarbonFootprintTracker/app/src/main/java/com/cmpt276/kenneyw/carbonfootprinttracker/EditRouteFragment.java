@@ -14,8 +14,6 @@ import android.widget.Toast;
 
 public class EditRouteFragment extends AppCompatDialogFragment {
 
-
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -23,7 +21,7 @@ public class EditRouteFragment extends AppCompatDialogFragment {
 
         //create view
         View viewer= LayoutInflater.from(getActivity())
-                .inflate(R.layout.fragment_edit_route,null);
+                .inflate(R.layout.fragment_edit_route, null);
 
         final EditText editName=(EditText)viewer.findViewById(R.id.editName);
         final EditText editCity=(EditText)viewer.findViewById(R.id.editCity);

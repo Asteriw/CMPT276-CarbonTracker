@@ -34,7 +34,7 @@ import java.text.DecimalFormat;
 *  Negative values are not allowed.
 * */
 
-public class CalculationScreen extends AppCompatActivity {
+public class CalculationScreen extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
