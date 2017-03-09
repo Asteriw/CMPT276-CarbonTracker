@@ -24,7 +24,7 @@ public class SelectTransportation extends AppCompatActivity {
 
     //CarCollection carList = new CarCollection();
     ArrayAdapter<String> adapter;
-
+    CarCollection cars=new CarCollection();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +73,6 @@ public class SelectTransportation extends AppCompatActivity {
         car.setLiterEngine( intent.getDoubleExtra("CarDataLiterEngine", 0 ));
         car.setMake( intent.getStringExtra("CarDataMake" ));
         car.setModel( intent.getStringExtra("CarDataModel"));
-        CarCollection cars = new CarCollection();
         cars.addCar(car);
 
         //build adapter
@@ -84,6 +83,20 @@ public class SelectTransportation extends AppCompatActivity {
         // Configure the list view
         ListView list = (ListView) findViewById(R.id.car_listview);
         list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i=SelectRoute.makeIntent(SelectTransportation.this);
+                i.putExtra("carName",cars.getCar(position).getName());
+                i.putExtra("carMake",cars.getCar(position).getMake());
+                i.putExtra("carModel",cars.getCar(position).getModel());
+                i.putExtra("carYear",cars.getCar(position).getYear());
+                i.putExtra("MPGCity",cars.getCar(position).getCityEmissions());
+                i.putExtra("MPGHighway",cars.getCar(position).getHighwayEmissions());
+                i.putExtra("carGasType",cars.getCar(position).getGasType());
+                startActivity(i);
+            }
+        });
     }
 
     private void registerForContextMenu(){
