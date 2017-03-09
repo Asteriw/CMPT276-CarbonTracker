@@ -170,7 +170,7 @@ public class AddCar extends AppCompatActivity{
                     tempCar.setTransmission(tokens[18]);
                     Log.i("setTransmission = ", tokens[18]);
                     tempCar.setYear(year);
-                    tempCar.setName("tempName");
+                    tempCar.setName("Default Name");
                     tempCar.setGasType(tokens[16]);
                     if (Double.parseDouble(tokens[3]) == 0.0) {
                         if ((Double.parseDouble(tokens[6]) == 0.0)) {
@@ -205,20 +205,16 @@ public class AddCar extends AppCompatActivity{
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+
                 // display a dialog, get name from user
                 FragmentManager manager = getSupportFragmentManager();
                 GetCarNameFragment dialog = new GetCarNameFragment();
                 dialog.show(manager,"Enter Car Name");
                 Log.i("TAG", "Launched GetCarNameFragment Dialog");
+
             }
         });
     }
-
-    public void makeCar(){
-        //Read the data - Maybe make this setters.
-    }
-
-
 
     private void setupYearSpinner() {
         Spinner yearSpinner = (Spinner) findViewById(R.id.yearSpinner);

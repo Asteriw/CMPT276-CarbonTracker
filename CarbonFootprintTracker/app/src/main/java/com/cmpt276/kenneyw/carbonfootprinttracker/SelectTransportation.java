@@ -24,7 +24,7 @@ public class SelectTransportation extends AppCompatActivity {
     String[] carArray;
     CarCollection carList = new CarCollection();
     CarCollection CarList;
-    String[] arrayOfCars = {"temporary"};
+    String[] arrayOfCars = {"Temporary"};
     ArrayAdapter<String> adapter;
 
     @Override
@@ -39,6 +39,7 @@ public class SelectTransportation extends AppCompatActivity {
         registerForContextMenu();
         //setupRouteButton();
     }
+    /*
     private void saveDataInIntent(Intent i,int position){
        // i.putExtra();
     }
@@ -61,7 +62,7 @@ public class SelectTransportation extends AppCompatActivity {
         editor.putString(SHAREDPREF_ITEM_CARARRAY, tempArray.toString());
         editor.apply();
     }
-
+*/
     private void setupListView() {
         //build adapter
         adapter = new ArrayAdapter<String>(

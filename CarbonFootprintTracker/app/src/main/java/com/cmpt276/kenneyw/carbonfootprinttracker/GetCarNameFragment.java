@@ -24,7 +24,7 @@ public class GetCarNameFragment extends AppCompatDialogFragment{
         final EditText editName=(EditText)viewer.findViewById(R.id.car_name_for_listcars_UI);
 
         //create button listeners
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+        final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -41,9 +41,13 @@ public class GetCarNameFragment extends AppCompatDialogFragment{
                             // Log.i("name = ", user_defined_car_name);
 
                             // Set the Car name
-
-
+                            int getCarAtIndex = ((AddCar)getActivity()).listOfCars.countCars();
+                            ((AddCar)getActivity()).listOfCars.getCar( getCarAtIndex ).setName(user_defined_car_name);
                         }
+                        // pass Car data to SelectTransportation
+
+
+
 
                         // kill the addCar Activity and close
                         getActivity().finish();
