@@ -17,6 +17,7 @@ public class MainMenu extends AppCompatActivity {
         setupButtons();
     }
 
+
     private void setupButtons() {
         Button startCreate = (Button) findViewById(R.id.btncreatenew);
         startCreate.setOnClickListener(new View.OnClickListener() {
