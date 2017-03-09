@@ -47,10 +47,22 @@ public class GetCarNameFragment extends AppCompatDialogFragment{
                             ((AddCar)getActivity()).listOfCars.getCar( getCarAtIndex - 1).setName(user_defined_car_name);
                             Log.i("UI after name is = ",
                                     ((AddCar)getActivity()).listOfCars.getCar( getCarAtIndex - 1).getName());
-                            
+
+                            // Check if name was set properly
+                            Intent intent2SelectTransportation = SelectTransportation.makeIntent(getActivity());
+                            intent2SelectTransportation.putExtra("CarDataName", ((AddCar)getActivity()).listOfCars.getCar(getCarAtIndex - 1).getName());
+                            intent2SelectTransportation.putExtra("CarDataCityEmissions", ((AddCar)getActivity()).listOfCars.getCar(getCarAtIndex - 1).getCityEmissions());
+                            intent2SelectTransportation.putExtra("CarDataGasType", ((AddCar)getActivity()).listOfCars.getCar(getCarAtIndex - 1).getGasType());
+                            intent2SelectTransportation.putExtra("CarDataHighwayEmissions", ((AddCar)getActivity()).listOfCars.getCar(getCarAtIndex - 1).getHighwayEmissions());
+                            intent2SelectTransportation.putExtra("CarDataLiterEngine", ((AddCar)getActivity()).listOfCars.getCar(getCarAtIndex - 1).getLiterEngine());
+                            intent2SelectTransportation.putExtra("CarDataMake", ((AddCar)getActivity()).listOfCars.getCar(getCarAtIndex - 1).getMake());
+                            intent2SelectTransportation.putExtra("CarDataModel", ((AddCar)getActivity()).listOfCars.getCar(getCarAtIndex - 1).getModel());
+                            intent2SelectTransportation.putExtra("CarDataTransmission", ((AddCar)getActivity()).listOfCars.getCar(getCarAtIndex - 1).getTransmission());
+                            intent2SelectTransportation.putExtra("CarDataYear", ((AddCar)getActivity()).listOfCars.getCar(getCarAtIndex - 1).getYear());
+                            startActivity(intent2SelectTransportation);
+
                         }
-                        // kill the addCar Activity and close
-                        //getActivity().finish();
+
                     case DialogInterface.BUTTON_NEGATIVE:
                         break;
                 }

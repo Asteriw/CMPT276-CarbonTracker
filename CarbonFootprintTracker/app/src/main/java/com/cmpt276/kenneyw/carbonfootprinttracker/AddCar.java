@@ -219,7 +219,7 @@ public class AddCar extends AppCompatActivity{
                 Log.i("TAG", "Launched GetCarNameFragment Dialog");
 
                 Log.i("Final name = ", listOfCars.getCar(position).getName());
-
+/*
                     // Check if name was set properly
                     Intent intent2SelectTransportation = SelectTransportation.makeIntent(AddCar.this);
                     intent2SelectTransportation.putExtra("CarDataName", listOfCars.getCar(position).getName());
@@ -232,7 +232,7 @@ public class AddCar extends AppCompatActivity{
                     intent2SelectTransportation.putExtra("CarDataTransmission", listOfCars.getCar(position).getTransmission());
                     intent2SelectTransportation.putExtra("CarDataYear", listOfCars.getCar(position).getYear());
                     startActivity(intent2SelectTransportation);
-
+*/
             }
         });
 
