@@ -171,7 +171,7 @@ public class AddCar extends AppCompatActivity{
                     Log.i("setTransmission = ", tokens[18]);
                     tempCar.setYear(year);
                     tempCar.setName("tempName");
-
+                    tempCar.setGasType(tokens[16]);
                     if (Double.parseDouble(tokens[3]) == 0.0) {
                         if ((Double.parseDouble(tokens[6]) == 0.0)) {
                             tempCar.setCityEmissions(Double.parseDouble(tokens[9]));

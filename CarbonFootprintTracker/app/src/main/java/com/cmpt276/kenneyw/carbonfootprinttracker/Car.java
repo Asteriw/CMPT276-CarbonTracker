@@ -7,6 +7,7 @@ import java.util.Arrays;
 public class Car extends AppCompatActivity {
     private String name;
     private String make;
+    private String gasType;
     private int year;
     private String model;
     private double[] Emissions =  new double[2];
@@ -51,6 +52,12 @@ public class Car extends AppCompatActivity {
     }
 
 
+    String getGasType(){
+        return gasType;
+    }
+    void setGasType(String gasType){
+        this.gasType = gasType;
+    }
 
     String getName(){
         return name;

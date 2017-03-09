@@ -2,6 +2,7 @@ package com.cmpt276.kenneyw.carbonfootprinttracker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,8 +16,14 @@ import java.util.List;
 
 public class SelectTransportation extends AppCompatActivity {
 
+    private static final String SHAREDPREF_SET = "CarbonFootprintTracker";
+    private static final String SHAREDPREF_ITEM_CARNAME = "CarName";
+    private static final String SHAREDPREF_ITEM_CARARRAY = "CarArray";
+    private static final String SHAREDPREF_ITEM_AMOUNTOFCARS = "AmountOfCars";
+    int carAmount = 0;
+    String[] carArray;
+    CarCollection carList = new CarCollection();
     CarCollection CarList;
-    private List<Car> carList = new ArrayList<>();
     String[] arrayOfCars = {"temporary"};
     ArrayAdapter<String> adapter;
 
@@ -25,11 +32,34 @@ public class SelectTransportation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_transportation);
 
+        //loadPreferences();
         setupAddCarButton();
         setupCancelButton();
         setupListView();
         registerForContextMenu();
         //setupRouteButton();
+    }
+    private void saveDataInIntent(Intent i,int position){
+       // i.putExtra();
+    }
+    private void loadPreferences() {
+        SharedPreferences preferences = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        carAmount = preferences.getInt(SHAREDPREF_ITEM_AMOUNTOFCARS, 6);
+        String tempCarArray = preferences.getString(SHAREDPREF_ITEM_CARARRAY, "");
+        carArray = tempCarArray.split(",");
+    }
+
+    private void savePreferences(){
+        SharedPreferences preferences = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(SHAREDPREF_ITEM_AMOUNTOFCARS, carAmount);
+        StringBuilder tempArray = new StringBuilder();
+        String[] tempListOfCars = carList.getCarsNames();
+        for (int i = 0; i < carList.countCars(); i++){
+            tempArray.append(tempListOfCars[i]).append(",");
+        }
+        editor.putString(SHAREDPREF_ITEM_CARARRAY, tempArray.toString());
+        editor.apply();
     }
 
     private void setupListView() {

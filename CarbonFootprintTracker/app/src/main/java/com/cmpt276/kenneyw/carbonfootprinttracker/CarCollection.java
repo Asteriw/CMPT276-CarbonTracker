@@ -44,6 +44,15 @@ public class CarCollection {
         return descriptions;
     }
 
+    public String[] getCarsNames() {
+        String[] descriptions = new String[countCars()];
+        for (int i = 0; i < countCars(); i++) {
+            Car car = getCar(i);
+            descriptions[i] = car.getName();
+        }
+        return descriptions;
+    }
+
     public String[] getCarsDescriptionsWithName() {
         String[] descriptions = new String[countCars()];
         for (int i = 0; i < countCars(); i++) {
