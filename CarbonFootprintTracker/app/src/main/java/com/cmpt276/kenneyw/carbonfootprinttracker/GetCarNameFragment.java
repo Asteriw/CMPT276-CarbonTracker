@@ -2,6 +2,7 @@ package com.cmpt276.kenneyw.carbonfootprinttracker;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
@@ -13,7 +14,7 @@ import android.widget.Toast;
 
 
 public class GetCarNameFragment extends AppCompatDialogFragment{
-
+    String user_defined_car_name;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -37,20 +38,19 @@ public class GetCarNameFragment extends AppCompatDialogFragment{
                             break;
                         }else{
                             // Get the user input
-                            String user_defined_car_name = editName.getText().toString();
-                            // Log.i("name = ", user_defined_car_name);
+                            user_defined_car_name = editName.getText().toString();
+                            Log.i("UI name is = ", user_defined_car_name);
 
                             // Set the Car name
                             int getCarAtIndex = ((AddCar)getActivity()).listOfCars.countCars();
-                            ((AddCar)getActivity()).listOfCars.getCar( getCarAtIndex ).setName(user_defined_car_name);
+                            Log.i("getCarAtIndex = ", "" + getCarAtIndex);
+                            ((AddCar)getActivity()).listOfCars.getCar( getCarAtIndex - 1).setName(user_defined_car_name);
+                            Log.i("UI after name is = ",
+                                    ((AddCar)getActivity()).listOfCars.getCar( getCarAtIndex - 1).getName());
+                            
                         }
-                        // pass Car data to SelectTransportation
-
-
-
-
                         // kill the addCar Activity and close
-                        getActivity().finish();
+                        //getActivity().finish();
                     case DialogInterface.BUTTON_NEGATIVE:
                         break;
                 }

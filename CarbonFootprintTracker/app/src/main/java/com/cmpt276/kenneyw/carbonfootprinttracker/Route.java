@@ -1,5 +1,8 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
+/*
 
+This Class makes an Individual Route and has it's getters and setters and contructor
+ */
 public class Route {
 
     private String routeName;

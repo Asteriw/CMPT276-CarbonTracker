@@ -1,8 +1,13 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
+/*
 
+This Class Lets the user select, edit and delete a saved route,
+and set values or choose a route to advance to the Calculation Screen
+
+ */
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+//import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,12 +34,7 @@ public class SelectRoute extends AppCompatActivity {
     int routeAmount = 0;
 
     /*
-    private final String carName=i.getStringExtra("carName");
-    private final String carMake=i.getStringExtra("carMake");
-    private final String carModel=i.getStringExtra("carModel");
-    private final String carYear=i.getStringExtra("carYear");
-    private final int mpgCity=i.getIntExtra("mpgCity",0);
-    private final int mpgHighway=i.getIntExtra("mpgHighway",0);
+
 */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,9 @@ public class SelectRoute extends AppCompatActivity {
         });
 
     }
-   /* private void loadPreferences() {
+   /*
+   for next iteration::
+   private void loadPreferences() {
         SharedPreferences preferences = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
         routeAmount = preferences.getInt(SHAREDPREF_ITEM_AMOUNTOFROUTES, 6);
         String tempRouteArray = preferences.getString(SHAREDPREF_ITEM_ROUTEARRAY, "");
@@ -109,6 +111,14 @@ public class SelectRoute extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e(TAG, " Moving on to calculation activity.");
+                Intent i=getIntent();
+                final String carName=i.getStringExtra("carName");
+                final String carMake=i.getStringExtra("carMake");
+                final String carModel=i.getStringExtra("carModel");
+                final String carYear=i.getStringExtra("carYear");
+                final int mpgCity=i.getIntExtra("mpgCity",0);
+                final int mpgHighway=i.getIntExtra("mpgHighway",0);
+                final String carGasType=i.getStringExtra("carGasType");
 
                 Intent calculateIntent = CalculationScreen.makeIntent(SelectRoute.this);
 
@@ -134,7 +144,13 @@ public class SelectRoute extends AppCompatActivity {
                     calculateIntent.putExtra("name", nameToPass);
                     calculateIntent.putExtra("city", Integer.parseInt(cityToPass));
                     calculateIntent.putExtra("highway", Integer.parseInt(highwayToPass));
-
+                    calculateIntent.putExtra("carName",carName);
+                    calculateIntent.putExtra("carMake",carMake);
+                    calculateIntent.putExtra("carModel",carModel);
+                    calculateIntent.putExtra("carYear",carYear);
+                    calculateIntent.putExtra("MPGCity",mpgCity);
+                    calculateIntent.putExtra("MPGHighway",mpgHighway);
+                    calculateIntent.putExtra("carGasType",carGasType);
                     startActivity(calculateIntent);
                     finish();
                 }
@@ -156,6 +172,14 @@ public class SelectRoute extends AppCompatActivity {
                 else{
                     Toast.makeText(SelectRoute.this,"No Route selected to Delete",Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        Button cancelButton=(Button)findViewById(R.id.btnBack);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
