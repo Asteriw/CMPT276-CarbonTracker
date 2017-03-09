@@ -160,7 +160,7 @@ public class AddCar extends AppCompatActivity{
 
                 if(Integer.parseInt(tokens[20]) == year && tokens[1].contentEquals(make) && tokens[2].contentEquals(model)) {
                     Car tempCar = new Car();
-
+                    listOfCars=new CarCollection();
                     tempCar.setMake(tokens[1]);
                     Log.i("setMake = ", tokens[1]);
                     tempCar.setModel(tokens[2]);
@@ -214,10 +214,6 @@ public class AddCar extends AppCompatActivity{
 
                 Log.i("Final name = ", listOfCars.getCar(position).getName());
 
-
-                if (listOfCars.getCar(position).getName().contentEquals("Default Name")){
-                    Toast.makeText(getApplicationContext(), "Name was not set", Toast.LENGTH_SHORT).show();
-                }else {
                     // Check if name was set properly
                     Intent intent2SelectTransportation = SelectTransportation.makeIntent(AddCar.this);
                     intent2SelectTransportation.putExtra("CarDataName", listOfCars.getCar(position).getName());
@@ -230,7 +226,7 @@ public class AddCar extends AppCompatActivity{
                     intent2SelectTransportation.putExtra("CarDataTransmission", listOfCars.getCar(position).getTransmission());
                     intent2SelectTransportation.putExtra("CarDataYear", listOfCars.getCar(position).getYear());
                     startActivity(intent2SelectTransportation);
-                }
+
             }
         });
 
