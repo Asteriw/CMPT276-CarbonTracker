@@ -35,10 +35,10 @@ public class CarCollection {
         String[] descriptions = new String[countCars()];
         for (int i = 0; i < countCars(); i++) {
             Car car = getCar(i);
-            descriptions[i] = car.getMake() +
-                    car.getModel() +
-                    car.getYear() +
-                    car.getTransmission() +
+            descriptions[i] = car.getMake() + " - " +
+                    car.getModel() + " - " +
+                    car.getYear() + " - " +
+                    car.getTransmission() + " - " +
                     car.getLiterEngine();
         }
         return descriptions;

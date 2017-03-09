@@ -23,7 +23,8 @@ public class SelectTransportation extends AppCompatActivity {
     int carAmount = 0;
     String[] carArray;
     CarCollection carList = new CarCollection();
-    String[] arrayOfCars = {};
+    CarCollection CarList;
+    String[] arrayOfCars = {"temporary"};
     ArrayAdapter<String> adapter;
 
     @Override
@@ -35,6 +36,7 @@ public class SelectTransportation extends AppCompatActivity {
         setupAddCarButton();
         setupCancelButton();
         setupListView();
+        registerForContextMenu();
         //setupRouteButton();
     }
     private void saveDataInIntent(Intent i,int position){
@@ -61,16 +63,32 @@ public class SelectTransportation extends AppCompatActivity {
     }
 
     private void setupListView() {
-        adapter = new ArrayAdapter<>(this, R.layout.listview_layout, arrayOfCars);
+        //build adapter
+        adapter = new ArrayAdapter<String>(
+                this,
+                R.layout.listview_layout,
+                arrayOfCars);
+        // Configure the list view
         ListView list = (ListView) findViewById(R.id.car_listview);
         list.setAdapter(adapter);
-        registerForContextMenu(list);
+    }
+
+    private void registerForContextMenu(){
+        ListView list = (ListView) findViewById(R.id.car_listview);
+
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                return false;
+            }
+        });
+
+        // Redirect the user to the SelectRoute Screen
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i= SelectRoute.makeIntent(SelectTransportation.this);
-                saveDataInIntent(i,position);
-                startActivity(i);
+                Intent selectTransportation2SelectRoute = new Intent(getApplicationContext(), SelectRoute.class);
+                startActivity(selectTransportation2SelectRoute);
             }
         });
     }
