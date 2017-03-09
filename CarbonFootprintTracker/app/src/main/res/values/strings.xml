@@ -11,6 +11,13 @@
     <string name="btn_edit_route">Edit Route</string>
     <string name="btn_save_route">Save route</string>
     <string name="txt_route_name">Route Name:</string>
+    <string name="year_string">Select a Year:</string>
+    <string name="make_string">Select a Make:</string>
+    <string name="model_string">Select a Model:</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="add_car">Add Car</string>
+    <string name="select_a_car">Select a Car from your Car List:</string>
+    <string name="calculation_result">calculation result</string>
     <string name="App_name">Carbon Tracker</string>
     <string name="authors_text">Authors: Team Honeydew</string>
 </resources>

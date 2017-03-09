@@ -54,22 +54,23 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:layout_above="@+id/txtCity"
         android:layout_toRightOf="@+id/txtRouteName"
         android:layout_toEndOf="@+id/txtRouteName"
-        android:id="@+id/editTextName"
-        android:layout_alignTop="@+id/txtRouteName" />
+        android:id="@+id/editName"
+        android:layout_alignTop="@+id/txtRouteName"
+        android:textSize="14sp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:layout_alignLeft="@+id/editTextName"
-        android:layout_alignStart="@+id/editTextName"
-        android:id="@+id/editTextCity"
+        android:layout_alignLeft="@+id/editName"
+        android:layout_alignStart="@+id/editName"
+        android:id="@+id/editCity"
         android:layout_alignTop="@+id/txtCity"
-        android:layout_alignBottom="@+id/txtCity" />
+        android:textSize="14sp"
+        android:layout_above="@+id/editHighway" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -78,10 +79,11 @@
         android:ems="10"
         android:layout_alignTop="@+id/txtHighway"
         android:layout_toEndOf="@+id/txtHighway"
-        android:id="@+id/editTextHighway"
-        android:layout_alignBottom="@+id/txtHighway"
-        android:layout_alignLeft="@+id/editTextCity"
-        android:layout_alignStart="@+id/editTextCity" />
+        android:layout_toRightOf="@id/txtHighway"
+        android:id="@+id/editHighway"
+        android:layout_alignLeft="@+id/editCity"
+        android:layout_alignStart="@+id/editCity"
+        android:textSize="14sp" />
 
     <Button
         android:text="@android:string/cancel"
@@ -135,7 +137,7 @@
         android:text="@string/btn_edit_route"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editTextName"
+        android:layout_above="@+id/editName"
         android:layout_alignLeft="@+id/btnDelete"
         android:layout_alignStart="@+id/btnDelete"
         android:id="@+id/btnEdit"
