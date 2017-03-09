@@ -217,7 +217,7 @@ public class AddCar extends AppCompatActivity{
     private void setupYearSpinner() {
         Spinner yearSpinner = (Spinner) findViewById(R.id.yearSpinner);
         ArrayAdapter<Integer> yearAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, yearList);
-        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        yearAdapter.setDropDownViewResource(R.layout.custom_spinner);
         Log.i("CarbonFootprintTracker", "Testing");
         yearSpinner.setAdapter(yearAdapter);
         yearSpinner.setSelection(yearSelected);
