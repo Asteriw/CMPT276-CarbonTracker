@@ -12,9 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -217,22 +214,7 @@ public class AddCar extends AppCompatActivity{
                 GetCarNameFragment dialog = new GetCarNameFragment();
                 dialog.show(manager,"Enter Car Name");
                 Log.i("TAG", "Launched GetCarNameFragment Dialog");
-
                 Log.i("Final name = ", listOfCars.getCar(position).getName());
-/*
-                    // Check if name was set properly
-                    Intent intent2SelectTransportation = SelectTransportation.makeIntent(AddCar.this);
-                    intent2SelectTransportation.putExtra("CarDataName", listOfCars.getCar(position).getName());
-                    intent2SelectTransportation.putExtra("CarDataCityEmissions", listOfCars.getCar(position).getCityEmissions());
-                    intent2SelectTransportation.putExtra("CarDataGasType", listOfCars.getCar(position).getGasType());
-                    intent2SelectTransportation.putExtra("CarDataHighwayEmissions", listOfCars.getCar(position).getHighwayEmissions());
-                    intent2SelectTransportation.putExtra("CarDataLiterEngine", listOfCars.getCar(position).getLiterEngine());
-                    intent2SelectTransportation.putExtra("CarDataMake", listOfCars.getCar(position).getMake());
-                    intent2SelectTransportation.putExtra("CarDataModel", listOfCars.getCar(position).getModel());
-                    intent2SelectTransportation.putExtra("CarDataTransmission", listOfCars.getCar(position).getTransmission());
-                    intent2SelectTransportation.putExtra("CarDataYear", listOfCars.getCar(position).getYear());
-                    startActivity(intent2SelectTransportation);
-*/
             }
         });
 
