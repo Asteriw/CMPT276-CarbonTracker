@@ -7,39 +7,36 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-/*
-* CLASS DESCRIPTION:
-*  Simple class that sets up the buttons to go to the "View Tracked" and "New Journey" pages.
-*  Image of the background is Image4 from Professor Brian Fraser's folder of photos.
-*  http://www.cs.sfu.ca/CourseCentral/276/bfraser/solutions/images/Images/Image-4.jpg
-* */
-
 public class MainMenu extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        
-        setupButtons();
+        setupJourneyButtons();
+        setupFootprintButtons();
     }
 
-
-    private void setupButtons() {
-        Button startCreate = (Button) findViewById(R.id.btncreatenew);
-        startCreate.setOnClickListener(new View.OnClickListener() {
+    private void setupFootprintButtons() {
+        // directs to "CarboonFootPrint" screen
+        Button footprint_button = (Button) findViewById(R.id.view_cabon_footprint_button);
+        footprint_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newJourneyIntent = SelectTransportation.makeIntent(MainMenu.this);
-                startActivity(newJourneyIntent);
+                Intent MainMenu2CarbonFootPrint = CarbonFootPrint.makeIntent(MainMenu.this);
+                startActivity(MainMenu2CarbonFootPrint);
             }
         });
-        Button startSettings = (Button) findViewById(R.id.btnviewtracked);
-        startSettings.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void setupJourneyButtons() {
+        // directs to "SelectJourney" screen
+        Button journey_button = (Button) findViewById(R.id.create_a_new_journey_button);
+        journey_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ViewTrackedIntent = ViewTracked.makeIntent(MainMenu.this);
-                startActivity(ViewTrackedIntent);
+                Intent MainMenu2SelectJourney = SelectJourney.makeIntent(MainMenu.this);
+                startActivity(MainMenu2SelectJourney);
             }
         });
     }

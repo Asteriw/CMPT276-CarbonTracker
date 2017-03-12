@@ -1,15 +1,10 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
-/*
 
-This Class makes an Individual Route and has it's getters and setters and contructor
+/**
+ * This Class makes an Individual Route and has it's getters and setters and contructor
  */
+
 public class Route {
-
-    private String routeName;
-    private int highwayDistance;
-    private int cityDistance;
-    private int totalDistance;
-
     public Route(String routeName, int cityDistance, int highwayDistance) {
         this.routeName=routeName;
         this.cityDistance = cityDistance;
@@ -51,5 +46,11 @@ public class Route {
         this.highwayDistance = highwayDistance;
         this.highwayDistance=this.getCityDistance()+this.getHighwayDistance();
     }
+
+    // Varaibles Declaration
+    private String routeName;
+    private int highwayDistance;
+    private int cityDistance;
+    private int totalDistance;
 
 }

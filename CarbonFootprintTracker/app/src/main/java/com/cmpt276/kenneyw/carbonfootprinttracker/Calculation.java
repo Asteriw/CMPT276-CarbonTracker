@@ -1,20 +1,11 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatDialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+
 
 /*
 * CLASS DESCRIPTION:
@@ -33,61 +24,10 @@ import java.text.DecimalFormat;
 *
 * CONSTRAINT:
 *  Negative values are not allowed.
+*
 * */
 
-public class CalculationScreen extends AppCompatActivity {
-    private static final String SHAREDPREF_SET = "CarbonFootprintTracker";
-    private static final String SHAREDPREF_ITEM_CARNAME = "CarName";
-    private static final String SHAREDPREF_ITEM_MAKE = "CarMake";
-    private static final String SHAREDPREF_ITEM_MODEL = "CarModel";
-    private static final String SHAREDPREF_ITEM_CITYMPG = "CityMPG";
-    private static final String SHAREDPREF_ITEM_HIGHWAYMPG = "HighwayMPG";
-    private static final String SHAREDPREF_ITEM_ROUTENAME = "RouteName";
-    private static final String SHAREDPREF_ITEM_AMOUNTOFROUTES = "AmountOfRoutes";
-    private static final String SHAREDPREF_ITEM_AMOUNTOFTRIPS = "AmountOfTrips";
-    private static final String SHAREDPREF_ITEM_CO2EMISSIONS = "CO2Emissions";
-    private static final String SHAREDPREF_ITEM_AMOUNTOFCARS = "AmountOfCars";
-    private static final String SHAREDPREF_ITEM_CITYDISTANCE = "CityDistance";
-    private static final String SHAREDPREF_ITEM_HIGHWAYDISTANCE = "HighwayDistance";
-
-    String calculatedTotal = "0";
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calculation_screen);
-        loadPreferences();
-        setupTextView();
-        setupButtons();
-    }
-
-    private void setupButtons() {
-        Button calcsave = (Button) findViewById(R.id.calc_save);
-        calcsave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        Button calccancel = (Button) findViewById(R.id.calc_cancel);
-        calccancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
-
-    private void loadPreferences() {
-    }
-
-    public void setupTextView(){
-        TextView calculationResult = (TextView) findViewById(R.id.calculation_result);
-        //load what type of gas it is, calculate the total off of that. Check if Diesel or Gas.
-
-        calculationResult.setText(calculatedTotal);
-    }
+public class Calculation {
 
     private static DecimalFormat df2 = new DecimalFormat(".##"); // for decimal precision
     final private static double gasoline_CO2_emission_kg_per_gal = 8.89;
@@ -128,7 +68,6 @@ public class CalculationScreen extends AppCompatActivity {
     }
 
     public static Intent makeIntent(Context context) {
-        return new Intent(context, CalculationScreen.class);
+        return new Intent(context, Calculation.class);
     }
-
 }

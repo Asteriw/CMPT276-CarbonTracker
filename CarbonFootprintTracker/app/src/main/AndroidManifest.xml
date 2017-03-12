@@ -7,24 +7,21 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity
-            android:name=".SplashScreen"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/AppTheme">
+        <activity android:name=".WelcomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainMenu"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".SelectTransportation" />
+        <activity android:name=".MainMenu" />
+        <activity android:name=".SelectCar" />
+        <activity android:name=".CarbonFootPrint" />
         <activity android:name=".AddCar" />
+        <activity android:name=".SelectJourney" />
         <activity android:name=".SelectRoute" />
-        <activity android:name=".CalculationScreen" />
-        <activity android:name=".ViewTracked" />
+        <activity android:name=".AddRoute"></activity>
     </application>
 
 </manifest>

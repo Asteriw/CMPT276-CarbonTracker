@@ -1,14 +1,13 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
 
+
 import java.util.ArrayList;
 import java.util.List;
-import com.cmpt276.kenneyw.carbonfootprinttracker.Car;
 
-/*
-* CLASS DESCRIPTION:
-*  Class for the ArrayList of Cars. This has some basic collection management functions, quite a few of which
-*  are just transformations of the arraylist ito a list of strings.
-* */
+/**
+ * DESCRIPTION:
+ *  - Create a list of car and functions to access to cars in the list
+ */
 
 public class CarCollection {
     private List<Car> cars = new ArrayList<>();
