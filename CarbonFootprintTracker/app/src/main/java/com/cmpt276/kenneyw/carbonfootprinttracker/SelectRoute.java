@@ -20,6 +20,9 @@ import java.util.ArrayList;
 public class SelectRoute extends AppCompatActivity {
 
     private static final String TAG = "CarbonFootprintTracker";
+    public static final String NAME = "name";
+    public static final String CITY = "city";
+    public static final String HIGHWAY = "highway";
     ArrayList<Route> routes=new ArrayList<>();
     private static final String SHAREDPREF_SET = "CarbonFootprintTracker";
     private static final String SHAREDPREF_ITEM_AMOUNTOFROUTES = "AmountOfRoutes";
@@ -232,10 +235,12 @@ public class SelectRoute extends AppCompatActivity {
         int routeAmt=routes.size();
 
         for(int i=0;i<routeAmt;i++){
-            editor.putString(i+"name",routes.get(i).getRouteName());
-            editor.putInt(i+"city",routes.get(i).getCityDistance());
-            editor.putInt(i+"highway",routes.get(i).getCityDistance());
+            Log.i(TAG,""+routes.get(i).getRouteName());
+            editor.putString(i+ NAME,routes.get(i).getRouteName());
+            editor.putInt(i+ CITY,routes.get(i).getCityDistance());
+            editor.putInt(i+ HIGHWAY,routes.get(i).getCityDistance());
         }
+        editor.putInt(SHAREDPREF_ITEM_AMOUNTOFROUTES,routeAmt);
         editor.apply();
     }
 
