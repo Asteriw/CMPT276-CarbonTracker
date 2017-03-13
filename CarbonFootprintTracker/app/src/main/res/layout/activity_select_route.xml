@@ -105,7 +105,7 @@
         android:text="@string/save_route"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/add_route_button"
+        android:id="@+id/btn_route_save"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -124,7 +124,7 @@
         android:text="@string/select_route"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/select_route_button"
+        android:id="@+id/btn_select_route"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />

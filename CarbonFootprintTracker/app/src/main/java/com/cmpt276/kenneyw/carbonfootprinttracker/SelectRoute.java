@@ -88,13 +88,13 @@ public class SelectRoute extends AppCompatActivity {
     }
 
     private void setupAddRouteButton() {
-        Button addRoute=(Button)findViewById(R.id.add_route_button);
+        Button addRoute=(Button)findViewById(R.id.btn_route_save);
         addRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editName=(EditText)findViewById(R.id.editName);
-                EditText editCity=(EditText)findViewById(R.id.editCity);
-                EditText editHighway=(EditText)findViewById(R.id.editHighway);
+                EditText editName=(EditText)findViewById(R.id.editText_route_name);
+                EditText editCity=(EditText)findViewById(R.id.editText_route_city);
+                EditText editHighway=(EditText)findViewById(R.id.editText_route_highway);
 
                 String nameToAdd=editName.getText().toString();
                 String cityToAdd=editCity.getText().toString();
@@ -176,15 +176,15 @@ public class SelectRoute extends AppCompatActivity {
     }
 
     private void setupSelectRouteButton() {
-        Button selectRoute=(Button)findViewById(R.id.select_route_button);
+        Button selectRoute=(Button)findViewById(R.id.btn_select_route);
         selectRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent selectRoute2selectJourney = SelectJourney.makeIntent(SelectRoute.this);
 
-                EditText editName=(EditText)findViewById(R.id.editName);
-                EditText editCity=(EditText)findViewById(R.id.editCity);
-                EditText editHighway=(EditText)findViewById(R.id.editHighway);
+                EditText editName=(EditText)findViewById(R.id.editText_route_name);
+                EditText editCity=(EditText)findViewById(R.id.editText_route_city);
+                EditText editHighway=(EditText)findViewById(R.id.editText_route_highway);
 
                 String nameToPass=editName.getText().toString();
                 String cityToPass=editCity.getText().toString();
@@ -207,6 +207,7 @@ public class SelectRoute extends AppCompatActivity {
                     selectRoute2selectJourney.putExtra("city", Integer.parseInt(cityToPass));
                     selectRoute2selectJourney.putExtra("highway", Integer.parseInt(highwayToPass));
                     startActivity(selectRoute2selectJourney);
+                    saveRoutes();
                     finish();
                 }
             }
@@ -218,21 +219,24 @@ public class SelectRoute extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
-                SharedPreferences.Editor editor=pref.edit();
-                editor.clear();
-                int routeAmt=routes.size();
-
-                for(int i=0;i<routeAmt;i++){
-                    editor.putString(i+"name",routes.get(i).getRouteName());
-                    editor.putInt(i+"city",routes.get(i).getCityDistance());
-                    editor.putInt(i+"highway",routes.get(i).getCityDistance());
-                }
-                editor.apply();
-
+                saveRoutes();
                 finish();
             }
         });
+    }
+
+    private void saveRoutes() {
+        SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
+        SharedPreferences.Editor editor=pref.edit();
+        editor.clear();
+        int routeAmt=routes.size();
+
+        for(int i=0;i<routeAmt;i++){
+            editor.putString(i+"name",routes.get(i).getRouteName());
+            editor.putInt(i+"city",routes.get(i).getCityDistance());
+            editor.putInt(i+"highway",routes.get(i).getCityDistance());
+        }
+        editor.apply();
     }
 
     public static Intent makeIntent(Context context) {
