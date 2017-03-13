@@ -36,6 +36,11 @@ public class CarbonFootPrint extends AppCompatActivity {
         setupSwtichViewButton();
         setupBackButton();
         setupChart();
+        setupTable();
+    }
+
+    private void setupTable() {
+        
     }
 
     private void setupChart() {
