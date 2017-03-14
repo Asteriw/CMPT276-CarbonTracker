@@ -40,7 +40,7 @@ public class CarbonFootPrint extends AppCompatActivity {
     }
 
     private void setupTable() {
-        
+
     }
 
     private void setupChart() {
