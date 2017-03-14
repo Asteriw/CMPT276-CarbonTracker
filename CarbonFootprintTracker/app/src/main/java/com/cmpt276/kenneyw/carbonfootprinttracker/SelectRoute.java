@@ -7,15 +7,21 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
+
+
+/*
+Select Route class
+ */
 
 public class SelectRoute extends AppCompatActivity {
 
@@ -32,12 +38,41 @@ public class SelectRoute extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         routes=LoadRoutes();
         setContentView(R.layout.activity_select_route);
-        setUpSpinner();
-        setupAddRouteButton();
+        setUpListView();
         setupBackButton();
-        setupEditRouteButton();
-        setupDeleteRouteButton();
-        setupSelectRouteButton();
+        setupAddRouteButton();
+    }
+
+    private void setupAddRouteButton() {
+        Button btn=(Button)findViewById(R.id.btn_add_route);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=AddRoute.makeIntent(SelectRoute.this);
+                startActivityForResult(intent,1);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==RESULT_CANCELED){
+            Log.i(TAG,"User Cancelled Add Route");
+        }
+        else {
+            switch (requestCode) {
+                case 1:
+                    String nameToAdd=data.getStringExtra("name");
+                    int cityToAdd=data.getIntExtra("city",0);
+                    int highwayToAdd=data.getIntExtra("highway",0);
+                    Route r=new Route(nameToAdd,cityToAdd,highwayToAdd);
+                    break;
+
+                case 2:
+
+                    break;
+            }
+        }
     }
 
     private ArrayList<Route> LoadRoutes() {
@@ -57,29 +92,32 @@ public class SelectRoute extends AppCompatActivity {
         return routes;
     }
 
-    public void setUpSpinner() {
+    public void setUpListView() {
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner_routes);
-        ArrayAdapter<Route> adapter = new ArrayAdapter<Route>(this, android.R.layout.simple_spinner_item, routes);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        ListView listForRoutes=(ListView)findViewById(R.id.listViewRoutes);
+        ArrayAdapter<Route> adapter = new ArrayAdapter<Route>(this, R.layout.layout_for_list, routes);
+        listForRoutes.setAdapter(adapter);
+
+        listForRoutes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent selectRoute2selectJourney = SelectJourney.makeIntent(SelectRoute.this);
                 Log.e(TAG, routes.get(position).toString()+" selected.");
-
                 Route r=routes.get(position);
-
                 String nameToPass=r.getRouteName();
                 int cityToPass=r.getCityDistance();
                 int highwayToPass=r.getHighwayDistance();
 
-                EditText editName=(EditText)findViewById(R.id.editText_route_name);
-                EditText editCity=(EditText)findViewById(R.id.editText_route_city);
-                EditText editHighway=(EditText)findViewById(R.id.editText_route_highway);
 
-                editName.setText(nameToPass);
-                editCity.setText(""+cityToPass);
-                editHighway.setText(""+highwayToPass);
+                    selectRoute2selectJourney.putExtra("name", nameToPass);
+                    selectRoute2selectJourney.putExtra("city", cityToPass);
+                    selectRoute2selectJourney.putExtra("highway", highwayToPass);
+                    startActivity(selectRoute2selectJourney);
+                    saveRoutes();
+                    finish();
+
+
             }
 
             @Override
@@ -87,135 +125,68 @@ public class SelectRoute extends AppCompatActivity {
 
             }
         });
+        registerForContextMenu(listForRoutes);
+
 
     }
 
-    private void setupAddRouteButton() {
-        Button addRoute=(Button)findViewById(R.id.btn_route_save);
-        addRoute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText editName=(EditText)findViewById(R.id.editText_route_name);
-                EditText editCity=(EditText)findViewById(R.id.editText_route_city);
-                EditText editHighway=(EditText)findViewById(R.id.editText_route_highway);
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo){
+        if(v.getId()==R.id.listViewRoutes){
+            AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo)menuInfo;
+            menu.setHeaderTitle(routes.get(info.position).toString());
+            String[] menuItems= getResources().getStringArray(R.array.menu);
 
-                String nameToAdd=editName.getText().toString();
-                String cityToAdd=editCity.getText().toString();
-                String highwayToAdd=editHighway.getText().toString();
-
-                if(nameToAdd.equals("")){
-                    Toast.makeText(SelectRoute.this,"Name cannot be empty",Toast.LENGTH_SHORT).show();
-                }
-
-                else if(cityToAdd.equals("") || highwayToAdd.equals("")) {
-                    Toast.makeText(SelectRoute.this,"Length cannot be empty",Toast.LENGTH_SHORT).show();
-                }
-                else if(Integer.parseInt(cityToAdd)<0||Integer.parseInt(highwayToAdd)<0){
-                    Toast.makeText(SelectRoute.this,"Length cannot be negative",Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Route r=new Route(nameToAdd,Integer.parseInt(cityToAdd),Integer.parseInt(highwayToAdd));
-                    routes.add(r);
-                    setUpSpinner();
-                }
+            for(int i=0;i<menuItems.length;i++){
+                menu.add(Menu.NONE,i,i,menuItems[i]);
             }
-        });
+        }
     }
 
-    private void setupDeleteRouteButton() {
-        Button deleteRoute=(Button)findViewById(R.id.btn_route_delete);
-        deleteRoute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Spinner spinner = (Spinner) findViewById(R.id.spinner_routes);
-                if (spinner.getSelectedItem() != null) {
-                    Route r=routes.get(spinner.getSelectedItemPosition());
-                    Toast.makeText(SelectRoute.this,"Removed Route"+r.toString(),Toast.LENGTH_SHORT).show();
-                    routes.remove(r);
-                    setUpSpinner();
-                }
-                else{
-                    Toast.makeText(SelectRoute.this,"No Route selected to Delete",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int menuItemIndex = item.getItemId();
+        String[] menuItems = getResources().getStringArray(R.array.menu);
+        String menuItemName = menuItems[menuItemIndex];
+        int pos=info.position;
+        if(menuItemName.equals("Edit")){
+            launchEditFragment(pos);
+            setUpListView();
+        }
+        else if(menuItemName.equals("Delete")){
+            Route r=routes.get(pos);
+            Toast.makeText(SelectRoute.this,"Removed Route"+r.toString(),Toast.LENGTH_SHORT).show();
+            routes.remove(r);
+            setUpListView();
+        }
+        return true;
     }
 
-    private void setupEditRouteButton() {
-        Button editRoute=(Button)findViewById(R.id.btn_route_edit);
-        editRoute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Spinner spinner = (Spinner) findViewById(R.id.spinner_routes);
-                if (spinner.getSelectedItem() != null) {
+    private void launchEditFragment(int pos) {
+        final Route r=routes.get(pos);
+        Toast.makeText(SelectRoute.this,"Enter new values for Route "+r.toString(),Toast.LENGTH_SHORT).show();
 
-                    final Route r=routes.get(spinner.getSelectedItemPosition());
-                    Toast.makeText(SelectRoute.this,"Enter new values for Route "+r.toString(),Toast.LENGTH_SHORT).show();
+        String nameToEdit=r.getRouteName();
+        int cityToEdit=r.getCityDistance();
+        int highwayToEdit=r.getHighwayDistance();
 
-                    String nameToEdit=r.getRouteName();
-                    int cityToEdit=r.getCityDistance();
-                    int highwayToEdit=r.getHighwayDistance();
+        Bundle bundle =new Bundle();
+        bundle.putString("name",nameToEdit);
+        bundle.putInt("city",cityToEdit);
+        bundle.putInt("highway",highwayToEdit);
+        bundle.putInt("pos",pos);
 
-                    Bundle bundle =new Bundle();
-                    bundle.putString("name",nameToEdit);
-                    bundle.putInt("city",cityToEdit);
-                    bundle.putInt("highway",highwayToEdit);
-                    bundle.putInt("pos",spinner.getSelectedItemPosition());
+        FragmentManager manager=getSupportFragmentManager();
+        EditRouteFragment dialog=new EditRouteFragment();
+        dialog.setArguments(bundle);
 
-                    FragmentManager manager=getSupportFragmentManager();
-                    EditRouteFragment dialog=new EditRouteFragment();
-                    dialog.setArguments(bundle);
+        dialog.show(manager,"EditRouteDialog");
 
-                    dialog.show(manager,"EditRouteDialog");
-
-                    Log.i(TAG,"Launched Dialog Fragment");
-                }
-                else{
-                    Toast.makeText(SelectRoute.this,"No Route selected to Edit",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        Log.i(TAG,"Launched Dialog Fragment");
     }
 
-    private void setupSelectRouteButton() {
-        Button selectRoute=(Button)findViewById(R.id.btn_select_route);
-        selectRoute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent selectRoute2selectJourney = SelectJourney.makeIntent(SelectRoute.this);
-
-                EditText editName=(EditText)findViewById(R.id.editText_route_name);
-                EditText editCity=(EditText)findViewById(R.id.editText_route_city);
-                EditText editHighway=(EditText)findViewById(R.id.editText_route_highway);
-
-                String nameToPass=editName.getText().toString();
-                String cityToPass=editCity.getText().toString();
-                String highwayToPass=editHighway.getText().toString();
-
-                //RouteSingleton newRouteSingleton=new RouteSingleton();
-
-                if(nameToPass.equals("")){
-                    Toast.makeText(SelectRoute.this,"Name cannot be empty",Toast.LENGTH_SHORT).show();
-                }
-
-                else if(cityToPass.equals("") || highwayToPass.equals("")) {
-                    Toast.makeText(SelectRoute.this,"Length cannot be empty",Toast.LENGTH_SHORT).show();
-                }
-                else if(Integer.parseInt(cityToPass)<0||Integer.parseInt(highwayToPass)<0){
-                    Toast.makeText(SelectRoute.this,"Length cannot be negative",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    selectRoute2selectJourney.putExtra("name", nameToPass);
-                    selectRoute2selectJourney.putExtra("city", Integer.parseInt(cityToPass));
-                    selectRoute2selectJourney.putExtra("highway", Integer.parseInt(highwayToPass));
-                    startActivity(selectRoute2selectJourney);
-                    saveRoutes();
-                    finish();
-                }
-            }
-        });
-    }
     private void setupBackButton() {
         Button back_button = (Button) findViewById(R.id.back_button_select_route);
         back_button.setOnClickListener(new View.OnClickListener() {
@@ -238,7 +209,7 @@ public class SelectRoute extends AppCompatActivity {
             Log.i(TAG,""+routes.get(i).getRouteName());
             editor.putString(i+ NAME,routes.get(i).getRouteName());
             editor.putInt(i+ CITY,routes.get(i).getCityDistance());
-            editor.putInt(i+ HIGHWAY,routes.get(i).getCityDistance());
+            editor.putInt(i+ HIGHWAY,routes.get(i).getHighwayDistance());
         }
         editor.putInt(SHAREDPREF_ITEM_AMOUNTOFROUTES,routeAmt);
         editor.apply();

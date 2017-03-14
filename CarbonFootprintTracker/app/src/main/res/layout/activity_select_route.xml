@@ -10,107 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.SelectRoute">
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner_routes"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="110dp"
-        android:layout_marginEnd="110dp" />
-
-    <Button
-        android:text="@string/delete_route"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_route_edit"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/btn_route_delete" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_route_city"
-        android:layout_alignBaseline="@+id/editText_route_city"
-        android:layout_alignBottom="@+id/editText_route_city"
-        android:layout_alignLeft="@+id/txt_route_name"
-        android:layout_alignStart="@+id/txt_route_name"
-        android:text="@string/km_driven_in_city" />
-
-    <TextView
-        android:text="@string/km_driven_on_highway"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_route_highway"
-        android:layout_alignBaseline="@+id/editText_route_highway"
-        android:layout_alignBottom="@+id/editText_route_highway"
-        android:layout_alignLeft="@+id/txt_route_city"
-        android:layout_alignStart="@+id/txt_route_city" />
-
-    <TextView
-        android:text="@string/route_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_route_name"
-        android:layout_alignBaseline="@+id/editText_route_name"
-        android:layout_alignBottom="@+id/editText_route_name"
-        android:layout_alignRight="@+id/back_button_select_route"
-        android:layout_alignEnd="@+id/back_button_select_route" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editText_route_highway"
-        android:layout_below="@+id/editText_route_city"
-        android:layout_toRightOf="@+id/txt_route_highway"
-        android:layout_toEndOf="@+id/txt_route_highway"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editText_route_city"
-        android:layout_below="@+id/editText_route_name"
-        android:layout_alignLeft="@+id/editText_route_highway"
-        android:layout_alignStart="@+id/editText_route_highway" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_marginTop="22dp"
-        android:id="@+id/editText_route_name"
-        android:layout_below="@+id/btn_route_delete"
-        android:layout_alignLeft="@+id/editText_route_city"
-        android:layout_alignStart="@+id/editText_route_city" />
-
-    <Button
-        android:text="@string/edit_route"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_route_edit"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/btn_route_delete"
-        android:layout_alignStart="@+id/btn_route_delete" />
-
-    <Button
-        android:text="@string/save_route"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_route_save"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="49dp" />
-
     <Button
         android:text="@string/back"
         android:layout_width="wrap_content"
@@ -121,11 +20,20 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="@string/select_route"
+        android:text="@string/add_route"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_select_route"
+        android:id="@+id/btn_add_route"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/back_button_select_route"
+        android:id="@+id/listViewRoutes" />
+
 </RelativeLayout>

@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -55,7 +54,7 @@ public class EditRouteFragment extends AppCompatDialogFragment {
                             break;
                         }
                         ((SelectRoute)getActivity()).changeRoute(pos,name,Integer.parseInt(city),Integer.parseInt(highway));
-                        ((SelectRoute)getActivity()).setUpSpinner();
+                        ((SelectRoute)getActivity()).setUpListView();
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
 
