@@ -19,8 +19,15 @@ import java.text.DecimalFormat;
 *  Electric:    0 (our electricity is mainly hydro) [done]
 *  Natural Gas: Ignore (don't even list these in the app) [done]
 *
-* OPTION:
-*  User interface must be in metric: Litres, Kilometers, and kilograms or metric tons (whichever you think best).
+*  Methood:
+*
+*   ____ Km/L  *  ___ miles/km * ___ gallon*miles * ___ kg/gallon = ___ kg/L (Kg CO2 per litre)
+* (from user)                      (from CSV)                     (Result)
+*
+*   User interface is metric: Litres and Kilometers
+*   L is the engine displacement of a selected car, rerad from CSV.
+*   city08 and higway08 are used for miles per gallon of fuel. Only focus on the primary fuel.
+*
 *
 * CONSTRAINT:
 *  Negative values are not allowed.
@@ -30,42 +37,37 @@ import java.text.DecimalFormat;
 public class Calculation {
 
     private static DecimalFormat df2 = new DecimalFormat(".##"); // for decimal precision
-    final private static double gasoline_CO2_emission_kg_per_gal = 8.89;
-    final private static double diesel_CO2_emission_kg_per_gal = 10.16;
+    final private static double gasoline_volume_in_kg_per_gallon = 8.89;
+    final private static double diesel_volumne_in_kg_per_gallon = 10.16;
+    final private static double engine_displacement_in_litre = 0; // must be read from CSV
+    final private static double km_per_mile = 0.621371;
+    final private static double miles_per_gallon = 0; // must be read from CSV
 
-    /*Convert CO2 Emission from gallons to kilograms*/
-    public double calculate_C02_Emission_of_Diesel_from_gallon_to_kg(double var_in_gal){
-        double result_in_kg;
-        result_in_kg = var_in_gal * diesel_CO2_emission_kg_per_gal;
-        df2.setRoundingMode(RoundingMode.UP); // round a double to 2 decimal places
-        df2.format(result_in_kg);
-        return result_in_kg; // return with 2 decimal places
+    /*Calculate CO2 Emission of Gasoline with a given distance*/
+    public double calculate_CO2_Emission_of_Gasoline(double distance_in_km_from_user){
+        double result_in_kg_CO2_per_litre;
+        result_in_kg_CO2_per_litre = (distance_in_km_from_user/ engine_displacement_in_litre) *
+                                     (1/km_per_mile) *
+                                     (miles_per_gallon) *
+                                     (gasoline_volume_in_kg_per_gallon);
+        df2.setRoundingMode(RoundingMode.UP);
+        df2.format(result_in_kg_CO2_per_litre);
+        return result_in_kg_CO2_per_litre;
     }
 
-    public double calculate_CO2_Emission_of_Gasoline_from_gallon_to_kg(double var_in_gal){
-        double result_in_kg;
-        result_in_kg = var_in_gal * gasoline_CO2_emission_kg_per_gal;
-        df2.setRoundingMode(RoundingMode.UP); // round a double to 2 decimal places
-        df2.format(result_in_kg);
-        return result_in_kg; // return with 2 decimal places
+
+    /*Calculate CO2 Emission of Diesel with a given distance*/
+    public double calculate_C02_Emission_of_Diesel_from_kg_to_gallon(double distance_in_km_from_user){
+        double result_in_kg_CO2_per_litre;
+        result_in_kg_CO2_per_litre = (distance_in_km_from_user/ engine_displacement_in_litre) *
+                                     (1/km_per_mile) *
+                                     (miles_per_gallon) *
+                                     (diesel_volumne_in_kg_per_gallon);
+        df2.setRoundingMode(RoundingMode.UP);
+        df2.format(result_in_kg_CO2_per_litre);
+        return result_in_kg_CO2_per_litre;
     }
 
-    /*Convert CO2 Emission from kilograms to gallons*/
-    public double calculate_C02_Emission_of_Diesel_from_kg_to_gallon(double var_in_kg){
-        double result_in_gal;
-        result_in_gal = var_in_kg / diesel_CO2_emission_kg_per_gal;
-        df2.setRoundingMode(RoundingMode.UP); // round a double to 2 decimal places
-        df2.format(result_in_gal);
-        return result_in_gal; // return with 2 decimal places
-    }
-
-    public double calculate_CO2_Emission_of_Gasoline_from_kg_to_gallon(double var_in_kg){
-        double result_in_gal;
-        result_in_gal = var_in_kg / gasoline_CO2_emission_kg_per_gal;
-        df2.setRoundingMode(RoundingMode.UP); // round a double to 2 decimal places
-        df2.format(result_in_gal);
-        return result_in_gal; // return with 2 decimal places
-    }
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, Calculation.class);
