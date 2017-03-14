@@ -23,4 +23,6 @@
     <string name="city_km">City (km):</string>
     <string name="swtich_view">swtich view</string>
     <string name="nickname_for_car">Nickname for car</string>
+    <string name="context_edit">Edit</string>
+    <string name="context_delete">Delete</string>
 </resources>
