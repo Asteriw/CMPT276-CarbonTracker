@@ -29,6 +29,7 @@ public class SelectRoute extends AppCompatActivity {
     public static final String NAME = "name";
     public static final String CITY = "city";
     public static final String HIGHWAY = "highway";
+    public static final int REQUEST_ADD_ROUTE = 1;
     ArrayList<Route> routes=new ArrayList<>();
     private static final String SHAREDPREF_SET = "CarbonFootprintTracker";
     private static final String SHAREDPREF_ITEM_AMOUNTOFROUTES = "AmountOfRoutes";
@@ -49,31 +50,31 @@ public class SelectRoute extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=AddRoute.makeIntent(SelectRoute.this);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent, REQUEST_ADD_ROUTE);
             }
         });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode==RESULT_CANCELED){
-            Log.i(TAG,"User Cancelled Add Route");
-        }
-        else {
+
             switch (requestCode) {
-                case 1:
-                    String nameToAdd=data.getStringExtra("name");
-                    int cityToAdd=data.getIntExtra("city",0);
-                    int highwayToAdd=data.getIntExtra("highway",0);
-                    Route r=new Route(nameToAdd,cityToAdd,highwayToAdd);
-                    break;
-
-                case 2:
-
-                    break;
+                case REQUEST_ADD_ROUTE:
+                    if (resultCode == RESULT_CANCELED) {
+                        Log.i(TAG, "User Cancelled Add Route");
+                    }
+                    else{
+                        String nameToAdd = data.getStringExtra("name");
+                        int cityToAdd = data.getIntExtra("city", 0);
+                        int highwayToAdd = data.getIntExtra("highway", 0);
+                        Route r = new Route(nameToAdd, cityToAdd, highwayToAdd);
+                        routes.add(r);
+                        setUpListView();
+                        break;
+                    }
             }
-        }
     }
+
 
     private ArrayList<Route> LoadRoutes() {
         ArrayList<Route> routes=new ArrayList<>();
@@ -97,7 +98,6 @@ public class SelectRoute extends AppCompatActivity {
         ListView listForRoutes=(ListView)findViewById(R.id.listViewRoutes);
         ArrayAdapter<Route> adapter = new ArrayAdapter<Route>(this, R.layout.layout_for_list, routes);
         listForRoutes.setAdapter(adapter);
-
         listForRoutes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -108,16 +108,12 @@ public class SelectRoute extends AppCompatActivity {
                 String nameToPass=r.getRouteName();
                 int cityToPass=r.getCityDistance();
                 int highwayToPass=r.getHighwayDistance();
-
-
-                    selectRoute2selectJourney.putExtra("name", nameToPass);
-                    selectRoute2selectJourney.putExtra("city", cityToPass);
-                    selectRoute2selectJourney.putExtra("highway", highwayToPass);
-                    startActivity(selectRoute2selectJourney);
-                    saveRoutes();
-                    finish();
-
-
+                selectRoute2selectJourney.putExtra("name", nameToPass);
+                selectRoute2selectJourney.putExtra("city", cityToPass);
+                selectRoute2selectJourney.putExtra("highway", highwayToPass);
+                startActivity(selectRoute2selectJourney);
+                saveRoutes();
+                finish();
             }
 
             @Override
@@ -126,8 +122,6 @@ public class SelectRoute extends AppCompatActivity {
             }
         });
         registerForContextMenu(listForRoutes);
-
-
     }
 
     @Override
@@ -151,13 +145,14 @@ public class SelectRoute extends AppCompatActivity {
         String[] menuItems = getResources().getStringArray(R.array.menu);
         String menuItemName = menuItems[menuItemIndex];
         int pos=info.position;
+
         if(menuItemName.equals("Edit")){
             launchEditFragment(pos);
             setUpListView();
         }
         else if(menuItemName.equals("Delete")){
             Route r=routes.get(pos);
-            Toast.makeText(SelectRoute.this,"Removed Route"+r.toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(SelectRoute.this,"Removed Route "+r.getRouteName(),Toast.LENGTH_SHORT).show();
             routes.remove(r);
             setUpListView();
         }
@@ -187,18 +182,6 @@ public class SelectRoute extends AppCompatActivity {
         Log.i(TAG,"Launched Dialog Fragment");
     }
 
-    private void setupBackButton() {
-        Button back_button = (Button) findViewById(R.id.back_button_select_route);
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                saveRoutes();
-                finish();
-            }
-        });
-    }
-
     private void saveRoutes() {
         SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
         SharedPreferences.Editor editor=pref.edit();
@@ -213,6 +196,23 @@ public class SelectRoute extends AppCompatActivity {
         }
         editor.putInt(SHAREDPREF_ITEM_AMOUNTOFROUTES,routeAmt);
         editor.apply();
+    }
+
+    private void setupBackButton() {
+        Button back_button = (Button) findViewById(R.id.back_button_select_route);
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveRoutes();
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        saveRoutes();
+        finish();
     }
 
     public static Intent makeIntent(Context context) {

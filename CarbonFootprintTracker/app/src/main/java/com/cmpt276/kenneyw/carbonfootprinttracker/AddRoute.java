@@ -57,19 +57,19 @@ public class AddRoute extends AppCompatActivity {
     }
 
     private void setupCancelButton() {
-        Intent intent=new Intent();
-        setResult(RESULT_CANCELED,intent);
-        finish();
-    }
+        Button cancelBtn=(Button)findViewById(R.id.btn_cancel_addroute);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent();
+                setResult(RESULT_CANCELED,intent);
+                finish();
+            }
+        });
 
-    @Override
-    public void onBackPressed() {
-        Intent intent=new Intent();
-        setResult(RESULT_CANCELED,intent);
-        finish();
     }
 
     public static Intent makeIntent(Context context) {
-        return new Intent(context, SelectRoute.class);
+        return new Intent(context, AddRoute.class);
     }
 }

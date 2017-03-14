@@ -13,7 +13,7 @@ public class Route {
     }
 
     public String toString() {
-        return routeName;
+        return routeName+" - "+cityDistance+" - "+highwayDistance;
     }
 
     public String getRouteName() {
