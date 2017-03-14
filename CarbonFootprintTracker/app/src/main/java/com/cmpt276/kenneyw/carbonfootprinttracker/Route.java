@@ -13,7 +13,7 @@ public class Route {
     }
 
     public String toString() {
-        return routeName;
+        return routeName+" - "+cityDistance+" - "+highwayDistance;
     }
 
     public String getRouteName() {
@@ -39,12 +39,12 @@ public class Route {
 
     public void setCityDistance(int cityDistance) {
         this.cityDistance = cityDistance;
-        this.highwayDistance=this.getCityDistance()+this.getHighwayDistance();
+        this.totalDistance=this.getCityDistance()+this.getHighwayDistance();
     }
 
     public void setHighwayDistance(int highwayDistance) {
         this.highwayDistance = highwayDistance;
-        this.highwayDistance=this.getCityDistance()+this.getHighwayDistance();
+        this.totalDistance=this.getCityDistance()+this.getHighwayDistance();
     }
 
     // Varaibles Declaration
