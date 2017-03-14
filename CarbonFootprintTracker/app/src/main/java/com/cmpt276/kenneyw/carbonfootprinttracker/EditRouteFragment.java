@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -11,7 +12,7 @@ import android.widget.Toast;
 
 
 public class EditRouteFragment extends AppCompatDialogFragment {
-
+    private static final String TAG = "CarbonFootprintTracker";
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -53,6 +54,7 @@ public class EditRouteFragment extends AppCompatDialogFragment {
                             Toast.makeText(getActivity(),"Values cannot be negative.",Toast.LENGTH_SHORT).show();
                             break;
                         }
+                        Log.i(TAG,""+name+" "+city+ " "+highway);
                         ((SelectRoute)getActivity()).changeRoute(pos,name,Integer.parseInt(city),Integer.parseInt(highway));
                         ((SelectRoute)getActivity()).setUpListView();
                         break;

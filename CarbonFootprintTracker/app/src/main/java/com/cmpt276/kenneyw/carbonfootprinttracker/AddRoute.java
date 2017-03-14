@@ -47,8 +47,8 @@ public class AddRoute extends AppCompatActivity {
                 else{
                     Intent intent=new Intent();
                     intent.putExtra("name",nameToAdd);
-                    intent.putExtra("city",cityToAdd);
-                    intent.putExtra("highway",highwayToAdd);
+                    intent.putExtra("city",Integer.parseInt(cityToAdd));
+                    intent.putExtra("highway",Integer.parseInt(highwayToAdd));
                     setResult(RESULT_OK,intent);
                     finish();
                 }

@@ -98,10 +98,9 @@ public class SelectRoute extends AppCompatActivity {
         ListView listForRoutes=(ListView)findViewById(R.id.listViewRoutes);
         ArrayAdapter<Route> adapter = new ArrayAdapter<Route>(this, R.layout.layout_for_list, routes);
         listForRoutes.setAdapter(adapter);
-        listForRoutes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        listForRoutes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent selectRoute2selectJourney = SelectJourney.makeIntent(SelectRoute.this);
                 Log.e(TAG, routes.get(position).toString()+" selected.");
                 Route r=routes.get(position);
@@ -114,11 +113,6 @@ public class SelectRoute extends AppCompatActivity {
                 startActivity(selectRoute2selectJourney);
                 saveRoutes();
                 finish();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         registerForContextMenu(listForRoutes);
@@ -148,7 +142,6 @@ public class SelectRoute extends AppCompatActivity {
 
         if(menuItemName.equals("Edit")){
             launchEditFragment(pos);
-            setUpListView();
         }
         else if(menuItemName.equals("Delete")){
             Route r=routes.get(pos);
@@ -160,7 +153,7 @@ public class SelectRoute extends AppCompatActivity {
     }
 
     private void launchEditFragment(int pos) {
-        final Route r=routes.get(pos);
+         Route r=routes.get(pos);
         Toast.makeText(SelectRoute.this,"Enter new values for Route "+r.toString(),Toast.LENGTH_SHORT).show();
 
         String nameToEdit=r.getRouteName();
@@ -219,6 +212,7 @@ public class SelectRoute extends AppCompatActivity {
         return new Intent(context, SelectRoute.class);
     }
     public void changeRoute(int pos, String name, int city, int highway) {
+        Log.i(TAG,"change Route got: "+name+" "+city+" "+highway);
         routes.get(pos).setRouteName(name);
         routes.get(pos).setCityDistance(city);
         routes.get(pos).setHighwayDistance(highway);
