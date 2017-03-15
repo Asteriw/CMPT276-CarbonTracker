@@ -23,8 +23,21 @@ import java.util.List;
 *
 *   all known trips must be shown
 *
-*   Table
-*    Columns: date of trip, route name, distancee, vehicle name, CO2 emitted
+* Requirements:
+- User has app open and has entered in one or more journeys
+- From the main menu, user selects to view current carbon footprint.
+- User is shown a table of car trips. Columns include date of trip, route name (if any), distance, vehicle name, and carbon emitted.
+- User is shown a graph of the car trips (or user is able to switch from the table to the graph and back as desired)
+	Graph may be either a stacked bar graph, or a pie graph.
+	All known trips are shown in the graph (not restricted to a single day).
+*
+ * [20] Display Carbon Footprint
+    - Deleting a route or car does *not* affect the details shown here.
+    - Editing a route or a car *does* affect the details shown here.
+   [10] View table of journeys: date of trip, route name, distance, vehicle name, carbon emitted.
+   [10] Able to switch to a graph view (either stacked bar or pie).
+ *
+ *
 * */
 
 public class CarbonFootPrint extends AppCompatActivity {
@@ -36,11 +49,6 @@ public class CarbonFootPrint extends AppCompatActivity {
         setupSwtichViewButton();
         setupBackButton();
         setupChart();
-        setupTable();
-    }
-
-    private void setupTable() {
-
     }
 
     private void setupChart() {
@@ -80,6 +88,7 @@ public class CarbonFootPrint extends AppCompatActivity {
 
     }
 
+
     private void setupSwtichViewButton() {
         Button swtichView_button = (Button) findViewById(R.id.switchview_button_carbon_foot_print);
         swtichView_button.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +99,21 @@ public class CarbonFootPrint extends AppCompatActivity {
             }
         });
     }
+
+    // Columns: date of trip, route name, distancee, vehicle name, CO2 emitted
+    private void displayTable() {
+        // Go through a list of journeys
+
+        // add a new row
+
+        // display
+    }
+
+
+
+
+
+
 
     private void setupBackButton() {
         Button back_button = (Button) findViewById(R.id.back_button_carbon_foot_print);
