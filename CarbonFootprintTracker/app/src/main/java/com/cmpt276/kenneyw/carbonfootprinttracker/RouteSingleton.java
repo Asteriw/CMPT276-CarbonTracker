@@ -1,19 +1,25 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
 
-/**
- * This Class makes an Individual Route and has it's getters and setters and contructor
- */
+public class RouteSingleton {
 
-public class Route {
-    public Route(String routeName, int cityDistance, int highwayDistance) {
-        this.routeName=routeName;
-        this.cityDistance = cityDistance;
-        this.highwayDistance = highwayDistance;
+    private static RouteSingleton routeinstance = null;
+
+    private RouteSingleton(){
+        this.routeName= "";
+        this.cityDistance = 0;
+        this.highwayDistance = 0;
         this.totalDistance = cityDistance+highwayDistance;
     }
 
+    public static RouteSingleton getInstance(){
+        if(routeinstance == null){
+            routeinstance = new RouteSingleton();
+        }
+        return routeinstance;
+    }
+
     public String toString() {
-        return routeName+" - "+cityDistance+" City, "+highwayDistance+" Highway";
+        return routeName;
     }
 
     public String getRouteName() {
@@ -39,15 +45,15 @@ public class Route {
 
     public void setCityDistance(int cityDistance) {
         this.cityDistance = cityDistance;
-        this.totalDistance=this.getCityDistance()+this.getHighwayDistance();
+        this.highwayDistance=this.getCityDistance()+this.getHighwayDistance();
     }
 
     public void setHighwayDistance(int highwayDistance) {
         this.highwayDistance = highwayDistance;
-        this.totalDistance=this.getCityDistance()+this.getHighwayDistance();
+        this.highwayDistance=this.getCityDistance()+this.getHighwayDistance();
     }
 
-    // Varaibles Declaration
+    // Variables Declaration
     private String routeName;
     private int highwayDistance;
     private int cityDistance;
