@@ -79,6 +79,18 @@ public class DatabaseAccess {
         return list;
     }
 
+    public List<String> getYears() {
+        List<String> list = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT DISTINCT year FROM 'mainTable' ORDER BY year ASC", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            list.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return list;
+    }
+
     public List<String> getUserCars() {
         List<String> list = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT * FROM quotes", null);

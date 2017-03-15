@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -20,13 +22,13 @@ public class AddCar extends AppCompatActivity {
 
     DatabaseAccess databaseAccess;
     ArrayList<String> makeList;
-
-    String[] yearsArray = {"1984","1985","1986","1987","1988","1989",
-                           "1990","1991","1992","1993","1994","1995",
-                           "1996","1997","1998","1999","2000","2001",
-                           "2002","2003","2004","2005","2006","2007",
-                           "2008","2009","2010","2011","2012","2013",
-                           "2014","2015","2016","2017","2018","2019"};
+    ArrayList<String> yearList;
+    String selectedYear;
+    String selectedMake;
+    String selectedModel;
+    int yearSelected = 0;
+    int makeSelected = 0;
+    int modelSelected = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +36,6 @@ public class AddCar extends AppCompatActivity {
         setContentView(R.layout.activity_add_car);
         openDatabase();
         setupYearSpinner();
-        setupMakeSpinner("2004");
-        setupModelSpinner("2004", "Honda");
         setupBackButton();
         setupOKButton();
     }
@@ -48,25 +48,74 @@ public class AddCar extends AppCompatActivity {
 
     private void setupYearSpinner() {
         Spinner yearSpinner = (Spinner) findViewById(R.id.year_spinner);
-        ArrayAdapter<CharSequence> yearAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, yearsArray);
+        List<String> yearList = DatabaseAccess.getInstance(this).getYears();
+        ArrayAdapter<CharSequence> yearAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, yearList);
         yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        yearSpinner.setOnItemSelectedListener(new yearSpinner());
         yearSpinner.setAdapter(yearAdapter);
+    }
+    private class yearSpinner implements AdapterView.OnItemSelectedListener {
+        public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
+            if (position == 0 && yearSelected == 0){
+                yearSelected = 1;
+            } else {
+                selectedYear = parent.getItemAtPosition(position).toString();
+                Log.i("This", selectedYear);
+                setupMakeSpinner(selectedYear);
+            }
+        }
+        public void onNothingSelected (AdapterView<?> parent) {
+        }
     }
 
     private void setupMakeSpinner(String year) {
-        Spinner yearSpinner = (Spinner) findViewById(R.id.make_spinner);
+        Spinner makeSpinner = (Spinner) findViewById(R.id.make_spinner);
         List<String> makeList = DatabaseAccess.getInstance(this).getMakes(year);
-        ArrayAdapter<CharSequence> yearAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, makeList);
-        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        yearSpinner.setAdapter(yearAdapter);
+        ArrayAdapter<CharSequence> makeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, makeList);
+        makeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        makeSpinner.setOnItemSelectedListener(new makeSpinner());
+        makeSpinner.setAdapter(makeAdapter);
+    }
+
+    private class makeSpinner implements AdapterView.OnItemSelectedListener {
+        public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
+            if (position == 0 && makeSelected == 0){
+                makeSelected = 1;
+            } else {
+                selectedMake = parent.getItemAtPosition(position).toString();
+                Log.i("This", selectedMake);
+                setupModelSpinner(selectedYear, selectedMake);
+            }
+        }
+        public void onNothingSelected (AdapterView<?> parent) {
+        }
     }
 
     private void setupModelSpinner(String year, String make) {
-        Spinner yearSpinner = (Spinner) findViewById(R.id.model_spinner);
+        Spinner modelSpinner = (Spinner) findViewById(R.id.model_spinner);
         List<String> modelList = DatabaseAccess.getInstance(this).getModels(year, make);
-        ArrayAdapter<CharSequence> yearAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, modelList);
-        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        yearSpinner.setAdapter(yearAdapter);
+        ArrayAdapter<CharSequence> modelAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, modelList);
+        modelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        modelSpinner.setOnItemSelectedListener(new modelSpinner());
+        modelSpinner.setAdapter(modelAdapter);
+    }
+
+    private class modelSpinner implements AdapterView.OnItemSelectedListener {
+        public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
+            if (position == 0 && modelSelected == 0){
+                modelSelected = 1;
+            } else {
+                selectedModel = parent.getItemAtPosition(position).toString();
+                Log.i("This", selectedModel);
+                makeCar(selectedYear, selectedMake, selectedModel);
+            }
+        }
+        public void onNothingSelected (AdapterView<?> parent) {
+        }
+    }
+
+    private void makeCar(String yearSelected, String modelSelected, String makeSelected) {
+        
     }
 
     private void closeDatabase() {
@@ -99,7 +148,6 @@ public class AddCar extends AppCompatActivity {
             }
         });
     }
-
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddCar.class);
