@@ -3,7 +3,9 @@
     <string name="view_carbon_footprint">View Carbon FootPrint</string>
     <string name="create_a_new_journey">Create a New Journey</string>
     <string name="add_a_new_journey">add a new journey</string>
-    <string name="add_a_new_route">Add a new route</string>
+    <string name="save_route">Save Route</string>
+    <string name="edit_route">Edit</string>
+    <string name="delete_route">Delete</string>
     <string name="start">start</string>
     <string name="add_a_new_car">add a new car</string>
     <string name="nick_name">Nick Name:</string>
@@ -15,12 +17,25 @@
     <string name="ok">Ok</string>
     <string name="back">Back</string>
     <string name="nickname">NickName:</string>
-    <string name="distance">distance</string>
-    <string name="nick_name_for_route">nick name for route</string>
-    <string name="city_distance_in_km">city distance in km</string>
-    <string name="high_way_distance_in_km">high way distance in km</string>
+    <string name="distance">Distance</string>
+    <string name="nick_name_for_route">Nick Name for Route</string>
+    <string name="city_distance_in_km">City Distance in KM</string>
+    <string name="high_way_distance_in_km">Highway Distance in KM</string>
     <string name="highway_km">Highway (km):</string>
     <string name="city_km">City (km):</string>
-    <string name="swtich_view">swtich view</string>
+    <string name="switch_view">switch view</string>
     <string name="nickname_for_car">Nickname for car</string>
+    <string name="km_driven_in_city">KM Driven in City:</string>
+    <string name="km_driven_on_highway">KM driven on Highway:</string>
+    <string name="route_name">Route Name:</string>
+    <string name="context_edit">Edit</string>
+    <string name="add_a_new_route">Add a new route</string>
+    <string name="context_delete">Delete</string>
+    <string name="add_route">Add Route</string>
+    <string-array name="menu">
+        <item>Edit</item>
+        <item>Delete</item>
+    </string-array>
+
+
 </resources>

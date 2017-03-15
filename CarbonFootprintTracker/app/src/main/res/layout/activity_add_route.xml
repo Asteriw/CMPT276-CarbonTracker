@@ -10,92 +10,85 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.AddRoute">
 
-    <TextView
-        android:text="@string/highway_km"
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/highway_distance_add_route"
-        android:textSize="20sp"
+        android:inputType="textPersonName"
+        android:ems="10"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp" />
-
-    <TextView
-        android:text="@string/city_km"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/city_distance_add_route"
-        android:textSize="20sp"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/highway_distance_add_route"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="@string/nickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/nickname_add_route"
-        android:textSize="20sp"
-        android:layout_marginTop="24dp"
-        android:layout_below="@+id/city_distance_add_route"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="115dp"
+        android:id="@+id/editText_name_addroute"
+        android:hint="@string/nick_name_for_route" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/highway_distance_from_user_text"
-        android:layout_alignBaseline="@+id/highway_distance_add_route"
-        android:layout_alignBottom="@+id/highway_distance_add_route"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:hint="@string/high_way_distance_in_km" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/city_distance_from_user_text"
-        android:layout_alignBaseline="@+id/city_distance_add_route"
-        android:layout_alignBottom="@+id/city_distance_add_route"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/editText_name_addroute"
+        android:layout_alignLeft="@+id/editText_name_addroute"
+        android:layout_alignStart="@+id/editText_name_addroute"
+        android:id="@+id/editText_city_addroute"
         android:hint="@string/city_distance_in_km" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:ems="10"
-        android:id="@+id/route_nick_name_from_user_text"
-        android:layout_alignBaseline="@+id/nickname_add_route"
-        android:layout_alignBottom="@+id/nickname_add_route"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:hint="@string/nick_name_for_route" />
+        android:layout_below="@+id/editText_city_addroute"
+        android:layout_alignLeft="@+id/editText_city_addroute"
+        android:layout_alignStart="@+id/editText_city_addroute"
+        android:id="@+id/editText_highway_addroute"
+        android:hint="@string/high_way_distance_in_km" />
+
+    <TextView
+        android:text="@string/city_km"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt2_addroute"
+        android:layout_alignBaseline="@+id/editText_city_addroute"
+        android:layout_alignBottom="@+id/editText_city_addroute"
+        android:layout_alignLeft="@+id/txt1_addroute"
+        android:layout_alignStart="@+id/txt1_addroute" />
+
+    <TextView
+        android:text="@string/highway_km"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt3_addroute"
+        android:layout_alignBaseline="@+id/editText_highway_addroute"
+        android:layout_alignBottom="@+id/editText_highway_addroute"
+        android:layout_alignLeft="@+id/txt2_addroute"
+        android:layout_alignStart="@+id/txt2_addroute" />
 
     <Button
-        android:text="@string/cancel"
+        android:text="@android:string/ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/cancel_button_add_route" />
+        android:id="@+id/btn_ok_addroute" />
 
     <Button
-        android:text="@string/ok"
+        android:text="@android:string/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/route_nick_name_from_user_text"
-        android:layout_alignStart="@+id/route_nick_name_from_user_text"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:id="@+id/ok_button_add_route" />
+        android:layout_alignTop="@+id/btn_ok_addroute"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/btn_cancel_addroute" />
+
+    <TextView
+        android:text="@string/route_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt1_addroute"
+        android:layout_alignBaseline="@+id/editText_name_addroute"
+        android:layout_alignBottom="@+id/editText_name_addroute"
+        android:layout_alignRight="@+id/btn_cancel_addroute"
+        android:layout_alignEnd="@+id/btn_cancel_addroute" />
 </RelativeLayout>

@@ -11,29 +11,29 @@
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.SelectRoute">
 
     <Button
-        android:text="@string/add_a_new_route"
+        android:text="@string/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/back_button_select_route"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/add_route"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_add_route"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/add_route_button" />
+        android:layout_alignParentEnd="true" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="70dp"
-        android:id="@+id/routeList" />
+        android:layout_above="@+id/back_button_select_route"
+        android:id="@+id/listViewRoutes" />
 
-    <Button
-        android:text="@string/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/add_route_button"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/back_button_select_route" />
 </RelativeLayout>
