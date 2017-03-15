@@ -27,6 +27,7 @@ public class AddCar extends AppCompatActivity {
     String selectedMake;
     String selectedModel;
     int yearSelected = 0;
+    CarCollection carList = new CarCollection();
     int makeSelected = 0;
     int modelSelected = 0;
 
@@ -56,13 +57,9 @@ public class AddCar extends AppCompatActivity {
     }
     private class yearSpinner implements AdapterView.OnItemSelectedListener {
         public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
-            if (position == 0 && yearSelected == 0){
-                yearSelected = 1;
-            } else {
-                selectedYear = parent.getItemAtPosition(position).toString();
-                Log.i("This", selectedYear);
-                setupMakeSpinner(selectedYear);
-            }
+            selectedYear = parent.getItemAtPosition(position).toString();
+            Log.i("This", selectedYear);
+            setupMakeSpinner(selectedYear);
         }
         public void onNothingSelected (AdapterView<?> parent) {
         }
@@ -79,13 +76,9 @@ public class AddCar extends AppCompatActivity {
 
     private class makeSpinner implements AdapterView.OnItemSelectedListener {
         public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
-            if (position == 0 && makeSelected == 0){
-                makeSelected = 1;
-            } else {
-                selectedMake = parent.getItemAtPosition(position).toString();
-                Log.i("This", selectedMake);
-                setupModelSpinner(selectedYear, selectedMake);
-            }
+            selectedMake = parent.getItemAtPosition(position).toString();
+            Log.i("This", selectedMake);
+            setupModelSpinner(selectedYear, selectedMake);
         }
         public void onNothingSelected (AdapterView<?> parent) {
         }
@@ -102,20 +95,32 @@ public class AddCar extends AppCompatActivity {
 
     private class modelSpinner implements AdapterView.OnItemSelectedListener {
         public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
-            if (position == 0 && modelSelected == 0){
-                modelSelected = 1;
-            } else {
-                selectedModel = parent.getItemAtPosition(position).toString();
-                Log.i("This", selectedModel);
-                makeCar(selectedYear, selectedMake, selectedModel);
-            }
+            selectedModel = parent.getItemAtPosition(position).toString();
+            Log.i("This", selectedModel);
+            makeCar(selectedYear, selectedMake, selectedModel);
         }
         public void onNothingSelected (AdapterView<?> parent) {
         }
     }
 
-    private void makeCar(String yearSelected, String modelSelected, String makeSelected) {
-        
+    private void makeCar(String yearSelected, String makeSelected, String modelSelected) {
+        List<String[]> tempCarList = DatabaseAccess.getInstance(this).getTempCarList(yearSelected, makeSelected, modelSelected);
+        ArrayList<ArrayList<String>> temp = new ArrayList<>();
+        Log.i("this", "Database query passed");
+        for(int i = 0; i<tempCarList.size(); i++){
+            String[] carData = tempCarList.get(i);
+            Car car = new Car();
+            car.setMake(carData[2]);
+            car.setModel(carData[3]);
+            car.setYear(Integer.parseInt(carData[21]));
+            car.setYear(Integer.parseInt(carData[21]));
+            car.setTransmission(carData[19]);
+            car.setLiterEngine(12); //change
+            if (carData[12] == "") {//change
+            }
+
+            carList.addCar(car);
+        }
     }
 
     private void closeDatabase() {

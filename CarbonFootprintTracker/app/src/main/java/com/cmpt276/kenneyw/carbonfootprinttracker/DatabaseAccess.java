@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +86,22 @@ public class DatabaseAccess {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             list.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return list;
+    }
+
+    public List<String[]> getTempCarList(String year, String make, String model) {
+        List<String[]> list = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT DISTINCT * FROM 'mainTable' WHERE year = "+year+" AND make = \""+make+"\" AND model = \""+model+"\"", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String[] row = new String[cursor.getColumnCount()];
+            for (int i = 0; i<cursor.getColumnCount(); i++){
+                row[i] = cursor.getString(i);
+            }
+            list.add(row);
             cursor.moveToNext();
         }
         cursor.close();
