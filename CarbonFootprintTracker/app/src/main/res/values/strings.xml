@@ -17,10 +17,10 @@
     <string name="ok">Ok</string>
     <string name="back">Back</string>
     <string name="nickname">NickName:</string>
-    <string name="distance">distance</string>
-    <string name="nick_name_for_route">nick name for route</string>
-    <string name="city_distance_in_km">city distance in km</string>
-    <string name="high_way_distance_in_km">high way distance in km</string>
+    <string name="distance">Distance</string>
+    <string name="nick_name_for_route">Nick Name for Route</string>
+    <string name="city_distance_in_km">City Distance in KM</string>
+    <string name="high_way_distance_in_km">Highway Distance in KM</string>
     <string name="highway_km">Highway (km):</string>
     <string name="city_km">City (km):</string>
     <string name="switch_view">switch view</string>
@@ -32,7 +32,6 @@
     <string name="add_a_new_route">Add a new route</string>
     <string name="context_delete">Delete</string>
     <string name="add_route">Add Route</string>
-
     <string-array name="menu">
         <item>Edit</item>
         <item>Delete</item>
