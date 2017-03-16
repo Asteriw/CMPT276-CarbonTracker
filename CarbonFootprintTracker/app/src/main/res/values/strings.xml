@@ -2,12 +2,12 @@
     <string name="app_name">CarbonTracker</string>
     <string name="view_carbon_footprint">View Carbon FootPrint</string>
     <string name="create_a_new_journey">Create a New Journey</string>
-    <string name="add_a_new_journey">add a new journey</string>
+    <string name="add_a_new_journey">Add a New Journey</string>
     <string name="save_route">Save Route</string>
     <string name="edit_route">Edit</string>
     <string name="delete_route">Delete</string>
-    <string name="start">start</string>
-    <string name="add_a_new_car">add a new car</string>
+    <string name="start">Start</string>
+    <string name="add_a_new_car">Add a New Car</string>
     <string name="nick_name">Nick Name:</string>
     <string name="name">Name</string>
     <string name="year">Year</string>
@@ -23,15 +23,16 @@
     <string name="high_way_distance_in_km">Highway Distance in KM</string>
     <string name="highway_km">Highway (km):</string>
     <string name="city_km">City (km):</string>
-    <string name="switch_view">switch view</string>
-    <string name="nickname_for_car">Nickname for car</string>
+    <string name="switch_view">Switch View</string>
+    <string name="nickname_for_car">Nickname for Car</string>
     <string name="km_driven_in_city">KM Driven in City:</string>
-    <string name="km_driven_on_highway">KM driven on Highway:</string>
+    <string name="km_driven_on_highway">KM Driven on Highway:</string>
     <string name="route_name">Route Name:</string>
     <string name="context_edit">Edit</string>
-    <string name="add_a_new_route">Add a new route</string>
+    <string name="add_a_new_route">Add a New Route</string>
     <string name="context_delete">Delete</string>
     <string name="add_route">Add Route</string>
+    <string name="error_toast">Please name your car before adding it to your collection</string>
     <string-array name="menu">
         <item>Edit</item>
         <item>Delete</item>

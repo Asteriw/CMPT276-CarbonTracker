@@ -44,7 +44,7 @@ public class CarCollection {
                     car.getModel() + " - " +
                     car.getYear() + " - " +
                     car.getTransmission() + " - " +
-                    car.getLiterEngine();
+                    car.getLiterEngine() + "L";
         }
         return descriptions;
     }
@@ -67,7 +67,7 @@ public class CarCollection {
                     car.getModel() + " - " +
                     car.getYear() + " - " +
                     car.getTransmission() + " - " +
-                    car.getLiterEngine();
+                    car.getLiterEngine() + "L";
         }
         return descriptions;
     }
