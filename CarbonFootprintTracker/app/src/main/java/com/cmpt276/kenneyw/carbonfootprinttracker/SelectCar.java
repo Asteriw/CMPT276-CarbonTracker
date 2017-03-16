@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,8 @@ import android.widget.ListView;
 * */
 
 public class SelectCar extends AppCompatActivity {
+
+    CarCollection myCars = new CarCollection();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,27 @@ public class SelectCar extends AppCompatActivity {
         });
     }
 
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()) {
+            case R.id.edit:
+                editEntry(info.position);
+                return true;
+            case R.id.delete:
+                deleteEntry(info.position);
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    private void editEntry(int position) {//TODO
+
+    }
+
+    private void deleteEntry(int position) {
+        myCars.deleteCar(position);
+    }
+
     private void setupBackButton() {
         Button back_button = (Button) findViewById(R.id.back_button_select_car);
         back_button.setOnClickListener(new View.OnClickListener() {
@@ -52,17 +76,14 @@ public class SelectCar extends AppCompatActivity {
 
     private void setCarList() {
         // Create list of items
-        String[] myCars = {"Car 1", "Car 2"};
 
         // Build Adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this,                           // Context for the activity
-                R.layout.layout_for_list,   // Layout to use
-                myCars);                    // items to display
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.layout_for_list, myCars.getCarsDescriptionsWithName());
 
-        // Conofigure the list view
+        // Configure the list view
         ListView list = (ListView) findViewById(R.id.carlist);
         list.setAdapter(adapter);
+        registerForContextMenu(list);
     }
 
     // Upon a click on an item in the list, direct to "Select Route"

@@ -5,11 +5,18 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +45,7 @@ public class AddCar extends AppCompatActivity {
         openDatabase();
         setupYearSpinner();
         setupBackButton();
-        setupOKButton();
+        populateListView();
     }
 
     @Override
@@ -97,13 +104,14 @@ public class AddCar extends AppCompatActivity {
         public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
             selectedModel = parent.getItemAtPosition(position).toString();
             Log.i("This", selectedModel);
-            makeCar(selectedYear, selectedMake, selectedModel);
+            makeCarList(selectedYear, selectedMake, selectedModel);
         }
         public void onNothingSelected (AdapterView<?> parent) {
         }
     }
 
-    private void makeCar(String yearSelected, String makeSelected, String modelSelected) {
+    private void makeCarList(String yearSelected, String makeSelected, String modelSelected) {
+        carList = new CarCollection();
         List<String[]> tempCarList = DatabaseAccess.getInstance(this).getTempCarList(yearSelected, makeSelected, modelSelected);
         ArrayList<ArrayList<String>> temp = new ArrayList<>();
         Log.i("this", "Database query passed");
@@ -115,12 +123,54 @@ public class AddCar extends AppCompatActivity {
             car.setYear(Integer.parseInt(carData[21]));
             car.setYear(Integer.parseInt(carData[21]));
             car.setTransmission(carData[19]);
-            car.setLiterEngine(12); //change
-            if (carData[12] == "") {//change
+            car.setLiterEngine(roundToTwoDecimals(Double.parseDouble(carData[16])));
+            if (carData[4] == "0") {
+                if (carData[7] == "0") {
+                    car.setCityEmissions(Double.parseDouble(carData[10]));
+                    car.setHighwayEmissions(Double.parseDouble(carData[11]));
+                } else {
+                    car.setCityEmissions(Double.parseDouble(carData[7]));
+                    car.setHighwayEmissions(Double.parseDouble(carData[8]));
+                }
+            } else {
+                car.setCityEmissions(Double.parseDouble(carData[4]));
+                car.setHighwayEmissions(Double.parseDouble(carData[5]));
             }
-
             carList.addCar(car);
         }
+        populateListView();
+    }
+
+    private void populateListView() {
+        ListView listView = (ListView) findViewById(R.id.car_listview);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.layout_for_list, carList.getCarsDescriptions());
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                EditText inputName = (EditText) findViewById(R.id.nick_name_from_user);
+                String userInputName = inputName.getText().toString();
+                if (userInputName == ""){
+                    Toast.makeText(AddCar.this, R.string.error_toast, Toast.LENGTH_SHORT).show();
+                } else {
+                    CarSingleton masterCar = CarSingleton.getInstance();
+                }
+            }
+        });
+        listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.contextmenu, menu);
+    }
+
+    private double roundToTwoDecimals(double value) {
+        long factor = (long) Math.pow(10, 2);
+        value = value * factor;
+        long tempValue = Math.round(value);
+        return (double) tempValue/factor;
     }
 
     private void closeDatabase() {
@@ -130,18 +180,6 @@ public class AddCar extends AppCompatActivity {
     private void openDatabase() {
         databaseAccess = DatabaseAccess.getInstance(this);
         databaseAccess.open();
-    }
-
-    private void setupOKButton() {
-        Button ok_button = (Button) findViewById(R.id.ok_button_add_car);
-        ok_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // save a car and send it to the carlist
-
-                finish();
-            }
-        });
     }
 
     private void setupBackButton() {
