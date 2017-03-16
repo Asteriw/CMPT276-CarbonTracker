@@ -11,17 +11,29 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 public class SelectJourney extends AppCompatActivity {
 
+
+    ArrayList<Journey> journeyArrayList=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_journey);
 
+        journeyArrayList=loadJourneys();
         setupAddJourneyButton();
         setupBackButton();
         setJourneyList();
         registerClickCallBack();
+    }
+
+    private ArrayList<Journey> loadJourneys() {
+        ArrayList<Journey> journeyArrayList=new ArrayList<>();
+
+
+        return journeyArrayList;
     }
 
     private void setupBackButton() {
@@ -71,7 +83,18 @@ public class SelectJourney extends AppCompatActivity {
                 // Opens a dialog with the calculation result of CO2 emission
                 FragmentManager manager=getSupportFragmentManager();
                 CalculationDialog dialog = new CalculationDialog();
-                dialog.show(manager,"EditRouteDialog");
+
+                Bundle bundle =new Bundle();
+                bundle.putString("gasType",journeyArrayList.get(position).getGasType());
+                bundle.putInt("city",journeyArrayList.get(position).getCityDistance());
+                bundle.putInt("highway",journeyArrayList.get(position).getHighwayDistance());
+                bundle.putDouble("mpgCity",journeyArrayList.get(position).getMpgCity());
+                bundle.putDouble("mpgHighway",journeyArrayList.get(position).getMpgHighway());
+                bundle.putDouble("literEngine",journeyArrayList.get(position).getLiterEngine());
+
+                dialog.setArguments(bundle);
+
+                dialog.show(manager,"CalculateDialog");
 
 
             }
