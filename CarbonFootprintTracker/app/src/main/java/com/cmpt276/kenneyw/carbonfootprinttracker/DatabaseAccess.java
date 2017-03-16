@@ -82,6 +82,7 @@ public class DatabaseAccess {
     public List<String> getYears() {
         List<String> list = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT DISTINCT year FROM 'mainTable' ORDER BY year ASC", null);
+
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             list.add(cursor.getString(0));
