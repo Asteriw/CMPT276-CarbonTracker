@@ -65,7 +65,7 @@ public class CarbonFootPrint extends AppCompatActivity {
     String vehicleNames[] = {"Honda", "Ford", "GMC", "Subaru", "BMW", "Mercedes", "Porche", "Toyota"};
     String dateofTrips[] = {"January", "February", "March", "April", "May","June", "July", "August"};
     String routeNames[] = {"Home", "School", "Friend's house", "Park", "Recreation Centre", "Church", "Shop" ,"Restaurant"};
-    double CO2emitted[] = {12.45, 53.27, 75.75, 34.58, 69.32, 68.56, 89.12, 56.45};
+    float CO2emitted[] = {12.45f, 53.27f, 75.75f, 34.58f, 69.32f, 68.56f, 89.12f, 56.45f};
 
     // Chart Variables
     PieChart chart;
@@ -75,9 +75,7 @@ public class CarbonFootPrint extends AppCompatActivity {
 
     // Table Variables
     TableLayout journeyTable;
-    TableLayout columnTable;
     TableRow journeytablerow;
-    TableRow columntablerow;
     TextView col_1_content;
     TextView col_2_content;
     TextView col_3_content;
@@ -105,7 +103,7 @@ public class CarbonFootPrint extends AppCompatActivity {
             //entries.add( new PieEntry(distance[i], vehicleNames[i]));
             //entries.add( new PieEntry(distance[i], dateofTrips[i]));
             //entries.add( new PieEntry(distance[i], routeNames[i]));
-            entries.add( new PieEntry(distance[i], i));
+            entries.add( new PieEntry(CO2emitted[i], dateofTrips[i]));
         }
 
         // Config for each region of the chart
@@ -125,9 +123,9 @@ public class CarbonFootPrint extends AppCompatActivity {
         chart.setData(data);
         chart.animateY(2000);
         chart.setCenterText("SUMMARY\nof\nDATA");
-        chart.setCenterTextSize(12);
+        chart.setCenterTextSize(20);
         chart.setCenterTextColor(Color.DKGRAY);
-        chart.setCenterTextOffset(0,5);
+        //chart.setCenterTextOffset(0,5);
         chart.setDescription(null);
         chart.getLegend().setEnabled(false);
         chart.setVisibility(View.INVISIBLE);
