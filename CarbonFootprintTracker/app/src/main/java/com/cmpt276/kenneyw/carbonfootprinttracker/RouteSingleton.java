@@ -45,12 +45,12 @@ public class RouteSingleton {
 
     public void setCityDistance(int cityDistance) {
         this.cityDistance = cityDistance;
-        this.highwayDistance=this.getCityDistance()+this.getHighwayDistance();
+        this.totalDistance=this.getCityDistance()+this.getHighwayDistance();
     }
 
     public void setHighwayDistance(int highwayDistance) {
         this.highwayDistance = highwayDistance;
-        this.highwayDistance=this.getCityDistance()+this.getHighwayDistance();
+        this.totalDistance=this.getCityDistance()+this.getHighwayDistance();
     }
 
     // Variables Declaration
