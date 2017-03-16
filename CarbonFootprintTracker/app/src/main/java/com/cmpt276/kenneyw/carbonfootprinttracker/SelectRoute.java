@@ -107,10 +107,10 @@ public class SelectRoute extends AppCompatActivity {
                 String nameToPass=r.getRouteName();
                 int cityToPass=r.getCityDistance();
                 int highwayToPass=r.getHighwayDistance();
-                selectRoute2selectJourney.putExtra("name", nameToPass);
-                selectRoute2selectJourney.putExtra("city", cityToPass);
-                selectRoute2selectJourney.putExtra("highway", highwayToPass);
-                startActivity(selectRoute2selectJourney);
+                RouteSingleton routeselected=RouteSingleton.getInstance();
+                routeselected.setRouteName(nameToPass);
+                routeselected.setCityDistance(cityToPass);
+                routeselected.setHighwayDistance(highwayToPass);
                 saveRoutes();
                 finish();
             }
