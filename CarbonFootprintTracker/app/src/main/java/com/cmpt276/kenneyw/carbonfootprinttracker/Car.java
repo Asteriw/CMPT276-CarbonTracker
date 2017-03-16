@@ -92,6 +92,7 @@ public class Car {
         this.Emissions[1] = city;
     }
 
+
     // Variables Declaration
     private String name;
     private String make;
