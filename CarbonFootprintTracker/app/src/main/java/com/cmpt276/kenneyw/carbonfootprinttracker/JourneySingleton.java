@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.Date;
 
-public class Journey extends AppCompatActivity {
+public class JourneySingleton extends AppCompatActivity {
     private String routeName;
     private int cityDistance;
     private int highwayDistance;
@@ -16,18 +16,25 @@ public class Journey extends AppCompatActivity {
     private double literEngine;
     private Date dateOfTravel;
 
-    public Journey(String routeName, int cityDistance, int highwayDistance,
-                   String carName, String gasType, double mpgCity, double mpgHighway, double literEngine,
-                   Date dateOfTravel){
-        this.routeName=routeName;
-        this.cityDistance = cityDistance;
-        this.highwayDistance = highwayDistance;
-        this.name=carName;
-        this.gasType=gasType;
-        this.mpgCity=mpgCity;
-        this.mpgHighway=mpgHighway;
-        this.literEngine=literEngine;
-        this.dateOfTravel=dateOfTravel;
+    private static JourneySingleton journeyInstance = null;
+
+    private JourneySingleton(){
+        this.routeName = "";
+        this.cityDistance = 0;
+        this.highwayDistance = 0;
+        this.name = "";
+        this.gasType = "";
+        this.mpgCity = 0;
+        this.mpgHighway = 0;
+        this.literEngine = 0;
+        this.dateOfTravel = null;
+    }
+
+    public static JourneySingleton getInstance(){
+        if(journeyInstance == null){
+            journeyInstance = new JourneySingleton();
+        }
+        return journeyInstance;
     }
 
 
@@ -83,6 +90,22 @@ public class Journey extends AppCompatActivity {
         return name;
     }
 
+    public String getTransmission() {
+        return transmission;
+    }
+
+    public void setTransmission(String transmission) {
+        this.transmission = transmission;
+    }
+
+    public Date getDateOfTravel() {
+        return dateOfTravel;
+    }
+
+    public void setDateOfTravel(Date dateOfTravel) {
+        this.dateOfTravel = dateOfTravel;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -93,22 +116,5 @@ public class Journey extends AppCompatActivity {
 
     public void setRouteName(String routeName) {
         this.routeName = routeName;
-    }
-
-    public String getTransmission() {
-        return transmission;
-    }
-
-    public void setTransmission(String transmission) {
-        this.transmission = transmission;
-    }
-
-
-    public Date getDateOfTravel() {
-        return dateOfTravel;
-    }
-
-    public void setDateOfTravel(Date dateOfTravel) {
-        this.dateOfTravel = dateOfTravel;
     }
 }
