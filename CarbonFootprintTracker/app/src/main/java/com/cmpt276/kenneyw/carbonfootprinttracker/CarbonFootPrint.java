@@ -218,7 +218,6 @@ public class CarbonFootPrint extends AppCompatActivity {
         journeyTable.setVisibility(View.VISIBLE);
     }
 
-
     private void setupBackButton() {
         Button back_button = (Button) findViewById(R.id.back_button_carbon_foot_print);
         back_button.setOnClickListener(new View.OnClickListener() {
