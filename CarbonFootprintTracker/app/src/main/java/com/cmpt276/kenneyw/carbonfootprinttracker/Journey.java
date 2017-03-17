@@ -16,7 +16,7 @@ public class Journey extends AppCompatActivity {
     private double literEngine;
     private Date dateOfTravel;
 
-    public Journey(String routeName, int cityDistance, int highwayDistance,
+    Journey(String routeName, int cityDistance, int highwayDistance,
                    String carName, String gasType, double mpgCity, double mpgHighway, double literEngine,
                    Date dateOfTravel){
         this.routeName=routeName;
