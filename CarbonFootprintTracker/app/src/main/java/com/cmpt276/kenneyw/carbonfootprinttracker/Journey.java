@@ -1,8 +1,12 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
 
 import java.util.Date;
-
+/*
+Stores a Journey, and calculates CO2 emitted via this Journey in constructor and in seperate function to be called
+when editing a pre-existing Journey.
+ */
 public class Journey {
+
     private String routeName;
     private int cityDistance;
     private int highwayDistance;
@@ -13,6 +17,7 @@ public class Journey {
     private String transmission;
     private double literEngine;
     private Date dateOfTravel;
+    private double totalEmissions;
 
     public Journey(String routeName, int cityDistance, int highwayDistance,
                    String carName, String gasType, double mpgCity, double mpgHighway, double literEngine,
@@ -26,8 +31,38 @@ public class Journey {
         this.mpgHighway=mpgHighway;
         this.literEngine=literEngine;
         this.dateOfTravel=dateOfTravel;
+        Calculation c=new Calculation();
+        switch(gasType) {
+            case "Premium":
+                this.totalEmissions += c.calculateCO2Diesel(mpgCity,literEngine,cityDistance);
+                this.totalEmissions += c.calculateCO2Diesel(mpgHighway,literEngine,highwayDistance);
+                break;
+            case "Regular":
+                this.totalEmissions += c.calculateCO2Gasoline(mpgCity,literEngine,cityDistance);
+                this.totalEmissions += c.calculateCO2Gasoline(mpgHighway,literEngine,highwayDistance);
+                break;
+            default:
+                this.totalEmissions=0;
+                break;
+        }
     }
 
+    public double CalculateTotalEmissions(){
+        Calculation c=new Calculation();
+        double totalEmissions=0;
+        switch(gasType) {               //CONFIRM
+            case "Premium":
+                totalEmissions += c.calculateCO2Diesel(mpgCity,literEngine,cityDistance);
+                totalEmissions += c.calculateCO2Diesel(mpgHighway,literEngine,highwayDistance);
+                break;
+            case "Regular":             //CONFIRM
+                totalEmissions += c.calculateCO2Gasoline(mpgCity,literEngine,cityDistance);
+                totalEmissions += c.calculateCO2Gasoline(mpgHighway,literEngine,highwayDistance);
+                break;
+        }
+        return totalEmissions;
+
+    }
 
     public int getCityDistance() {
         return cityDistance;
@@ -101,7 +136,6 @@ public class Journey {
         this.transmission = transmission;
     }
 
-
     public Date getDateOfTravel() {
         return dateOfTravel;
     }
@@ -109,4 +143,18 @@ public class Journey {
     public void setDateOfTravel(Date dateOfTravel) {
         this.dateOfTravel = dateOfTravel;
     }
+
+    public double getTotalEmissions() {
+        return totalEmissions;
+    }
+
+    public void setTotalEmissions(double totalEmissions) {
+        this.totalEmissions = totalEmissions;
+    }
+
+
+    public String toString() {
+        return name+" - "+routeName+" - "+cityDistance+" City, "+highwayDistance+" Highway"+" Date: "+dateOfTravel;
+    }
+
 }

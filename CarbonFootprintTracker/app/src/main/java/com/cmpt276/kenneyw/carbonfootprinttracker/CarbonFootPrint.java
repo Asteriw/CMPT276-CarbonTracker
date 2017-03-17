@@ -2,6 +2,7 @@ package com.cmpt276.kenneyw.carbonfootprinttracker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -25,6 +26,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /*
@@ -52,20 +54,45 @@ import java.util.List;
 
 public class CarbonFootPrint extends AppCompatActivity {
     final static int col_size = 5;
-    final static int row_size = 8; // must be consistent over every variable used for a pie chart/ table
+    int row_size; // must be consistent over every variable used for a pie chart/ table
     final static String column_1_header = "Date of Trip";
     final static String column_2_header = "Route";
     final static String column_3_header = "Distance (Km)";
     final static String column_4_header = "Vehicle";
     final static String column_5_header = "CO2 emitted (kg/L)";
+    ArrayList<Journey> journeyArrayList=new ArrayList<>();
+
+
+    private static final String SHAREDPREF_SET = "CarbonFootprintTrackerJournies";
+    private static final String SHAREDPREF_ITEM_AMOUNTOFJOURNEYS = "AmountOfJourneys";
+
+    public static final String NAME = "name";
+    public static final String ROUTENAME = "routeName";
+    public static final String CITY = "city";
+    public static final String HIGHWAY = "highway";
+    public static final String GASTYPE="gasType";
+    public static final String MPGCITY="mpgCity";
+    public static final String MPGHIGHWAY="mpgHighway";
+    public static final String LITERENGINE="literEngine";
+    public static final String DATEOFTRAVEL="DateOfTravel";
+
+
 
     // Columns: date of trip, route name, distancee, vehicle name, CO2 emitted
     // the size of arrays must be constant
+    /*
     float distance[]={100f,200f,300f,400f,500f,600f,700f,800f};
     String vehicleNames[] = {"Honda", "Ford", "GMC", "Subaru", "BMW", "Mercedes", "Porche", "Toyota"};
     String dateofTrips[] = {"January", "February", "March", "April", "May","June", "July", "August"};
     String routeNames[] = {"Home", "School", "Friend's house", "Park", "Recreation Centre", "Church", "Shop" ,"Restaurant"};
     float CO2emitted[] = {12.45f, 53.27f, 75.75f, 34.58f, 69.32f, 68.56f, 89.12f, 56.45f};
+   */
+
+    String vehicleNames[];
+    String dateofTrips[];
+    String routeNames[];
+    float CO2emitted[];
+    float distance[];
 
     // Chart Variables
     PieChart chart;
@@ -89,11 +116,55 @@ public class CarbonFootPrint extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carbon_foot_print);
         setupSwtichViewButton();
+
+        setUpArrays();
+
         setupBackButton();
         updateChart();
         updateTable();
     }
 
+    private void setUpArrays() {
+        journeyArrayList=loadJourneys();
+        int size=journeyArrayList.size();
+
+        row_size=size;
+        vehicleNames=new String[size];
+        routeNames=new String[size];
+        CO2emitted=new float[size];
+        dateofTrips=new String[size];
+        distance=new float[size];
+
+        for(int i=0;i<journeyArrayList.size();i++){
+            Journey journey = journeyArrayList.get(i);
+
+            vehicleNames[i]= journey.getName();
+            routeNames[i]= journey.getRouteName();
+            CO2emitted[i]=(float) journey.getTotalEmissions();
+            dateofTrips[i]= journey.getDateOfTravel().toString();
+            distance[i]= journey.getHighwayDistance()+ journey.getCityDistance();
+        }
+    }
+
+    public ArrayList<Journey> loadJourneys() {
+        ArrayList<Journey> journeyArrayList=new ArrayList<>();
+        SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
+       /* String routeName;int cityDistance;int highwayDistance;
+        String name;String gasType;double mpgCity;double mpgHighway;
+        String transmission;double literEngine;Date dateOfTravel;double totalEmissions;
+       */
+
+        int journeyAmt=pref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS,0);
+        for(int i=0;i<journeyAmt;i++){
+            Date d=new Date(pref.getLong(i+DATEOFTRAVEL,0));
+            Journey j=new Journey(pref.getString(i+ROUTENAME,""),pref.getInt(i+CITY,0),pref.getInt(i+HIGHWAY,0),
+                    pref.getString(i+NAME,""),pref.getString(i+GASTYPE,""),Double.longBitsToDouble(pref.getLong(i+MPGCITY,0)),
+                    Double.longBitsToDouble(pref.getLong(i+MPGHIGHWAY,0)),Double.longBitsToDouble(pref.getLong(i+LITERENGINE,0)), d);
+            journeyArrayList.add(j);
+        }
+
+        return journeyArrayList;
+    }
     //Populate a list of Pie entries
     private void updateChart() {
         // Create a Dataset
