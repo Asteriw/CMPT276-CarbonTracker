@@ -121,11 +121,10 @@ public class CarbonFootPrint extends AppCompatActivity {
         // Chart config
         chart = (PieChart) findViewById(R.id.chart);
         chart.setData(data);
-        chart.animateY(2000);
+        chart.animateX(3000);
         chart.setCenterText("SUMMARY\nof\nDATA");
         chart.setCenterTextSize(20);
         chart.setCenterTextColor(Color.DKGRAY);
-        //chart.setCenterTextOffset(0,5);
         chart.setDescription(null);
         chart.getLegend().setEnabled(false);
         chart.setVisibility(View.INVISIBLE);
@@ -150,15 +149,13 @@ public class CarbonFootPrint extends AppCompatActivity {
         });
     }
 
-
     // Columns: date of trip, route name, distancee, vehicle name, CO2 emitted
     // Each column can be edited uniquely
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void updateTable() {
-        setupColumnHeader();
 
         // Go through a list of journeys
-        for (int row = 0; row < row_size; row++){
+        for (int row = 0; row < row_size + 1; row++){
             journeytablerow = new TableRow(this);
             journeyTable.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT, 1.0f ));
             journeyTable.addView(journeytablerow);
@@ -170,11 +167,22 @@ public class CarbonFootPrint extends AppCompatActivity {
             col_4_content = new TextView(this);
             col_5_content = new TextView(this);
 
-            col_1_content.setText(dateofTrips[row]);
-            col_2_content.setText(routeNames[row]);
-            col_3_content.setText("" + distance[row]);
-            col_4_content.setText(vehicleNames[row]);
-            col_5_content.setText("" + CO2emitted[row]);
+            // add column heading
+            if ( row == 0 ){
+                journeytablerow.setBackgroundColor(Color.YELLOW);
+                col_1_content.setText(column_1_header);
+                col_2_content.setText(column_2_header);
+                col_3_content.setText(column_3_header);
+                col_4_content.setText(column_4_header);
+                col_5_content.setText(column_5_header);
+            }else {
+
+                col_1_content.setText(dateofTrips[row]);
+                col_2_content.setText(routeNames[row]);
+                col_3_content.setText("" + distance[row]);
+                col_4_content.setText(vehicleNames[row]);
+                col_5_content.setText("" + CO2emitted[row]);
+            }
 
             col_1_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
             col_2_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
@@ -210,60 +218,6 @@ public class CarbonFootPrint extends AppCompatActivity {
         journeyTable.setVisibility(View.VISIBLE);
     }
 
-    // This function add column headers in the first row of JourneyTable
-    // Each column header can be edited uniquely
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public void setupColumnHeader(){
-        journeyTable = (TableLayout) findViewById(R.id.journey_table);
-        journeytablerow = new TableRow(this);
-        journeytablerow.setBackgroundColor(Color.YELLOW);
-        journeyTable.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT, 1.0f ));
-        journeyTable.addView(journeytablerow);
-
-        // Set content of each column
-        col_1_content = new TextView(this);
-        col_2_content = new TextView(this);
-        col_3_content = new TextView(this);
-        col_4_content = new TextView(this);
-        col_5_content = new TextView(this);
-
-        col_1_content.setText(column_1_header);
-        col_2_content.setText(column_2_header);
-        col_3_content.setText(column_3_header);
-        col_4_content.setText(column_4_header);
-        col_5_content.setText(column_5_header);
-
-        col_1_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
-        col_2_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
-        col_3_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
-        col_4_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
-        col_5_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
-
-        // Attributes //
-        col_1_content.setWidth(7);
-        col_2_content.setWidth(7);
-        col_3_content.setWidth(7);
-        col_4_content.setWidth(7);
-        col_5_content.setWidth(7);
-
-        col_1_content.setPadding(5,0,5,0);
-        col_2_content.setPadding(5,0,5,0);
-        col_3_content.setPadding(5,0,5,0);
-        col_4_content.setPadding(5,0,5,0);
-        col_5_content.setPadding(5,0,5,0);
-
-        col_1_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        col_2_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        col_3_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        col_4_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        col_5_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-
-        journeytablerow.addView(col_1_content);
-        journeytablerow.addView(col_2_content);
-        journeytablerow.addView(col_3_content);
-        journeytablerow.addView(col_4_content);
-        journeytablerow.addView(col_5_content);
-    }
 
     private void setupBackButton() {
         Button back_button = (Button) findViewById(R.id.back_button_carbon_foot_print);

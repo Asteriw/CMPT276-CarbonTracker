@@ -19,7 +19,7 @@ import java.text.DecimalFormat;
 *  Electric:    0 (our electricity is mainly hydro) [done]
 *  Natural Gas: Ignore (don't even list these in the app) [done]
 *
-*  Methood:
+*  Formula:
 *
 *   ____ Km/L  *  ___ miles/km * ___ gallon*miles * ___ kg/gallon = ___ kg/L (Kg CO2 per litre)
 * (from user)                      (from CSV)                     (Result)
