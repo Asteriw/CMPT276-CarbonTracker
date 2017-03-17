@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CarbonTracker</string>
+    <string name="app_name">Carbon Tracker</string>
     <string name="view_carbon_footprint">View Carbon FootPrint</string>
     <string name="create_a_new_journey">Create a New Journey</string>
     <string name="add_a_new_journey">Add a New Journey</string>
@@ -33,6 +33,9 @@
     <string name="context_delete">Delete</string>
     <string name="add_route">Add Route</string>
     <string name="error_toast">Please name your car before adding it to your collection</string>
+    <string name="btn_splash_start">start</string>
+    <string name="App_name">Carbon Tracker</string>
+    <string name="authors_text">Authors: Team Honeydew</string>
     <string-array name="menu">
         <item>Edit</item>
         <item>Delete</item>

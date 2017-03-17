@@ -27,6 +27,8 @@ public class CalculationDialog extends AppCompatDialogFragment {
         //create view
         View viewer = LayoutInflater.from(getActivity()).inflate(R.layout.activity_calculation_dialog, null);
 
+        //calculate CO2
+
         //create button listeners
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 
@@ -34,10 +36,6 @@ public class CalculationDialog extends AppCompatDialogFragment {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        break;
-
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        // Don't do anything
                         break;
                 }
             }
@@ -48,7 +46,6 @@ public class CalculationDialog extends AppCompatDialogFragment {
                 .setTitle("CO2 Emission Result")
                 .setView(viewer)
                 .setPositiveButton(android.R.string.ok, listener)
-                .setNegativeButton(android.R.string.cancel, listener)
                 .create();
     }
 

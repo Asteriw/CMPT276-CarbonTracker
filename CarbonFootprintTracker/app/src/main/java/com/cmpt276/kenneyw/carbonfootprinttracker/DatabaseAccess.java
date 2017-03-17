@@ -8,12 +8,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseAccess {
+public class DatabaseAccess extends AppCompatActivity{
     private SQLiteOpenHelper openHelper;
     private SQLiteDatabase database;
     private static DatabaseAccess instance;
@@ -56,7 +57,8 @@ public class DatabaseAccess {
         }
     }
 
-    public List<String> getMakes(String year) {
+    //Query that gets all the makes in the CarDB. Takes in a year, returns a List<String> of makes.
+    public List<String> getMakes(String year) { //
         List<String> list = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT DISTINCT make FROM 'mainTable' WHERE year = "+year+" ORDER BY make ASC", null);
         cursor.moveToFirst();
@@ -68,6 +70,7 @@ public class DatabaseAccess {
         return list;
     }
 
+    //Query that gets all the models in the CarDB. Takes in a year and make, returns a List<String> of models.
     public List<String> getModels(String year, String make) {
         List<String> list = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT DISTINCT model FROM 'mainTable' WHERE year = "+year+" AND make = \""+make+"\"  ORDER BY model ASC", null);
@@ -80,6 +83,7 @@ public class DatabaseAccess {
         return list;
     }
 
+    //Query that gets all the years in the CarDB. Takes in no params, returns a List<String> of years.
     public List<String> getYears() {
         List<String> list = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT DISTINCT year FROM 'mainTable' ORDER BY year ASC", null);
@@ -93,6 +97,7 @@ public class DatabaseAccess {
         return list;
     }
 
+    //Query that gets all the Car info in the CarDB. Takes in a year and make, returns a List<String[]> of all info in the car row.
     public List<String[]> getTempCarList(String year, String make, String model) {
         List<String[]> list = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT DISTINCT * FROM 'mainTable' WHERE year = "+year+" AND make = \""+make+"\" AND model = \""+model+"\"", null);
@@ -109,6 +114,7 @@ public class DatabaseAccess {
         return list;
     }
 
+    //This is a dummy class, more for template reasons. Please do not change for the time being.
     public List<String> getUserCars() {
         List<String> list = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT * FROM quotes", null);
