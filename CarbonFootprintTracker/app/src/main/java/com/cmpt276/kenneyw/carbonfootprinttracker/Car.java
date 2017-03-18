@@ -1,12 +1,12 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
 
 /**
- * Creates a Car from the CSV values and user input. If user inputs an empty name,
+ * Creates a Car from the CSV values and user input. If user inputs an empty name, tells user to try again
  */
 
 public class Car {
 
-    Car(String name_temp, String make_temp, String model_temp, double highway_temp, double city_temp, int year_temp, String transmission_temp, double literEngine_temp ){
+    Car(String name_temp, String make_temp, String model_temp, double highway_temp, double city_temp, int year_temp, String transmission_temp, double literEngine_temp,String gasType_temp){
         name = name_temp;
         make = make_temp;
         model = model_temp;
@@ -15,6 +15,7 @@ public class Car {
         year = year_temp;
         transmission = transmission_temp;
         literEngine = literEngine_temp;
+        gasType=gasType_temp;
     }
 
     Car(){

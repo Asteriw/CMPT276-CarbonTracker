@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.SelectCar">
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/carlist"
-        android:layout_marginBottom="70dp" />
-
     <Button
         android:text="@string/add_a_new_car"
         android:layout_width="wrap_content"
@@ -32,4 +23,38 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/back_button_select_car" />
+
+    <Button
+        android:text="Walk/Bike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/back_button_select_car"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/btnWalk" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/carlist"
+        android:layout_above="@+id/btnWalk"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Skytrain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/add_car_button_select_car"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/btnSkytrain" />
+
+    <Button
+        android:text="Bus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnWalk"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btnBus" />
 </RelativeLayout>

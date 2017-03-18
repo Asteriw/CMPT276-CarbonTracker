@@ -18,6 +18,7 @@ import java.util.List;
 
 /*
 *  Add Car saves nickname,make,model and year of a car user selects from cardb.db.zip
+*  Also handles editing cars. Passes saved car via singleton class: carSingleton
 * */
 public class AddCar extends AppCompatActivity {
 
@@ -28,11 +29,19 @@ public class AddCar extends AppCompatActivity {
     String selectedMake;
     String selectedModel;
     CarCollection carList = new CarCollection();
+    int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_car);
+
+        Intent i=getIntent();
+        if(i.hasExtra("pos")) {
+            pos = i.getIntExtra("pos", 0);
+        }
+        else{pos=0;}
+
         openDatabase();
         setupYearSpinner();
         setupBackButton();
@@ -154,6 +163,10 @@ public class AddCar extends AppCompatActivity {
                     masterCar.setLiterEngine(tempCar.getLiterEngine());
                     masterCar.setTransmission(tempCar.getTransmission());
                     masterCar.setMake(tempCar.getMake());
+
+                    Intent i=new Intent();
+                    i.putExtra("posEdit",pos);
+                    setResult(RESULT_OK,i);
                     finish();
                 }
             }
@@ -186,6 +199,8 @@ public class AddCar extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i=new Intent();
+                setResult(RESULT_CANCELED,i);
                 finish();
             }
         });

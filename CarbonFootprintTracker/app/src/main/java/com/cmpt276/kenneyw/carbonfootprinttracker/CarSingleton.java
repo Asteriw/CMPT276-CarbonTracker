@@ -17,6 +17,10 @@ public class CarSingleton {
         year = 0;
         transmission = "";
         literEngine = 0;
+        walk=false;
+        bus=false;
+        skytrain=false;
+
     }
 
     public static CarSingleton getInstance(){
@@ -90,6 +94,28 @@ public class CarSingleton {
         this.Emissions[1] = city;
     }
 
+    boolean getWalk(){
+        return walk;
+    }
+    boolean getBus(){
+        return bus;
+    }
+    boolean getSkytrain(){
+        return skytrain;
+    }
+
+    public void setWalk(boolean walk) {
+        this.walk = walk;
+    }
+
+    public void setSkytrain(boolean skytrain) {
+        this.skytrain = skytrain;
+    }
+
+    public void setBus(boolean bus) {
+        this.bus = bus;
+    }
+
     // Variables Declaration
     private String name;
     private String make;
@@ -99,4 +125,7 @@ public class CarSingleton {
     private double[] Emissions =  new double[2];
     private String transmission;
     private double literEngine;
+    private boolean walk;
+    private boolean bus;
+    private boolean skytrain;
 }

@@ -20,7 +20,9 @@ import java.util.ArrayList;
 
 
 /*
-Select Route class
+This Class stores a list of routes for perusal in a journey. Can add, edit and delete saved routes.
+Includes error checking of input, and user can go back to select car screen. Saving routes via shared prefs and
+transferring to journey to save via singleton class: routeSingleton
  */
 
 public class SelectRoute extends AppCompatActivity {
@@ -101,22 +103,30 @@ public class SelectRoute extends AppCompatActivity {
         listForRoutes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent selectRoute2selectJourney = SelectJourney.makeIntent(SelectRoute.this);
+
                 Log.e(TAG, routes.get(position).toString()+" selected.");
+
                 Route r=routes.get(position);
                 String nameToPass=r.getRouteName();
                 int cityToPass=r.getCityDistance();
                 int highwayToPass=r.getHighwayDistance();
+
                 RouteSingleton routeselected=RouteSingleton.getInstance();
                 routeselected.setRouteName(nameToPass);
                 routeselected.setCityDistance(cityToPass);
                 routeselected.setHighwayDistance(highwayToPass);
+
                 saveRoutes();
+                Intent i=new Intent();
+                setResult(RESULT_OK,i);
                 finish();
             }
         });
         registerForContextMenu(listForRoutes);
     }
+
+    //Context Menu Code taken and modified from:
+    //https://www.mikeplate.com/2010/01/21/show-a-context-menu-for-long-clicks-in-an-android-listview/
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
@@ -182,7 +192,7 @@ public class SelectRoute extends AppCompatActivity {
         int routeAmt=routes.size();
 
         for(int i=0;i<routeAmt;i++){
-            Log.i(TAG,""+routes.get(i).getRouteName());
+
             editor.putString(i+ NAME,routes.get(i).getRouteName());
             editor.putInt(i+ CITY,routes.get(i).getCityDistance());
             editor.putInt(i+ HIGHWAY,routes.get(i).getHighwayDistance());
@@ -197,6 +207,8 @@ public class SelectRoute extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveRoutes();
+                Intent i=new Intent();
+                setResult(RESULT_CANCELED,i);
                 finish();
             }
         });
@@ -205,6 +217,8 @@ public class SelectRoute extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         saveRoutes();
+        Intent i=new Intent();
+        setResult(RESULT_CANCELED,i);
         finish();
     }
 
