@@ -54,7 +54,7 @@ import java.util.List;
 
 public class CarbonFootPrint extends AppCompatActivity {
     final static int col_size = 5;
-    int row_size; // must be consistent over every variable used for a pie chart/ table
+    private static int row_size; // must be consistent over every variable used for a pie chart/ table
     final static String column_1_header = "Date of Trip";
     final static String column_2_header = "Route";
     final static String column_3_header = "Distance (Km)";
@@ -127,7 +127,6 @@ public class CarbonFootPrint extends AppCompatActivity {
     private void setUpArrays() {
         journeyArrayList=loadJourneys();
         int size=journeyArrayList.size();
-
         row_size=size;
         vehicleNames=new String[size];
         routeNames=new String[size];
@@ -159,7 +158,8 @@ public class CarbonFootPrint extends AppCompatActivity {
             Date d=new Date(pref.getLong(i+DATEOFTRAVEL,0));
             Journey j=new Journey(pref.getString(i+ROUTENAME,""),pref.getInt(i+CITY,0),pref.getInt(i+HIGHWAY,0),
                     pref.getString(i+NAME,""),pref.getString(i+GASTYPE,""),Double.longBitsToDouble(pref.getLong(i+MPGCITY,0)),
-                    Double.longBitsToDouble(pref.getLong(i+MPGHIGHWAY,0)),Double.longBitsToDouble(pref.getLong(i+LITERENGINE,0)), d);
+                    Double.longBitsToDouble(pref.getLong(i+MPGHIGHWAY,0)),Double.longBitsToDouble(pref.getLong(i+LITERENGINE,0)),
+                    d,pref.getBoolean(i+"bus",false),pref.getBoolean("bike",false),pref.getBoolean("skytrain",false));
             journeyArrayList.add(j);
         }
 

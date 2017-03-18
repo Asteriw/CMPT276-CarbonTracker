@@ -45,6 +45,10 @@ public class SelectJourney extends AppCompatActivity {
     public static final String LITERENGINE="literEngine";
     public static final String DATEOFTRAVEL="DateOfTravel";
     public static final String TOTALEMISSIONS ="totalEmissions";
+    public static final String BUS = "bus";
+    public static final String BIKE = "bike";
+    public static final String SKYTRAIN = "skytrain";
+
     ArrayList<Journey> journeyArrayList=new ArrayList<>();
 
     @Override
@@ -66,7 +70,8 @@ public class SelectJourney extends AppCompatActivity {
             Date d=new Date(pref.getLong(i+DATEOFTRAVEL,0));
             Journey j=new Journey(pref.getString(i+ROUTENAME,""),pref.getInt(i+CITY,0),pref.getInt(i+HIGHWAY,0),
                     pref.getString(i+NAME,""),pref.getString(i+GASTYPE,""),Double.longBitsToDouble(pref.getLong(i+MPGCITY,0)),
-                    Double.longBitsToDouble(pref.getLong(i+MPGHIGHWAY,0)),Double.longBitsToDouble(pref.getLong(i+LITERENGINE,0)), d);
+                    Double.longBitsToDouble(pref.getLong(i+MPGHIGHWAY,0)),Double.longBitsToDouble(pref.getLong(i+LITERENGINE,0)),
+                    d,pref.getBoolean(i+ BUS,false),pref.getBoolean(i+ BIKE,false),pref.getBoolean(i+ SKYTRAIN,false));
             journeyArrayList.add(j);
         }
         return journeyArrayList;
@@ -185,19 +190,20 @@ public class SelectJourney extends AppCompatActivity {
                     CarSingleton finalCar=CarSingleton.getInstance();
                     Journey finalJourney=new Journey(finalRoute.getRouteName(),finalRoute.getCityDistance(),finalRoute.getHighwayDistance()
                             ,finalCar.getName(),finalCar.getGasType(),finalCar.getCityEmissions(),finalCar.getHighwayEmissions(),
-                            finalCar.getLiterEngine(),date);
+                            finalCar.getLiterEngine(),date,finalCar.getBus(),finalCar.getWalk(),finalCar.getSkytrain());
                     journeyArrayList.add(finalJourney);
                     setupAddJourneyButton();
                     setupBackButton();
                     setJourneyList();
 
                 }
-                else {
+                else{
                     Log.i(TAG,"User Cancelled");
                     setupAddJourneyButton();
                     setupBackButton();
                     setJourneyList();
                 }
+
                 break;
             case EDIT_JOURNEY:
                 if(resultCode==RESULT_OK){

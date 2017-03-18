@@ -26,6 +26,9 @@ public class SelectCar extends AppCompatActivity {
     public static final int ROUTE_SELECTED = 4;
     public static final int CAR_ADDED=5;
     public static final int EDIT_CAR = 6;
+    private static final int BIKE_SELECTED = 7;
+    private static final int BUS_SELECTED = 8;
+    private static final int SKYTRAIN_SELECTED = 9;
 
     private static final String SHAREDPREF_SET = "CarbonFootprintTrackerCars";
     private static final String SHAREDPREF_ITEM_AMOUNTOFCARS = "AmountOfCars";
@@ -38,6 +41,7 @@ public class SelectCar extends AppCompatActivity {
     public static final String MAKE="Make";
     public static final String MODEL="Model";
     public static final String YEAR="Year";
+
 
 
     CarCollection myCars = new CarCollection();
@@ -59,6 +63,78 @@ public class SelectCar extends AppCompatActivity {
         setupAddCarButton();
         setupBackButton();
         setCarList();
+        setUpAlternateTransportationBtns();
+    }
+
+    private void setUpAlternateTransportationBtns() {
+        Button btnSkytrain=(Button)findViewById(R.id.btnSkytrain);
+        Button btnBus=(Button)findViewById(R.id.btnBus);
+        Button btnWalk=(Button)findViewById(R.id.btnWalk);
+
+        btnSkytrain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CarSingleton finalCar=CarSingleton.getInstance();
+                finalCar.setMake("");
+                finalCar.setModel("");
+                finalCar.setName("Skytrain");
+                finalCar.setYear(0);
+                finalCar.setCityEmissions(0);
+                finalCar.setHighwayEmissions(0);
+                finalCar.setLiterEngine(0);
+                finalCar.setGasType("");
+                finalCar.setTransmission("");
+                finalCar.setSkytrain(true);
+                finalCar.setBus(false);
+                finalCar.setWalk(false);
+
+                Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
+                startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
+            }
+        });
+        btnBus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CarSingleton finalCar=CarSingleton.getInstance();
+                finalCar.setMake("");
+                finalCar.setModel("");
+                finalCar.setName("Bus");
+                finalCar.setYear(0);
+                finalCar.setCityEmissions(0);
+                finalCar.setHighwayEmissions(0);
+                finalCar.setLiterEngine(0);
+                finalCar.setGasType("");
+                finalCar.setTransmission("");
+                finalCar.setSkytrain(false);
+                finalCar.setBus(true);
+                finalCar.setWalk(false);
+
+                Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
+                startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
+            }
+        });
+        btnWalk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CarSingleton finalCar=CarSingleton.getInstance();
+                finalCar.setMake("");
+                finalCar.setModel("");
+                finalCar.setName("Walk / Bike");
+                finalCar.setYear(0);
+                finalCar.setCityEmissions(0);
+                finalCar.setHighwayEmissions(0);
+                finalCar.setLiterEngine(0);
+                finalCar.setGasType("");
+                finalCar.setTransmission("");
+                finalCar.setSkytrain(false);
+                finalCar.setBus(false);
+                finalCar.setWalk(true);
+
+                Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
+                startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
+
+            }
+        });
 
     }
 
@@ -253,6 +329,49 @@ public class SelectCar extends AppCompatActivity {
 
                     break;
                 }
+                break;
+            /*case BIKE_SELECTED:
+                if(resultCode==RESULT_OK){
+                    Intent i=new Intent();
+                    setResult(RESULT_OK,i);
+                    saveCars();
+                    finish();
+                }
+                else{
+                    setupAddCarButton();
+                    setupBackButton();
+                    setCarList();
+
+                }
+                break;
+            case BUS_SELECTED:
+                if(resultCode==RESULT_OK){
+                    Intent i=new Intent();
+                    setResult(RESULT_OK,i);
+                    saveCars();
+                    finish();
+                }
+                else{
+                    setupAddCarButton();
+                    setupBackButton();
+                    setCarList();
+
+                }
+                break;
+            case SKYTRAIN_SELECTED:
+                if(resultCode==RESULT_OK){
+                    Intent i=new Intent();
+                    setResult(RESULT_OK,i);
+                    saveCars();
+                    finish();
+                }
+                else{
+                    setupAddCarButton();
+                    setupBackButton();
+                    setCarList();
+
+                }
+                break;*/
         }
     }
 
