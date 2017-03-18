@@ -21,7 +21,7 @@ import java.text.DecimalFormat;
 *
 *  Methood:
 *
-*   ____ Km/L  *  ___ miles/km * ___ gallon*miles * ___ kg/gallon = ___ kg/L (Kg CO2 per litre)
+*   ____ Km  *  ___ miles/km * ___ miles/gallon * ___ kg/gallon = ___ kg/L (Kg CO2 per litre)
 * (from user)                      (from CSV)                     (Result)
 *
 *   User interface is metric: Litres and Kilometers
@@ -41,10 +41,10 @@ public class Calculation {
     final private static double km_per_mile = 0.621371;
 
     /*Calculate CO2 Emission of Gasoline with a given distance*/
-    public double calculate_CO2_Emission_of_Gasoline(double distance_in_km_from_user,double miles_per_gallon,double engine_displacement_in_litre){
+    private double calculate_CO2_Emission_of_Gasoline(double distance_in_km_from_user,double miles_per_gallon){
         double result_in_kg_CO2_per_litre;
-        result_in_kg_CO2_per_litre = (distance_in_km_from_user/ engine_displacement_in_litre) *
-                                     (1/km_per_mile) * /////??????????????????? why dont you just multiply with 1.609????????
+        result_in_kg_CO2_per_litre = (distance_in_km_from_user) *
+                                     (1/km_per_mile) *
                                      (miles_per_gallon) *
                                      (gasoline_volume_in_kg_per_gallon);
         return doubleToTwoPlaces(result_in_kg_CO2_per_litre);
@@ -52,9 +52,9 @@ public class Calculation {
 
 
     /*Calculate CO2 Emission of Diesel with a given distance*/
-    public double calculate_C02_Emission_of_Diesel_from_kg_to_gallon(double distance_in_km_from_user,double miles_per_gallon,double engine_displacement_in_litre){
+    private double calculate_C02_Emission_of_Diesel_from_kg_to_gallon(double distance_in_km_from_user,double miles_per_gallon){
         double result_in_kg_CO2_per_litre;
-        result_in_kg_CO2_per_litre = (distance_in_km_from_user/ engine_displacement_in_litre) *
+        result_in_kg_CO2_per_litre = (distance_in_km_from_user) *
                                      (1/km_per_mile) *
                                      (miles_per_gallon) *
                                      (diesel_volumne_in_kg_per_gallon);
@@ -67,13 +67,13 @@ public class Calculation {
         return result_in_kg_CO2_per_litre;
     }
 
-    public double calculateCO2Diesel(double mpg,double engineLiter, double distance)
+    public double calculateCO2Diesel(double mpg, double distance)
     {
-        return calculate_C02_Emission_of_Diesel_from_kg_to_gallon(mpg,distance,engineLiter);
+        return calculate_C02_Emission_of_Diesel_from_kg_to_gallon(mpg,distance);
     }
-    public double calculateCO2Gasoline(double mpg,double engineLiter, double distance)
+    public double calculateCO2Gasoline(double mpg, double distance)
     {
-        return calculate_CO2_Emission_of_Gasoline(mpg,distance,engineLiter);
+        return calculate_CO2_Emission_of_Gasoline(mpg,distance);
     }
 
     public static Intent makeIntent(Context context) {
