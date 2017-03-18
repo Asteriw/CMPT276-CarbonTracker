@@ -29,8 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/back_button_carbon_foot_print"
-        android:id="@+id/content_layout"
-        android:layout_below="@+id/Table_info">
+        android:id="@+id/content_layout">
 
         <ScrollView
             android:layout_width="match_parent"

@@ -3,6 +3,7 @@ package com.cmpt276.kenneyw.carbonfootprinttracker;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -216,7 +217,7 @@ public class CarbonFootPrint extends AppCompatActivity {
     public void setupColumnHeader(){
         journeyTable = (TableLayout) findViewById(R.id.journey_table);
         journeytablerow = new TableRow(this);
-        journeytablerow.setBackgroundColor(Color.YELLOW);
+        journeytablerow.setBackgroundColor(0xFF10ce20);
         journeyTable.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT, 1.0f ));
         journeyTable.addView(journeytablerow);
 
@@ -232,6 +233,18 @@ public class CarbonFootPrint extends AppCompatActivity {
         col_3_content.setText(column_3_header);
         col_4_content.setText(column_4_header);
         col_5_content.setText(column_5_header);
+
+        col_1_content.setTextColor(Color.BLACK);
+        col_2_content.setTextColor(Color.BLACK);
+        col_3_content.setTextColor(Color.BLACK);
+        col_4_content.setTextColor(Color.BLACK);
+        col_5_content.setTextColor(Color.BLACK);
+
+        col_1_content.setTypeface(Typeface.DEFAULT_BOLD);
+        col_2_content.setTypeface(Typeface.DEFAULT_BOLD);
+        col_3_content.setTypeface(Typeface.DEFAULT_BOLD);
+        col_4_content.setTypeface(Typeface.DEFAULT_BOLD);
+        col_5_content.setTypeface(Typeface.DEFAULT_BOLD);
 
         col_1_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
         col_2_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
