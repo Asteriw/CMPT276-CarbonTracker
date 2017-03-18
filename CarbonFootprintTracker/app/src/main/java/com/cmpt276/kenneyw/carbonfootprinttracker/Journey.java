@@ -61,6 +61,7 @@ when editing a pre-existing Journey.
         }
         else if(skytrain){
             this.totalEmissions=0;
+            //Edit This
         }
         else{
             this.totalEmissions=0.89*(this.cityDistance+this.highwayDistance);
@@ -81,7 +82,7 @@ when editing a pre-existing Journey.
                 totalEmissions += c.calculateCO2Gasoline(mpgHighway,literEngine,highwayDistance);
                 break;
         }
-        if(this.Skytrain){
+        if(this.Bus){
             totalEmissions=0.89*(this.cityDistance+this.highwayDistance);
         }
         return totalEmissions;

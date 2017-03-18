@@ -225,6 +225,9 @@ public class SelectCar extends AppCompatActivity {
                 finalCar.setLiterEngine(myCars.getCar(position).getLiterEngine());
                 finalCar.setGasType(myCars.getCar(position).getGasType());
                 finalCar.setTransmission(myCars.getCar(position).getTransmission());
+                finalCar.setWalk(false);
+                finalCar.setBus(false);
+                finalCar.setSkytrain(false);
 
                 Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
                 startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);

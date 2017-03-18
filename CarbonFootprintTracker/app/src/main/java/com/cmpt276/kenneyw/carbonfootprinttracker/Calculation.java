@@ -36,7 +36,6 @@ import java.text.DecimalFormat;
 
 public class Calculation {
 
-    private static DecimalFormat df2 = new DecimalFormat(".##"); // for decimal precision
     final private static double gasoline_volume_in_kg_per_gallon = 8.89;
     final private static double diesel_volumne_in_kg_per_gallon = 10.16;
     final private static double km_per_mile = 0.621371;
@@ -48,9 +47,7 @@ public class Calculation {
                                      (1/km_per_mile) * /////??????????????????? why dont you just multiply with 1.609????????
                                      (miles_per_gallon) *
                                      (gasoline_volume_in_kg_per_gallon);
-        df2.setRoundingMode(RoundingMode.UP);
-        df2.format(result_in_kg_CO2_per_litre);
-        return result_in_kg_CO2_per_litre;
+        return doubleToTwoPlaces(result_in_kg_CO2_per_litre);
     }
 
 
@@ -61,8 +58,12 @@ public class Calculation {
                                      (1/km_per_mile) *
                                      (miles_per_gallon) *
                                      (diesel_volumne_in_kg_per_gallon);
-        df2.setRoundingMode(RoundingMode.UP);
-        df2.format(result_in_kg_CO2_per_litre);
+        return doubleToTwoPlaces(result_in_kg_CO2_per_litre);
+    }
+
+    private double doubleToTwoPlaces(double result_in_kg_CO2_per_litre) {
+        DecimalFormat df2 = new DecimalFormat("#.##");
+        result_in_kg_CO2_per_litre=Double.valueOf(df2.format(result_in_kg_CO2_per_litre));
         return result_in_kg_CO2_per_litre;
     }
 
