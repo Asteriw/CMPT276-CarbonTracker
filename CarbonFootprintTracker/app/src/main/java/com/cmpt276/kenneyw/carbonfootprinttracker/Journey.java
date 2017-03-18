@@ -16,7 +16,6 @@ when editing a pre-existing Journey.
     private String gasType;
     private double mpgCity;
     private double mpgHighway;
-    private String transmission;
     private double literEngine;
     private Date dateOfTravel;
     private double totalEmissions;
@@ -43,12 +42,12 @@ when editing a pre-existing Journey.
             Calculation c = new Calculation();
             switch (gasType) {
                 case "Premium":
-                    this.totalEmissions += c.calculateCO2Diesel(mpgCity, literEngine, cityDistance);
-                    this.totalEmissions += c.calculateCO2Diesel(mpgHighway, literEngine, highwayDistance);
+                    this.totalEmissions += c.calculateCO2Diesel(mpgCity, cityDistance);
+                    this.totalEmissions += c.calculateCO2Diesel(mpgHighway, highwayDistance);
                     break;
                 case "Regular":
-                    this.totalEmissions += c.calculateCO2Gasoline(mpgCity, literEngine, cityDistance);
-                    this.totalEmissions += c.calculateCO2Gasoline(mpgHighway, literEngine, highwayDistance);
+                    this.totalEmissions += c.calculateCO2Gasoline(mpgCity,  cityDistance);
+                    this.totalEmissions += c.calculateCO2Gasoline(mpgHighway,  highwayDistance);
                     break;
                 default:
                     this.totalEmissions = 0;
@@ -61,6 +60,7 @@ when editing a pre-existing Journey.
         }
         else if(skytrain){
             this.totalEmissions=0;
+            //Edit This
         }
         else{
             this.totalEmissions=0.89*(this.cityDistance+this.highwayDistance);
@@ -73,19 +73,19 @@ when editing a pre-existing Journey.
         if(!this.Bus && !this.Bike && !this.Skytrain )
         switch(gasType) {               //CONFIRM
             case "Premium":
-                totalEmissions += c.calculateCO2Diesel(mpgCity,literEngine,cityDistance);
-                totalEmissions += c.calculateCO2Diesel(mpgHighway,literEngine,highwayDistance);
+                totalEmissions += c.calculateCO2Diesel(mpgCity,cityDistance);
+                totalEmissions += c.calculateCO2Diesel(mpgHighway,highwayDistance);
                 break;
             case "Regular":             //CONFIRM
-                totalEmissions += c.calculateCO2Gasoline(mpgCity,literEngine,cityDistance);
-                totalEmissions += c.calculateCO2Gasoline(mpgHighway,literEngine,highwayDistance);
+                totalEmissions += c.calculateCO2Gasoline(mpgCity,cityDistance);
+                totalEmissions += c.calculateCO2Gasoline(mpgHighway,highwayDistance);
                 break;
         }
-        if(this.Skytrain){
-            totalEmissions=0.89*(this.cityDistance+this.highwayDistance);
+        //89 grams of CO2 per km
+        if(this.Bus){
+            totalEmissions=0.089*(this.cityDistance+this.highwayDistance);
         }
         return totalEmissions;
-
     }
 
     public int getCityDistance() {
@@ -152,14 +152,6 @@ when editing a pre-existing Journey.
         this.routeName = routeName;
     }
 
-    public String getTransmission() {
-        return transmission;
-    }
-
-    public void setTransmission(String transmission) {
-        this.transmission = transmission;
-    }
-
     public Date getDateOfTravel() {
         return dateOfTravel;
     }
@@ -201,7 +193,7 @@ when editing a pre-existing Journey.
     }
 
     public String toString() {
-        return name+" - "+routeName+" - "+cityDistance+" City, "+highwayDistance+" Highway"+" Date: "+dateOfTravel;
+        return name+" - "+routeName+" - "+cityDistance+" km City, "+highwayDistance+"km Highway"+" - Date: "+dateOfTravel;
     }
 
 }

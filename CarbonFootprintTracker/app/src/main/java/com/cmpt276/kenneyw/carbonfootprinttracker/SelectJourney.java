@@ -90,7 +90,6 @@ public class SelectJourney extends AppCompatActivity {
             editor.putLong(i+ MPGHIGHWAY,Double.doubleToRawLongBits(journeyArrayList.get(i).getMpgHighway()));
             editor.putInt(i+CITY,journeyArrayList.get(i).getCityDistance());
             editor.putInt(i+HIGHWAY,journeyArrayList.get(i).getHighwayDistance());
-            editor.putString(i+TRANSMISSION,journeyArrayList.get(i).getTransmission());
             editor.putLong(i+LITERENGINE,Double.doubleToRawLongBits(journeyArrayList.get(i).getLiterEngine()));
             editor.putLong(i+DATEOFTRAVEL,journeyArrayList.get(i).getDateOfTravel().getTime());
             editor.putLong(i+TOTALEMISSIONS,Double.doubleToRawLongBits(journeyArrayList.get(i).getTotalEmissions()));

@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 /*
 *  This class displays the calculation result of CO2 emission of a selected journey
 * */
@@ -25,6 +28,7 @@ public class CalculationDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         //create view
+
         View viewer = LayoutInflater.from(getActivity()).inflate(R.layout.activity_calculation_dialog, null);
         TextView txtCO2=(TextView) viewer.findViewById(R.id.calculation_result_dialog);
         Double CO2=getArguments().getDouble("CO2");
