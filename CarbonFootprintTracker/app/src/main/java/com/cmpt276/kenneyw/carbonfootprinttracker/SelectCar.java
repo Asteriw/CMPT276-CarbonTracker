@@ -26,9 +26,6 @@ public class SelectCar extends AppCompatActivity {
     public static final int ROUTE_SELECTED = 4;
     public static final int CAR_ADDED=5;
     public static final int EDIT_CAR = 6;
-    private static final int BIKE_SELECTED = 7;
-    private static final int BUS_SELECTED = 8;
-    private static final int SKYTRAIN_SELECTED = 9;
 
     private static final String SHAREDPREF_SET = "CarbonFootprintTrackerCars";
     private static final String SHAREDPREF_ITEM_AMOUNTOFCARS = "AmountOfCars";
@@ -41,8 +38,7 @@ public class SelectCar extends AppCompatActivity {
     public static final String MAKE="Make";
     public static final String MODEL="Model";
     public static final String YEAR="Year";
-
-
+    public static final String POS_EDIT = "posEdit";
 
     CarCollection myCars = new CarCollection();
 
@@ -53,7 +49,7 @@ public class SelectCar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_car);
         myCars=loadCars();
-//need this
+
         Intent i=getIntent();
         if(i.hasExtra("pos")) {
             pos = i.getIntExtra("pos", 0);
@@ -263,13 +259,13 @@ public class SelectCar extends AppCompatActivity {
         switch(menuItemName) {
             case "Edit":
                 Intent i=AddCar.makeIntent(SelectCar.this);
-                i.putExtra("pos",info.position);
+                i.putExtra(POS_EDIT,info.position);
                 startActivityForResult(i,EDIT_CAR);
+                break;
             case "Delete":
                 myCars.deleteCar(info.position);
                 setCarList();
-
-
+                break;
         }
         return true;
     }
@@ -326,11 +322,9 @@ public class SelectCar extends AppCompatActivity {
                             masterCar.getLiterEngine(),
                             masterCar.getGasType()
                     );
-                    int position=data.getIntExtra("posEdit",0);
+                    int position=data.getIntExtra(POS_EDIT,0);
                     myCars.changeCar(tempCar,position);
                     setCarList();
-
-                    break;
                 }
                 break;
             /*case BIKE_SELECTED:

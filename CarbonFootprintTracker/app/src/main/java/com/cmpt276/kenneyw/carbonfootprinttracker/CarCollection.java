@@ -17,9 +17,16 @@ public class CarCollection {
     }
 
     public void changeCar(Car car, int indexOfCarToEdit) {
-        validateIndexWithException(indexOfCarToEdit);
-        cars.remove(indexOfCarToEdit);
-        cars.add(indexOfCarToEdit, car);
+//        validateIndexWithException(indexOfCarToEdit);
+        cars.get(indexOfCarToEdit).setName(car.getName());
+        cars.get(indexOfCarToEdit).setMake(car.getMake());
+        cars.get(indexOfCarToEdit).setModel(car.getModel());
+        cars.get(indexOfCarToEdit).setTransmission(car.getTransmission());
+        cars.get(indexOfCarToEdit).setYear(car.getYear());
+        cars.get(indexOfCarToEdit).setLiterEngine(car.getLiterEngine());
+        cars.get(indexOfCarToEdit).setHighwayEmissions(car.getHighwayEmissions());
+        cars.get(indexOfCarToEdit).setGasType(car.getGasType());
+        cars.get(indexOfCarToEdit).setCityEmissions(car.getCityEmissions());
     }
 
     public void deleteCar(int indexToDelete){
