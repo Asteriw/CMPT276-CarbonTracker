@@ -1,8 +1,5 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
 
-import android.content.Context;
-import android.content.Intent;
-
 import java.text.DecimalFormat;
 
 
@@ -51,7 +48,7 @@ public class Calculation {
 
 
     /*Calculate CO2 Emission of Diesel with a given distance*/
-    private double calculate_C02_Emission_of_Diesel_from_kg_to_gallon(double distance_in_km_from_user,double miles_per_gallon){
+    private double calculate_C02_Emission_of_Diesel(double distance_in_km_from_user, double miles_per_gallon){
         double result_in_kg_CO2;
         result_in_kg_CO2 = (distance_in_km_from_user) *
                                      (mile_per_km) *
@@ -68,7 +65,7 @@ public class Calculation {
 
     public double calculateCO2Diesel(double mpg, double distance)
     {
-        return calculate_C02_Emission_of_Diesel_from_kg_to_gallon(mpg,distance);
+        return calculate_C02_Emission_of_Diesel(mpg,distance);
     }
     public double calculateCO2Gasoline(double mpg, double distance)
     {

@@ -68,10 +68,19 @@ public class SelectJourney extends AppCompatActivity {
         int journeyAmt=pref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS,0);
         for(int i=0;i<journeyAmt;i++){
             Date d=new Date(pref.getLong(i+DATEOFTRAVEL,0));
-            Journey j=new Journey(pref.getString(i+ROUTENAME,""),pref.getInt(i+CITY,0),pref.getInt(i+HIGHWAY,0),
-                    pref.getString(i+NAME,""),pref.getString(i+GASTYPE,""),Double.longBitsToDouble(pref.getLong(i+MPGCITY,0)),
-                    Double.longBitsToDouble(pref.getLong(i+MPGHIGHWAY,0)),Double.longBitsToDouble(pref.getLong(i+LITERENGINE,0)),
-                    d,pref.getBoolean(i+ BUS,false),pref.getBoolean(i+ BIKE,false),pref.getBoolean(i+ SKYTRAIN,false));
+            Journey j=new Journey(
+                    pref.getString(i+ROUTENAME,""),
+                    pref.getInt(i+CITY,0),
+                    pref.getInt(i+HIGHWAY,0),
+                    pref.getString(i+NAME,""),
+                    pref.getString(i+GASTYPE,""),
+                    Double.longBitsToDouble(pref.getLong(i+MPGCITY,0)),
+                    Double.longBitsToDouble(pref.getLong(i+MPGHIGHWAY,0)),
+                    Double.longBitsToDouble(pref.getLong(i+LITERENGINE,0)),
+                    d,
+                    pref.getBoolean(i+BUS,false),
+                    pref.getBoolean(i+BIKE,false),
+                    pref.getBoolean(i+SKYTRAIN,false));
             journeyArrayList.add(j);
         }
         return journeyArrayList;
@@ -93,6 +102,9 @@ public class SelectJourney extends AppCompatActivity {
             editor.putLong(i+LITERENGINE,Double.doubleToRawLongBits(journeyArrayList.get(i).getLiterEngine()));
             editor.putLong(i+DATEOFTRAVEL,journeyArrayList.get(i).getDateOfTravel().getTime());
             editor.putLong(i+TOTALEMISSIONS,Double.doubleToRawLongBits(journeyArrayList.get(i).getTotalEmissions()));
+            editor.putBoolean(i+BUS,journeyArrayList.get(i).isBus());
+            editor.putBoolean(i+BIKE,journeyArrayList.get(i).isBike());
+            editor.putBoolean(i+SKYTRAIN,journeyArrayList.get(i).isSkytrain());
         }
         editor.putInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS,journeyAmt);
         editor.apply();
@@ -190,6 +202,7 @@ public class SelectJourney extends AppCompatActivity {
                     Journey finalJourney=new Journey(finalRoute.getRouteName(),finalRoute.getCityDistance(),finalRoute.getHighwayDistance()
                             ,finalCar.getName(),finalCar.getGasType(),finalCar.getCityEmissions(),finalCar.getHighwayEmissions(),
                             finalCar.getLiterEngine(),date,finalCar.getBus(),finalCar.getWalk(),finalCar.getSkytrain());
+                    finalJourney.setTotalEmissions(finalJourney.CalculateTotalEmissions());
                     journeyArrayList.add(finalJourney);
                     setupAddJourneyButton();
                     setupBackButton();
