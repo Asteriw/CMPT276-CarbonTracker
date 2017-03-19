@@ -175,7 +175,7 @@ public class CarbonFootPrint extends AppCompatActivity {
             //entries.add( new PieEntry(distance[i], vehicleNames[i]));
             //entries.add( new PieEntry(distance[i], dateofTrips[i]));
             //entries.add( new PieEntry(distance[i], routeNames[i]));
-            entries.add( new PieEntry(CO2emitted[i], dateofTrips[i]));
+            entries.add( new PieEntry(CO2emitted[i], vehicleNames[i]));
         }
 
         // Config for each region of the chart

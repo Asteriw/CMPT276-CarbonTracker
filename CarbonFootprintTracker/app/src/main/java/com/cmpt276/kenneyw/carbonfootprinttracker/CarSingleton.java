@@ -104,15 +104,11 @@ public class CarSingleton {
         return skytrain;
     }
 
-    public void setWalk(boolean walk) {
-        this.walk = walk;
-    }
-
-    public void setSkytrain(boolean skytrain) {
+    void setWalk(boolean walk) {this.walk = walk; }
+    void setSkytrain(boolean skytrain) {
         this.skytrain = skytrain;
     }
-
-    public void setBus(boolean bus) {
+    void setBus(boolean bus) {
         this.bus = bus;
     }
 

@@ -38,9 +38,10 @@ when editing a pre-existing Journey.
         this.Bus=bus;
         this.Bike=bike;
         this.Skytrain=skytrain;
+
         if(!bus &&!bike&& !skytrain) {
             Calculation c = new Calculation();
-            switch (gasType) {
+            switch (this.gasType) {
                 case "Premium":
                     this.totalEmissions += c.calculateCO2Diesel(mpgCity, cityDistance);
                     this.totalEmissions += c.calculateCO2Diesel(mpgHighway, highwayDistance);
@@ -54,16 +55,15 @@ when editing a pre-existing Journey.
                     break;
             }
         }
-
-        else if(bike){
+        else if(this.Bike){
             this.totalEmissions=0;
         }
-        else if(skytrain){
+        else if(this.Skytrain){
             this.totalEmissions=0;
             //Edit This
         }
         else{
-            this.totalEmissions=0.89*(this.cityDistance+this.highwayDistance);
+            this.totalEmissions=0.089*(this.cityDistance+this.highwayDistance);
         }
     }
 
@@ -71,12 +71,12 @@ when editing a pre-existing Journey.
         Calculation c=new Calculation();
         double totalEmissions=0;
         if(!this.Bus && !this.Bike && !this.Skytrain )
-        switch(gasType) {               //CONFIRM
+        switch(this.gasType) {
             case "Premium":
                 totalEmissions += c.calculateCO2Diesel(mpgCity,cityDistance);
                 totalEmissions += c.calculateCO2Diesel(mpgHighway,highwayDistance);
                 break;
-            case "Regular":             //CONFIRM
+            case "Regular":
                 totalEmissions += c.calculateCO2Gasoline(mpgCity,cityDistance);
                 totalEmissions += c.calculateCO2Gasoline(mpgHighway,highwayDistance);
                 break;
