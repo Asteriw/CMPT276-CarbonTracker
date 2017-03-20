@@ -69,6 +69,8 @@ public class CarbonFootPrint extends AppCompatActivity {
     TextView col_4_content;
     TextView col_5_content;
 
+    SimpleDateFormat dateformatter = new SimpleDateFormat("MMMM dd, yyyy");
+    String simpledate;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -84,6 +86,7 @@ public class CarbonFootPrint extends AppCompatActivity {
         updateChart();
         updateTable();
     }
+
 
     public JourneyCollection loadJourneys(JourneyCollection journeys) {
         SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
@@ -113,8 +116,7 @@ public class CarbonFootPrint extends AppCompatActivity {
         entries = new ArrayList<>();
 
         for (int i = 0; i < row_size; i++) {
-            SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
-            String simpledate = dateformatter.format(journeys.getJourney(i).getDateOfTravel());
+            simpledate = dateformatter.format(journeys.getJourney(i).getDateOfTravel());
             entries.add(new PieEntry((float) journeys.getJourney(i).getTotalEmissions(), simpledate));
         }
         // Config for each region of the chart
@@ -177,7 +179,9 @@ public class CarbonFootPrint extends AppCompatActivity {
             col_4_content = new TextView(this);
             col_5_content = new TextView(this);
 
-            col_1_content.setText(journeys.getJourney(row).getDateOfTravel().toString());
+            simpledate = dateformatter.format(journeys.getJourney(row).getDateOfTravel());
+
+            col_1_content.setText(simpledate);
             col_2_content.setText(journeys.getJourney(row).getRouteName());
             col_3_content.setText("" + journeys.getJourney(row).getCityDistance() + journeys.getJourney(row).getHighwayDistance());
             col_4_content.setText(journeys.getJourney(row).getName());
@@ -202,11 +206,11 @@ public class CarbonFootPrint extends AppCompatActivity {
             col_4_content.setPadding(5, 0, 5, 0);
             col_5_content.setPadding(5, 0, 5, 0);
 
-            col_1_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-            col_2_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-            col_3_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-            col_4_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-            col_5_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+            col_1_content.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            col_2_content.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            col_3_content.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            col_4_content.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            col_5_content.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             journeytablerow.addView(col_1_content);
             journeytablerow.addView(col_2_content);
@@ -270,11 +274,11 @@ public class CarbonFootPrint extends AppCompatActivity {
         col_4_content.setPadding(5, 0, 5, 0);
         col_5_content.setPadding(5, 0, 5, 0);
 
-        col_1_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        col_2_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        col_3_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        col_4_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        col_5_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+        col_1_content.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        col_2_content.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        col_3_content.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        col_4_content.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        col_5_content.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         journeytablerow.addView(col_1_content);
         journeytablerow.addView(col_2_content);
