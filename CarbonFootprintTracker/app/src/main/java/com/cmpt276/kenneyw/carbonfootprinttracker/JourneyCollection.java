@@ -58,6 +58,44 @@ public class JourneyCollection extends AppCompatActivity{
         return descriptions;
     }
 
+    public String[] getJourneysDates() {
+        String[] descriptions = new String[countJourneys()];
+        for (int i = 0; i < countJourneys(); i++) {
+            Journey journey = getJourney(i);
+            descriptions[i] = journey.getDateOfTravel().toString();
+        }
+        return descriptions;
+    }
+
+    public String[] getJourneysRouteNames() {
+        String[] descriptions = new String[countJourneys()];
+        for (int i = 0; i < countJourneys(); i++) {
+            Journey journey = getJourney(i);
+            descriptions[i] = journey.getRouteName();
+        }
+        return descriptions;
+    }
+
+
+    public float[] getJourneysEmissions() {
+        float[] descriptions = new float[countJourneys()];
+        for (int i = 0; i < countJourneys(); i++) {
+            Journey journey = getJourney(i);
+            descriptions[i] = (float) journey.getTotalEmissions();
+        }
+        return descriptions;
+    }
+
+    public float[] getJourneysDistances() {
+        float[] descriptions = new float[countJourneys()];
+        for (int i = 0; i < countJourneys(); i++) {
+            Journey journey = getJourney(i);
+            descriptions[i] = (float) journey.getCityDistance() + journey.getHighwayDistance();
+        }
+        return descriptions;
+    }
+
+
     public String[] getJourneysDescriptionsWithName() {
         String[] descriptions = new String[countJourneys()];
         for (int i = 0; i < countJourneys(); i++) {

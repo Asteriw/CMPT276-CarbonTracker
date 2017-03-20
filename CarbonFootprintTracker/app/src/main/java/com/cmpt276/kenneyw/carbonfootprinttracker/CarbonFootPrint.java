@@ -9,23 +9,19 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -115,32 +111,32 @@ public class CarbonFootPrint extends AppCompatActivity {
         // Create a Dataset
         entries = new ArrayList<>();
 
-        for (int i = 0; i < row_size; i++){
-            entries.add( new PieEntry( (float) journeys.getJourney(i).getTotalEmissions(), journeys.getJourney(i).getName()) );
+        for (int i = 0; i < row_size; i++) {
+            SimpleDateFormat dateformatter = new SimpleDateFormat("dd/MM/yyyy");
+            String simpledate = dateformatter.format(journeys.getJourney(i).getDateOfTravel());
+            entries.add(new PieEntry( (float) journeys.getJourney(i).getTotalEmissions(),  simpledate));
         }
-
         // Config for each region of the chart
-        dataSet = new PieDataSet(entries,"Fuel Consumption Rates of Car Brands");
+        dataSet = new PieDataSet(entries,"");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        dataSet.addColor(Color.MAGENTA);
-        dataSet.addColor(Color.RED);
-        dataSet.addColor(Color.CYAN);
-        dataSet.setValueLineColor(Color.BLACK);
+        dataSet.setValueLineColor(Color.TRANSPARENT);
+        dataSet.setSliceSpace(5.0f);
+        dataSet.setValueTextSize(15);
 
         // set the data
         data = new PieData(dataSet);
         data.setValueTextSize(20);
+        data.setValueTextColor(Color.BLACK);
 
         // Chart config
         chart = (PieChart) findViewById(R.id.chart);
         chart.setData(data);
         chart.animateY(2000);
-        chart.setCenterText("SUMMARY\nof\nDATA");
+        chart.setCenterText("SUMMARY\nof\nCO2 EMISSION");
         chart.setCenterTextSize(20);
         chart.setCenterTextColor(Color.DKGRAY);
-        //chart.setCenterTextOffset(0,5);
         chart.setDescription(null);
-        chart.getLegend().setEnabled(false);
+        chart.getLegend().setEnabled(true);
         chart.setVisibility(View.INVISIBLE);
         chart.invalidate();
     }
@@ -167,14 +163,13 @@ public class CarbonFootPrint extends AppCompatActivity {
     // Each column can be edited uniquely
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void updateTable() {
-        setupColumnHeader();
+        setcolumnHeading();
 
         // Go through a list of journeys
         for (int row = 0; row < row_size; row++){
             journeytablerow = new TableRow(this);
             journeyTable.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT, 1.0f ));
             journeyTable.addView(journeytablerow);
-
             // Set content of each column
             col_1_content = new TextView(this);
             col_2_content = new TextView(this);
@@ -182,11 +177,12 @@ public class CarbonFootPrint extends AppCompatActivity {
             col_4_content = new TextView(this);
             col_5_content = new TextView(this);
 
-            col_1_content.setText( journeys.getJourney(row).getDateOfTravel().toString() );
-            col_2_content.setText( journeys.getJourney(row).getRouteName() );
-            col_3_content.setText("" + (float) journeys.getJourney(row).getCityDistance() + (float) journeys.getJourney(row).getHighwayDistance() );
-            col_4_content.setText( journeys.getJourney(row).getName() );
-            col_5_content.setText("" + (float) journeys.getJourney(row).getTotalEmissions());
+                col_1_content.setText(journeys.getJourney(row).getDateOfTravel().toString());
+                col_2_content.setText(journeys.getJourney(row).getRouteName());
+                col_3_content.setText("" + journeys.getJourney(row).getCityDistance() + journeys.getJourney(row).getHighwayDistance());
+                col_4_content.setText(journeys.getJourney(row).getName());
+                col_5_content.setText("" + journeys.getJourney(row).getTotalEmissions());
+
 
             col_1_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
             col_2_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
@@ -194,7 +190,6 @@ public class CarbonFootPrint extends AppCompatActivity {
             col_4_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
             col_5_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
 
-            // Attributes //
             col_1_content.setWidth(7);
             col_2_content.setWidth(7);
             col_3_content.setWidth(7);
@@ -222,14 +217,13 @@ public class CarbonFootPrint extends AppCompatActivity {
         journeyTable.setVisibility(View.VISIBLE);
     }
 
-    // This function add column headers in the first row of JourneyTable
-    // Each column header can be edited uniquely
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public void setupColumnHeader(){
+    public void setcolumnHeading(){
         journeyTable = (TableLayout) findViewById(R.id.journey_table);
+
         journeytablerow = new TableRow(this);
-        journeytablerow.setBackgroundColor(0xFF10ce20);
         journeyTable.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT, 1.0f ));
+        journeytablerow.setBackgroundColor(0xFF10ce20);
         journeyTable.addView(journeytablerow);
 
         // Set content of each column
@@ -238,6 +232,7 @@ public class CarbonFootPrint extends AppCompatActivity {
         col_3_content = new TextView(this);
         col_4_content = new TextView(this);
         col_5_content = new TextView(this);
+
 
         col_1_content.setText(column_1_header);
         col_2_content.setText(column_2_header);
@@ -257,37 +252,37 @@ public class CarbonFootPrint extends AppCompatActivity {
         col_4_content.setTypeface(Typeface.DEFAULT_BOLD);
         col_5_content.setTypeface(Typeface.DEFAULT_BOLD);
 
-        col_1_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
-        col_2_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
-        col_3_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
-        col_4_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
-        col_5_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
+    col_1_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
+    col_2_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
+    col_3_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
+    col_4_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
+    col_5_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
 
-        // Attributes //
-        col_1_content.setWidth(7);
-        col_2_content.setWidth(7);
-        col_3_content.setWidth(7);
-        col_4_content.setWidth(7);
-        col_5_content.setWidth(7);
+    col_1_content.setWidth(7);
+    col_2_content.setWidth(7);
+    col_3_content.setWidth(7);
+    col_4_content.setWidth(7);
+    col_5_content.setWidth(7);
 
-        col_1_content.setPadding(5,0,5,0);
-        col_2_content.setPadding(5,0,5,0);
-        col_3_content.setPadding(5,0,5,0);
-        col_4_content.setPadding(5,0,5,0);
-        col_5_content.setPadding(5,0,5,0);
+    col_1_content.setPadding(5,0,5,0);
+    col_2_content.setPadding(5,0,5,0);
+    col_3_content.setPadding(5,0,5,0);
+    col_4_content.setPadding(5,0,5,0);
+    col_5_content.setPadding(5,0,5,0);
 
-        col_1_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        col_2_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        col_3_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        col_4_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        col_5_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+    col_1_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+    col_2_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+    col_3_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+    col_4_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+    col_5_content.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
 
-        journeytablerow.addView(col_1_content);
-        journeytablerow.addView(col_2_content);
-        journeytablerow.addView(col_3_content);
-        journeytablerow.addView(col_4_content);
-        journeytablerow.addView(col_5_content);
-    }
+    journeytablerow.addView(col_1_content);
+    journeytablerow.addView(col_2_content);
+    journeytablerow.addView(col_3_content);
+    journeytablerow.addView(col_4_content);
+    journeytablerow.addView(col_5_content);
+}
+
 
     private void setupBackButton() {
         Button back_button = (Button) findViewById(R.id.back_button_carbon_foot_print);
