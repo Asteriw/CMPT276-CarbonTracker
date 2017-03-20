@@ -47,6 +47,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/car_logo"
         app:srcCompat="@drawable/car_icon"
         android:id="@+id/car_logo"
         android:layout_alignBottom="@+id/view_cabon_footprint_button"
