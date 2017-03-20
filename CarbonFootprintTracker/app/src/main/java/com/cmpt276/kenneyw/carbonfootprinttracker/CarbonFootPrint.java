@@ -169,12 +169,37 @@ public class CarbonFootPrint extends AppCompatActivity {
         chart.invalidate();
     }
 
+<<<<<<< HEAD
+=======
+    // turn view of data; table to pie chart and vice versa
+    private void setupSwtichViewButton() {
+        Button swtichView_button = (Button) findViewById(R.id.switchview_button_carbon_foot_print);
+        swtichView_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (chart.getVisibility() == View.VISIBLE && journeyTable.getVisibility() == View.INVISIBLE) {
+                    chart.setVisibility(View.INVISIBLE);
+                    journeyTable.setVisibility(View.VISIBLE);
+                }
+                else{
+                    chart.setVisibility(View.VISIBLE);
+                    journeyTable.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+    }
+
+>>>>>>> f5c41a3ec149f401ee170d089a3b8df3d9f40180
     // Columns: date of trip, route name, distancee, vehicle name, CO2 emitted
     // Each column can be edited uniquely
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void updateTable() {
+<<<<<<< HEAD
             journeyTable = (TableLayout) findViewById(R.id.journey_table);
             row_size = journeys.countJourneys();
+=======
+
+>>>>>>> f5c41a3ec149f401ee170d089a3b8df3d9f40180
         // Go through a list of journeys
         for (int row = 0; row < row_size + 1; row++){
             journeytablerow = new TableRow(this);
@@ -190,19 +215,32 @@ public class CarbonFootPrint extends AppCompatActivity {
 
             // add column heading
             if ( row == 0 ){
+<<<<<<< HEAD
                 journeytablerow.setBackgroundColor(Color.rgb(156,150,150));
+=======
+                journeytablerow.setBackgroundColor(Color.YELLOW);
+>>>>>>> f5c41a3ec149f401ee170d089a3b8df3d9f40180
                 col_1_content.setText(column_1_header);
                 col_2_content.setText(column_2_header);
                 col_3_content.setText(column_3_header);
                 col_4_content.setText(column_4_header);
                 col_5_content.setText(column_5_header);
             }else {
+<<<<<<< HEAD
                 journeytablerow.setBackgroundColor(Color.rgb(156 - row*3 ,150 - row*3, 150 - row*3));
                 col_1_content.setText( journeys.getJourney(row).getDateOfTravel().toString()); // date of trip
                 col_2_content.setText(journeys.getJourney(row).getRouteName()); // route name
                 col_3_content.setText("" + journeys.getJourney(row).getHighwayDistance() + journeys.getJourney(row).getCityDistance()); // distance
                 col_4_content.setText(journeys.getJourney(row).getName()); // vechicle name
                 col_5_content.setText("" + journeys.getJourney(row).getTotalEmissions()); // CO2
+=======
+
+                col_1_content.setText(dateofTrips[row]);
+                col_2_content.setText(routeNames[row]);
+                col_3_content.setText("" + distance[row]);
+                col_4_content.setText(vehicleNames[row]);
+                col_5_content.setText("" + CO2emitted[row]);
+>>>>>>> f5c41a3ec149f401ee170d089a3b8df3d9f40180
             }
 
             col_1_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
@@ -239,6 +277,7 @@ public class CarbonFootPrint extends AppCompatActivity {
         journeyTable.setVisibility(View.VISIBLE);
     }
 
+<<<<<<< HEAD
     // turn view of data; table to pie chart and vice versa
     private void setupSwtichViewButton() {
         Button swtichView_button = (Button) findViewById(R.id.switchview_button_carbon_foot_print);
@@ -257,6 +296,8 @@ public class CarbonFootPrint extends AppCompatActivity {
         });
     }
 
+=======
+>>>>>>> f5c41a3ec149f401ee170d089a3b8df3d9f40180
     private void setupBackButton() {
         Button back_button = (Button) findViewById(R.id.back_button_carbon_foot_print);
         back_button.setOnClickListener(new View.OnClickListener() {
