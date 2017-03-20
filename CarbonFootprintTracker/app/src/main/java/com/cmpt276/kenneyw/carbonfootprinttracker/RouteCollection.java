@@ -6,13 +6,13 @@ import java.util.List;
 
 /**
  * DESCRIPTION:
- *  - Create a list of car and functions to access to cars in the list
+ * - Create a list of car and functions to access to cars in the list
  */
 
 public class RouteCollection {
     private List<Route> routes = new ArrayList<>();
 
-    public void addRoute(Route route){
+    public void addRoute(Route route) {
         routes.add(route);
     }
 
@@ -22,7 +22,7 @@ public class RouteCollection {
         routes.add(indexOfRouteToEdit, route);
     }
 
-    public void deleteRoute(int indexToDelete){
+    public void deleteRoute(int indexToDelete) {
         validateIndexWithException(indexToDelete);
         routes.remove(indexToDelete);
     }

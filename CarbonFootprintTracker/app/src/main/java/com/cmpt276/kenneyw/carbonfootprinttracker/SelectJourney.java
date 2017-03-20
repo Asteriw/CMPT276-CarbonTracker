@@ -38,68 +38,68 @@ public class SelectJourney extends AppCompatActivity {
     public static final String ROUTENAME = "routeName";
     public static final String CITY = "city";
     public static final String HIGHWAY = "highway";
-    public static final String GASTYPE="gasType";
-    public static final String MPGCITY="mpgCity";
-    public static final String MPGHIGHWAY="mpgHighway";
-    public static final String TRANSMISSION ="transmission";
-    public static final String LITERENGINE="literEngine";
-    public static final String DATEOFTRAVEL="DateOfTravel";
-    public static final String TOTALEMISSIONS ="totalEmissions";
+    public static final String GASTYPE = "gasType";
+    public static final String MPGCITY = "mpgCity";
+    public static final String MPGHIGHWAY = "mpgHighway";
+    public static final String TRANSMISSION = "transmission";
+    public static final String LITERENGINE = "literEngine";
+    public static final String DATEOFTRAVEL = "DateOfTravel";
+    public static final String TOTALEMISSIONS = "totalEmissions";
     public static final String BUS = "bus";
     public static final String BIKE = "bike";
     public static final String SKYTRAIN = "skytrain";
 
-    ArrayList<Journey> journeyArrayList=new ArrayList<>();
+    ArrayList<Journey> journeyArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_journey);
 
-        journeyArrayList=loadJourneys();
+        journeyArrayList = loadJourneys();
         setupAddJourneyButton();
         setupBackButton();
         setJourneyList();
     }
 
     public ArrayList<Journey> loadJourneys() {
-        ArrayList<Journey> journeyArrayList=new ArrayList<>();
-        SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
-        int journeyAmt=pref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS,0);
-        for(int i=0;i<journeyAmt;i++){
-            Date d=new Date(pref.getLong(i+DATEOFTRAVEL,0));
-            Journey j=new Journey(pref.getString(i+ROUTENAME,""),pref.getInt(i+CITY,0),pref.getInt(i+HIGHWAY,0),
-                    pref.getString(i+NAME,""),pref.getString(i+GASTYPE,""),Double.longBitsToDouble(pref.getLong(i+MPGCITY,0)),
-                    Double.longBitsToDouble(pref.getLong(i+MPGHIGHWAY,0)),Double.longBitsToDouble(pref.getLong(i+LITERENGINE,0)),
-                    d,pref.getBoolean(i+ BUS,false),pref.getBoolean(i+ BIKE,false),pref.getBoolean(i+ SKYTRAIN,false));
+        ArrayList<Journey> journeyArrayList = new ArrayList<>();
+        SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        int journeyAmt = pref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
+        for (int i = 0; i < journeyAmt; i++) {
+            Date d = new Date(pref.getLong(i + DATEOFTRAVEL, 0));
+            Journey j = new Journey(pref.getString(i + ROUTENAME, ""), pref.getInt(i + CITY, 0), pref.getInt(i + HIGHWAY, 0),
+                    pref.getString(i + NAME, ""), pref.getString(i + GASTYPE, ""), Double.longBitsToDouble(pref.getLong(i + MPGCITY, 0)),
+                    Double.longBitsToDouble(pref.getLong(i + MPGHIGHWAY, 0)), Double.longBitsToDouble(pref.getLong(i + LITERENGINE, 0)),
+                    d, pref.getBoolean(i + BUS, false), pref.getBoolean(i + BIKE, false), pref.getBoolean(i + SKYTRAIN, false));
             journeyArrayList.add(j);
         }
         return journeyArrayList;
     }
 
     private void saveJourneys() {
-        SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
-        SharedPreferences.Editor editor=pref.edit();
+        SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
         editor.clear();
-        int journeyAmt=journeyArrayList.size();
-        for(int i=0;i<journeyAmt;i++){
-            editor.putString(i+ NAME,journeyArrayList.get(i).getName());
-            editor.putString(i+ ROUTENAME,journeyArrayList.get(i).getRouteName());
-            editor.putString(i+ GASTYPE,journeyArrayList.get(i).getGasType());
-            editor.putLong(i+MPGCITY,Double.doubleToRawLongBits(journeyArrayList.get(i).getMpgCity()));
-            editor.putLong(i+ MPGHIGHWAY,Double.doubleToRawLongBits(journeyArrayList.get(i).getMpgHighway()));
-            editor.putInt(i+CITY,journeyArrayList.get(i).getCityDistance());
-            editor.putInt(i+HIGHWAY,journeyArrayList.get(i).getHighwayDistance());
-            editor.putLong(i+LITERENGINE,Double.doubleToRawLongBits(journeyArrayList.get(i).getLiterEngine()));
-            editor.putLong(i+DATEOFTRAVEL,journeyArrayList.get(i).getDateOfTravel().getTime());
-            editor.putLong(i+TOTALEMISSIONS,Double.doubleToRawLongBits(journeyArrayList.get(i).getTotalEmissions()));
+        int journeyAmt = journeyArrayList.size();
+        for (int i = 0; i < journeyAmt; i++) {
+            editor.putString(i + NAME, journeyArrayList.get(i).getName());
+            editor.putString(i + ROUTENAME, journeyArrayList.get(i).getRouteName());
+            editor.putString(i + GASTYPE, journeyArrayList.get(i).getGasType());
+            editor.putLong(i + MPGCITY, Double.doubleToRawLongBits(journeyArrayList.get(i).getMpgCity()));
+            editor.putLong(i + MPGHIGHWAY, Double.doubleToRawLongBits(journeyArrayList.get(i).getMpgHighway()));
+            editor.putInt(i + CITY, journeyArrayList.get(i).getCityDistance());
+            editor.putInt(i + HIGHWAY, journeyArrayList.get(i).getHighwayDistance());
+            editor.putLong(i + LITERENGINE, Double.doubleToRawLongBits(journeyArrayList.get(i).getLiterEngine()));
+            editor.putLong(i + DATEOFTRAVEL, journeyArrayList.get(i).getDateOfTravel().getTime());
+            editor.putLong(i + TOTALEMISSIONS, Double.doubleToRawLongBits(journeyArrayList.get(i).getTotalEmissions()));
         }
-        editor.putInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS,journeyAmt);
+        editor.putInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, journeyAmt);
         editor.apply();
     }
 
     private void setupBackButton() {
-        Button back_button =  (Button) findViewById(R.id.back_button_select_journey);
+        Button back_button = (Button) findViewById(R.id.back_button_select_journey);
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +116,7 @@ public class SelectJourney extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent SelectJourney2SelectCar = SelectCar.makeIntent(SelectJourney.this);
-                startActivityForResult(SelectJourney2SelectCar,CAR_AND_ROUTE_SELECTED);
+                startActivityForResult(SelectJourney2SelectCar, CAR_AND_ROUTE_SELECTED);
             }
         });
     }
@@ -125,18 +125,19 @@ public class SelectJourney extends AppCompatActivity {
 
         ArrayAdapter<Journey> adapter = new ArrayAdapter<Journey>(this, R.layout.layout_for_list, journeyArrayList);
         ListView list = (ListView) findViewById(R.id.journeyList);
-        list.setAdapter(adapter);list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Opens a dialog with the calculation result of CO2 emission
-                FragmentManager manager=getSupportFragmentManager();
+                FragmentManager manager = getSupportFragmentManager();
                 CalculationDialog dialog = new CalculationDialog();
 
-                Bundle bundle =new Bundle();
-                bundle.putDouble("CO2",journeyArrayList.get(position).getTotalEmissions());
+                Bundle bundle = new Bundle();
+                bundle.putDouble("CO2", journeyArrayList.get(position).getTotalEmissions());
 
                 dialog.setArguments(bundle);
-                dialog.show(manager,"CalculateDialog");
+                dialog.show(manager, "CalculateDialog");
             }
         });
         registerForContextMenu(list);
@@ -147,57 +148,56 @@ public class SelectJourney extends AppCompatActivity {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo){
-        if(v.getId()==R.id.journeyList){
-            AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo)menuInfo;
-            menu.setHeaderTitle(journeyArrayList.get(info.position).getName()+" - "+journeyArrayList.get(info.position).getRouteName());
-            String[] menuItems= getResources().getStringArray(R.array.menu);
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId() == R.id.journeyList) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            menu.setHeaderTitle(journeyArrayList.get(info.position).getName() + " - " + journeyArrayList.get(info.position).getRouteName());
+            String[] menuItems = getResources().getStringArray(R.array.menu);
 
-            for(int i=0;i<menuItems.length;i++){
-                menu.add(Menu.NONE,i,i,menuItems[i]);
+            for (int i = 0; i < menuItems.length; i++) {
+                menu.add(Menu.NONE, i, i, menuItems[i]);
             }
         }
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int menuItemIndex = item.getItemId();
         String[] menuItems = getResources().getStringArray(R.array.menu);
         String menuItemName = menuItems[menuItemIndex];
-        int pos=info.position;
+        int pos = info.position;
 
-        if(menuItemName.equals("Edit")){
-            Intent i=SelectCar.makeIntent(SelectJourney.this);
-            i.putExtra("pos",pos);
+        if (menuItemName.equals("Edit")) {
+            Intent i = SelectCar.makeIntent(SelectJourney.this);
+            i.putExtra("pos", pos);
             startActivityForResult(i, EDIT_JOURNEY);
-        }
-        else if(menuItemName.equals("Delete")){
-            Journey j=journeyArrayList.get(pos);
+        } else if (menuItemName.equals("Delete")) {
+            Journey j = journeyArrayList.get(pos);
             journeyArrayList.remove(j);
             setJourneyList();
         }
         return true;
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case CAR_AND_ROUTE_SELECTED:
-                if(resultCode==RESULT_OK){
-                    Date date=new Date();
-                    RouteSingleton finalRoute=RouteSingleton.getInstance();
-                    CarSingleton finalCar=CarSingleton.getInstance();
-                    Journey finalJourney=new Journey(finalRoute.getRouteName(),finalRoute.getCityDistance(),finalRoute.getHighwayDistance()
-                            ,finalCar.getName(),finalCar.getGasType(),finalCar.getCityEmissions(),finalCar.getHighwayEmissions(),
-                            finalCar.getLiterEngine(),date,finalCar.getBus(),finalCar.getWalk(),finalCar.getSkytrain());
+                if (resultCode == RESULT_OK) {
+                    Date date = new Date();
+                    RouteSingleton finalRoute = RouteSingleton.getInstance();
+                    CarSingleton finalCar = CarSingleton.getInstance();
+                    Journey finalJourney = new Journey(finalRoute.getRouteName(), finalRoute.getCityDistance(), finalRoute.getHighwayDistance()
+                            , finalCar.getName(), finalCar.getGasType(), finalCar.getCityEmissions(), finalCar.getHighwayEmissions(),
+                            finalCar.getLiterEngine(), date, finalCar.getBus(), finalCar.getWalk(), finalCar.getSkytrain());
                     journeyArrayList.add(finalJourney);
                     setupAddJourneyButton();
                     setupBackButton();
                     setJourneyList();
 
-                }
-                else{
-                    Log.i(TAG,"User Cancelled");
+                } else {
+                    Log.i(TAG, "User Cancelled");
                     setupAddJourneyButton();
                     setupBackButton();
                     setJourneyList();
@@ -205,11 +205,11 @@ public class SelectJourney extends AppCompatActivity {
 
                 break;
             case EDIT_JOURNEY:
-                if(resultCode==RESULT_OK){
-                    int pos=data.getIntExtra("pos",0);
-                    Journey j=journeyArrayList.get(pos);
-                    RouteSingleton finalRoute=RouteSingleton.getInstance();
-                    CarSingleton finalCar=CarSingleton.getInstance();
+                if (resultCode == RESULT_OK) {
+                    int pos = data.getIntExtra("pos", 0);
+                    Journey j = journeyArrayList.get(pos);
+                    RouteSingleton finalRoute = RouteSingleton.getInstance();
+                    CarSingleton finalCar = CarSingleton.getInstance();
                     j.setRouteName(finalRoute.getRouteName());
                     j.setCityDistance(finalRoute.getCityDistance());
                     j.setHighwayDistance(finalRoute.getHighwayDistance());
@@ -222,8 +222,7 @@ public class SelectJourney extends AppCompatActivity {
                     setupAddJourneyButton();
                     setupBackButton();
                     setJourneyList();
-                }
-                else{
+                } else {
                     setupAddJourneyButton();
                     setupBackButton();
                     setJourneyList();
