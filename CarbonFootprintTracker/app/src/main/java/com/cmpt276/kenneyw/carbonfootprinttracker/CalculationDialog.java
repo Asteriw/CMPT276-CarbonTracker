@@ -30,9 +30,9 @@ public class CalculationDialog extends AppCompatDialogFragment {
         //create view
 
         View viewer = LayoutInflater.from(getActivity()).inflate(R.layout.activity_calculation_dialog, null);
-        TextView txtCO2=(TextView) viewer.findViewById(R.id.calculation_result_dialog);
-        Double CO2=getArguments().getDouble("CO2");
-        txtCO2.setText(""+CO2);
+        TextView txtCO2 = (TextView) viewer.findViewById(R.id.calculation_result_dialog);
+        Double CO2 = getArguments().getDouble("CO2");
+        txtCO2.setText("" + CO2);
         //create button listeners
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 
