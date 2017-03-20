@@ -23,7 +23,7 @@ when editing a pre-existing Journey.
     private boolean Bus;
     private boolean Skytrain;
 
-    public Journey(String routeName, int cityDistance, int highwayDistance,
+    Journey(String routeName, int cityDistance, int highwayDistance,
                    String carName, String gasType, double mpgCity, double mpgHighway, double literEngine,
                    Date dateOfTravel,boolean bus,boolean bike,boolean skytrain){
         this.routeName=routeName;
@@ -38,10 +38,9 @@ when editing a pre-existing Journey.
         this.Bus=bus;
         this.Bike=bike;
         this.Skytrain=skytrain;
-
         if(!bus &&!bike&& !skytrain) {
             Calculation c = new Calculation();
-            switch (this.gasType) {
+            switch (gasType) {
                 case "Premium":
                     this.totalEmissions += c.calculateCO2Diesel(mpgCity, cityDistance);
                     this.totalEmissions += c.calculateCO2Diesel(mpgHighway, highwayDistance);
@@ -55,15 +54,16 @@ when editing a pre-existing Journey.
                     break;
             }
         }
-        else if(this.Bike){
+
+        else if(bike){
             this.totalEmissions=0;
         }
-        else if(this.Skytrain){
+        else if(skytrain){
             this.totalEmissions=0;
             //Edit This
         }
         else{
-            this.totalEmissions=0.089*(this.cityDistance+this.highwayDistance);
+            this.totalEmissions=0.89*(this.cityDistance+this.highwayDistance);
         }
     }
 
@@ -71,12 +71,12 @@ when editing a pre-existing Journey.
         Calculation c=new Calculation();
         double totalEmissions=0;
         if(!this.Bus && !this.Bike && !this.Skytrain )
-        switch(this.gasType) {
+        switch(gasType) {               //CONFIRM
             case "Premium":
                 totalEmissions += c.calculateCO2Diesel(mpgCity,cityDistance);
                 totalEmissions += c.calculateCO2Diesel(mpgHighway,highwayDistance);
                 break;
-            case "Regular":
+            case "Regular":             //CONFIRM
                 totalEmissions += c.calculateCO2Gasoline(mpgCity,cityDistance);
                 totalEmissions += c.calculateCO2Gasoline(mpgHighway,highwayDistance);
                 break;

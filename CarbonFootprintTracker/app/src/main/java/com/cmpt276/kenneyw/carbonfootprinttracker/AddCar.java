@@ -22,7 +22,6 @@ import java.util.List;
 * */
 public class AddCar extends AppCompatActivity {
 
-    public static final String POS_EDIT = "posEdit";
     DatabaseAccess databaseAccess;
     List<String> makeList;
     List<String> yearList;
@@ -38,8 +37,8 @@ public class AddCar extends AppCompatActivity {
         setContentView(R.layout.activity_add_car);
 
         Intent i=getIntent();
-        if(i.hasExtra(POS_EDIT)) {
-            pos = i.getIntExtra(POS_EDIT, 0);
+        if(i.hasExtra("pos")) {
+            pos = i.getIntExtra("pos", 0);
         }
         else{pos=0;}
 
@@ -166,7 +165,7 @@ public class AddCar extends AppCompatActivity {
                     masterCar.setMake(tempCar.getMake());
 
                     Intent i=new Intent();
-                    i.putExtra(POS_EDIT,pos);
+                    i.putExtra("posEdit",pos);
                     setResult(RESULT_OK,i);
                     finish();
                 }
