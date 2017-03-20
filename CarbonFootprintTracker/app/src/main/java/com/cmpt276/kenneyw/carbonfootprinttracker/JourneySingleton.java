@@ -18,7 +18,7 @@ public class JourneySingleton extends AppCompatActivity {
 
     private static JourneySingleton journeyInstance = null;
 
-    private JourneySingleton(){
+    private JourneySingleton() {
         this.routeName = "";
         this.cityDistance = 0;
         this.highwayDistance = 0;
@@ -30,8 +30,8 @@ public class JourneySingleton extends AppCompatActivity {
         this.dateOfTravel = null;
     }
 
-    public static JourneySingleton getInstance(){
-        if(journeyInstance == null){
+    public static JourneySingleton getInstance() {
+        if (journeyInstance == null) {
             journeyInstance = new JourneySingleton();
         }
         return journeyInstance;

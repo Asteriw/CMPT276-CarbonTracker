@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.Date;
 
 public class Journey extends AppCompatActivity {
-/*
-Stores a Journey, and calculates CO2 emitted via this Journey in constructor and in seperate function to be called
-when editing a pre-existing Journey.
- */
+    /*
+    Stores a Journey, and calculates CO2 emitted via this Journey in constructor and in seperate function to be called
+    when editing a pre-existing Journey.
+     */
     private String routeName;
     private int cityDistance;
     private int highwayDistance;
@@ -24,21 +24,21 @@ when editing a pre-existing Journey.
     private boolean Skytrain;
 
     Journey(String routeName, int cityDistance, int highwayDistance,
-                   String carName, String gasType, double mpgCity, double mpgHighway, double literEngine,
-                   Date dateOfTravel,boolean bus,boolean bike,boolean skytrain){
-        this.routeName=routeName;
+            String carName, String gasType, double mpgCity, double mpgHighway, double literEngine,
+            Date dateOfTravel, boolean bus, boolean bike, boolean skytrain) {
+        this.routeName = routeName;
         this.cityDistance = cityDistance;
         this.highwayDistance = highwayDistance;
-        this.name=carName;
-        this.gasType=gasType;
-        this.mpgCity=mpgCity;
-        this.mpgHighway=mpgHighway;
-        this.literEngine=literEngine;
-        this.dateOfTravel=dateOfTravel;
-        this.Bus=bus;
-        this.Bike=bike;
-        this.Skytrain=skytrain;
-        if(!bus &&!bike&& !skytrain) {
+        this.name = carName;
+        this.gasType = gasType;
+        this.mpgCity = mpgCity;
+        this.mpgHighway = mpgHighway;
+        this.literEngine = literEngine;
+        this.dateOfTravel = dateOfTravel;
+        this.Bus = bus;
+        this.Bike = bike;
+        this.Skytrain = skytrain;
+        if (!bus && !bike && !skytrain) {
             Calculation c = new Calculation();
             switch (gasType) {
                 case "Premium":
@@ -46,44 +46,40 @@ when editing a pre-existing Journey.
                     this.totalEmissions += c.calculateCO2Diesel(mpgHighway, highwayDistance);
                     break;
                 case "Regular":
-                    this.totalEmissions += c.calculateCO2Gasoline(mpgCity,  cityDistance);
-                    this.totalEmissions += c.calculateCO2Gasoline(mpgHighway,  highwayDistance);
+                    this.totalEmissions += c.calculateCO2Gasoline(mpgCity, cityDistance);
+                    this.totalEmissions += c.calculateCO2Gasoline(mpgHighway, highwayDistance);
                     break;
                 default:
                     this.totalEmissions = 0;
                     break;
             }
-        }
-
-        else if(bike){
-            this.totalEmissions=0;
-        }
-        else if(skytrain){
-            this.totalEmissions=0;
+        } else if (bike) {
+            this.totalEmissions = 0;
+        } else if (skytrain) {
+            this.totalEmissions = 0;
             //Edit This
-        }
-        else{
-            this.totalEmissions=0.89*(this.cityDistance+this.highwayDistance);
+        } else {
+            this.totalEmissions = 0.89 * (this.cityDistance + this.highwayDistance);
         }
     }
 
-    public double CalculateTotalEmissions(){
-        Calculation c=new Calculation();
-        double totalEmissions=0;
-        if(!this.Bus && !this.Bike && !this.Skytrain )
-        switch(gasType) {               //CONFIRM
-            case "Premium":
-                totalEmissions += c.calculateCO2Diesel(mpgCity,cityDistance);
-                totalEmissions += c.calculateCO2Diesel(mpgHighway,highwayDistance);
-                break;
-            case "Regular":             //CONFIRM
-                totalEmissions += c.calculateCO2Gasoline(mpgCity,cityDistance);
-                totalEmissions += c.calculateCO2Gasoline(mpgHighway,highwayDistance);
-                break;
-        }
+    public double CalculateTotalEmissions() {
+        Calculation c = new Calculation();
+        double totalEmissions = 0;
+        if (!this.Bus && !this.Bike && !this.Skytrain)
+            switch (gasType) {               //CONFIRM
+                case "Premium":
+                    totalEmissions += c.calculateCO2Diesel(mpgCity, cityDistance);
+                    totalEmissions += c.calculateCO2Diesel(mpgHighway, highwayDistance);
+                    break;
+                case "Regular":             //CONFIRM
+                    totalEmissions += c.calculateCO2Gasoline(mpgCity, cityDistance);
+                    totalEmissions += c.calculateCO2Gasoline(mpgHighway, highwayDistance);
+                    break;
+            }
         //89 grams of CO2 per km
-        if(this.Bus){
-            totalEmissions=0.089*(this.cityDistance+this.highwayDistance);
+        if (this.Bus) {
+            totalEmissions = 0.089 * (this.cityDistance + this.highwayDistance);
         }
         return totalEmissions;
     }
@@ -193,7 +189,7 @@ when editing a pre-existing Journey.
     }
 
     public String toString() {
-        return name+" - "+routeName+" - "+cityDistance+" km City, "+highwayDistance+"km Highway"+" - Date: "+dateOfTravel;
+        return name + " - " + routeName + " - " + cityDistance + " km City, " + highwayDistance + "km Highway" + " - Date: " + dateOfTravel;
     }
 
 }

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import java.util.List;
 
 
@@ -36,11 +37,12 @@ public class AddCar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_car);
 
-        Intent i=getIntent();
-        if(i.hasExtra("pos")) {
+        Intent i = getIntent();
+        if (i.hasExtra("pos")) {
             pos = i.getIntExtra("pos", 0);
+        } else {
+            pos = 0;
         }
-        else{pos=0;}
 
         openDatabase();
         setupYearSpinner();
@@ -49,7 +51,7 @@ public class AddCar extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy(){//Last function to be called, is called before the Activity is closed.
+    protected void onDestroy() {//Last function to be called, is called before the Activity is closed.
         super.onDestroy();
         closeDatabase();//Closes the database.
     }
@@ -62,12 +64,14 @@ public class AddCar extends AppCompatActivity {
         yearSpinner.setOnItemSelectedListener(new yearSpinner());
         yearSpinner.setAdapter(yearAdapter);
     }
+
     private class yearSpinner implements AdapterView.OnItemSelectedListener {
-        public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             selectedYear = parent.getItemAtPosition(position).toString();
             setupMakeSpinner(selectedYear);
         }
-        public void onNothingSelected (AdapterView<?> parent) {
+
+        public void onNothingSelected(AdapterView<?> parent) {
         }
     }
 
@@ -79,12 +83,14 @@ public class AddCar extends AppCompatActivity {
         makeSpinner.setOnItemSelectedListener(new makeSpinner());
         makeSpinner.setAdapter(makeAdapter);
     }
+
     private class makeSpinner implements AdapterView.OnItemSelectedListener {
-        public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             selectedMake = parent.getItemAtPosition(position).toString();
             setupModelSpinner(selectedYear, selectedMake);
         }
-        public void onNothingSelected (AdapterView<?> parent) {
+
+        public void onNothingSelected(AdapterView<?> parent) {
         }
     }
 
@@ -96,23 +102,25 @@ public class AddCar extends AppCompatActivity {
         modelSpinner.setOnItemSelectedListener(new modelSpinner());
         modelSpinner.setAdapter(modelAdapter);
     }
+
     private class modelSpinner implements AdapterView.OnItemSelectedListener {
-        public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             selectedModel = parent.getItemAtPosition(position).toString();
             Log.i("This", selectedModel);
             makeCarList(selectedYear, selectedMake, selectedModel);
         }
-        public void onNothingSelected (AdapterView<?> parent) {
+
+        public void onNothingSelected(AdapterView<?> parent) {
         }
     }
 
     //Makes an instance of the DatabaseAccess class and queries the Database. This is the meat and potatoes of the whole class.
     //Calls the getTempCarList function in DatabaseAccess, which in turn returns all the values of matching database queries
     //if a List<String[]>, so that you can .get() and then reference like an array.
-    private void makeCarList(String selectedYear, String selectedMake, String selectedModel){
+    private void makeCarList(String selectedYear, String selectedMake, String selectedModel) {
         carList = new CarCollection();
         List<String[]> tempCarList = databaseAccess.getTempCarList(selectedYear, selectedMake, selectedModel);
-        for(int i = 0; i<tempCarList.size(); i++){
+        for (int i = 0; i < tempCarList.size(); i++) {
             String[] carData = tempCarList.get(i);
             Car car = new Car();
             car.setMake(carData[2]);
@@ -146,10 +154,10 @@ public class AddCar extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 EditText inputName = (EditText) findViewById(R.id.nick_name_from_user);
                 String userInputName = inputName.getText().toString();
-                if (userInputName.matches("")){
+                if (userInputName.matches("")) {
                     Toast.makeText(AddCar.this, R.string.error_toast, Toast.LENGTH_SHORT).show();
                 } else {
                     CarSingleton masterCar = CarSingleton.getInstance();
@@ -164,9 +172,9 @@ public class AddCar extends AppCompatActivity {
                     masterCar.setTransmission(tempCar.getTransmission());
                     masterCar.setMake(tempCar.getMake());
 
-                    Intent i=new Intent();
-                    i.putExtra("posEdit",pos);
-                    setResult(RESULT_OK,i);
+                    Intent i = new Intent();
+                    i.putExtra("posEdit", pos);
+                    setResult(RESULT_OK, i);
                     finish();
                 }
             }
@@ -179,7 +187,7 @@ public class AddCar extends AppCompatActivity {
         int factor = 100;
         value = value * factor;
         long tempValue = Math.round(value);
-        return (double) tempValue/factor;
+        return (double) tempValue / factor;
     }
 
     //Simple database close function.
@@ -199,8 +207,8 @@ public class AddCar extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent();
-                setResult(RESULT_CANCELED,i);
+                Intent i = new Intent();
+                setResult(RESULT_CANCELED, i);
                 finish();
             }
         });

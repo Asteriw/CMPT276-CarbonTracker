@@ -6,13 +6,13 @@ import java.util.List;
 
 /**
  * DESCRIPTION:
- *  - Create a list of car and functions to access to cars in the list
+ * - Create a list of car and functions to access to cars in the list
  */
 
 public class CarCollection {
     private List<Car> cars = new ArrayList<>();
 
-    public void addCar(Car car){
+    public void addCar(Car car) {
         cars.add(car);
     }
 
@@ -22,7 +22,7 @@ public class CarCollection {
         cars.add(indexOfCarToEdit, car);
     }
 
-    public void deleteCar(int indexToDelete){
+    public void deleteCar(int indexToDelete) {
         validateIndexWithException(indexToDelete);
         cars.remove(indexToDelete);
     }

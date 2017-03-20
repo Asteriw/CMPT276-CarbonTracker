@@ -24,7 +24,7 @@ import android.widget.ListView;
 public class SelectCar extends AppCompatActivity {
 
     public static final int ROUTE_SELECTED = 4;
-    public static final int CAR_ADDED=5;
+    public static final int CAR_ADDED = 5;
     public static final int EDIT_CAR = 6;
     private static final int BIKE_SELECTED = 7;
     private static final int BUS_SELECTED = 8;
@@ -33,15 +33,14 @@ public class SelectCar extends AppCompatActivity {
     private static final String SHAREDPREF_SET = "CarbonFootprintTrackerCars";
     private static final String SHAREDPREF_ITEM_AMOUNTOFCARS = "AmountOfCars";
     public static final String NAME = "name";
-    public static final String GASTYPE="gasType";
-    public static final String MPGCITY="mpgCity";
-    public static final String MPGHIGHWAY="mpgHighway";
-    public static final String TRANSMISSION ="transmission";
-    public static final String LITERENGINE="literEngine";
-    public static final String MAKE="Make";
-    public static final String MODEL="Model";
-    public static final String YEAR="Year";
-
+    public static final String GASTYPE = "gasType";
+    public static final String MPGCITY = "mpgCity";
+    public static final String MPGHIGHWAY = "mpgHighway";
+    public static final String TRANSMISSION = "transmission";
+    public static final String LITERENGINE = "literEngine";
+    public static final String MAKE = "Make";
+    public static final String MODEL = "Model";
+    public static final String YEAR = "Year";
 
 
     CarCollection myCars = new CarCollection();
@@ -52,13 +51,14 @@ public class SelectCar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_car);
-        myCars=loadCars();
+        myCars = loadCars();
 //need this
-        Intent i=getIntent();
-        if(i.hasExtra("pos")) {
+        Intent i = getIntent();
+        if (i.hasExtra("pos")) {
             pos = i.getIntExtra("pos", 0);
+        } else {
+            pos = 0;
         }
-        else{pos=0;}
 
         setupAddCarButton();
         setupBackButton();
@@ -67,14 +67,14 @@ public class SelectCar extends AppCompatActivity {
     }
 
     private void setUpAlternateTransportationBtns() {
-        Button btnSkytrain=(Button)findViewById(R.id.btnSkytrain);
-        Button btnBus=(Button)findViewById(R.id.btnBus);
-        Button btnWalk=(Button)findViewById(R.id.btnWalk);
+        Button btnSkytrain = (Button) findViewById(R.id.btnSkytrain);
+        Button btnBus = (Button) findViewById(R.id.btnBus);
+        Button btnWalk = (Button) findViewById(R.id.btnWalk);
 
         btnSkytrain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CarSingleton finalCar=CarSingleton.getInstance();
+                CarSingleton finalCar = CarSingleton.getInstance();
                 finalCar.setMake("");
                 finalCar.setModel("");
                 finalCar.setName("Skytrain");
@@ -89,13 +89,13 @@ public class SelectCar extends AppCompatActivity {
                 finalCar.setWalk(false);
 
                 Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
-                startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
+                startActivityForResult(SelectCar2SelectRoute, ROUTE_SELECTED);
             }
         });
         btnBus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CarSingleton finalCar=CarSingleton.getInstance();
+                CarSingleton finalCar = CarSingleton.getInstance();
                 finalCar.setMake("");
                 finalCar.setModel("");
                 finalCar.setName("Bus");
@@ -110,13 +110,13 @@ public class SelectCar extends AppCompatActivity {
                 finalCar.setWalk(false);
 
                 Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
-                startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
+                startActivityForResult(SelectCar2SelectRoute, ROUTE_SELECTED);
             }
         });
         btnWalk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CarSingleton finalCar=CarSingleton.getInstance();
+                CarSingleton finalCar = CarSingleton.getInstance();
                 finalCar.setMake("");
                 finalCar.setModel("");
                 finalCar.setName("Walk / Bike");
@@ -131,7 +131,7 @@ public class SelectCar extends AppCompatActivity {
                 finalCar.setWalk(true);
 
                 Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
-                startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
+                startActivityForResult(SelectCar2SelectRoute, ROUTE_SELECTED);
 
             }
         });
@@ -140,38 +140,39 @@ public class SelectCar extends AppCompatActivity {
 
     public CarCollection loadCars() {
         CarCollection cars = new CarCollection();
-        SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
-        int carAmt=pref.getInt(SHAREDPREF_ITEM_AMOUNTOFCARS,0);
+        SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        int carAmt = pref.getInt(SHAREDPREF_ITEM_AMOUNTOFCARS, 0);
 
-        for(int i=0;i<carAmt;i++){
-            Car car=new Car( pref.getString(i+NAME,""),pref.getString(i+MAKE,""),pref.getString(i+MODEL,""),
-                    Double.longBitsToDouble(pref.getLong(i+MPGHIGHWAY,0)),
-                    Double.longBitsToDouble(pref.getLong(i+MPGCITY,0)),pref.getInt(i+YEAR,0),
-                    pref.getString(i+TRANSMISSION,""),
-                    Double.longBitsToDouble(pref.getLong(i+LITERENGINE,0)),pref.getString(i+GASTYPE,""));
+        for (int i = 0; i < carAmt; i++) {
+            Car car = new Car(pref.getString(i + NAME, ""), pref.getString(i + MAKE, ""), pref.getString(i + MODEL, ""),
+                    Double.longBitsToDouble(pref.getLong(i + MPGHIGHWAY, 0)),
+                    Double.longBitsToDouble(pref.getLong(i + MPGCITY, 0)), pref.getInt(i + YEAR, 0),
+                    pref.getString(i + TRANSMISSION, ""),
+                    Double.longBitsToDouble(pref.getLong(i + LITERENGINE, 0)), pref.getString(i + GASTYPE, ""));
             cars.addCar(car);
         }
 
         return cars;
     }
-    private void saveCars(){
-        SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
-        SharedPreferences.Editor editor=pref.edit();
-        editor.clear();
-        int carAmt=myCars.countCars();
 
-        for(int i=0;i<carAmt;i++){
-            editor.putString(i+NAME,myCars.getCar(i).getName());
-            editor.putString(i+MAKE,myCars.getCar(i).getMake());
-            editor.putString(i+MODEL,myCars.getCar(i).getModel());
-            editor.putString(i+TRANSMISSION,myCars.getCar(i).getTransmission());
-            editor.putString(i+GASTYPE,myCars.getCar(i).getGasType());
-            editor.putInt(i+YEAR,myCars.getCar(i).getYear());
-            editor.putLong(i+MPGCITY,Double.doubleToRawLongBits(myCars.getCar(i).getCityEmissions()));
-            editor.putLong(i+MPGHIGHWAY,Double.doubleToRawLongBits(myCars.getCar(i).getHighwayEmissions()));
-            editor.putLong(i+LITERENGINE,Double.doubleToRawLongBits(myCars.getCar(i).getLiterEngine()));
+    private void saveCars() {
+        SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        int carAmt = myCars.countCars();
+
+        for (int i = 0; i < carAmt; i++) {
+            editor.putString(i + NAME, myCars.getCar(i).getName());
+            editor.putString(i + MAKE, myCars.getCar(i).getMake());
+            editor.putString(i + MODEL, myCars.getCar(i).getModel());
+            editor.putString(i + TRANSMISSION, myCars.getCar(i).getTransmission());
+            editor.putString(i + GASTYPE, myCars.getCar(i).getGasType());
+            editor.putInt(i + YEAR, myCars.getCar(i).getYear());
+            editor.putLong(i + MPGCITY, Double.doubleToRawLongBits(myCars.getCar(i).getCityEmissions()));
+            editor.putLong(i + MPGHIGHWAY, Double.doubleToRawLongBits(myCars.getCar(i).getHighwayEmissions()));
+            editor.putLong(i + LITERENGINE, Double.doubleToRawLongBits(myCars.getCar(i).getLiterEngine()));
         }
-        editor.putInt(SHAREDPREF_ITEM_AMOUNTOFCARS,carAmt);
+        editor.putInt(SHAREDPREF_ITEM_AMOUNTOFCARS, carAmt);
         editor.apply();
     }
 
@@ -182,12 +183,11 @@ public class SelectCar extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent SelectCar2AddCar = AddCar.makeIntent(SelectCar.this);
-                startActivityForResult(SelectCar2AddCar,CAR_ADDED);
+                startActivityForResult(SelectCar2AddCar, CAR_ADDED);
                 //need this
             }
         });
     }
-
 
 
     private void setupBackButton() {
@@ -195,8 +195,8 @@ public class SelectCar extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent();
-                setResult(RESULT_CANCELED,i);
+                Intent i = new Intent();
+                setResult(RESULT_CANCELED, i);
                 saveCars();
                 finish();
             }
@@ -215,7 +215,7 @@ public class SelectCar extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                CarSingleton finalCar=CarSingleton.getInstance();
+                CarSingleton finalCar = CarSingleton.getInstance();
                 finalCar.setMake(myCars.getCar(position).getMake());
                 finalCar.setModel(myCars.getCar(position).getModel());
                 finalCar.setName(myCars.getCar(position).getName());
@@ -230,7 +230,7 @@ public class SelectCar extends AppCompatActivity {
                 finalCar.setSkytrain(false);
 
                 Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
-                startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
+                startActivityForResult(SelectCar2SelectRoute, ROUTE_SELECTED);
 
             }
         });
@@ -242,14 +242,14 @@ public class SelectCar extends AppCompatActivity {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo){
-        if(v.getId()==R.id.carlist){
-            AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo)menuInfo;
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId() == R.id.carlist) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
             menu.setHeaderTitle(myCars.getCar(info.position).getName());
-            String[] menuItems= getResources().getStringArray(R.array.menu);
+            String[] menuItems = getResources().getStringArray(R.array.menu);
 
-            for(int i=0;i<menuItems.length;i++){
-                menu.add(Menu.NONE,i,i,menuItems[i]);
+            for (int i = 0; i < menuItems.length; i++) {
+                menu.add(Menu.NONE, i, i, menuItems[i]);
             }
         }
     }
@@ -260,11 +260,11 @@ public class SelectCar extends AppCompatActivity {
         int menuItemIndex = item.getItemId();
         String[] menuItems = getResources().getStringArray(R.array.menu);
         String menuItemName = menuItems[menuItemIndex];
-        switch(menuItemName) {
+        switch (menuItemName) {
             case "Edit":
-                Intent i=AddCar.makeIntent(SelectCar.this);
-                i.putExtra("pos",info.position);
-                startActivityForResult(i,EDIT_CAR);
+                Intent i = AddCar.makeIntent(SelectCar.this);
+                i.putExtra("pos", info.position);
+                startActivityForResult(i, EDIT_CAR);
             case "Delete":
                 myCars.deleteCar(info.position);
                 setCarList();
@@ -275,19 +275,18 @@ public class SelectCar extends AppCompatActivity {
     }
 
 
-//need this
+    //need this
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode){
+        switch (requestCode) {
             case ROUTE_SELECTED:
-                if(resultCode==RESULT_OK){
-                    Intent i=new Intent();
-                    i.putExtra("pos",pos);
-                    setResult(RESULT_OK,i);
+                if (resultCode == RESULT_OK) {
+                    Intent i = new Intent();
+                    i.putExtra("pos", pos);
+                    setResult(RESULT_OK, i);
                     saveCars();
                     finish();
-                }
-                else{
+                } else {
                     setupAddCarButton();
                     setupBackButton();
                     setCarList();
@@ -295,26 +294,7 @@ public class SelectCar extends AppCompatActivity {
                 }
                 break;
             case CAR_ADDED:
-                if(resultCode==RESULT_OK){
-                CarSingleton masterCar = CarSingleton.getInstance();
-                Car tempCar =new Car(masterCar.getName(),
-                        masterCar.getMake(),
-                        masterCar.getModel(),
-                        masterCar.getHighwayEmissions(),
-                        masterCar.getCityEmissions(),
-                        masterCar.getYear(),
-                        masterCar.getTransmission(),
-                        masterCar.getLiterEngine(),
-                        masterCar.getGasType()
-                );
-                myCars.addCar(tempCar);}
-                setupAddCarButton();
-                setupBackButton();
-                setCarList();
-
-                break;
-            case EDIT_CAR:
-                if(resultCode==RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     CarSingleton masterCar = CarSingleton.getInstance();
                     Car tempCar = new Car(masterCar.getName(),
                             masterCar.getMake(),
@@ -326,8 +306,28 @@ public class SelectCar extends AppCompatActivity {
                             masterCar.getLiterEngine(),
                             masterCar.getGasType()
                     );
-                    int position=data.getIntExtra("posEdit",0);
-                    myCars.changeCar(tempCar,position);
+                    myCars.addCar(tempCar);
+                }
+                setupAddCarButton();
+                setupBackButton();
+                setCarList();
+
+                break;
+            case EDIT_CAR:
+                if (resultCode == RESULT_OK) {
+                    CarSingleton masterCar = CarSingleton.getInstance();
+                    Car tempCar = new Car(masterCar.getName(),
+                            masterCar.getMake(),
+                            masterCar.getModel(),
+                            masterCar.getHighwayEmissions(),
+                            masterCar.getCityEmissions(),
+                            masterCar.getYear(),
+                            masterCar.getTransmission(),
+                            masterCar.getLiterEngine(),
+                            masterCar.getGasType()
+                    );
+                    int position = data.getIntExtra("posEdit", 0);
+                    myCars.changeCar(tempCar, position);
                     setCarList();
 
                     break;
