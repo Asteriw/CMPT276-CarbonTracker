@@ -34,39 +34,17 @@ import java.util.List;
 *   This class displays a table or a pie chart of journeys user created.
 *   User is allowed to switch view
 *
-*   all known trips must be shown
-*
-* Requirements:
-- User has app open and has entered in one or more journeys
-- From the main menu, user selects to view current carbon footprint.
-- User is shown a table of car trips. Columns include date of trip, route name (if any), distance, vehicle name, and carbon emitted.
-- User is shown a graph of the car trips (or user is able to switch from the table to the graph and back as desired)
-	Graph may be either a stacked bar graph, or a pie graph.
-	All known trips are shown in the graph (not restricted to a single day).
-*
- * [20] Display Carbon Footprint
-    - Deleting a route or car does *not* affect the details shown here.
-    - Editing a route or a car *does* affect the details shown here.
-   [10] View table of journeys: date of trip, route name, distance, vehicle name, carbon emitted.
-   [10] Able to switch to a graph view (either stacked bar or pie).
- *
- *
 * */
 
 public class CarbonFootPrint extends AppCompatActivity {
-    final static int col_size = 5;
     private static int row_size; // must be consistent over every variable used for a pie chart/ table
     final static String column_1_header = "Date of Trip";
     final static String column_2_header = "Route";
     final static String column_3_header = "Distance (Km)";
     final static String column_4_header = "Vehicle";
     final static String column_5_header = "CO2 emitted (kg/L)";
-    ArrayList<Journey> journeyArrayList=new ArrayList<>();
-
-
     private static final String SHAREDPREF_SET = "CarbonFootprintTrackerJournies";
     private static final String SHAREDPREF_ITEM_AMOUNTOFJOURNEYS = "AmountOfJourneys";
-
     public static final String NAME = "name";
     public static final String ROUTENAME = "routeName";
     public static final String CITY = "city";
@@ -77,23 +55,7 @@ public class CarbonFootPrint extends AppCompatActivity {
     public static final String LITERENGINE="literEngine";
     public static final String DATEOFTRAVEL="DateOfTravel";
 
-
-
-    // Columns: date of trip, route name, distancee, vehicle name, CO2 emitted
-    // the size of arrays must be constant
-    /*
-    float distance[]={100f,200f,300f,400f,500f,600f,700f,800f};
-    String vehicleNames[] = {"Honda", "Ford", "GMC", "Subaru", "BMW", "Mercedes", "Porche", "Toyota"};
-    String dateofTrips[] = {"January", "February", "March", "April", "May","June", "July", "August"};
-    String routeNames[] = {"Home", "School", "Friend's house", "Park", "Recreation Centre", "Church", "Shop" ,"Restaurant"};
-    float CO2emitted[] = {12.45f, 53.27f, 75.75f, 34.58f, 69.32f, 68.56f, 89.12f, 56.45f};
-   */
-
-    String vehicleNames[];
-    String dateofTrips[];
-    String routeNames[];
-    float CO2emitted[];
-    float distance[];
+    JourneyCollection journeys = new JourneyCollection();
 
     // Chart Variables
     PieChart chart;
@@ -118,64 +80,43 @@ public class CarbonFootPrint extends AppCompatActivity {
         setContentView(R.layout.activity_carbon_foot_print);
         setupSwtichViewButton();
 
-        setUpArrays();
+        loadJourneys(journeys);
+        row_size = journeys.countJourneys();
 
         setupBackButton();
         updateChart();
         updateTable();
     }
 
-    private void setUpArrays() {
-        journeyArrayList=loadJourneys();
-        int size=journeyArrayList.size();
-        row_size=size;
-        vehicleNames=new String[size];
-        routeNames=new String[size];
-        CO2emitted=new float[size];
-        dateofTrips=new String[size];
-        distance=new float[size];
-
-        for(int i=0;i<journeyArrayList.size();i++){
-            Journey journey = journeyArrayList.get(i);
-
-            vehicleNames[i]= journey.getName();
-            routeNames[i]= journey.getRouteName();
-            CO2emitted[i]=(float) journey.getTotalEmissions();
-            dateofTrips[i]= journey.getDateOfTravel().toString();
-            distance[i]= journey.getHighwayDistance()+ journey.getCityDistance();
-        }
-    }
-
-    public ArrayList<Journey> loadJourneys() {
-        ArrayList<Journey> journeyArrayList=new ArrayList<>();
+    public JourneyCollection loadJourneys( JourneyCollection journeys) {
         SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
        /* String routeName;int cityDistance;int highwayDistance;
         String name;String gasType;double mpgCity;double mpgHighway;
         String transmission;double literEngine;Date dateOfTravel;double totalEmissions;
        */
-
-        int journeyAmt=pref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS,0);
-        for(int i=0;i<journeyAmt;i++){
-            Date d=new Date(pref.getLong(i+DATEOFTRAVEL,0));
-            Journey j=new Journey(pref.getString(i+ROUTENAME,""),pref.getInt(i+CITY,0),pref.getInt(i+HIGHWAY,0),
-                    pref.getString(i+NAME,""),pref.getString(i+GASTYPE,""),Double.longBitsToDouble(pref.getLong(i+MPGCITY,0)),
-                    Double.longBitsToDouble(pref.getLong(i+MPGHIGHWAY,0)),Double.longBitsToDouble(pref.getLong(i+LITERENGINE,0)),
-                    d,pref.getBoolean(i+"bus",false),pref.getBoolean("bike",false),pref.getBoolean("skytrain",false));
-            journeyArrayList.add(j);
+        int num_of_journeys = pref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS,0);
+        for(int i=0; i<num_of_journeys; i++){
+            Date date = new Date(pref.getLong(i+DATEOFTRAVEL,0));
+            Journey temp_journey = new Journey(pref.getString(i+ROUTENAME,""),
+                    pref.getInt(i+CITY,0),pref.getInt(i+HIGHWAY,0),
+                    pref.getString(i+NAME,""),
+                    pref.getString(i+GASTYPE,""),
+                    Double.longBitsToDouble(pref.getLong(i+MPGCITY,0)),
+                    Double.longBitsToDouble(pref.getLong(i+MPGHIGHWAY,0)),
+                    Double.longBitsToDouble(pref.getLong(i+LITERENGINE,0)),
+                    date,pref.getBoolean(i+"bus",false),pref.getBoolean("bike",false),pref.getBoolean("skytrain",false));
+            journeys.addJourney(temp_journey);
         }
-
-        return journeyArrayList;
+        return journeys;
     }
+
     //Populate a list of Pie entries
     private void updateChart() {
         // Create a Dataset
         entries = new ArrayList<>();
 
-        for (int i = 0; i < distance.length; i++){
-            //entries.add( new PieEntry(distance[i], vehicleNames[i]));
-            //entries.add( new PieEntry(distance[i], dateofTrips[i]));
-            //entries.add( new PieEntry(distance[i], routeNames[i]));
-            entries.add( new PieEntry(CO2emitted[i], vehicleNames[i]));
+        for (int i = 0; i < row_size; i++){
+            entries.add( new PieEntry( (float) journeys.getJourney(i).getTotalEmissions(), journeys.getJourney(i).getName()) );
         }
 
         // Config for each region of the chart
@@ -221,8 +162,7 @@ public class CarbonFootPrint extends AppCompatActivity {
             }
         });
     }
-
-
+    
     // Columns: date of trip, route name, distancee, vehicle name, CO2 emitted
     // Each column can be edited uniquely
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -242,11 +182,11 @@ public class CarbonFootPrint extends AppCompatActivity {
             col_4_content = new TextView(this);
             col_5_content = new TextView(this);
 
-            col_1_content.setText(dateofTrips[row]);
-            col_2_content.setText(routeNames[row]);
-            col_3_content.setText("" + distance[row]);
-            col_4_content.setText(vehicleNames[row]);
-            col_5_content.setText("" + CO2emitted[row]);
+            col_1_content.setText( journeys.getJourney(row).getDateOfTravel().toString() );
+            col_2_content.setText( journeys.getJourney(row).getRouteName() );
+            col_3_content.setText("" + (float) journeys.getJourney(row).getCityDistance() + (float) journeys.getJourney(row).getHighwayDistance() );
+            col_4_content.setText( journeys.getJourney(row).getName() );
+            col_5_content.setText("" + (float) journeys.getJourney(row).getTotalEmissions());
 
             col_1_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
             col_2_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
