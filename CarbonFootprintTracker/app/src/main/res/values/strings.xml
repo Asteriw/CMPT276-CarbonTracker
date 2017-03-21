@@ -42,6 +42,23 @@
     </string-array>
     <string name="next_tip">Next Tip</string>
     <string name="close_tips">Close</string>
-
+    <string-array name="tips">
+        <item>Tip1</item>
+        <item>Tip2</item>
+        <item>Tip3</item>
+        <item>Tip4</item>
+        <item>Tip5</item>
+        <item>Tip6</item>
+        <item>Tip7</item>
+        <item>Tip8</item>
+        <item>Tip9</item>
+        <item>Tip10</item>
+        <item>Tip11</item>
+        <item>Tip12</item>
+        <item>Tip13</item>
+        <item>Tip14</item>
+        <item>Tip15</item>
+        <item>Tip16</item>
+    </string-array>
 
 </resources>

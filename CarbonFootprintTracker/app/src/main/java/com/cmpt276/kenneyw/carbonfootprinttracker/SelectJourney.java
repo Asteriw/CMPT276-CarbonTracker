@@ -56,8 +56,6 @@ public class SelectJourney extends AppCompatActivity {
 
     int tipCounter = 0;
     String tipString = "";
-    int tipIndex = 0;
-    int tempIndex = 0;
 
     ArrayList<Journey> journeyArrayList=new ArrayList<>();
 
@@ -247,16 +245,7 @@ public class SelectJourney extends AppCompatActivity {
     //Avoids tips that have been shown in the last 7
     //Picks relevant tips, using userdata
     private CharSequence tipTextSelector2() {
-        //if (database tipRepeat var > 0) {
-            //tipIndex++;
-            //database tipRepeat var++
-        //}
-        //if (database tipRepeat var == 7) {
-            //
-            //database tipRepeat var = 0;
 
-            //
-        //}
         return tipString;
     }
 
