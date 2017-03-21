@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,6 +71,8 @@ public class CarbonFootPrint extends AppCompatActivity {
     TextView col_5_content;
 
     SimpleDateFormat dateformatter = new SimpleDateFormat("MMMM dd, yyyy");
+    DecimalFormat df2 = new DecimalFormat("#.##");
+
     String simpledate;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -183,9 +186,9 @@ public class CarbonFootPrint extends AppCompatActivity {
 
             col_1_content.setText(simpledate);
             col_2_content.setText(journeys.getJourney(row).getRouteName());
-            col_3_content.setText("" + journeys.getJourney(row).getCityDistance() + journeys.getJourney(row).getHighwayDistance());
+            col_3_content.setText("" + df2.format(journeys.getJourney(row).getCityDistance() + journeys.getJourney(row).getHighwayDistance()));
             col_4_content.setText(journeys.getJourney(row).getName());
-            col_5_content.setText("" + journeys.getJourney(row).getTotalEmissions());
+            col_5_content.setText("" + df2.format(journeys.getJourney(row).getTotalEmissions()));
 
 
             col_1_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
