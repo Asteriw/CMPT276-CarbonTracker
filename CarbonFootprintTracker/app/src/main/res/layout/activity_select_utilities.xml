@@ -1,67 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_carbon_foot_print"
+    android:id="@+id/activity_select_utilities"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.CarbonFootPrint">
-    <RelativeLayout
+    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.SelectUtilities">
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/back_button_carbon_foot_print"
-        android:id="@+id/content_layout">
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/journey_table"
-                    tools:ignore="UselessParent">
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        tools:ignore="UselessLeaf" />
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        tools:ignore="UselessLeaf" />
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        tools:ignore="UselessLeaf" />
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        tools:ignore="UselessLeaf" />
-                </TableLayout>
-            </LinearLayout>
-        </ScrollView>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/piechart_layout"
-            android:layout_above="@+id/back_button_carbon_foot_print"
-            tools:ignore="NotSibling">
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/chart"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:clickable="true"
-                android:alpha="1" />
-        </RelativeLayout>
-    </RelativeLayout>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/add_utility"
+        android:id="@+id/utilities_listView" />
     <Button
-        android:text="@string/switch_view"
+        android:text="@string/add_utility"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/switchview_button_carbon_foot_print"
+        android:id="@+id/add_utility"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -69,8 +25,7 @@
         android:text="@string/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/back_button_carbon_foot_print"
-        tools:ignore="RelativeOverlap"
+        android:id="@+id/utility_back"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
