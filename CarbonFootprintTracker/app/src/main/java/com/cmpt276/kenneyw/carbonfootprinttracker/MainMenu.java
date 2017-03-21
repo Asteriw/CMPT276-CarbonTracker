@@ -31,7 +31,7 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(MainMenu2CarbonFootPrint);
             }
         });
-        
+
         // directs to "Utility Bill" screen
         Button utility_button = (Button) findViewById(R.id.utility_add_button);
         utility_button.setOnClickListener(new View.OnClickListener() {

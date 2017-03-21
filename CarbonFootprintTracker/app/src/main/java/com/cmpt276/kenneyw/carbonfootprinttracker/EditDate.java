@@ -30,8 +30,8 @@ public class EditDate extends AppCompatActivity {
             public void onClick(View v) {
                 // save the date and go back to journey list
                 DateSingleton.getInstance().setDateString(date_in_str);
-                Intent EditRoute2SelectJourneyIntent = SelectJourney.makeIntent(EditDate.this);
-                startActivity(EditRoute2SelectJourneyIntent);
+                Intent EditDate2SelectJourneyIntent = SelectJourney.makeIntent(EditDate.this);
+                startActivity(EditDate2SelectJourneyIntent);
                 finish();
             }
         });

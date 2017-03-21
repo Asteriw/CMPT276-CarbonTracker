@@ -9,21 +9,18 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.EditDate">
-
     <Button
-        android:text="OK"
+        android:text="@string/ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ok_button_eidt_date"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/ok_button_eidt_date">
-
         <DatePicker
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,13 +28,11 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/datePicker" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_below="@+id/datePicker">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +44,6 @@
                 android:layout_toEndOf="@+id/textView2"
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,9 +55,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1" />
-
             <TextView
-                android:text="Initial Date:"
+                android:text="@string/initial_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView3"
@@ -72,9 +65,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
-
             <TextView
-                android:text="New Date"
+                android:text="@string/new_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView2"
@@ -83,8 +75,6 @@
                 android:layout_below="@+id/textView3"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
-
         </RelativeLayout>
     </RelativeLayout>
-
 </RelativeLayout>
