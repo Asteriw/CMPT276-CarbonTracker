@@ -22,34 +22,30 @@ public class AddRoute extends AppCompatActivity {
 
     private void setupOKButton() {
 
-        Button okBtn=(Button)findViewById(R.id.btn_ok_addroute);
+        Button okBtn = (Button) findViewById(R.id.btn_ok_addroute);
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editName=(EditText)findViewById(R.id.editText_name_addroute);
-                EditText editCity=(EditText)findViewById(R.id.editText_city_addroute);
-                EditText editHighway=(EditText)findViewById(R.id.editText_highway_addroute);
+                EditText editName = (EditText) findViewById(R.id.editText_name_addroute);
+                EditText editCity = (EditText) findViewById(R.id.editText_city_addroute);
+                EditText editHighway = (EditText) findViewById(R.id.editText_highway_addroute);
 
-                String nameToAdd=editName.getText().toString();
-                String cityToAdd=editCity.getText().toString();
-                String highwayToAdd=editHighway.getText().toString();
+                String nameToAdd = editName.getText().toString();
+                String cityToAdd = editCity.getText().toString();
+                String highwayToAdd = editHighway.getText().toString();
 
-                if(nameToAdd.equals("")){
-                    Toast.makeText(AddRoute.this,"Name cannot be empty",Toast.LENGTH_SHORT).show();
-                }
-
-                else if(cityToAdd.equals("") || highwayToAdd.equals("")) {
-                    Toast.makeText(AddRoute.this,"Length cannot be empty",Toast.LENGTH_SHORT).show();
-                }
-                else if(Integer.parseInt(cityToAdd)<0||Integer.parseInt(highwayToAdd)<0){
-                    Toast.makeText(AddRoute.this,"Length cannot be negative",Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Intent intent=new Intent();
-                    intent.putExtra("name",nameToAdd);
-                    intent.putExtra("city",Integer.parseInt(cityToAdd));
-                    intent.putExtra("highway",Integer.parseInt(highwayToAdd));
-                    setResult(RESULT_OK,intent);
+                if (nameToAdd.equals("")) {
+                    Toast.makeText(AddRoute.this, "Name cannot be empty", Toast.LENGTH_SHORT).show();
+                } else if (cityToAdd.equals("") || highwayToAdd.equals("")) {
+                    Toast.makeText(AddRoute.this, "Length cannot be empty", Toast.LENGTH_SHORT).show();
+                } else if (Integer.parseInt(cityToAdd) < 0 || Integer.parseInt(highwayToAdd) < 0) {
+                    Toast.makeText(AddRoute.this, "Length cannot be negative", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("name", nameToAdd);
+                    intent.putExtra("city", Integer.parseInt(cityToAdd));
+                    intent.putExtra("highway", Integer.parseInt(highwayToAdd));
+                    setResult(RESULT_OK, intent);
                     finish();
                 }
             }
@@ -57,12 +53,12 @@ public class AddRoute extends AppCompatActivity {
     }
 
     private void setupCancelButton() {
-        Button cancelBtn=(Button)findViewById(R.id.btn_cancel_addroute);
+        Button cancelBtn = (Button) findViewById(R.id.btn_cancel_addroute);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent();
-                setResult(RESULT_CANCELED,intent);
+                Intent intent = new Intent();
+                setResult(RESULT_CANCELED, intent);
                 finish();
             }
         });

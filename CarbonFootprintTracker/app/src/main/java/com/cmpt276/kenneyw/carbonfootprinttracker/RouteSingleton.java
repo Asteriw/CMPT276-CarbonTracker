@@ -4,15 +4,15 @@ public class RouteSingleton {
 
     private static RouteSingleton routeinstance = null;
 
-    private RouteSingleton(){
-        this.routeName= "";
+    private RouteSingleton() {
+        this.routeName = "";
         this.cityDistance = 0;
         this.highwayDistance = 0;
-        this.totalDistance = cityDistance+highwayDistance;
+        this.totalDistance = cityDistance + highwayDistance;
     }
 
-    public static RouteSingleton getInstance(){
-        if(routeinstance == null){
+    public static RouteSingleton getInstance() {
+        if (routeinstance == null) {
             routeinstance = new RouteSingleton();
         }
         return routeinstance;
@@ -45,12 +45,12 @@ public class RouteSingleton {
 
     public void setCityDistance(int cityDistance) {
         this.cityDistance = cityDistance;
-        this.totalDistance=this.getCityDistance()+this.getHighwayDistance();
+        this.totalDistance = this.getCityDistance() + this.getHighwayDistance();
     }
 
     public void setHighwayDistance(int highwayDistance) {
         this.highwayDistance = highwayDistance;
-        this.totalDistance=this.getCityDistance()+this.getHighwayDistance();
+        this.totalDistance = this.getCityDistance() + this.getHighwayDistance();
     }
 
     // Variables Declaration
