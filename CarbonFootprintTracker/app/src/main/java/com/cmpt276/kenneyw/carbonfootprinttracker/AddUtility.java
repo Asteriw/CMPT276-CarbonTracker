@@ -10,7 +10,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.util.Date;
+
 public class AddUtility extends AppCompatActivity{
+    UtilitiesCollection utilities = new UtilitiesCollection();
+    Utility new_utility = new Utility();
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -27,17 +32,26 @@ public class AddUtility extends AppCompatActivity{
                 //Toast.makeText(getApplicationContext(), "" + checkedId + " selected", Toast.LENGTH_SHORT).show();
                 RadioButton selectedButton = (RadioButton) findViewById(checkedId);
                 Toast.makeText(getApplicationContext(), selectedButton.getText() + " selected", Toast.LENGTH_SHORT).show();
+                String utility_type = selectedButton.getText().toString();
             }
         });
     }
 
 
     private void setupButton() {
-        Button button = (Button) findViewById(R.id.utility_add_cancel);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button cancel_button = (Button) findViewById(R.id.utility_add_cancel);
+        cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        Button ok_button = (Button) findViewById(R.id.utility_add_button);
+        ok_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Save a utility
             }
         });
     }
