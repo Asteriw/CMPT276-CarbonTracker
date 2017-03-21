@@ -6,23 +6,30 @@ import java.util.List;
 
 /**
  * DESCRIPTION:
- * - Create a list of car and functions to access to cars in the list
+ *  - Create a list of car and functions to access to cars in the list
  */
 
 public class CarCollection {
     private List<Car> cars = new ArrayList<>();
 
-    public void addCar(Car car) {
+    public void addCar(Car car){
         cars.add(car);
     }
 
     public void changeCar(Car car, int indexOfCarToEdit) {
-        validateIndexWithException(indexOfCarToEdit);
-        cars.remove(indexOfCarToEdit);
-        cars.add(indexOfCarToEdit, car);
+//        validateIndexWithException(indexOfCarToEdit);
+        cars.get(indexOfCarToEdit).setName(car.getName());
+        cars.get(indexOfCarToEdit).setMake(car.getMake());
+        cars.get(indexOfCarToEdit).setModel(car.getModel());
+        cars.get(indexOfCarToEdit).setTransmission(car.getTransmission());
+        cars.get(indexOfCarToEdit).setYear(car.getYear());
+        cars.get(indexOfCarToEdit).setLiterEngine(car.getLiterEngine());
+        cars.get(indexOfCarToEdit).setHighwayEmissions(car.getHighwayEmissions());
+        cars.get(indexOfCarToEdit).setGasType(car.getGasType());
+        cars.get(indexOfCarToEdit).setCityEmissions(car.getCityEmissions());
     }
 
-    public void deleteCar(int indexToDelete) {
+    public void deleteCar(int indexToDelete){
         validateIndexWithException(indexToDelete);
         cars.remove(indexToDelete);
     }

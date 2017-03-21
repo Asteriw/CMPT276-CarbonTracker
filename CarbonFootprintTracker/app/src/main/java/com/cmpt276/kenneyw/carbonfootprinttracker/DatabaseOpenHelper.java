@@ -5,7 +5,6 @@ package com.cmpt276.kenneyw.carbonfootprinttracker;
 //Code is used as-is with small modifications to fit personal needs.
 
 import android.content.Context;
-
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 public class DatabaseOpenHelper extends SQLiteAssetHelper {

@@ -98,30 +98,32 @@ public class SelectRoute extends AppCompatActivity {
     }
 
     public void setUpListView() {
-
         ListView listForRoutes = (ListView) findViewById(R.id.listViewRoutes);
         ArrayAdapter<Route> adapter = new ArrayAdapter<Route>(this, R.layout.layout_for_list, routes);
         listForRoutes.setAdapter(adapter);
         listForRoutes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Log.e(TAG, routes.get(position).toString() + " selected.");
-
                 Route r = routes.get(position);
                 String nameToPass = r.getRouteName();
                 int cityToPass = r.getCityDistance();
                 int highwayToPass = r.getHighwayDistance();
-
                 RouteSingleton routeselected = RouteSingleton.getInstance();
                 routeselected.setRouteName(nameToPass);
                 routeselected.setCityDistance(cityToPass);
                 routeselected.setHighwayDistance(highwayToPass);
-
                 saveRoutes();
                 Intent i = new Intent();
                 setResult(RESULT_OK, i);
-                finish();
+
+                // Call Calendar Activity
+                Intent SelectRoute2EditDate = EditDate.makeIntent(SelectRoute.this);
+
+
+                // pass date
+
+                startActivity(SelectRoute2EditDate);
             }
         });
         registerForContextMenu(listForRoutes);

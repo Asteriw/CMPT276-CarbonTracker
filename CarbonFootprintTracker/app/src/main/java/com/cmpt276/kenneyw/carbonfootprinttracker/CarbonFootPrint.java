@@ -32,7 +32,6 @@ import java.util.List;
 *   User is allowed to switch view
 *
 * */
-
 public class CarbonFootPrint extends AppCompatActivity {
     private static int row_size; // must be consistent over every variable used for a pie chart/ table
     final static String column_1_header = "Date of Trip";
@@ -51,15 +50,12 @@ public class CarbonFootPrint extends AppCompatActivity {
     public static final String MPGHIGHWAY = "mpgHighway";
     public static final String LITERENGINE = "literEngine";
     public static final String DATEOFTRAVEL = "DateOfTravel";
-
     JourneyCollection journeys = new JourneyCollection();
-
     // Chart Variables
     PieChart chart;
     List<PieEntry> entries;
     PieDataSet dataSet;
     PieData data;
-
     // Table Variables
     TableLayout journeyTable;
     TableRow journeytablerow;
@@ -68,7 +64,6 @@ public class CarbonFootPrint extends AppCompatActivity {
     TextView col_3_content;
     TextView col_4_content;
     TextView col_5_content;
-
     SimpleDateFormat dateformatter = new SimpleDateFormat("MMMM dd, yyyy");
     String simpledate;
 
@@ -78,15 +73,12 @@ public class CarbonFootPrint extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carbon_foot_print);
         setupSwtichViewButton();
-
         loadJourneys(journeys);
         row_size = journeys.countJourneys();
-
         setupBackButton();
         updateChart();
         updateTable();
     }
-
 
     public JourneyCollection loadJourneys(JourneyCollection journeys) {
         SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
@@ -114,7 +106,6 @@ public class CarbonFootPrint extends AppCompatActivity {
     private void updateChart() {
         // Create a Dataset
         entries = new ArrayList<>();
-
         for (int i = 0; i < row_size; i++) {
             simpledate = dateformatter.format(journeys.getJourney(i).getDateOfTravel());
             entries.add(new PieEntry((float) journeys.getJourney(i).getTotalEmissions(), simpledate));
@@ -125,12 +116,10 @@ public class CarbonFootPrint extends AppCompatActivity {
         dataSet.setValueLineColor(Color.TRANSPARENT);
         dataSet.setSliceSpace(5.0f);
         dataSet.setValueTextSize(15);
-
         // set the data
         data = new PieData(dataSet);
         data.setValueTextSize(20);
         data.setValueTextColor(Color.BLACK);
-
         // Chart config
         chart = (PieChart) findViewById(R.id.chart);
         chart.setData(data);
@@ -166,7 +155,6 @@ public class CarbonFootPrint extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void updateTable() {
         setcolumnHeading();
-
         // Go through a list of journeys
         for (int row = 0; row < row_size; row++) {
             journeytablerow = new TableRow(this);
@@ -186,7 +174,6 @@ public class CarbonFootPrint extends AppCompatActivity {
             col_3_content.setText("" + journeys.getJourney(row).getCityDistance() + journeys.getJourney(row).getHighwayDistance());
             col_4_content.setText(journeys.getJourney(row).getName());
             col_5_content.setText("" + journeys.getJourney(row).getTotalEmissions());
-
 
             col_1_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
             col_2_content.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1.0f));
@@ -224,19 +211,16 @@ public class CarbonFootPrint extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void setcolumnHeading() {
         journeyTable = (TableLayout) findViewById(R.id.journey_table);
-
         journeytablerow = new TableRow(this);
         journeyTable.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT, 1.0f));
         journeytablerow.setBackgroundColor(0xFF10ce20);
         journeyTable.addView(journeytablerow);
-
         // Set content of each column
         col_1_content = new TextView(this);
         col_2_content = new TextView(this);
         col_3_content = new TextView(this);
         col_4_content = new TextView(this);
         col_5_content = new TextView(this);
-
 
         col_1_content.setText(column_1_header);
         col_2_content.setText(column_2_header);
@@ -286,7 +270,6 @@ public class CarbonFootPrint extends AppCompatActivity {
         journeytablerow.addView(col_4_content);
         journeytablerow.addView(col_5_content);
     }
-
 
     private void setupBackButton() {
         Button back_button = (Button) findViewById(R.id.back_button_carbon_foot_print);

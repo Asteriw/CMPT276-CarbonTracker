@@ -39,10 +39,13 @@
     <string name="car_logo">car_logo</string>
     <string name="splashbackground">splashbackground</string>
     <string name="startbutton">startbutton</string>
+    <string name="add_utility">Add Utility</string>
     <string-array name="menu">
         <item>Edit</item>
         <item>Delete</item>
     </string-array>
-
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="initial_date">Initial Date:</string>
+    <string name="new_date">New Date</string>
 </resources>

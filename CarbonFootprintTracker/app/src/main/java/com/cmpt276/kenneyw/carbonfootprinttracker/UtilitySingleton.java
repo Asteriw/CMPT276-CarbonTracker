@@ -1,12 +1,11 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
 
 import android.support.v7.app.AppCompatActivity;
+
 import java.util.Date;
 
 public class UtilitySingleton extends AppCompatActivity {
-
     private static UtilitySingleton utilityInstance = null;
-
     private String name;
     private String gasType;
     private double emissions;
