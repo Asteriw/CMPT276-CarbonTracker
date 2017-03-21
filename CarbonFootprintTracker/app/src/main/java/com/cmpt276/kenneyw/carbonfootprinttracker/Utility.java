@@ -28,7 +28,7 @@ public class Utility extends AppCompatActivity {
 
     public Utility(String name, String gasType, double emissions, double kiloWattHour, Date startDate, Date endDate) {
         this.name = name;
-        if (gasType.matches("Electric")) {
+        if (gasType.matches("Electricity")) {
             this.gasType = gasTypeEnum.ELECTRIC.toString();
         } else {
             this.gasType = gasTypeEnum.NATURAL_GAS.toString();

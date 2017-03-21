@@ -29,6 +29,7 @@ public class SelectUtilities extends AppCompatActivity{
                 finish();
             }
         });
+
         Button addButton = (Button) findViewById(R.id.add_utility);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
