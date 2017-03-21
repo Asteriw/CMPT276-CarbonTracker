@@ -36,10 +36,14 @@
     <string name="btn_splash_start">start</string>
     <string name="App_name">Carbon Tracker</string>
     <string name="authors_text">Authors: Team Honeydew</string>
+    <string name="car_logo">car_logo</string>
+    <string name="splashbackground">splashbackground</string>
+    <string name="startbutton">startbutton</string>
+    <string name="add_utility">Add Utility</string>
     <string-array name="menu">
         <item>Edit</item>
         <item>Delete</item>
     </string-array>
-
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

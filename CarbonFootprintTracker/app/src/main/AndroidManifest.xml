@@ -26,7 +26,9 @@
         <activity android:name=".CarbonFootPrint" />
         <activity android:name=".AddCar" />
         <activity android:name=".SelectJourney" />
-        <activity android:name=".SelectRoute" />
+        <activity android:name=".AddUtility" />
+        <activity android:name=".SelectRoute"/>
+        <activity android:name=".SelectUtilities"/>
         <activity android:name=".AddRoute"></activity>
     </application>
 
