@@ -13,12 +13,20 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        setupJourneyButtons();
-        setupFootprintButtons();
+        setupButtons();
     }
 
-    private void setupFootprintButtons() {
-        // directs to "CarboonFootPrint" screen
+    private void setupButtons() {
+        // directs to "SelectJourney" screen
+        Button journey_button = (Button) findViewById(R.id.create_a_new_journey_button);
+        journey_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent MainMenu2SelectJourney = SelectJourney.makeIntent(MainMenu.this);
+                startActivity(MainMenu2SelectJourney);
+            }
+        });
+        // directs to "CarbonFootPrint" screen
         Button footprint_button = (Button) findViewById(R.id.view_cabon_footprint_button);
         footprint_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,16 +35,13 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(MainMenu2CarbonFootPrint);
             }
         });
-    }
-
-    private void setupJourneyButtons() {
-        // directs to "SelectJourney" screen
-        Button journey_button = (Button) findViewById(R.id.create_a_new_journey_button);
-        journey_button.setOnClickListener(new View.OnClickListener() {
+        // directs to "Utility Bill" screen
+        Button utility_button = (Button) findViewById(R.id.utility_add_button);
+        utility_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent MainMenu2SelectJourney = SelectJourney.makeIntent(MainMenu.this);
-                startActivity(MainMenu2SelectJourney);
+                Intent MainMenu2Utilities = SelectUtilities.makeIntent(MainMenu.this);
+                startActivity(MainMenu2Utilities);
             }
         });
     }

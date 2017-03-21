@@ -17,15 +17,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:text="@string/create_a_new_journey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/create_a_new_journey_button"
-        android:layout_marginBottom="23dp"
-        android:layout_above="@+id/view_cabon_footprint_button"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,14 +25,14 @@
         android:elevation="2dp"
         tools:elevation="2dp"
         android:id="@+id/Splash_Title"
-        android:layout_marginTop="120dp"
         android:textSize="45sp"
         android:shadowDx="4"
         android:shadowDy="4"
         android:shadowRadius="5"
         android:shadowColor="@color/black"
         android:textStyle="normal|bold"
-        android:layout_alignParentTop="true"
+        android:layout_marginBottom="41dp"
+        android:layout_above="@+id/car_logo"
         android:layout_centerHorizontal="true" />
 
     <ImageView
@@ -50,8 +41,23 @@
         android:contentDescription="@string/car_logo"
         app:srcCompat="@drawable/car_icon"
         android:id="@+id/car_logo"
-        android:layout_alignBottom="@+id/view_cabon_footprint_button"
+        android:layout_above="@+id/view_cabon_footprint_button"
         android:layout_alignLeft="@+id/Splash_Title"
-        android:layout_alignStart="@+id/Splash_Title"
-        android:layout_marginBottom="33dp" />
+        android:layout_alignStart="@+id/Splash_Title" />
+
+    <Button
+        android:text="@string/create_a_new_journey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/create_a_new_journey_button"
+        android:layout_above="@+id/utility_add_button"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Add a Utility Bill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/utility_add_button"
+        android:layout_above="@+id/view_cabon_footprint_button"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

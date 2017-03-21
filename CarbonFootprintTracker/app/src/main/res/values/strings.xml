@@ -39,6 +39,7 @@
     <string name="car_logo">car_logo</string>
     <string name="splashbackground">splashbackground</string>
     <string name="startbutton">startbutton</string>
+    <string name="add_utility">Add Utility</string>
     <string-array name="menu">
         <item>Edit</item>
         <item>Delete</item>

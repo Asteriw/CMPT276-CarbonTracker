@@ -15,6 +15,6 @@ public class SelectUtilities extends AppCompatActivity{
 
 
     public static Intent makeIntent(Context context) {
-        return new Intent(context, SelectRoute.class);
+        return new Intent(context, SelectUtilities.class);
     }
 }
