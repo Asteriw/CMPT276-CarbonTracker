@@ -3,11 +3,165 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <Button
+        android:text="@string/ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ok_button_add_utility"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
         android:text="@string/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/utility_add_cancel"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/utility_add_cancel" />
+        android:layout_alignParentStart="true" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/utility_add_cancel">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="100dp">
+
+            <TextView
+                android:text="@string/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/amount"
+                android:textSize="20sp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/amount_text"
+                android:layout_alignBaseline="@+id/amount"
+                android:layout_alignBottom="@+id/amount"
+                android:layout_toRightOf="@+id/amount"
+                android:layout_toEndOf="@+id/amount" />
+
+            <TextView
+                android:text="@string/number_of_people"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/num_of_people"
+                android:textSize="20sp"
+                android:layout_marginTop="80dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/num_people_text"
+                android:layout_alignBaseline="@+id/num_of_people"
+                android:layout_alignBottom="@+id/num_of_people"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_toRightOf="@+id/num_of_people"
+                android:layout_toEndOf="@+id/num_of_people"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="120dp"
+                android:id="@+id/initial_date"
+                android:text="@string/initial_date"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp" />
+
+            <TextView
+                android:text="@string/gj_for_natural_gas_gwh_for_electricity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginStart="18dp"
+                android:id="@+id/note"
+                android:textColor="@android:color/holo_orange_light"
+                android:layout_below="@+id/amount_text"
+                android:layout_alignLeft="@+id/num_of_people"
+                android:layout_alignStart="@+id/num_of_people" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:ems="10"
+                android:id="@+id/editText4"
+                android:layout_alignBaseline="@+id/initial_date"
+                android:layout_alignBottom="@+id/initial_date"
+                android:layout_toRightOf="@+id/initial_date"
+                android:layout_marginLeft="10dp"
+                android:layout_alignRight="@+id/num_people_text"
+                android:layout_alignEnd="@+id/num_people_text" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Select Type:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="15dp"
+                android:id="@+id/selecttpye"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp" />
+
+            <RadioGroup
+                android:id="@+id/radioUtility"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <RadioButton
+                    android:id="@+id/radioElectricity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Electricity"
+                    android:layout_alignTop="@+id/radioNaturalGas"
+                    android:layout_toRightOf="@+id/radioNaturalGas"
+                    android:layout_toEndOf="@+id/radioNaturalGas"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:id="@+id/radioNaturalGas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Natural Gas"
+                    android:checked="true"
+                    android:layout_below="@+id/radioUtility"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="1" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
 </RelativeLayout>
