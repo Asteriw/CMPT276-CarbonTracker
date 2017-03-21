@@ -32,9 +32,3 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 }
-dependencies {
-    compile 'com.android.support:support-v4:25.+'
-}
-dependencies {
-    compile 'com.android.support:support-v4:25.+'
-}

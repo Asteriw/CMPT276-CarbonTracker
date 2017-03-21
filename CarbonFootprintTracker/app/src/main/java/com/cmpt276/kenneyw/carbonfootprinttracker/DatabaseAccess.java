@@ -9,11 +9,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseAccess extends AppCompatActivity {
+public class DatabaseAccess extends AppCompatActivity{
     private SQLiteOpenHelper openHelper;
     private SQLiteDatabase database;
     private static DatabaseAccess instance;
@@ -59,7 +60,7 @@ public class DatabaseAccess extends AppCompatActivity {
     //Query that gets all the makes in the CarDB. Takes in a year, returns a List<String> of makes.
     public List<String> getMakes(String year) { //
         List<String> list = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT DISTINCT make FROM 'mainTable' WHERE year = " + year + " ORDER BY make ASC", null);
+        Cursor cursor = database.rawQuery("SELECT DISTINCT make FROM 'mainTable' WHERE year = "+year+" ORDER BY make ASC", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             list.add(cursor.getString(0));
@@ -72,7 +73,7 @@ public class DatabaseAccess extends AppCompatActivity {
     //Query that gets all the models in the CarDB. Takes in a year and make, returns a List<String> of models.
     public List<String> getModels(String year, String make) {
         List<String> list = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT DISTINCT model FROM 'mainTable' WHERE year = " + year + " AND make = \"" + make + "\"  ORDER BY model ASC", null);
+        Cursor cursor = database.rawQuery("SELECT DISTINCT model FROM 'mainTable' WHERE year = "+year+" AND make = \""+make+"\"  ORDER BY model ASC", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             list.add(cursor.getString(0));
@@ -99,11 +100,11 @@ public class DatabaseAccess extends AppCompatActivity {
     //Query that gets all the Car info in the CarDB. Takes in a year and make, returns a List<String[]> of all info in the car row.
     public List<String[]> getTempCarList(String year, String make, String model) {
         List<String[]> list = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT DISTINCT * FROM 'mainTable' WHERE year = " + year + " AND make = \"" + make + "\" AND model = \"" + model + "\"", null);
+        Cursor cursor = database.rawQuery("SELECT DISTINCT * FROM 'mainTable' WHERE year = "+year+" AND make = \""+make+"\" AND model = \""+model+"\"", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             String[] row = new String[cursor.getColumnCount()];
-            for (int i = 0; i < cursor.getColumnCount(); i++) {
+            for (int i = 0; i<cursor.getColumnCount(); i++){
                 row[i] = cursor.getString(i);
             }
             list.add(row);

@@ -27,7 +27,6 @@
         android:layout_centerVertical="true"
         android:id="@+id/splashbackground"
         android:adjustViewBounds="false"
-        android:contentDescription="@string/splashbackground"
         android:alpha="0.8"
         android:elevation="1dp"
         tools:elevation="1dp" />
@@ -51,7 +50,6 @@
         android:textStyle="normal|bold" />
 
     <ImageView
-        android:contentDescription="@string/startbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/car_icon"

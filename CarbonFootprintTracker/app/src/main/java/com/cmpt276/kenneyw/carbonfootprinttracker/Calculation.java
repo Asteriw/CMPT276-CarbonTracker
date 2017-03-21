@@ -1,9 +1,5 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
 
-import android.content.Context;
-import android.content.Intent;
-
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 
@@ -19,7 +15,7 @@ import java.text.DecimalFormat;
 *  Electric:    0 (our electricity is mainly hydro) [done]
 *  Natural Gas: Ignore (don't even list these in the app) [done]
 *
-*  Formula:
+*  Methood:
 *
 *   ____ Km  *  ___ miles/km * ___ miles/gallon * ___ kg/gallon = ___ kg/L (Kg CO2 per litre)
 * (from user)                      (from CSV)                     (Result)
@@ -38,47 +34,41 @@ public class Calculation {
 
     final private static double gasoline_volume_in_kg_per_gallon = 8.89;
     final private static double diesel_volumne_in_kg_per_gallon = 10.16;
-    final private static double km_per_mile = 0.621371;
+    final private static double mile_per_km = 0.621371;
 
     /*Calculate CO2 Emission of Gasoline with a given distance*/
-    private double calculate_CO2_Emission_of_Gasoline(double distance_in_km_from_user, double miles_per_gallon) {
-        double result_in_kg_CO2_per_litre;
-        result_in_kg_CO2_per_litre = (distance_in_km_from_user) *
-                (1 / km_per_mile) *
-                (miles_per_gallon) *
-                (gasoline_volume_in_kg_per_gallon);
-        return doubleToTwoPlaces(result_in_kg_CO2_per_litre);
+    private double calculate_CO2_Emission_of_Gasoline(double distance_in_km_from_user,double miles_per_gallon){
+        double result_in_kg_CO2;
+        result_in_kg_CO2 = (distance_in_km_from_user) *
+                                     (mile_per_km) *
+                                     (1/miles_per_gallon) *
+                                     (gasoline_volume_in_kg_per_gallon);
+        return doubleToTwoPlaces(result_in_kg_CO2);
     }
 
 
     /*Calculate CO2 Emission of Diesel with a given distance*/
-    private double calculate_C02_Emission_of_Diesel_from_kg_to_gallon(double distance_in_km_from_user, double miles_per_gallon) {
-        double result_in_kg_CO2_per_litre;
-        result_in_kg_CO2_per_litre = (distance_in_km_from_user) *
-                (1 / km_per_mile) *
-                (miles_per_gallon) *
-                (diesel_volumne_in_kg_per_gallon);
-        return doubleToTwoPlaces(result_in_kg_CO2_per_litre);
+    private double calculate_C02_Emission_of_Diesel(double distance_in_km_from_user, double miles_per_gallon){
+        double result_in_kg_CO2;
+        result_in_kg_CO2 = (distance_in_km_from_user) *
+                                     (mile_per_km) *
+                                     (1/miles_per_gallon) *
+                                     (diesel_volumne_in_kg_per_gallon);
+        return doubleToTwoPlaces(result_in_kg_CO2);
     }
 
     private double doubleToTwoPlaces(double result_in_kg_CO2_per_litre) {
         DecimalFormat df2 = new DecimalFormat("#.##");
-        result_in_kg_CO2_per_litre = Double.valueOf(df2.format(result_in_kg_CO2_per_litre));
+        result_in_kg_CO2_per_litre=Double.valueOf(df2.format(result_in_kg_CO2_per_litre));
         return result_in_kg_CO2_per_litre;
     }
 
-    public double calculateCO2Diesel(double mpg, double distance) {
-        return calculate_C02_Emission_of_Diesel_from_kg_to_gallon(mpg, distance);
+    public double calculateCO2Diesel(double mpg, double distance)
+    {
+        return calculate_C02_Emission_of_Diesel(mpg,distance);
     }
-
-    public double calculateCO2Gasoline(double mpg, double distance) {
-        return calculate_CO2_Emission_of_Gasoline(mpg, distance);
+    public double calculateCO2Gasoline(double mpg, double distance)
+    {
+        return calculate_CO2_Emission_of_Gasoline(mpg,distance);
     }
-
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, Calculation.class);
-    }
-
-
-
 }

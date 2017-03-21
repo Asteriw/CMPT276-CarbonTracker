@@ -6,7 +6,7 @@ package com.cmpt276.kenneyw.carbonfootprinttracker;
 
 public class Car {
 
-    Car(String name_temp, String make_temp, String model_temp, double highway_temp, double city_temp, int year_temp, String transmission_temp, double literEngine_temp, String gasType_temp) {
+    Car(String name_temp, String make_temp, String model_temp, double highway_temp, double city_temp, int year_temp, String transmission_temp, double literEngine_temp,String gasType_temp){
         name = name_temp;
         make = make_temp;
         model = model_temp;
@@ -15,10 +15,10 @@ public class Car {
         year = year_temp;
         transmission = transmission_temp;
         literEngine = literEngine_temp;
-        gasType = gasType_temp;
+        gasType=gasType_temp;
     }
 
-    Car() {
+    Car(){
         name = "";
         make = "";
         model = "";
@@ -32,7 +32,6 @@ public class Car {
     public double getLiterEngine() {
         return literEngine;
     }
-
     public void setLiterEngine(double literEngine) {
         this.literEngine = literEngine;
     }
@@ -40,65 +39,57 @@ public class Car {
     public String getTransmission() {
         return transmission;
     }
-
     public void setTransmission(String transmission) {
         this.transmission = transmission;
     }
 
 
-    String getGasType() {
+    String getGasType(){
         return gasType;
     }
-
-    void setGasType(String gasType) {
+    void setGasType(String gasType){
         this.gasType = gasType;
     }
 
-    String getName() {
+    String getName(){
         return name;
     }
-
-    void setName(String name) {
+    void setName(String name){
         this.name = name;
     }
 
-    String getMake() {
+    String getMake(){
         return make;
     }
-
-    void setMake(String make) {
+    void setMake(String make){
         this.make = make;
     }
 
-    String getModel() {
+    String getModel(){
         return model;
     }
-
-    void setModel(String model) {
+    void setModel(String model){
         this.model = model;
     }
 
-    int getYear() {
+    int getYear(){
         return year;
     }
-
-    void setYear(int year) {
+    void setYear(int year){
         this.year = year;
     }
 
-    double getHighwayEmissions() {
+    double getHighwayEmissions(){
         return Emissions[0];
     }
-
-    void setHighwayEmissions(double highway) {
+    void setHighwayEmissions(double highway){
         this.Emissions[0] = highway;
     }
 
-    double getCityEmissions() {
+    double getCityEmissions(){
         return Emissions[1];
     }
-
-    void setCityEmissions(double city) {
+    void setCityEmissions(double city){
         this.Emissions[1] = city;
     }
 
@@ -109,7 +100,7 @@ public class Car {
     private String gasType;
     private int year;
     private String model;
-    private double[] Emissions = new double[2];
+    private double[] Emissions =  new double[2];
     private String transmission;
     private double literEngine;
 }
