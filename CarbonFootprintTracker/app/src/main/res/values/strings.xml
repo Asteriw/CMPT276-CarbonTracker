@@ -40,6 +40,8 @@
         <item>Edit</item>
         <item>Delete</item>
     </string-array>
+    <string name="next_tip">Next Tip</string>
+    <string name="close_tips">Close</string>
 
 
 </resources>
