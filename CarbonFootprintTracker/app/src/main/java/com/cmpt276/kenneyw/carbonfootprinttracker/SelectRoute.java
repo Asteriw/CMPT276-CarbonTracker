@@ -33,6 +33,7 @@ public class SelectRoute extends AppCompatActivity {
     public static final String CITY = "city";
     public static final String HIGHWAY = "highway";
     public static final int REQUEST_ADD_ROUTE = 1;
+    public static final int DATE_REQUESTED = 2;
     ArrayList<Route> routes = new ArrayList<>();
     private static final String SHAREDPREF_SET = "CarbonFootprintTracker";
     private static final String SHAREDPREF_ITEM_AMOUNTOFROUTES = "AmountOfRoutes";
@@ -65,6 +66,7 @@ public class SelectRoute extends AppCompatActivity {
             case REQUEST_ADD_ROUTE:
                 if (resultCode == RESULT_CANCELED) {
                     Log.i(TAG, "User Cancelled Add Route");
+                    break;
                 } else {
                     String nameToAdd = data.getStringExtra("name");
                     int cityToAdd = data.getIntExtra("city", 0);
@@ -74,6 +76,18 @@ public class SelectRoute extends AppCompatActivity {
                     setUpListView();
                     break;
                 }
+            case DATE_REQUESTED:
+                if(resultCode==RESULT_CANCELED){
+                    Log.i(TAG, "User Cancelled Date picker");
+                    break;
+                }
+                else{
+                    Intent i=new Intent();
+                    setResult(RESULT_OK,i);
+                    finish();
+                    break;
+                }
+
         }
     }
 
@@ -114,21 +128,15 @@ public class SelectRoute extends AppCompatActivity {
                 routeselected.setCityDistance(cityToPass);
                 routeselected.setHighwayDistance(highwayToPass);
                 saveRoutes();
-                Intent i = new Intent();
-                setResult(RESULT_OK, i);
-
                 // Call Calendar Activity
                 Intent SelectRoute2EditDate = EditDate.makeIntent(SelectRoute.this);
-
-
-                // pass date
-
-                startActivity(SelectRoute2EditDate);
-                finish();
+                startActivityForResult(SelectRoute2EditDate, DATE_REQUESTED);
             }
         });
         registerForContextMenu(listForRoutes);
     }
+
+
 
     //Context Menu Code taken and modified from:
     //https://www.mikeplate.com/2010/01/21/show-a-context-menu-for-long-clicks-in-an-android-listview/

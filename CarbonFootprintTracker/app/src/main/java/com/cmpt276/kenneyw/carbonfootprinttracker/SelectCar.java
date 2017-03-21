@@ -38,7 +38,8 @@ public class SelectCar extends AppCompatActivity {
     public static final String MAKE="Make";
     public static final String MODEL="Model";
     public static final String YEAR="Year";
-    public static final String POS_EDIT = "posEdit";
+    public static final String POS_FOR_EDIT_CAR = "posEdit";
+    public static final String POSITION_FOR_EDIT_JOURNEY = "pos";
 
     CarCollection myCars = new CarCollection();
 
@@ -51,8 +52,8 @@ public class SelectCar extends AppCompatActivity {
         myCars=loadCars();
 
         Intent i=getIntent();
-        if(i.hasExtra("pos")) {
-            pos = i.getIntExtra("pos", 0);
+        if(i.hasExtra(POSITION_FOR_EDIT_JOURNEY)) {
+            pos = i.getIntExtra(POSITION_FOR_EDIT_JOURNEY, 0);
         }
         else{pos=0;}
 
@@ -260,7 +261,7 @@ public class SelectCar extends AppCompatActivity {
         switch(menuItemName) {
             case "Edit":
                 Intent i=AddCar.makeIntent(SelectCar.this);
-                i.putExtra(POS_EDIT,info.position);
+                i.putExtra(POS_FOR_EDIT_CAR,info.position);
                 startActivityForResult(i,EDIT_CAR);
                 break;
             case "Delete":
@@ -272,14 +273,14 @@ public class SelectCar extends AppCompatActivity {
     }
 
 
-//need this
+    //need this
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode){
             case ROUTE_SELECTED:
                 if(resultCode==RESULT_OK){
                     Intent i=new Intent();
-                    i.putExtra("pos",pos);
+                    i.putExtra(POSITION_FOR_EDIT_JOURNEY,pos);
                     setResult(RESULT_OK,i);
                     saveCars();
                     finish();
@@ -293,18 +294,18 @@ public class SelectCar extends AppCompatActivity {
                 break;
             case CAR_ADDED:
                 if(resultCode==RESULT_OK){
-                CarSingleton masterCar = CarSingleton.getInstance();
-                Car tempCar =new Car(masterCar.getName(),
-                        masterCar.getMake(),
-                        masterCar.getModel(),
-                        masterCar.getHighwayEmissions(),
-                        masterCar.getCityEmissions(),
-                        masterCar.getYear(),
-                        masterCar.getTransmission(),
-                        masterCar.getLiterEngine(),
-                        masterCar.getGasType()
-                );
-                myCars.addCar(tempCar);}
+                    CarSingleton masterCar = CarSingleton.getInstance();
+                    Car tempCar =new Car(masterCar.getName(),
+                            masterCar.getMake(),
+                            masterCar.getModel(),
+                            masterCar.getHighwayEmissions(),
+                            masterCar.getCityEmissions(),
+                            masterCar.getYear(),
+                            masterCar.getTransmission(),
+                            masterCar.getLiterEngine(),
+                            masterCar.getGasType()
+                    );
+                    myCars.addCar(tempCar);}
                 setupAddCarButton();
                 setupBackButton();
                 setCarList();
@@ -323,7 +324,7 @@ public class SelectCar extends AppCompatActivity {
                             masterCar.getLiterEngine(),
                             masterCar.getGasType()
                     );
-                    int position=data.getIntExtra(POS_EDIT,0);
+                    int position=data.getIntExtra(POS_FOR_EDIT_CAR,0);
                     myCars.changeCar(tempCar,position);
                     setCarList();
                 }
