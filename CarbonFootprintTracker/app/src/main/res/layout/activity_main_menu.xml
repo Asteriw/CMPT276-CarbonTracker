@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/image4"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.MainMenu">
+
     <Button
         android:text="@string/view_carbon_footprint"
         android:layout_width="wrap_content"
@@ -15,6 +16,7 @@
         android:layout_marginBottom="31dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,6 +34,7 @@
         android:layout_marginBottom="41dp"
         android:layout_above="@+id/car_logo"
         android:layout_centerHorizontal="true" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,6 +44,7 @@
         android:layout_above="@+id/view_cabon_footprint_button"
         android:layout_alignLeft="@+id/Splash_Title"
         android:layout_alignStart="@+id/Splash_Title" />
+
     <Button
         android:text="@string/create_a_new_journey"
         android:layout_width="wrap_content"
@@ -48,6 +52,7 @@
         android:id="@+id/create_a_new_journey_button"
         android:layout_above="@+id/utility_add_button"
         android:layout_centerHorizontal="true" />
+
     <Button
         android:text="Add a Utility Bill"
         android:layout_width="wrap_content"

@@ -1,17 +1,21 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
 public class MainMenu extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         setupButtons();
     }
+
     private void setupButtons() {
         // directs to "SelectJourney" screen
         Button journey_button = (Button) findViewById(R.id.create_a_new_journey_button);
@@ -31,7 +35,6 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(MainMenu2CarbonFootPrint);
             }
         });
-
         // directs to "Utility Bill" screen
         Button utility_button = (Button) findViewById(R.id.utility_add_button);
         utility_button.setOnClickListener(new View.OnClickListener() {
@@ -41,8 +44,8 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(MainMenu2Utilities);
             }
         });
-
     }
+
     public static Intent makeIntent(Context context) {
         return new Intent(context, MainMenu.class);
     }
