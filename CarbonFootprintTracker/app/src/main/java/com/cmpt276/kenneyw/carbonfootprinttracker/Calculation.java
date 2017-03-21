@@ -78,4 +78,7 @@ public class Calculation {
     public static Intent makeIntent(Context context) {
         return new Intent(context, Calculation.class);
     }
+
+
+
 }
