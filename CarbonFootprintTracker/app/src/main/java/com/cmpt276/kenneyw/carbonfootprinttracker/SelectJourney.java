@@ -129,6 +129,7 @@ public class SelectJourney extends AppCompatActivity {
             public void onClick(View v) {
                 Intent SelectJourney2SelectCar = SelectCar.makeIntent(SelectJourney.this);
                 startActivityForResult(SelectJourney2SelectCar,CAR_AND_ROUTE_SELECTED);
+
             }
         });
     }
@@ -183,6 +184,7 @@ public class SelectJourney extends AppCompatActivity {
             Intent i=SelectCar.makeIntent(SelectJourney.this);
             i.putExtra("pos",pos);
             startActivityForResult(i, EDIT_JOURNEY);
+            finish();
         }
         else if(menuItemName.equals("Delete")){
             Journey j=journeyArrayList.get(pos);

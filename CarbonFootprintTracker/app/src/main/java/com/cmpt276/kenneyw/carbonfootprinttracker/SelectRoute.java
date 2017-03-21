@@ -124,6 +124,7 @@ public class SelectRoute extends AppCompatActivity {
                 // pass date
 
                 startActivity(SelectRoute2EditDate);
+                finish();
             }
         });
         registerForContextMenu(listForRoutes);
