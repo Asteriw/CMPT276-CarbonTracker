@@ -35,6 +35,8 @@ public class Calculation {
     final private static double gasoline_volume_in_kg_per_gallon = 8.89;
     final private static double diesel_volumne_in_kg_per_gallon = 10.16;
     final private static double mile_per_km = 0.621371;
+    final private static double kg_per_Gwh = 9000;
+    final private static double kg_per_GJ = 56.1;
 
     /*Calculate CO2 Emission of Gasoline with a given distance*/
     private double calculate_CO2_Emission_of_Gasoline(double distance_in_km_from_user,double miles_per_gallon){
@@ -56,6 +58,12 @@ public class Calculation {
                                      (diesel_volumne_in_kg_per_gallon);
         return doubleToTwoPlaces(result_in_kg_CO2);
     }
+
+    /*Calculate CO2 Emission of Natural gas*/
+    // Assume 9000Kg CO2 per GWh
+    //private double calculate_CO2_Emission_of_Natural_Gas(double kilowatts_per_hour_from_user ){
+    //}
+
 
     private double doubleToTwoPlaces(double result_in_kg_CO2_per_litre) {
         DecimalFormat df2 = new DecimalFormat("#.##");
