@@ -47,11 +47,12 @@ public class AddUtility extends AppCompatActivity{
             }
         });
 
-        Button ok_button = (Button) findViewById(R.id.utility_add_button);
+        Button ok_button = (Button) findViewById(R.id.ok_button_add_utility);
         ok_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Save a utility
+                finish();
             }
         });
     }
