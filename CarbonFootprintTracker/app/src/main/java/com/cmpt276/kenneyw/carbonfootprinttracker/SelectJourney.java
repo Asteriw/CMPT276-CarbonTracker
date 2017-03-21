@@ -1,13 +1,17 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -48,6 +53,11 @@ public class SelectJourney extends AppCompatActivity {
     public static final String BUS = "bus";
     public static final String BIKE = "bike";
     public static final String SKYTRAIN = "skytrain";
+
+    int tipCounter = 0;
+    String tipString = "";
+    int tipIndex = 0;
+    int tempIndex = 0;
 
     ArrayList<Journey> journeyArrayList=new ArrayList<>();
 
@@ -191,6 +201,65 @@ public class SelectJourney extends AppCompatActivity {
         }
         return true;
     }
+
+    //Creates an Alert Dialog using a the custom layout activity_tip_dialog
+    //Clicking next tip will create a new Alert Dialog with a new message
+    //The message is set by running the tipTextSelector method, which avoids repeats and selects
+    //a relevant tip (if available)
+    private void tipMaker() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View tipView =inflater.inflate(R.layout.activity_tip_dialog, null);
+
+        TextView tipText = (TextView) tipView.findViewById(R.id.tip_text);
+        tipText.setGravity(Gravity.CENTER);
+        tipText.setText(tipTextSelector());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Tips!");
+        builder.setView(tipView);
+        builder.setPositiveButton("Next Tip", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                tipMaker();
+            }
+        });
+        builder.setNegativeButton("Ok", null);
+        AlertDialog tipDialog = builder.create();
+        tipDialog.show();
+    }
+
+    private CharSequence tipTextSelector() {
+        if (tipCounter==0) {
+            tipString = "Tipperoni";
+            tipCounter++;
+            return tipString;
+        }
+        else if (tipCounter==1) {
+            tipString = "Just the tips";
+            tipCounter++;
+        }
+        else if (tipCounter>1) {
+            tipString = "No more Tips for you!";
+            tipCounter++;
+        }
+        return tipString;
+    }
+
+    //Avoids tips that have been shown in the last 7
+    //Picks relevant tips, using userdata
+    private CharSequence tipTextSelector2() {
+        //if (database tipRepeat var > 0) {
+            //tipIndex++;
+            //database tipRepeat var++
+        //}
+        //if (database tipRepeat var == 7) {
+            //
+            //database tipRepeat var = 0;
+
+            //
+        //}
+        return tipString;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -207,7 +276,7 @@ public class SelectJourney extends AppCompatActivity {
                     setupAddJourneyButton();
                     setupBackButton();
                     setJourneyList();
-
+                    tipMaker();
                 }
                 else{
                     Log.i(TAG,"User Cancelled");
