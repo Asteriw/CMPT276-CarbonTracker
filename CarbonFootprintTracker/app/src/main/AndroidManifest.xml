@@ -27,7 +27,8 @@
         <activity android:name=".AddCar" />
         <activity android:name=".SelectJourney" />
         <activity android:name=".SelectRoute" />
-        <activity android:name=".AddRoute"></activity>
+        <activity android:name=".AddRoute" />
+        <activity android:name=".EditDate"></activity>
     </application>
 
 </manifest>

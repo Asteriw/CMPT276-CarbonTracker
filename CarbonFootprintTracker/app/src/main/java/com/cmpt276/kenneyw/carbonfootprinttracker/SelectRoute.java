@@ -121,7 +121,14 @@ public class SelectRoute extends AppCompatActivity {
                 saveRoutes();
                 Intent i = new Intent();
                 setResult(RESULT_OK, i);
-                finish();
+
+                // Call Calendar Activity
+                Intent SelectRoute2EditDate = EditDate.makeIntent(SelectRoute.this);
+
+                // pass date
+
+
+                startActivity(SelectRoute2EditDate);
             }
         });
         registerForContextMenu(listForRoutes);
