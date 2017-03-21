@@ -14,6 +14,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 public class EditDate extends AppCompatActivity {
+    String date_in_str;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class EditDate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // save the date and go back to journey list
+                DateSingleton.getInstance().setDateString(date_in_str);
 
                 Intent EditRoute2SelectJourneyIntent = SelectJourney.makeIntent(EditDate.this);
                 startActivity(EditRoute2SelectJourneyIntent);
@@ -48,7 +50,7 @@ public class EditDate extends AppCompatActivity {
     DatePicker.OnDateChangedListener onDateChanged = new DatePicker.OnDateChangedListener() {
         @Override
         public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            String date_in_str = monthOfYear + "/" + dayOfMonth + "/" + year;
+            date_in_str = monthOfYear + "/" + dayOfMonth + "/" + year;
             //Toast.makeText(getApplicationContext(), date_in_str, Toast.LENGTH_LONG).show();
             TextView dateText = (TextView) findViewById(R.id.date_text);
             dateText.setText(date_in_str);
