@@ -31,7 +31,12 @@ public class SelectUtilities extends AppCompatActivity {
     }
 
     private void setupList() {
+        UtilitySingleton singleton_utility = UtilitySingleton.getInstance();
+        Log.i("temp_utility = ", singleton_utility.getName());
+
         //String name, String gasType, double amounts, int num_people, double emission, String startDate, String endDate
+
+
         ListView utilityList = (ListView) findViewById(R.id.utilities_listView);
         ArrayAdapter<Utility> adapter = new ArrayAdapter<Utility>(this, R.layout.layout_for_list, utilities);
         utilityList.setAdapter(adapter);
