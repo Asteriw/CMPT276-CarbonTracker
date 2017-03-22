@@ -5,12 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.Date;
 
 public class Utility extends AppCompatActivity {
+
     private String name;
     private String gasType;
-    private double emissions;
-    private double kiloWattHour;
-    private Date startDate;
-    private Date endDate;
+    private double amount;
+    private double emission;
+    private int numofPeople;
+    private String startDate;
+    private String endDate;
 
     private enum gasTypeEnum {
         NATURAL_GAS,
@@ -20,23 +22,25 @@ public class Utility extends AppCompatActivity {
     public Utility() {
         name = "";
         gasType = gasTypeEnum.NATURAL_GAS.toString();
-        emissions = 0.0;
-        kiloWattHour = 0.0;
-        startDate = new Date();
-        endDate = new Date();
+        amount = 0.0;
+        emission = 0.0;
+        startDate = "Default StartDate";
+        endDate = "Default EndDate";
+        numofPeople = 0;
     }
 
-    public Utility(String name, String gasType, double emissions, double kiloWattHour, Date startDate, Date endDate) {
+    public Utility(String name, String gasType, double amounts, int num_people, double emission, String startDate, String endDate) {
         this.name = name;
-        if (gasType.matches("Electricity")) {
+        if ( gasType == "Electricity" || gasType == "electricity" ) {
             this.gasType = gasTypeEnum.ELECTRIC.toString();
         } else {
             this.gasType = gasTypeEnum.NATURAL_GAS.toString();
         }
-        this.emissions = emissions;
-        this.kiloWattHour = kiloWattHour;
+        this.amount = amounts;
+        this.emission = emission;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.numofPeople = num_people;
     }
 
     public String getName() {
@@ -55,35 +59,44 @@ public class Utility extends AppCompatActivity {
         this.gasType = gasType;
     }
 
-    public double getEmissions() {
-        return emissions;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setEmissions(double emissions) {
-        this.emissions = emissions;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
-    public double getKiloWattHour() {
-        return kiloWattHour;
+    public double getEmission() {
+        return emission;
     }
 
-    public void setKiloWattHour(double kiloWattHour) {
-        this.kiloWattHour = kiloWattHour;
+    public void setEmission(double emission) {
+        this.emission = emission;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public int getNumofPeople() {
+        return numofPeople;
     }
 
-    public void setEndDate(Date date) {
-        this.endDate = date;
+    public void setNumofPeople(int numofPeople) {
+        this.numofPeople = numofPeople;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date date) {
-        this.startDate = date;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
 }
