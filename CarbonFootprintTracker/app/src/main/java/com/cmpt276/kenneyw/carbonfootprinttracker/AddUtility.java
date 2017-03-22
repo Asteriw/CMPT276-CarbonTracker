@@ -6,15 +6,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import java.util.Date;
-
 public class AddUtility extends AppCompatActivity{
-    UtilitiesCollection utilities = new UtilitiesCollection();
-    Utility new_utility = new Utility();
+    RadioButton selectedButton;
+    String utility_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -30,9 +29,9 @@ public class AddUtility extends AppCompatActivity{
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 //Toast.makeText(getApplicationContext(), "" + checkedId + " selected", Toast.LENGTH_SHORT).show();
-                RadioButton selectedButton = (RadioButton) findViewById(checkedId);
+                selectedButton = (RadioButton) findViewById(checkedId);
                 Toast.makeText(getApplicationContext(), selectedButton.getText() + " selected", Toast.LENGTH_SHORT).show();
-                String utility_type = selectedButton.getText().toString();
+                utility_type = selectedButton.getText().toString();
             }
         });
     }
@@ -51,12 +50,19 @@ public class AddUtility extends AppCompatActivity{
         ok_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                EditText editAmount = (EditText) findViewById(R.id.amount_text);
+                EditText editNumPeople = (EditText) findViewById(R.id.num_people_text);
+                EditText editStartDate = (EditText) findViewById(R.id.start_date_text);
+                EditText editEndDate = (EditText) findViewById(R.id.end_date_text);
+                EditText editNickname = (EditText) findViewById(R.id.utility_nick_name_text);
+
                 // Save a utility
-                finish();
+                //String name, String gasType, double amounts, int num_people, double emission, String startDate, String endDate
+
             }
         });
     }
-
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddUtility.class);

@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-import org.w3c.dom.Text;
+
 public class EditDate extends AppCompatActivity {
     String date_in_str;
     @Override
@@ -17,7 +15,7 @@ public class EditDate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_date);
         // Get the date of the journey
-        TextView initialDateText = (TextView) findViewById(R.id.initial_date_text);
+        TextView initialDateText = (TextView) findViewById(R.id.start_date_text);
         initialDateText.setText("");
         DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
         dp.init(2017, 1, 1, onDateChanged);

@@ -8,10 +8,12 @@ public class UtilitySingleton extends AppCompatActivity {
     private static UtilitySingleton utilityInstance = null;
     private String name;
     private String gasType;
-    private double emissions;
-    private double kiloWattHour;
-    private Date startDate;
-    private Date endDate;
+    private double amounts;
+    private int num_poeople;
+    private double emission;
+    private String startDate;
+    private String endDate;
+
 
     private enum gasTypeEnum {
         NATURAL_GAS,
@@ -28,10 +30,10 @@ public class UtilitySingleton extends AppCompatActivity {
     private UtilitySingleton() {
         name = "";
         gasType = gasTypeEnum.NATURAL_GAS.toString();
-        emissions = 0.0;
-        kiloWattHour = 0.0;
-        startDate = new Date();
-        endDate = new Date();
+        amounts = 0.0;
+        num_poeople = 0;
+        startDate = "Default startDate";
+        endDate = "Default endDate";
     }
 
     public String getName() {
@@ -50,35 +52,43 @@ public class UtilitySingleton extends AppCompatActivity {
         this.gasType = gasType;
     }
 
-    public double getEmissions() {
-        return emissions;
+    public double getAmounts() {
+        return amounts;
     }
 
-    public void setEmissions(double emissions) {
-        this.emissions = emissions;
+    public void setAmounts(double amounts) {
+        this.amounts = amounts;
     }
 
-    public double getKiloWattHour() {
-        return kiloWattHour;
+    public int getNum_poeople() {
+        return num_poeople;
     }
 
-    public void setKiloWattHour(double kiloWattHour) {
-        this.kiloWattHour = kiloWattHour;
+    public void setNum_poeople(int num_poeople) {
+        this.num_poeople = num_poeople;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public double getEmission() {
+        return emission;
     }
 
-    public void setEndDate(Date date) {
-        this.endDate = date;
+    public void setEmission(double emission) {
+        this.emission = emission;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date date) {
-        this.startDate = date;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

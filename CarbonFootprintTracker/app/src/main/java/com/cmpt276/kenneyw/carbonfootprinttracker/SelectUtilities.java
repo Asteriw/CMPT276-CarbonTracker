@@ -7,18 +7,53 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
-public class SelectUtilities extends AppCompatActivity{
+import java.util.ArrayList;
+
+public class SelectUtilities extends AppCompatActivity {
 
     private static final String TAG = "CarbonFootprintTracker";
     public static final int REQUEST_ADD_UTILITY = 1;
 
+    ArrayList<Utility> utilities = new ArrayList<>();
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_utilities);
+
         setupButtons();
+        setupList();
+    }
+
+    private void setupList() {
+        //String name, String gasType, double amounts, int num_people, double emission, String startDate, String endDate
+        ListView utilityList = (ListView) findViewById(R.id.utilities_listView);
+        ArrayAdapter<Utility> adapter = new ArrayAdapter<Utility>(this, R.layout.layout_for_list, utilities);
+        utilityList.setAdapter(adapter);
+        utilityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+            case REQUEST_ADD_UTILITY:
+                if (resultCode == RESULT_CANCELED) {
+                    Log.i(TAG, "User Cancelled Add Utility");
+                } else {
+                }
+                break;
+        }
     }
 
     private void setupButtons() {
@@ -39,20 +74,6 @@ public class SelectUtilities extends AppCompatActivity{
             }
         });
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        switch (requestCode) {
-            case REQUEST_ADD_UTILITY:
-                if (resultCode == RESULT_CANCELED) {
-                    Log.i(TAG, "User Cancelled Add Utility");
-                } else {
-
-                }
-        }
-    }
-
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, SelectUtilities.class);
