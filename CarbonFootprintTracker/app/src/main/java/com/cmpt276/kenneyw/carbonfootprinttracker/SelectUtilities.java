@@ -17,28 +17,25 @@ import java.util.ArrayList;
 public class SelectUtilities extends AppCompatActivity {
 
     private static final String TAG = "CarbonFootprintTracker";
-    public static final int REQUEST_ADD_UTILITY = 1;
+    public static final int REQUEST_ADD_UTILITY = 7;
 
     ArrayList<Utility> utilities = new ArrayList<>();
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_utilities);
 
-        setupButtons();
         setupList();
+        setupButtons();
     }
 
     private void setupList() {
-        UtilitySingleton singleton_utility = UtilitySingleton.getInstance();
-        Log.i("temp_utility = ", singleton_utility.getName());
-
-        //String name, String gasType, double amounts, int num_people, double emission, String startDate, String endDate
-
+        loadUtility();
 
         ListView utilityList = (ListView) findViewById(R.id.utilities_listView);
-        ArrayAdapter<Utility> adapter = new ArrayAdapter<Utility>(this, R.layout.layout_for_list, utilities);
+        ArrayAdapter<Utility> adapter = new ArrayAdapter<>(this, R.layout.layout_for_list, utilities);
         utilityList.setAdapter(adapter);
         utilityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -47,6 +44,25 @@ public class SelectUtilities extends AppCompatActivity {
             }
         });
     }
+
+    private void loadUtility(){
+
+        Utility temp_utility = new Utility(
+                UtilitySingleton.getInstance().getName(),
+                UtilitySingleton.getInstance().getGasType(),
+                UtilitySingleton.getInstance().getAmounts(),
+                UtilitySingleton.getInstance().getNum_poeople(),
+                UtilitySingleton.getInstance().getEmission(),
+                UtilitySingleton.getInstance().getStartDate(),
+                UtilitySingleton.getInstance().getEndDate()
+        );
+
+        Log.i("SELECT UTILITY = ", temp_utility.getName());
+
+        utilities.add(temp_utility);
+    }
+
+/*
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -60,7 +76,7 @@ public class SelectUtilities extends AppCompatActivity {
                 break;
         }
     }
-
+*/
     private void setupButtons() {
         Button backButton = (Button) findViewById(R.id.utility_back);
         backButton.setOnClickListener(new View.OnClickListener() {

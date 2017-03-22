@@ -35,28 +35,6 @@ public class AddUtility extends AppCompatActivity{
             }
         });
     }
-    private void getDataFromUser(){
-        // Save a utility
-        EditText editAmount = (EditText) findViewById(R.id.amount_text);
-        EditText editNumPeople = (EditText) findViewById(R.id.num_people_text);
-        EditText editStartDate = (EditText) findViewById(R.id.start_date_text);
-        EditText editEndDate = (EditText) findViewById(R.id.end_date_text);
-        EditText editNickname = (EditText) findViewById(R.id.utility_nick_name_text);
-
-        //String name, String gasType, double amounts, int num_people, double emission, String startDate, String endDate
-        UtilitySingleton new_utility = UtilitySingleton.getInstance();
-        new_utility.setAmounts( Double.parseDouble( editAmount.getText().toString() ));
-        new_utility.setNum_poeople( Integer.parseInt( editNumPeople.getText().toString() ));
-        new_utility.setStartDate(  editStartDate.getText().toString() );
-        new_utility.setEndDate(  editEndDate.getText().toString() );
-        new_utility.setName( editNickname.getText().toString() );
-        new_utility.setEmission( 0.0 );
-        new_utility.setGasType( utility_type );
-        setResult(RESULT_OK);
-        Log.i("AddUtility", "Singleton = "+ new_utility.getName());
-        Log.i("AddUtility", "Singleton = "+ new_utility.getGasType());
-        finish();
-    }
 
     private void setupButton() {
         Button cancel_button = (Button) findViewById(R.id.utility_add_cancel);
@@ -74,6 +52,65 @@ public class AddUtility extends AppCompatActivity{
                 getDataFromUser();
             }
         });
+    }
+
+    private void getDataFromUser(){
+        // Save a utility
+        EditText editAmount = (EditText) findViewById(R.id.amount_text);
+        EditText editNumPeople = (EditText) findViewById(R.id.num_people_text);
+        EditText editStartDate = (EditText) findViewById(R.id.start_date_text);
+        EditText editEndDate = (EditText) findViewById(R.id.end_date_text);
+        EditText editNickname = (EditText) findViewById(R.id.utility_nick_name_text);
+
+
+        if ( editAmount.getText().charAt(0) == ' '){
+            Toast.makeText(getApplicationContext(), "Amount can't be left empty", Toast.LENGTH_SHORT).show();
+        }
+        else if (utility_type.isEmpty()){
+            Toast.makeText(getApplicationContext(), "Please select a utility type", Toast.LENGTH_SHORT).show();
+        }
+        else if ( editNickname.getText().charAt(0) == ' ' ){
+            Toast.makeText(getApplicationContext(), "Name can't be left empty", Toast.LENGTH_SHORT).show();
+        }
+        else if ( editNumPeople.getText().charAt(0) == ' '){
+            Toast.makeText(getApplicationContext(), "Enter a number of poeple", Toast.LENGTH_SHORT).show();
+        }
+        // Date format: dd/mm/yyyy
+        else if ( editStartDate.getText().charAt(2) != '/' || editStartDate.getText().charAt(5) != '/'
+                 // day is over 31
+                || ( editStartDate.getText().charAt(0) >= '3' && editStartDate.getText().charAt(1)  > '1')
+                // month is 12
+                || ( editStartDate.getText().charAt(3) >= '1' && editStartDate.getText().charAt(4) > '2')
+                // year is in yyyy format
+                || (editStartDate.getText().subSequence(6,9).length() > 4)
+                ){
+            Toast.makeText(getApplicationContext(), "Please follow the date format, dd/mm/yyyy", Toast.LENGTH_SHORT).show();
+        }
+        // Date format: dd/mm/yyyy
+        else if ( editEndDate.getText().charAt(2) != '/' || editEndDate.getText().charAt(5) != '/'
+                // day is over 31
+                || ( editEndDate.getText().charAt(0) >= '3' && editEndDate.getText().charAt(1)  > '1')
+                // month is 12
+                || ( editEndDate.getText().charAt(3) >= '1' && editEndDate.getText().charAt(4) > '2')
+                // year is in yyyy format
+                || (editEndDate.getText().subSequence(6,9).length() > 4)
+                ){
+            Toast.makeText(getApplicationContext(), "Please follow the date format, dd/mm/yyyy", Toast.LENGTH_SHORT).show();
+        }else{
+            //String name, String gasType, double amounts, int num_people, double emission, String startDate, String endDate
+            UtilitySingleton new_utility = UtilitySingleton.getInstance();
+            new_utility.setAmounts(Double.parseDouble(editAmount.getText().toString()));
+            new_utility.setNum_poeople(Integer.parseInt(editNumPeople.getText().toString()));
+            new_utility.setStartDate(editStartDate.getText().toString());
+            new_utility.setEndDate(editEndDate.getText().toString());
+            new_utility.setName(editNickname.getText().toString());
+            new_utility.setEmission(0.0);
+            new_utility.setGasType(utility_type);
+            Log.i("AddUtility", "Singleton = " + new_utility.getName());
+            Log.i("AddUtility", "Singleton = " + new_utility.getGasType());
+            setResult(RESULT_OK);
+            finish();
+        }
     }
 
     public static Intent makeIntent(Context context) {
