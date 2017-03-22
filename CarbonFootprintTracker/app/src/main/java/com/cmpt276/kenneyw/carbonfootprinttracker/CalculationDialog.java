@@ -33,7 +33,7 @@ public class CalculationDialog extends AppCompatDialogFragment {
         View viewer = LayoutInflater.from(getActivity()).inflate(R.layout.activity_calculation_dialog, null);
         TextView txtCO2=(TextView) viewer.findViewById(R.id.calculation_result_dialog);
         Double CO2=getArguments().getDouble("CO2");
-        txtCO2.setText("   " + CO2 + " Kg/L");
+        txtCO2.setText("" + CO2 + " Kg of CO2");
         txtCO2.setTextColor(Color.rgb(255,178,102));
         //create button listeners
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
