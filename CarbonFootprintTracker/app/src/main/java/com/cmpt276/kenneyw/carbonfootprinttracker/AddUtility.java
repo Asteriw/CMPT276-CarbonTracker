@@ -69,6 +69,7 @@ public class AddUtility extends AppCompatActivity {
 
 
 
+
                 Intent i = new Intent();
                 setResult(RESULT_OK, i);
             }
@@ -97,14 +98,13 @@ public class AddUtility extends AppCompatActivity {
         switch(requestCode){
             case START_DATE_CHOOSE:
                 DateSingleton finalDate = DateSingleton.getInstance();
-                
+
                 break;
             case END_DATE_CHOOSE:
                 break;
         }
     }
 
-    //fix
     private void getDataFromUser() {
         // Save a utility
         editAmount = (EditText) findViewById(R.id.amount_text);
@@ -114,8 +114,8 @@ public class AddUtility extends AppCompatActivity {
         naturalgasButton = (RadioButton) findViewById(R.id.radioNaturalGas);
 
         // no inputs entered
-        if (editAmount.getText().toString().equals("") || editNumPeople.getText().toString().equals("") && editNickname.getText().toString().equals("")
-                && !electricityButton.isChecked() && !naturalgasButton.isChecked()) {
+        if (editAmount.getText().toString().equals("") || editNumPeople.getText().toString().equals("") || editNickname.getText().toString().equals("")
+                || (!electricityButton.isChecked() && !naturalgasButton.isChecked())) {
             Toast.makeText(getApplicationContext(), "No inputs entered", Toast.LENGTH_SHORT).show();
         }
         // something was entered

@@ -67,7 +67,7 @@ public class Calculation {
 
     private double doubleToTwoPlaces(double result_in_kg_CO2_per_litre) {
         DecimalFormat df2 = new DecimalFormat("#.##");
-        result_in_kg_CO2_per_litre=Double.valueOf(df2.format(result_in_kg_CO2_per_litre));
+        result_in_kg_CO2_per_litre=Double.valueOf( df2.format(result_in_kg_CO2_per_litre) );
         return result_in_kg_CO2_per_litre;
     }
 
