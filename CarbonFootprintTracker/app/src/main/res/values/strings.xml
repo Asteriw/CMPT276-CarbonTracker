@@ -58,4 +58,25 @@
     <string name="see_my_utilities_data">See My Utilities Data</string>
     <string name="see_my_journeys_data">See My Journeys Data</string>
     <string name="note_for_units">Units: Gj for natural gas, kwh for electricity</string>
+    <string name="next_tip">Next Tip</string>
+    <string name="close_tips">Close</string>
+    <string-array name="tips_array">
+        <item>Carpool with commuters that share similar trips to yours.</item>
+        <item>If looking to get a new car, take into consideration fuel efficiency when choosing which vehicle to get.</item>
+        <item>If possible, take a bus instead of a taxi or other forms of single-passenger transportation.</item>
+        <item>Try to prevent stopping and accelerating as much as you can when driving.</item>
+        <item>If in traffic, turn off your engine if idling for long periods of time.</item>
+        <item>Try to take the most direct path to your destination to avoid taking detours that will add to your trip length.</item>
+        <item>If going short distances, consider walking, biking, or other forms of zero-emission transportation.</item>
+        <item>Make sure your wheels are fully inflated, as flatter tires greatly increase your emissions.</item>
+        <item>Taking shorter showers can help greatly reduce the amount of hot water you consume, which will reduce your carbon footprint.</item>
+        <item>Washing clothes in cold water will reduce the amount of unnecessary hot water you use.</item>
+        <item>Turning off heating in the warmer months will drastically decrease the amount of gas used for heating.</item>
+        <item>Put a sweatshirt on instead of turning up the heat when cold.</item>
+        <item>Using compact fluorescent light bulbs will cut down on your electric bill and also increase the brightness of the rooms you are trying to light!</item>
+        <item>Unplugging electrical appliances that are not in use will reduce the amount of ambient electricity you use.</item>
+        <item>During the warmer months, hang your clothes up to dry instead of using a drying machine to cut down on your electric bill.</item>
+        <item>If going on vacation, turn off the heating in your house and put your water heater on "vacation" setting if possible.</item>
+    </string-array>
+
 </resources>

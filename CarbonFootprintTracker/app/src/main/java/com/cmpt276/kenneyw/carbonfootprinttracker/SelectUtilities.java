@@ -2,13 +2,17 @@ package com.cmpt276.kenneyw.carbonfootprinttracker;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -39,12 +44,17 @@ public class SelectUtilities extends AppCompatActivity {
     ArrayList<Utility> utilities = new ArrayList<>();
     Intent intent;
 
+    String tipString;
+    int properTipIndex;
+    String[] tipArray;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_utilities);
         utilities=loadUtilities();
         setupList();
+        tipArray = getResources().getStringArray(R.array.tips_array);
         setupButtons();
     }
 
@@ -169,6 +179,7 @@ public class SelectUtilities extends AppCompatActivity {
                     utilities.add(temp_utility);
                     setupButtons();
                     setupList();
+                    tipMaker();
                 }
                 else{
                     setupButtons();
@@ -193,6 +204,43 @@ public class SelectUtilities extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    private void tipMaker() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View tipView =inflater.inflate(R.layout.activity_tip_dialog, null);
+
+        TextView tipText = (TextView) tipView.findViewById(R.id.tip_text);
+        tipText.setGravity(Gravity.CENTER);
+        tipText.setText(tipTextSelector());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Tips!");
+        builder.setView(tipView);
+        builder.setPositiveButton("Next Tip", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                tipMaker();
+            }
+        });
+        builder.setNegativeButton("Ok", null);
+        AlertDialog tipDialog = builder.create();
+        tipDialog.show();
+    }
+
+    //Avoids tips that have been shown in the last 7
+    //Picks relevant tips, using userdata
+    private String tipTextSelector() {
+        TipHelperSingleton tipHelper = TipHelperSingleton.getInstance();
+        tipHelper.setTipIndexUtil();
+        if (tipHelper.spiceTimer() == 1) {
+            properTipIndex = tipHelper.checkRepeatTracker(tipHelper.spiceMaker());
+            tipString = tipArray[properTipIndex];
+            return tipString;
+        }
+        properTipIndex = tipHelper.checkRepeatTracker(0);
+        tipString = tipArray[properTipIndex];
+
+        return tipString;
     }
 
     @Override
