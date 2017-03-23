@@ -49,12 +49,11 @@
     <string name="initial_date">Initial Date:</string>
     <string name="new_date">New Date</string>
     <string name="amount">Amount :</string>
-    <string name="gj_for_natural_gas_gwh_for_electricity"> Gj for natural gas, Gwh for electricity</string>
     <string name="number_of_people">Number of People:</string>
     <string name="select_type">Select Type:</string>
     <string name="electricity">Electricity</string>
     <string name="natural_gas">Natural Gas</string>
     <string name="format_dd_mm_yyyy">Format: dd/mm/yyyy</string>
     <string name="final_date">Final Date:</string>
-    <string name="units_gj_for_natural_gas_gwh_for_electricity">Units: GJ for natural gas, GWH for electricity</string>
+    <string name="note_for_units">Units: Gj for natural gas, kwh for electricity</string>
 </resources>

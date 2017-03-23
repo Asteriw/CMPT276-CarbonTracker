@@ -14,12 +14,6 @@ public class UtilitySingleton extends AppCompatActivity {
     private String startDate;
     private String endDate;
 
-
-    private enum gasTypeEnum {
-        NATURAL_GAS,
-        ELECTRIC
-    }
-
     public static UtilitySingleton getInstance() {
         if (utilityInstance == null) {
             utilityInstance = new UtilitySingleton();
@@ -29,7 +23,7 @@ public class UtilitySingleton extends AppCompatActivity {
 
     private UtilitySingleton() {
         name = "";
-        gasType = gasTypeEnum.NATURAL_GAS.toString();
+        gasType = "Default GasType";
         amounts = 0.0;
         num_poeople = 0;
         startDate = "Default startDate";
@@ -91,4 +85,5 @@ public class UtilitySingleton extends AppCompatActivity {
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
+
 }

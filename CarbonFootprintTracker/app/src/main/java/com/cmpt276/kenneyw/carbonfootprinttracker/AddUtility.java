@@ -161,6 +161,7 @@ public class AddUtility extends AppCompatActivity {
             } else if (startYear <= endYear && startMonth == endMonth && startDay > endDay) {
                 Toast.makeText(getApplicationContext(), "StartDate can't be greater than EndDate", Toast.LENGTH_SHORT).show();
             } else {
+
                 //String name, String gasType, double amounts, int num_people, double emission, String startDate, String endDate
                 UtilitySingleton new_utility = UtilitySingleton.getInstance();
                 new_utility.setAmounts(Double.parseDouble(editAmount.getText().toString()));
@@ -168,11 +169,19 @@ public class AddUtility extends AppCompatActivity {
                 new_utility.setStartDate(startDate);
                 new_utility.setEndDate(endDate);
                 new_utility.setName(editNickname.getText().toString());
-                new_utility.setEmission(0.0);
+
+                Calculation calculation = new Calculation();
+                if ( utility_type.equals("Electricity") ) {
+                    new_utility.setEmission(calculation.calculate_CO2_Emission_of_Electricity(Double.parseDouble(editAmount.getText().toString())));
+                }
+                else{
+                    new_utility.setEmission( calculation.calculate_CO2_Emission_of_Natural_Gas( Double.parseDouble(editAmount.getText().toString()) ));
+                }
+
                 new_utility.setGasType(utility_type);
                 Log.i("AddUtility", "Singleton = " + new_utility.getName());
                 Log.i("AddUtility", "Singleton = " + new_utility.getGasType());
-
+                Log.i("AddUtility","Singleton = " + new_utility.getEmission());
                 Intent i = new Intent();
                 i.putExtra(POS_TO_EDIT,pos);
                 setResult(RESULT_OK, i);

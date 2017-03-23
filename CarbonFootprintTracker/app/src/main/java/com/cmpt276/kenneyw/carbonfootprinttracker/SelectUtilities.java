@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -79,13 +80,18 @@ public class SelectUtilities extends AppCompatActivity {
 
     private void setupList() {
 
-        ListView utilityList = (ListView) findViewById(R.id.utilities_listView);
+        final ListView utilityList = (ListView) findViewById(R.id.utilities_listView);
         ArrayAdapter<Utility> adapter = new ArrayAdapter<>(this, R.layout.layout_for_list, utilities);
         utilityList.setAdapter(adapter);
         utilityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                FragmentManager manager=getSupportFragmentManager();
+                CalculationDialog dialog = new CalculationDialog();
+                Bundle bundle =new Bundle();
+                bundle.putDouble("CO2", utilities.get(position).getEmission());
+                dialog.setArguments(bundle);
+                dialog.show(manager,"CalculateDialog");
             }
         });
 

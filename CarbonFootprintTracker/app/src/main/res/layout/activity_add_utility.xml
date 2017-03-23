@@ -81,7 +81,7 @@
                 android:layout_marginRight="30dp" />
 
             <TextView
-                android:text="@string/units_gj_for_natural_gas_gwh_for_electricity"
+                android:text="@string/note_for_units"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
