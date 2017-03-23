@@ -35,6 +35,12 @@ public class Calculation {
     final private static double gasoline_volume_in_kg_per_gallon = 8.89;
     final private static double diesel_volumne_in_kg_per_gallon = 10.16;
     final private static double mile_per_km = 0.621371;
+    final private static double kg_per_Gwh = 9000;
+    final private static double kg_per_GJ = 56.1;
+    final private static double gwh_per_kwh = 1000000;
+    final private static double gj_per_j = 1000000000;
+    final private static double kgCO2_per_Gwh = 9000;
+    final private static double kgCO2_per_GJ = 56.1;
 
     /*Calculate CO2 Emission of Gasoline with a given distance*/
     private double calculate_CO2_Emission_of_Gasoline(double distance_in_km_from_user,double miles_per_gallon){
@@ -46,7 +52,6 @@ public class Calculation {
         return doubleToTwoPlaces(result_in_kg_CO2);
     }
 
-
     /*Calculate CO2 Emission of Diesel with a given distance*/
     private double calculate_C02_Emission_of_Diesel(double distance_in_km_from_user, double miles_per_gallon){
         double result_in_kg_CO2;
@@ -57,9 +62,23 @@ public class Calculation {
         return doubleToTwoPlaces(result_in_kg_CO2);
     }
 
+    /*Calculate CO2 Emission of Natural gas*/
+    // Assume 9000Kg CO2 per GWh
+    public double calculate_CO2_Emission_of_Natural_Gas(double kilowatts_per_hour_from_user ){
+        double result_in_kg_CO2 = kgCO2_per_Gwh / gwh_per_kwh * kilowatts_per_hour_from_user;
+       return doubleToTwoPlaces(result_in_kg_CO2);
+    }
+
+    // Assume 56.1 kg CO2 / GJ
+    public double calculate_CO2_Emission_of_Electricity (double gigajouls_from_user ){
+        double result_in_kg_CO2 = kgCO2_per_GJ * gigajouls_from_user;
+        return doubleToTwoPlaces(result_in_kg_CO2);
+    }
+
+
     private double doubleToTwoPlaces(double result_in_kg_CO2_per_litre) {
         DecimalFormat df2 = new DecimalFormat("#.##");
-        result_in_kg_CO2_per_litre=Double.valueOf(df2.format(result_in_kg_CO2_per_litre));
+        result_in_kg_CO2_per_litre=Double.valueOf( df2.format(result_in_kg_CO2_per_litre) );
         return result_in_kg_CO2_per_litre;
     }
 

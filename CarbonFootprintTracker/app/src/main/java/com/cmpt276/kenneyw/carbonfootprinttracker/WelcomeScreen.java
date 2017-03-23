@@ -1,5 +1,4 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
-
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class WelcomeScreen extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +18,6 @@ public class WelcomeScreen extends AppCompatActivity {
         setupButton();
         setupAnimation();
     }
-
     private void setupAnimation() {
         ImageView car = (ImageView) findViewById(R.id.splashcar);
         TranslateAnimation slide = new TranslateAnimation(-400f, 1400f, -20f, -20f);
@@ -29,7 +26,6 @@ public class WelcomeScreen extends AppCompatActivity {
         slide.setRepeatCount(Animation.INFINITE);
         car.startAnimation(slide);
     }
-
     private void setupButton() {
         // Directs to "MainMenu" screen and kills "WelcomeScreen"
         Button start_button = (Button) findViewById(R.id.start_button);
@@ -42,7 +38,6 @@ public class WelcomeScreen extends AppCompatActivity {
             }
         });
     }
-
     public static Intent makeIntent(Context context) {
         return new Intent(context, WelcomeScreen.class);
     }

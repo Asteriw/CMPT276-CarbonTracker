@@ -6,25 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.CarbonFootPrint">
 
-    <Button
-        android:text="@string/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/back_button_carbon_foot_print"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        tools:ignore="RelativeOverlap" />
-
-    <Button
-        android:text="@string/switch_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/switchview_button_carbon_foot_print"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -85,5 +66,24 @@
 
         </RelativeLayout>
     </RelativeLayout>
+
+    <Button
+        android:text="@string/switch_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/switchview_button_carbon_foot_print"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="@string/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/back_button_carbon_foot_print"
+        tools:ignore="RelativeOverlap"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
