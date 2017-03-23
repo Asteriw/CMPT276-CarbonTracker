@@ -13,24 +13,24 @@ public class TipHelperSingleton {
     private TipHelperSingleton() {
 
         tipIndex = 0;
-        currentMode = "Gas";
+        currentMode = "Travel";
         repeatTracker = new int[16];
         noCycleCounter = 0;
 
     }
 
-    public void setTipIndexGas() {
+    public void setTipIndexTravel() {
         if (currentMode.equals("Utility")) {
             this.tipIndex = 0;
-            currentMode = "Gas";
+            currentMode = "Travel";
         }
         else {
-            Log.i("TIPS", "Already showing gas tips");
+            Log.i("TIPS", "Already showing travel tips");
         }
     }
 
     public void setTipIndexUtil() {
-        if (currentMode.equals("Gas")) {
+        if (currentMode.equals("Travel"))  {
             this.tipIndex = 8;
             currentMode = "Utility";
         }
@@ -72,8 +72,8 @@ public class TipHelperSingleton {
     }
 
     public int spiceMaker() {
-        int spicyTip = 99;
-        if (currentMode == "Gas") {
+        int spicyTip = 69;
+        if (currentMode == "Travel") {
             spicyTip = 8;
         }
         else if (currentMode == "Utility") {

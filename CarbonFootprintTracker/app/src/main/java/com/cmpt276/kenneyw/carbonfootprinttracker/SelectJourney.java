@@ -20,7 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -232,7 +231,7 @@ public class SelectJourney extends AppCompatActivity {
     //Picks relevant tips, using userdata
     private String tipTextSelector() {
         TipHelperSingleton tipHelper = TipHelperSingleton.getInstance();
-        tipHelper.setTipIndexGas();
+        tipHelper.setTipIndexTravel();
         if (tipHelper.spiceTimer() == 1) {
             properTipIndex = tipHelper.checkRepeatTracker(tipHelper.spiceMaker());
             tipString = tipArray[properTipIndex];
