@@ -31,7 +31,7 @@ public class MainMenu extends AppCompatActivity {
         footprint_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent MainMenu2CarbonFootPrint = CarbonFootPrint.makeIntent(MainMenu.this);
+                Intent MainMenu2CarbonFootPrint = DataActivityPicker.makeIntent(MainMenu.this);
                 startActivity(MainMenu2CarbonFootPrint);
             }
         });
