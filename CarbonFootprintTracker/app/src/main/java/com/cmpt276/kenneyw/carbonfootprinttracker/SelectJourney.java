@@ -1,5 +1,4 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,26 +15,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
 /*
 This Class shows the user a list of saved journies, and can add delete and edit journies.
 User can also see CO2 emitted for chosen journey in a dialog. Saves journies from route and car singletons, via shared preference.
 //might transfer database mgmt. to SQL
  */
-
 public class SelectJourney extends AppCompatActivity {
-
     private static final String TAG = "CarbonFootprintTracker";
     private static final int CAR_AND_ROUTE_SELECTED = 1;
     private static final int EDIT_JOURNEY = 2;
     private static final String SHAREDPREF_SET = "CarbonFootprintTrackerJournies";
     private static final String SHAREDPREF_ITEM_AMOUNTOFJOURNEYS = "AmountOfJourneys";
-
     public static final String NAME = "name";
     public static final String ROUTENAME = "routeName";
     public static final String CITY = "city";
@@ -49,21 +43,17 @@ public class SelectJourney extends AppCompatActivity {
     public static final String BUS = "bus";
     public static final String BIKE = "bike";
     public static final String SKYTRAIN = "skytrain";
-
     public static final String POSITION_FOR_EDIT_JOURNEY = "pos";
     ArrayList<Journey> journeyArrayList=new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_journey);
-
         journeyArrayList=loadJourneys();
         setupAddJourneyButton();
         setupBackButton();
         setJourneyList();
     }
-
     public ArrayList<Journey> loadJourneys() {
         ArrayList<Journey> journeyArrayList=new ArrayList<>();
         SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
@@ -87,12 +77,10 @@ public class SelectJourney extends AppCompatActivity {
         }
         return journeyArrayList;
     }
-
     private String dateToString(Date date) {
         SimpleDateFormat dateformatter = new SimpleDateFormat("MMMM dd, yyyy");
         return dateformatter.format(date);
     }
-
     private void saveJourneys() {
         SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
         SharedPreferences.Editor editor=pref.edit();
@@ -116,7 +104,6 @@ public class SelectJourney extends AppCompatActivity {
         editor.putInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS,journeyAmt);
         editor.apply();
     }
-
     private void setupBackButton() {
         Button back_button =  (Button) findViewById(R.id.back_button_select_journey);
         back_button.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +114,6 @@ public class SelectJourney extends AppCompatActivity {
             }
         });
     }
-
     private void setupAddJourneyButton() {
         // Directs to "Select Car" Screen
         Button journey_button = (Button) findViewById(R.id.add_a_new_journey_button);
@@ -136,13 +122,10 @@ public class SelectJourney extends AppCompatActivity {
             public void onClick(View v) {
                 Intent SelectJourney2SelectCar = SelectCar.makeIntent(SelectJourney.this);
                 startActivityForResult(SelectJourney2SelectCar,CAR_AND_ROUTE_SELECTED);
-
             }
         });
     }
-
     private void setJourneyList() {
-
         ArrayAdapter<Journey> adapter = new ArrayAdapter<Journey>(this, R.layout.layout_for_list, journeyArrayList);
         ListView list = (ListView) findViewById(R.id.journeyList);
         list.setAdapter(adapter);list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -151,20 +134,16 @@ public class SelectJourney extends AppCompatActivity {
                 // Opens a dialog with the calculation result of CO2 emission
                 FragmentManager manager=getSupportFragmentManager();
                 CalculationDialog dialog = new CalculationDialog();
-
                 Bundle bundle =new Bundle();
                 bundle.putDouble("CO2",journeyArrayList.get(position).getTotalEmissions());
-
                 dialog.setArguments(bundle);
                 dialog.show(manager,"CalculateDialog");
             }
         });
         registerForContextMenu(list);
     }
-
     //Context Menu Code taken and modified from:
     //https://www.mikeplate.com/2010/01/21/show-a-context-menu-for-long-clicks-in-an-android-listview/
-
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo){
@@ -172,13 +151,11 @@ public class SelectJourney extends AppCompatActivity {
             AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo)menuInfo;
             menu.setHeaderTitle(journeyArrayList.get(info.position).getName()+" - "+journeyArrayList.get(info.position).getRouteName());
             String[] menuItems= getResources().getStringArray(R.array.menu);
-
             for(int i=0;i<menuItems.length;i++){
                 menu.add(Menu.NONE,i,i,menuItems[i]);
             }
         }
     }
-
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
@@ -186,7 +163,6 @@ public class SelectJourney extends AppCompatActivity {
         String[] menuItems = getResources().getStringArray(R.array.menu);
         String menuItemName = menuItems[menuItemIndex];
         int pos=info.position;
-
         if(menuItemName.equals("Edit")){
             Intent i=SelectCar.makeIntent(SelectJourney.this);
             i.putExtra(POSITION_FOR_EDIT_JOURNEY,pos);
@@ -208,7 +184,6 @@ public class SelectJourney extends AppCompatActivity {
                     DateSingleton finalDate=DateSingleton.getInstance();
                     RouteSingleton finalRoute=RouteSingleton.getInstance();
                     CarSingleton finalCar=CarSingleton.getInstance();
-
                     Journey finalJourney=new Journey(
                             finalRoute.getRouteName(),
                             finalRoute.getCityDistance(),
@@ -218,13 +193,10 @@ public class SelectJourney extends AppCompatActivity {
                             finalCar.getLiterEngine(),finalDate.getDateString(),
                             finalCar.getBus(),finalCar.getWalk(),finalCar.getSkytrain());
                     finalJourney.setTotalEmissions(finalJourney.CalculateTotalEmissions());
-
                     journeyArrayList.add(finalJourney);
-
                     setupAddJourneyButton();
                     setupBackButton();
                     setJourneyList();
-
                 }
                 else{
                     Log.i(TAG,"User Cancelled");
@@ -232,17 +204,14 @@ public class SelectJourney extends AppCompatActivity {
                     setupBackButton();
                     setJourneyList();
                 }
-
                 break;
             case EDIT_JOURNEY:
                 if(resultCode==RESULT_OK){
                     int pos=data.getIntExtra(POSITION_FOR_EDIT_JOURNEY,0);
                     Journey j=journeyArrayList.get(pos);
-
                     DateSingleton finalDate=DateSingleton.getInstance();
                     RouteSingleton finalRoute=RouteSingleton.getInstance();
                     CarSingleton finalCar=CarSingleton.getInstance();
-
                     j.setDateString(finalDate.getDateString());
                     j.setRouteName(finalRoute.getRouteName());
                     j.setCityDistance(finalRoute.getCityDistance());
@@ -256,7 +225,6 @@ public class SelectJourney extends AppCompatActivity {
                     j.setBus(finalCar.getBus());
                     j.setSkytrain(finalCar.getSkytrain());
                     j.setTotalEmissions(j.CalculateTotalEmissions());
-
                     setupAddJourneyButton();
                     setupBackButton();
                     setJourneyList();
@@ -267,15 +235,12 @@ public class SelectJourney extends AppCompatActivity {
                     setJourneyList();
                 }
                 break;
-
         }
     }
-
     public void onBackPressed() {
         saveJourneys();
         finish();
     }
-
     public static Intent makeIntent(Context context) {
         return new Intent(context, SelectJourney.class);
     }
