@@ -18,11 +18,11 @@ public class EditDate extends AppCompatActivity {
     int Year;
     int Month;
     int Day;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_date);
+
         DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
         dp.init(2017, 0, 1, onDateChanged);
         setupButtons();

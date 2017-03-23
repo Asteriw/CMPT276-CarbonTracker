@@ -17,11 +17,10 @@ import android.widget.Toast;
 public class AddUtility extends AppCompatActivity {
     public static final int START_DATE_CHOOSE = 3;
     public static final int END_DATE_CHOOSE = 4;
+    public static final String POS_TO_EDIT = "POS";
     String utility_type;
     EditText editAmount;
     EditText editNumPeople;
-    EditText editStartDate;
-    EditText editEndDate;
     EditText editNickname;
     RadioButton electricityButton;
     RadioButton naturalgasButton;
@@ -33,11 +32,17 @@ public class AddUtility extends AppCompatActivity {
     int endMonth;
     int startYear;
     int endYear;
-
+    int pos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_utility);
+
+        Intent i=getIntent();
+        if(i.hasExtra("POS")) {
+            pos = i.getIntExtra(POS_TO_EDIT, 0);
+        }
+        else{pos=0;}
 
         setupButton();
         setupRadioButtons();
@@ -97,25 +102,27 @@ public class AddUtility extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case START_DATE_CHOOSE:
-                DateSingleton startdate = DateSingleton.getInstance();
-                startDate = startdate.getDateString(); // string;
-                startDay = startdate.getDay();
-                startMonth = startdate.getMonth(); // int;
-                startYear = startdate.getYear();
-                TextView start_date = (TextView) findViewById(R.id.startdate_text);
-                start_date.setText(startDate);
-
+                if(resultCode==RESULT_OK) {
+                    DateSingleton startdate = DateSingleton.getInstance();
+                    startDate = startdate.getDateString(); // string;
+                    startDay = startdate.getDay();
+                    startMonth = startdate.getMonth(); // int;
+                    startYear = startdate.getYear();
+                    TextView start_date = (TextView) findViewById(R.id.startdate_text);
+                    start_date.setText(startDate);
+                }
                 setupButton();
                 break;
             case END_DATE_CHOOSE:
-                DateSingleton finalDate = DateSingleton.getInstance();
-                endDate = finalDate.getDateString(); // string;
-                endDay = finalDate.getDay();
-                endMonth = finalDate.getMonth(); // int;
-                endYear = finalDate.getYear();
-                TextView end_date = (TextView) findViewById(R.id.enddate_text);
-                end_date.setText(endDate);
-
+                if(resultCode==RESULT_OK) {
+                    DateSingleton finalDate = DateSingleton.getInstance();
+                    endDate = finalDate.getDateString(); // string;
+                    endDay = finalDate.getDay();
+                    endMonth = finalDate.getMonth(); // int;
+                    endYear = finalDate.getYear();
+                    TextView end_date = (TextView) findViewById(R.id.enddate_text);
+                    end_date.setText(endDate);
+                }
                 setupButton();
                 break;
         }
@@ -167,6 +174,7 @@ public class AddUtility extends AppCompatActivity {
                 Log.i("AddUtility", "Singleton = " + new_utility.getGasType());
 
                 Intent i = new Intent();
+                i.putExtra(POS_TO_EDIT,pos);
                 setResult(RESULT_OK, i);
                 finish();
             }

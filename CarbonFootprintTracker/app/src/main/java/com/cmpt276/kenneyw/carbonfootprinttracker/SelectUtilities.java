@@ -7,11 +7,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,11 +28,12 @@ public class SelectUtilities extends AppCompatActivity {
     private static final String NAME ="name";
     private static final String GASTYPE="gasType";
     private static final String AMOUNT="amount";
-
     private static final String NUMPEOPLE="numofPeople";
     private static final String STARTDATE="startDate";
     private static final String ENDDATE="endDate";
     private static final String EMISSION = "emission";
+    public static final int EDIT_UTILITY = 4;
+    public static final String POS_TO_EDIT = "POS";
 
     ArrayList<Utility> utilities = new ArrayList<>();
     Intent intent;
@@ -83,6 +88,42 @@ public class SelectUtilities extends AppCompatActivity {
 
             }
         });
+
+        registerForContextMenu(utilityList);
+    }
+
+    //Context Menu Code taken and modified from:
+    //https://www.mikeplate.com/2010/01/21/show-a-context-menu-for-long-clicks-in-an-android-listview/
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId() == R.id.utilities_listView) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            menu.setHeaderTitle(utilities.get(info.position).toString());
+            String[] menuItems = getResources().getStringArray(R.array.menu);
+            for (int i = 0; i < menuItems.length; i++) {
+                menu.add(Menu.NONE, i, i, menuItems[i]);
+            }
+        }
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int menuItemIndex = item.getItemId();
+        String[] menuItems = getResources().getStringArray(R.array.menu);
+        String menuItemName = menuItems[menuItemIndex];
+        int pos = info.position;
+        if (menuItemName.equals("Edit")) {
+            Intent i=AddUtility.makeIntent(SelectUtilities.this);
+            i.putExtra(POS_TO_EDIT,pos);
+            startActivityForResult(i, EDIT_UTILITY);
+        } else if (menuItemName.equals("Delete")) {
+            Utility u = utilities.get(pos);
+            Toast.makeText(SelectUtilities.this, "Removed Utility " + u.getName(), Toast.LENGTH_SHORT).show();
+            utilities.remove(u);
+            setupList();
+        }
+        return true;
     }
 
     private void setupButtons() {
@@ -126,6 +167,23 @@ public class SelectUtilities extends AppCompatActivity {
                 else{
                     setupButtons();
                     setupList();
+                }
+                break;
+            case EDIT_UTILITY:
+                if(resultCode==RESULT_OK) {
+                    int pos=data.getIntExtra(POS_TO_EDIT,0);
+                    Utility utilToEdit=utilities.get(pos);
+                    UtilitySingleton utili = UtilitySingleton.getInstance();
+                    utilToEdit.setNumofPeople( utili.getNum_poeople());
+                    utilToEdit.setAmount( utili.getAmounts());
+                    utilToEdit.setGasType( utili.getGasType());
+                    utilToEdit.setName( utili.getName());
+                    utilToEdit.setEmission( utili.getEmission());
+                    utilToEdit.setStartDate( utili.getStartDate());
+                    utilToEdit.setEndDate( utili.getEndDate());
+
+                    setupList();
+                    setupButtons();
                 }
                 break;
         }
