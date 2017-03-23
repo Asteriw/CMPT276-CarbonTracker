@@ -42,7 +42,7 @@
     </string-array>
     <string name="next_tip">Next Tip</string>
     <string name="close_tips">Close</string>
-    <string-array name="tips">
+    <string-array name="tips_array">
         <item>Tip1</item>
         <item>Tip2</item>
         <item>Tip3</item>

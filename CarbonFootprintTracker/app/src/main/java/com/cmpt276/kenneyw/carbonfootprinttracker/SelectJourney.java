@@ -54,8 +54,9 @@ public class SelectJourney extends AppCompatActivity {
     public static final String BIKE = "bike";
     public static final String SKYTRAIN = "skytrain";
 
-    int tipCounter = 0;
-    String tipString = "";
+    String tipString;
+    int properTipIndex;
+    String[] tipArray;
 
     ArrayList<Journey> journeyArrayList=new ArrayList<>();
 
@@ -65,10 +66,12 @@ public class SelectJourney extends AppCompatActivity {
         setContentView(R.layout.activity_select_journey);
 
         journeyArrayList=loadJourneys();
+        tipArray = getResources().getStringArray(R.array.tips_array);
         setupAddJourneyButton();
         setupBackButton();
         setJourneyList();
     }
+
 
     public ArrayList<Journey> loadJourneys() {
         ArrayList<Journey> journeyArrayList=new ArrayList<>();
@@ -225,26 +228,18 @@ public class SelectJourney extends AppCompatActivity {
         tipDialog.show();
     }
 
-    private CharSequence tipTextSelector() {
-        if (tipCounter==0) {
-            tipString = "Tipperoni";
-            tipCounter++;
-            return tipString;
-        }
-        else if (tipCounter==1) {
-            tipString = "Just the tips";
-            tipCounter++;
-        }
-        else if (tipCounter>1) {
-            tipString = "No more Tips for you!";
-            tipCounter++;
-        }
-        return tipString;
-    }
-
     //Avoids tips that have been shown in the last 7
     //Picks relevant tips, using userdata
-    private CharSequence tipTextSelector2() {
+    private String tipTextSelector() {
+        TipHelperSingleton tipHelper = TipHelperSingleton.getInstance();
+        tipHelper.setTipIndexGas();
+        if (tipHelper.spiceTimer() == 1) {
+            properTipIndex = tipHelper.checkRepeatTracker(tipHelper.spiceMaker());
+            tipString = tipArray[properTipIndex];
+            return tipString;
+        }
+        properTipIndex = tipHelper.checkRepeatTracker(0);
+        tipString = tipArray[properTipIndex];
 
         return tipString;
     }
