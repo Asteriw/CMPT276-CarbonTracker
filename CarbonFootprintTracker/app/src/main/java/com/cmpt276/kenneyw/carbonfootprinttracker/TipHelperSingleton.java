@@ -13,7 +13,7 @@ public class TipHelperSingleton {
     private TipHelperSingleton() {
 
         tipIndex = 0;
-        currentMode = "";
+        currentMode = "Gas";
         repeatTracker = new int[16];
         noCycleCounter = 0;
 
@@ -73,10 +73,10 @@ public class TipHelperSingleton {
 
     public int spiceMaker() {
         int spicyTip = 99;
-        if (currentMode.equals("Gas")) {
+        if (currentMode == "Gas") {
             spicyTip = 8;
         }
-        else if (currentMode.equals("Utility")) {
+        else if (currentMode == "Utility") {
             spicyTip = 0;
         }
         return spicyTip;
