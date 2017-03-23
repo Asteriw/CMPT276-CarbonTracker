@@ -37,7 +37,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:id="@+id/amount"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_marginLeft="10dp" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -80,17 +81,7 @@
                 android:layout_marginRight="30dp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="120dp"
-                android:id="@+id/start_date"
-                android:text="Start Date:"
-                android:layout_marginLeft="10dp"
-                android:textSize="20sp" />
-
-            <TextView
-                android:text="@string/units_gj_for_natural_gas_gwh_for_electricity"
+                android:text="@string/note_for_units"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
@@ -101,73 +92,65 @@
                 android:layout_alignLeft="@+id/num_of_people"
                 android:layout_alignStart="@+id/num_of_people" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:ems="10"
-                android:id="@+id/start_date_text"
-                android:layout_alignBaseline="@+id/start_date"
-                android:layout_alignBottom="@+id/start_date"
-                android:layout_toRightOf="@+id/start_date"
-                android:layout_marginLeft="10dp"
-                android:layout_alignRight="@+id/num_people_text"
-                android:layout_alignEnd="@+id/num_people_text" />
-
             <TextView
-                android:text="End Date:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/end_date"
-                android:textSize="20sp"
-                android:layout_below="@+id/initial_date_note"
-                android:layout_alignLeft="@+id/start_date"
-                android:layout_alignStart="@+id/start_date"
-                android:layout_marginTop="10dp" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:ems="10"
-                android:id="@+id/end_date_text"
-                android:layout_alignBaseline="@+id/end_date"
-                android:layout_alignBottom="@+id/end_date"
-                android:layout_alignRight="@+id/start_date_text"
-                android:layout_alignEnd="@+id/start_date_text" />
-
-            <TextView
-                android:text="@string/format_dd_mm_yyyy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/initial_date_note"
-                android:textColor="@android:color/holo_orange_light"
-                android:layout_below="@+id/start_date_text"
-                android:layout_alignLeft="@+id/note"
-                android:layout_alignStart="@+id/note" />
-
-            <TextView
-                android:text="Nick Name:"
-                android:layout_width="wrap_content"
+                android:text="@string/nick_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/nickname"
-                android:layout_below="@+id/end_date_text"
-                android:layout_alignLeft="@+id/end_date"
-                android:layout_alignStart="@+id/end_date"
                 android:textSize="20sp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="130dp" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:layout_below="@+id/end_date_text"
-                android:layout_toRightOf="@+id/nickname"
                 android:id="@+id/utility_nick_name_text"
-                android:layout_marginLeft="10dp"
-                android:layout_alignRight="@+id/end_date_text"
-                android:layout_alignEnd="@+id/end_date_text" />
+                android:layout_alignBaseline="@+id/nickname"
+                android:layout_alignBottom="@+id/nickname"
+                android:layout_alignRight="@+id/num_people_text"
+                android:layout_alignEnd="@+id/num_people_text"
+                android:layout_alignLeft="@+id/amount_text"
+                android:layout_alignStart="@+id/amount_text"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:id="@+id/startdate_text"
+                android:layout_below="@+id/utility_nick_name_text"
+                android:layout_centerHorizontal="true" />
+
+            <Button
+                android:text="Add Start Date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/startdate_btn"
+                android:layout_alignBaseline="@+id/startdate_text"
+                android:layout_alignBottom="@+id/startdate_text"
+                android:layout_alignLeft="@+id/nickname"
+                android:layout_alignStart="@+id/nickname" />
+
+            <Button
+                android:text="Add END DATE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/enddate_btn"
+                android:layout_marginTop="31dp"
+                android:layout_below="@+id/startdate_text"
+                android:layout_alignLeft="@+id/startdate_btn"
+                android:layout_alignStart="@+id/startdate_btn" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/enddate_text"
+                android:layout_alignBaseline="@+id/enddate_btn"
+                android:layout_alignBottom="@+id/enddate_btn"
+                android:layout_centerHorizontal="true" />
+
         </RelativeLayout>
 
         <LinearLayout

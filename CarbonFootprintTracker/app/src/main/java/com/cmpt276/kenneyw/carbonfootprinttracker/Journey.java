@@ -1,7 +1,5 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker;
-
 import android.support.v7.app.AppCompatActivity;
-
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,7 +8,6 @@ import java.util.Date;
     which is called when editing a pre-existing Journey.
      */
 public class Journey extends AppCompatActivity {
-
     private String routeName;
     private int cityDistance;
     private int highwayDistance;
@@ -26,7 +23,6 @@ public class Journey extends AppCompatActivity {
     private boolean Skytrain;
     public static final double KWH_PER_KM = 6.848;
     public static final int CO2_PER_KWH = 9;
-
     public Journey(String routeName, int cityDistance, int highwayDistance,
                    String carName, String gasType, double mpgCity, double mpgHighway, double literEngine,
                    String dateString,boolean bus,boolean bike,boolean skytrain){
@@ -42,14 +38,11 @@ public class Journey extends AppCompatActivity {
         this.Bus=bus;
         this.Bike=bike;
         this.Skytrain=skytrain;
-
         this.totalEmissions=CalculateTotalEmissions();
     }
-
     public double CalculateTotalEmissions(){
         Calculation c=new Calculation();
         double totalEmissions=0;
-
         if(!this.Bus && !this.Bike && !this.Skytrain )
             switch(this.gasType) {
                 case "Premium":
@@ -68,12 +61,10 @@ public class Journey extends AppCompatActivity {
         if(this.Bus){
             totalEmissions=0.089*(this.cityDistance+this.highwayDistance);
         }
-
         //<--From: http://ctrf.ca/wp-content/uploads/2015/05/CTRF2015NguyenSangOramPerlTransportationEnvironment.pdf-->
         else if(this.Skytrain){
             totalEmissions= KWH_PER_KM * (this.cityDistance+this.highwayDistance) * CO2_PER_KWH;
         }
-
         return doubleToTwoPlaces(totalEmissions);
     }
     private double doubleToTwoPlaces(double result_in_kg_CO2) {
@@ -81,107 +72,80 @@ public class Journey extends AppCompatActivity {
         result_in_kg_CO2=Double.valueOf(df2.format(result_in_kg_CO2));
         return result_in_kg_CO2;
     }
-
     public String getDateString() {return dateString;}
-
     public void setDateString(String dateString) {this.dateString = dateString;}
-
     public int getCityDistance() {
         return cityDistance;
     }
-
     public void setCityDistance(int cityDistance) {
         this.cityDistance = cityDistance;
     }
-
     public String getGasType() {
         return gasType;
     }
-
     public void setGasType(String gasType) {
         this.gasType = gasType;
     }
-
     public int getHighwayDistance() {
         return highwayDistance;
     }
-
     public void setHighwayDistance(int highwayDistance) {
         this.highwayDistance = highwayDistance;
     }
-
     public double getLiterEngine() {
         return literEngine;
     }
-
     public void setLiterEngine(double literEngine) {
         this.literEngine = literEngine;
     }
-
     public double getMpgCity() {
         return mpgCity;
     }
-
     public void setMpgCity(double mpgCity) {
         this.mpgCity = mpgCity;
     }
-
     public double getMpgHighway() {
         return mpgHighway;
     }
-
     public void setMpgHighway(double mpgHighway) {
         this.mpgHighway = mpgHighway;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getRouteName() {
         return routeName;
     }
-
     public void setRouteName(String routeName) {
         this.routeName = routeName;
     }
-
     public double getTotalEmissions() {
         return totalEmissions;
     }
-
     public void setTotalEmissions(double totalEmissions) {
         this.totalEmissions = totalEmissions;
     }
-
     public boolean isBike() {
         return Bike;
     }
-
     public void setBike(boolean bike) {
         Bike = bike;
     }
-
     public boolean isBus() {
         return Bus;
     }
-
     public void setBus(boolean bus) {
         Bus = bus;
     }
-
     public boolean isSkytrain() {
         return Skytrain;
     }
-
     public void setSkytrain(boolean skytrain) {
         Skytrain = skytrain;
     }
-
     public String toString() {
         return
                 name+
@@ -192,5 +156,4 @@ public class Journey extends AppCompatActivity {
                         +highwayDistance+"km Highway"
                         + " - Date: "+dateString;
     }
-
 }

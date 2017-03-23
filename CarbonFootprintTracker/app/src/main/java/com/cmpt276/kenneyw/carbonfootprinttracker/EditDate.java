@@ -8,14 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
-
 import java.util.Date;
-
 /*
 Date Picker Activity, picks any day for corresponding journey
 saves year month and day for later use
  */
-
 public class EditDate extends AppCompatActivity {
     String date_in_str;
     int Year;
@@ -25,6 +22,7 @@ public class EditDate extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_date);
+
         DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
         dp.init(2017, 0, 1, onDateChanged);
         setupButtons();
