@@ -14,14 +14,9 @@ public class Utility extends AppCompatActivity {
     private String startDate;
     private String endDate;
 
-    private enum gasTypeEnum {
-        NATURAL_GAS,
-        ELECTRIC
-    }
-
     public Utility() {
         name = "";
-        gasType = gasTypeEnum.NATURAL_GAS.toString();
+        gasType = "";
         amount = 0.0;
         emission = 0.0;
         startDate = "Default StartDate";
@@ -31,11 +26,7 @@ public class Utility extends AppCompatActivity {
 
     public Utility(String name, String gasType, double amounts, int num_people, double emission, String startDate, String endDate) {
         this.name = name;
-        if ( gasType == "Electricity" || gasType == "electricity" ) {
-            this.gasType = gasTypeEnum.ELECTRIC.toString();
-        } else {
-            this.gasType = gasTypeEnum.NATURAL_GAS.toString();
-        }
+        this.gasType = gasType;
         this.amount = amounts;
         this.emission = emission;
         this.startDate = startDate;
@@ -97,6 +88,10 @@ public class Utility extends AppCompatActivity {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public String toString() {
+        return "Name: " + name +", Type: "+ gasType +", StartDate: " + startDate + ", EndDate: " + endDate;
     }
 
 }

@@ -16,8 +16,8 @@ import java.util.ArrayList;
 
 public class SelectUtilities extends AppCompatActivity {
 
+    public static final int  SELECT_UTILITY= 1;
     private static final String TAG = "CarbonFootprintTracker";
-    public static final int REQUEST_ADD_UTILITY = 7;
 
     ArrayList<Utility> utilities = new ArrayList<>();
     Intent intent;
@@ -32,7 +32,6 @@ public class SelectUtilities extends AppCompatActivity {
     }
 
     private void setupList() {
-        loadUtility();
 
         ListView utilityList = (ListView) findViewById(R.id.utilities_listView);
         ArrayAdapter<Utility> adapter = new ArrayAdapter<>(this, R.layout.layout_for_list, utilities);
@@ -45,38 +44,6 @@ public class SelectUtilities extends AppCompatActivity {
         });
     }
 
-    private void loadUtility(){
-
-        Utility temp_utility = new Utility(
-                UtilitySingleton.getInstance().getName(),
-                UtilitySingleton.getInstance().getGasType(),
-                UtilitySingleton.getInstance().getAmounts(),
-                UtilitySingleton.getInstance().getNum_poeople(),
-                UtilitySingleton.getInstance().getEmission(),
-                UtilitySingleton.getInstance().getStartDate(),
-                UtilitySingleton.getInstance().getEndDate()
-        );
-
-        Log.i("SELECT UTILITY = ", temp_utility.getName());
-
-        utilities.add(temp_utility);
-    }
-
-/*
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        switch (requestCode) {
-            case REQUEST_ADD_UTILITY:
-                if (resultCode == RESULT_CANCELED) {
-                    Log.i(TAG, "User Cancelled Add Utility");
-                } else {
-                }
-                break;
-        }
-    }
-*/
     private void setupButtons() {
         Button backButton = (Button) findViewById(R.id.utility_back);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -91,11 +58,36 @@ public class SelectUtilities extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent Utilities2Add = AddUtility.makeIntent(SelectUtilities.this);
-                startActivity(Utilities2Add);
+                startActivityForResult(Utilities2Add,SELECT_UTILITY);
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case SELECT_UTILITY:
+                if (resultCode == RESULT_OK) {
+                    UtilitySingleton utility2Load = UtilitySingleton.getInstance();
+                    Utility temp_utility = new Utility(
+                            utility2Load.getName(),
+                            utility2Load.getGasType(),
+                            utility2Load.getAmounts(),
+                            utility2Load.getNum_poeople(),
+                            utility2Load.getEmission(),
+                            utility2Load.getStartDate(),
+                            utility2Load.getEndDate() );
+                    utilities.add(temp_utility);
+                    setupButtons();
+                    setupList();
+                }
+                else{
+                    setupButtons();
+                    setupList();
+                }
+                break;
+        }
+    }
     public static Intent makeIntent(Context context) {
         return new Intent(context, SelectUtilities.class);
     }

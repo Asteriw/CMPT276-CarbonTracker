@@ -3,6 +3,7 @@ package com.cmpt276.kenneyw.carbonfootprinttracker;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,13 +13,24 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-public class AddUtility extends AppCompatActivity{
+public class AddUtility extends AppCompatActivity {
+    public static final int START_DATE_CHOOSE = 3;
+    public static final int END_DATE_CHOOSE = 4;
     String utility_type;
+    EditText editAmount;
+    EditText editNumPeople;
+    EditText editStartDate;
+    EditText editEndDate;
+    EditText editNickname;
+    RadioButton electricityButton;
+    RadioButton naturalgasButton;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_utility);
+
         setupButton();
         setupRadioButtons();
     }
@@ -41,6 +53,8 @@ public class AddUtility extends AppCompatActivity{
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent();
+                setResult(RESULT_CANCELED, i);
                 finish();
             }
         });
@@ -50,66 +64,85 @@ public class AddUtility extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 getDataFromUser();
+                setResult(RESULT_OK);
+                finish();
+
+
+
+                Intent i = new Intent();
+                setResult(RESULT_OK, i);
+            }
+        });
+
+        Button startDate=(Button)findViewById(R.id.startdate_btn);
+        startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent AddUtility2EditDate = EditDate.makeIntent(AddUtility.this);
+                startActivityForResult(AddUtility2EditDate,START_DATE_CHOOSE);
+            }
+        });
+        Button endDate=(Button)findViewById(R.id.enddate_btn);
+        endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent AddUtility2EditDate = EditDate.makeIntent(AddUtility.this);
+                startActivityForResult(AddUtility2EditDate,END_DATE_CHOOSE);
             }
         });
     }
 
-    private void getDataFromUser(){
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode){
+            case START_DATE_CHOOSE:
+                DateSingleton finalDate = DateSingleton.getInstance();
+                
+                break;
+            case END_DATE_CHOOSE:
+                break;
+        }
+    }
+
+    //fix
+    private void getDataFromUser() {
         // Save a utility
-        EditText editAmount = (EditText) findViewById(R.id.amount_text);
-        EditText editNumPeople = (EditText) findViewById(R.id.num_people_text);
-        EditText editStartDate = (EditText) findViewById(R.id.start_date_text);
-        EditText editEndDate = (EditText) findViewById(R.id.end_date_text);
-        EditText editNickname = (EditText) findViewById(R.id.utility_nick_name_text);
+        editAmount = (EditText) findViewById(R.id.amount_text);
+        editNumPeople = (EditText) findViewById(R.id.num_people_text);
+        editNickname = (EditText) findViewById(R.id.utility_nick_name_text);
+        electricityButton = (RadioButton) findViewById(R.id.radioElectricity);
+        naturalgasButton = (RadioButton) findViewById(R.id.radioNaturalGas);
 
+        // no inputs entered
+        if (editAmount.getText().toString().equals("") || editNumPeople.getText().toString().equals("") && editNickname.getText().toString().equals("")
+                && !electricityButton.isChecked() && !naturalgasButton.isChecked()) {
+            Toast.makeText(getApplicationContext(), "No inputs entered", Toast.LENGTH_SHORT).show();
+        }
+        // something was entered
+        else {
 
-        if ( editAmount.getText().charAt(0) == ' '){
-            Toast.makeText(getApplicationContext(), "Amount can't be left empty", Toast.LENGTH_SHORT).show();
-        }
-        else if (utility_type.isEmpty()){
-            Toast.makeText(getApplicationContext(), "Please select a utility type", Toast.LENGTH_SHORT).show();
-        }
-        else if ( editNickname.getText().charAt(0) == ' ' ){
-            Toast.makeText(getApplicationContext(), "Name can't be left empty", Toast.LENGTH_SHORT).show();
-        }
-        else if ( editNumPeople.getText().charAt(0) == ' '){
-            Toast.makeText(getApplicationContext(), "Enter a number of poeple", Toast.LENGTH_SHORT).show();
-        }
-        // Date format: dd/mm/yyyy
-        else if ( editStartDate.getText().charAt(2) != '/' || editStartDate.getText().charAt(5) != '/'
-                 // day is over 31
-                || ( editStartDate.getText().charAt(0) >= '3' && editStartDate.getText().charAt(1)  > '1')
-                // month is 12
-                || ( editStartDate.getText().charAt(3) >= '1' && editStartDate.getText().charAt(4) > '2')
-                // year is in yyyy format
-                || (editStartDate.getText().subSequence(6,9).length() > 4)
-                ){
-            Toast.makeText(getApplicationContext(), "Please follow the date format, dd/mm/yyyy", Toast.LENGTH_SHORT).show();
-        }
-        // Date format: dd/mm/yyyy
-        else if ( editEndDate.getText().charAt(2) != '/' || editEndDate.getText().charAt(5) != '/'
-                // day is over 31
-                || ( editEndDate.getText().charAt(0) >= '3' && editEndDate.getText().charAt(1)  > '1')
-                // month is 12
-                || ( editEndDate.getText().charAt(3) >= '1' && editEndDate.getText().charAt(4) > '2')
-                // year is in yyyy format
-                || (editEndDate.getText().subSequence(6,9).length() > 4)
-                ){
-            Toast.makeText(getApplicationContext(), "Please follow the date format, dd/mm/yyyy", Toast.LENGTH_SHORT).show();
-        }else{
-            //String name, String gasType, double amounts, int num_people, double emission, String startDate, String endDate
-            UtilitySingleton new_utility = UtilitySingleton.getInstance();
-            new_utility.setAmounts(Double.parseDouble(editAmount.getText().toString()));
-            new_utility.setNum_poeople(Integer.parseInt(editNumPeople.getText().toString()));
-            new_utility.setStartDate(editStartDate.getText().toString());
-            new_utility.setEndDate(editEndDate.getText().toString());
-            new_utility.setName(editNickname.getText().toString());
-            new_utility.setEmission(0.0);
-            new_utility.setGasType(utility_type);
-            Log.i("AddUtility", "Singleton = " + new_utility.getName());
-            Log.i("AddUtility", "Singleton = " + new_utility.getGasType());
-            setResult(RESULT_OK);
-            finish();
+            if (editAmount.getText().charAt(0) == ' ') {
+                Toast.makeText(getApplicationContext(), "Amount can't be left empty", Toast.LENGTH_SHORT).show();
+            } else if (utility_type.isEmpty()) {
+                Toast.makeText(getApplicationContext(), "Please select a utility type", Toast.LENGTH_SHORT).show();
+            } else if (editNickname.getText().charAt(0) == ' ') {
+                Toast.makeText(getApplicationContext(), "Name can't be left empty", Toast.LENGTH_SHORT).show();
+            } else if (editNumPeople.getText().charAt(0) == ' ') {
+                Toast.makeText(getApplicationContext(), "Enter a number of poeple", Toast.LENGTH_SHORT).show();
+            } else {
+
+                //String name, String gasType, double amounts, int num_people, double emission, String startDate, String endDate
+                UtilitySingleton new_utility = UtilitySingleton.getInstance();
+                new_utility.setAmounts(Double.parseDouble(editAmount.getText().toString()));
+                new_utility.setNum_poeople(Integer.parseInt(editNumPeople.getText().toString()));
+                new_utility.setStartDate(editStartDate.getText().toString());
+                new_utility.setEndDate(editEndDate.getText().toString());
+                new_utility.setName(editNickname.getText().toString());
+                new_utility.setEmission(0.0);
+                new_utility.setGasType(utility_type);
+                Log.i("AddUtility", "Singleton = " + new_utility.getName());
+                Log.i("AddUtility", "Singleton = " + new_utility.getGasType());
+            }
         }
     }
 

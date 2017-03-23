@@ -18,7 +18,7 @@ public class EditDate extends AppCompatActivity {
         TextView initialDateText = (TextView) findViewById(R.id.start_date_text);
         initialDateText.setText("");
         DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
-        dp.init(2017, 1, 1, onDateChanged);
+        dp.init(2017, 0, 1, onDateChanged);
         setupButton();
     }
     private void setupButton() {
