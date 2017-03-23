@@ -237,7 +237,7 @@ public class SelectUtilities extends AppCompatActivity {
             tipString = tipArray[properTipIndex];
             return tipString;
         }
-        properTipIndex = tipHelper.checkRepeatTracker(0);
+        properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
         tipString = tipArray[properTipIndex];
 
         return tipString;

@@ -32,11 +32,16 @@ public class TipHelperSingleton {
     public void setTipIndexUtil() {
         if (currentMode.equals("Travel"))  {
             this.tipIndex = 8;
+            Log.i("TIPS", "what tips am I showing?"+tipIndex);
             currentMode = "Utility";
         }
         else {
             Log.i("TIPS", "Already showing utility tips");
         }
+    }
+
+    public int getTipIndex() {
+        return tipIndex;
     }
 
     public int checkRepeatTracker(int tipIndex) {
