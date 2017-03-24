@@ -28,6 +28,11 @@ import java.text.DecimalFormat;
 * CONSTRAINT:
 *  Negative values are not allowed.
 *
+* NEW CONSTRAINT:
+* Units must be in Time taken for 1 Tree to absorb the KG of CO2
+* Time taken for 1 tree to absorb 1kg CO2 = ____
+* total time taken = kg CO2 * ____
+*
 * */
 
 public class Calculation {
