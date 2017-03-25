@@ -36,19 +36,6 @@ public class JourneyCollection extends AppCompatActivity{
         return journeys.get(index);
     }
 
-    public String[] getJourneysDescriptions() {
-        String[] descriptions = new String[countJourneys()];
-        for (int i = 0; i < countJourneys(); i++) {
-            Journey journey = getJourney(i);
-            /*descriptions[i] = journey.getMake() + " - " + TODO: CHANGE THIS PART
-                    car.getModel() + " - " +
-                    car.getYear() + " - " +
-                    car.getTransmission() + " - " +
-                    car.getLiterEngine() + "L";*/
-        }
-        return descriptions;
-    }
-
     public String[] getJourneysNames() {
         String[] descriptions = new String[countJourneys()];
         for (int i = 0; i < countJourneys(); i++) {
@@ -62,12 +49,8 @@ public class JourneyCollection extends AppCompatActivity{
         String[] descriptions = new String[countJourneys()];
         for (int i = 0; i < countJourneys(); i++) {
             Journey journey = getJourney(i);
-            /*descriptions[i] = car.getName() + " - " + TODO:CHANGE THIS PART
-                    car.getMake() + " - " +
-                    car.getModel() + " - " +
-                    car.getYear() + " - " +
-                    car.getTransmission() + " - " +
-                    car.getLiterEngine() + "L";*/
+            descriptions[i] = "Journey [" + journey.getName() +"]" + " created on " +
+                    journey.getDateString() ;
         }
         return descriptions;
     }
