@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
+
 /*
 This Class shows the user a list of saved journies, and can add delete and edit journies.
 User can also see CO2 emitted for chosen journey in a dialog. Saves journies from route and car singletons, via shared preference.
@@ -55,19 +55,19 @@ public class SelectJourney extends AppCompatActivity {
     int properTipIndex;
     String[] tipArray;
 
-    ArrayList<Journey> journeyArrayList=new ArrayList<>();
+    JourneyCollection journeys = new JourneyCollection();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_journey);
-        journeyArrayList=loadJourneys();
+        journeys = loadJourneys();
         tipArray = getResources().getStringArray(R.array.tips_array);
         setupAddJourneyButton();
         setupBackButton();
         setJourneyList();
     }
-    public ArrayList<Journey> loadJourneys() {
-        ArrayList<Journey> journeyArrayList=new ArrayList<>();
+    public JourneyCollection loadJourneys() {
+        JourneyCollection temp_journeys =new JourneyCollection();
         SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
         int journeyAmt=pref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS,0);
         for(int i=0;i<journeyAmt;i++){
@@ -85,9 +85,9 @@ public class SelectJourney extends AppCompatActivity {
                     pref.getBoolean(i+BUS,false),
                     pref.getBoolean(i+BIKE,false),
                     pref.getBoolean(i+SKYTRAIN,false));
-            journeyArrayList.add(j);
+            temp_journeys.addJourney(j);
         }
-        return journeyArrayList;
+        return temp_journeys;
     }
     private String dateToString(Date date) {
         SimpleDateFormat dateformatter = new SimpleDateFormat("MMMM dd, yyyy");
@@ -97,21 +97,21 @@ public class SelectJourney extends AppCompatActivity {
         SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
         SharedPreferences.Editor editor=pref.edit();
         editor.clear();
-        int journeyAmt=journeyArrayList.size();
+        int journeyAmt= journeys.countJourneys();
         for(int i=0;i<journeyAmt;i++){
-            editor.putString(i+ NAME,journeyArrayList.get(i).getName());
-            editor.putString(i+ ROUTENAME,journeyArrayList.get(i).getRouteName());
-            editor.putString(i+ GASTYPE,journeyArrayList.get(i).getGasType());
-            editor.putLong(i+MPGCITY,Double.doubleToRawLongBits(journeyArrayList.get(i).getMpgCity()));
-            editor.putLong(i+ MPGHIGHWAY,Double.doubleToRawLongBits(journeyArrayList.get(i).getMpgHighway()));
-            editor.putInt(i+CITY,journeyArrayList.get(i).getCityDistance());
-            editor.putInt(i+HIGHWAY,journeyArrayList.get(i).getHighwayDistance());
-            editor.putLong(i+LITERENGINE,Double.doubleToRawLongBits(journeyArrayList.get(i).getLiterEngine()));
-            editor.putString(i+DATESTRING,journeyArrayList.get(i).getDateString());
-            editor.putLong(i+TOTALEMISSIONS,Double.doubleToRawLongBits(journeyArrayList.get(i).getTotalEmissions()));
-            editor.putBoolean(i+BUS,journeyArrayList.get(i).isBus());
-            editor.putBoolean(i+BIKE,journeyArrayList.get(i).isBike());
-            editor.putBoolean(i+SKYTRAIN,journeyArrayList.get(i).isSkytrain());
+            editor.putString(i+ NAME, journeys.getJourney(i).getName());
+            editor.putString(i+ ROUTENAME, journeys.getJourney(i).getRouteName());
+            editor.putString(i+ GASTYPE, journeys.getJourney(i).getGasType());
+            editor.putLong(i+MPGCITY,Double.doubleToRawLongBits(journeys.getJourney(i).getMpgCity()));
+            editor.putLong(i+ MPGHIGHWAY,Double.doubleToRawLongBits(journeys.getJourney(i).getMpgHighway()));
+            editor.putInt(i+CITY, journeys.getJourney(i).getCityDistance());
+            editor.putInt(i+HIGHWAY, journeys.getJourney(i).getHighwayDistance());
+            editor.putLong(i+LITERENGINE,Double.doubleToRawLongBits(journeys.getJourney(i).getLiterEngine()));
+            editor.putString(i+DATESTRING, journeys.getJourney(i).getDateString());
+            editor.putLong(i+TOTALEMISSIONS,Double.doubleToRawLongBits(journeys.getJourney(i).getTotalEmissions()));
+            editor.putBoolean(i+BUS, journeys.getJourney(i).isBus());
+            editor.putBoolean(i+BIKE, journeys.getJourney(i).isBike());
+            editor.putBoolean(i+SKYTRAIN, journeys.getJourney(i).isSkytrain());
         }
         editor.putInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS,journeyAmt);
         editor.apply();
@@ -138,7 +138,7 @@ public class SelectJourney extends AppCompatActivity {
         });
     }
     private void setJourneyList() {
-        ArrayAdapter<Journey> adapter = new ArrayAdapter<Journey>(this, R.layout.layout_for_list, journeyArrayList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.layout_for_list, journeys.getJourneysDescriptionsWithName());
         ListView list = (ListView) findViewById(R.id.journeyList);
         list.setAdapter(adapter);list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -147,7 +147,7 @@ public class SelectJourney extends AppCompatActivity {
                 FragmentManager manager=getSupportFragmentManager();
                 CalculationDialog dialog = new CalculationDialog();
                 Bundle bundle =new Bundle();
-                bundle.putDouble("CO2",journeyArrayList.get(position).getTotalEmissions());
+                bundle.putDouble("CO2", journeys.getJourney(position).getTotalEmissions());
                 dialog.setArguments(bundle);
                 dialog.show(manager,"CalculateDialog");
             }
@@ -161,7 +161,17 @@ public class SelectJourney extends AppCompatActivity {
                                     ContextMenu.ContextMenuInfo menuInfo){
         if(v.getId()==R.id.journeyList){
             AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo)menuInfo;
-            menu.setHeaderTitle(journeyArrayList.get(info.position).getName()+" - "+journeyArrayList.get(info.position).getRouteName());
+
+            if (journeys.getJourney(info.position).isBike()){
+                menu.setHeaderTitle("Transporation method: " + "Bike" + "\n"  + "Route Name: " + journeys.getJourney(info.position).getRouteName());
+            }else if ( journeys.getJourney(info.position).isBus()){
+                menu.setHeaderTitle("Transporation method: " + "Bus" + "\n"  + "Route Name: " + journeys.getJourney(info.position).getRouteName());
+            }else if ( journeys.getJourney(info.position).isSkytrain() ){
+                menu.setHeaderTitle("Transporation method: " + "Skytrain" + "\n"  + "Route Name: " + journeys.getJourney(info.position).getRouteName());
+            }else {
+                menu.setHeaderTitle("Transporation method: Car" + "\n" + "Route Name: " + journeys.getJourney(info.position).getRouteName());
+            }
+
             String[] menuItems= getResources().getStringArray(R.array.menu);
             for(int i=0;i<menuItems.length;i++){
                 menu.add(Menu.NONE,i,i,menuItems[i]);
@@ -181,9 +191,9 @@ public class SelectJourney extends AppCompatActivity {
             startActivityForResult(i, EDIT_JOURNEY);
         }
         else if(menuItemName.equals("Delete")){
-            Journey j=journeyArrayList.get(pos);
+            Journey j= journeys.getJourney(pos);
             Toast.makeText(SelectJourney.this, "Removed Journey " + j.toString(), Toast.LENGTH_SHORT).show();
-            journeyArrayList.remove(j);
+            journeys.deleteJourney(pos);
             setJourneyList();
         }
         return true;
@@ -247,7 +257,7 @@ public class SelectJourney extends AppCompatActivity {
                             finalCar.getLiterEngine(),finalDate.getDateString(),
                             finalCar.getBus(),finalCar.getWalk(),finalCar.getSkytrain());
                     finalJourney.setTotalEmissions(finalJourney.CalculateTotalEmissions());
-                    journeyArrayList.add(finalJourney);
+                    journeys.addJourney(finalJourney);
                     setupAddJourneyButton();
                     setupBackButton();
                     setJourneyList();
@@ -263,7 +273,7 @@ public class SelectJourney extends AppCompatActivity {
             case EDIT_JOURNEY:
                 if(resultCode==RESULT_OK){
                     int pos=data.getIntExtra(POSITION_FOR_EDIT_JOURNEY,0);
-                    Journey j=journeyArrayList.get(pos);
+                    Journey j= journeys.getJourney(pos);
                     DateSingleton finalDate=DateSingleton.getInstance();
                     RouteSingleton finalRoute=RouteSingleton.getInstance();
                     CarSingleton finalCar=CarSingleton.getInstance();

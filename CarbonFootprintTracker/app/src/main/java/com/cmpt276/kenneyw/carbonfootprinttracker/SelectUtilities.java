@@ -27,21 +27,21 @@ import java.util.ArrayList;
 
 public class SelectUtilities extends AppCompatActivity {
 
-    public static final int  SELECT_UTILITY= 1;
+    public static final int SELECT_UTILITY = 1;
     private static final String TAG = "CarbonFootprintTracker";
     private static final String SHAREDPREF_SET = "CarbonFootprintTrackerUtilities";
     private static final String SHAREDPREF_ITEM_AMOUNTOFUTILITIES = "AmountOfUtilities";
-    private static final String NAME ="name";
-    private static final String GASTYPE="gasType";
-    private static final String AMOUNT="amount";
-    private static final String NUMPEOPLE="numofPeople";
-    private static final String STARTDATE="startDate";
-    private static final String ENDDATE="endDate";
+    private static final String NAME = "name";
+    private static final String GASTYPE = "gasType";
+    private static final String AMOUNT = "amount";
+    private static final String NUMPEOPLE = "numofPeople";
+    private static final String STARTDATE = "startDate";
+    private static final String ENDDATE = "endDate";
     private static final String EMISSION = "emission";
     public static final int EDIT_UTILITY = 4;
     public static final String POS_TO_EDIT = "POS";
 
-    ArrayList<Utility> utilities = new ArrayList<>();
+    UtilitiesCollection utilities = new UtilitiesCollection();
     Intent intent;
 
     String tipString;
@@ -52,56 +52,57 @@ public class SelectUtilities extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_utilities);
-        utilities=loadUtilities();
+        utilities = loadUtilities();
         setupList();
         tipArray = getResources().getStringArray(R.array.tips_array);
         setupButtons();
     }
 
-    private ArrayList<Utility> loadUtilities() {
-        ArrayList<Utility> utils = new ArrayList<>();
-        SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
-        int utilityAmt=pref.getInt(SHAREDPREF_ITEM_AMOUNTOFUTILITIES,0);
-        for(int i=0;i<utilityAmt;i++) {
-            Utility newUtil=new Utility(pref.getString(i+NAME,""),
-                    pref.getString(i+GASTYPE,""),Double.longBitsToDouble(pref.getLong(i+AMOUNT,0)),pref.getInt(i+NUMPEOPLE,0),
-                    Double.longBitsToDouble(pref.getLong(i+EMISSION,0)),pref.getString(i+STARTDATE,""),pref.getString(i+ENDDATE,""));
-            utils.add(newUtil);
+    private UtilitiesCollection loadUtilities() {
+        UtilitiesCollection utils = new UtilitiesCollection();
+        SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        int utilityAmt = pref.getInt(SHAREDPREF_ITEM_AMOUNTOFUTILITIES, 0);
+        for (int i = 0; i < utilityAmt; i++) {
+            Utility newUtil = new Utility(pref.getString(i + NAME, ""),
+                    pref.getString(i + GASTYPE, ""), Double.longBitsToDouble(pref.getLong(i + AMOUNT, 0)), pref.getInt(i + NUMPEOPLE, 0),
+                    Double.longBitsToDouble(pref.getLong(i + EMISSION, 0)), pref.getString(i + STARTDATE, ""), pref.getString(i + ENDDATE, ""));
+            utils.addUtility(newUtil);
         }
         return utils;
     }
+
     private void saveUtilities() {
-        SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
-        SharedPreferences.Editor editor=pref.edit();
+        SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
         editor.clear();
-        int utilityAmt=utilities.size();
-        for(int i=0;i<utilityAmt;i++) {
-            editor.putString(i+NAME,utilities.get(i).getName());
-            editor.putString(i+GASTYPE,utilities.get(i).getGasType());
-            editor.putString(i+STARTDATE,utilities.get(i).getStartDate());
-            editor.putString(i+ENDDATE,utilities.get(i).getEndDate());
-            editor.putInt(i+NUMPEOPLE,utilities.get(i).getNumofPeople());
-            editor.putLong(i+EMISSION,Double.doubleToRawLongBits(utilities.get(i).getEmission()));
-            editor.putLong(i+AMOUNT,Double.doubleToRawLongBits(utilities.get(i).getAmount()));
+        int utilityAmt = utilities.countUtility();
+        for (int i = 0; i < utilityAmt; i++) {
+            editor.putString(i + NAME, utilities.getUtility(i).getName());
+            editor.putString(i + GASTYPE, utilities.getUtility(i).getGasType());
+            editor.putString(i + STARTDATE, utilities.getUtility(i).getStartDate());
+            editor.putString(i + ENDDATE, utilities.getUtility(i).getEndDate());
+            editor.putInt(i + NUMPEOPLE, utilities.getUtility(i).getNumofPeople());
+            editor.putLong(i + EMISSION, Double.doubleToRawLongBits(utilities.getUtility(i).getEmission()));
+            editor.putLong(i + AMOUNT, Double.doubleToRawLongBits(utilities.getUtility(i).getAmount()));
         }
-        editor.putInt(SHAREDPREF_ITEM_AMOUNTOFUTILITIES,utilityAmt);
+        editor.putInt(SHAREDPREF_ITEM_AMOUNTOFUTILITIES, utilityAmt);
         editor.apply();
     }
 
     private void setupList() {
 
         final ListView utilityList = (ListView) findViewById(R.id.utilities_listView);
-        ArrayAdapter<Utility> adapter = new ArrayAdapter<>(this, R.layout.layout_for_list, utilities);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.layout_for_list, utilities.getUtilitiesDescriptionsWithName());
         utilityList.setAdapter(adapter);
         utilityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                FragmentManager manager=getSupportFragmentManager();
+                FragmentManager manager = getSupportFragmentManager();
                 CalculationDialog dialog = new CalculationDialog();
-                Bundle bundle =new Bundle();
-                bundle.putDouble("CO2", utilities.get(position).getEmission());
+                Bundle bundle = new Bundle();
+                bundle.putDouble("CO2", utilities.getUtility(position).getEmission());
                 dialog.setArguments(bundle);
-                dialog.show(manager,"CalculateDialog");
+                dialog.show(manager, "CalculateDialog");
             }
         });
 
@@ -115,13 +116,18 @@ public class SelectUtilities extends AppCompatActivity {
                                     ContextMenu.ContextMenuInfo menuInfo) {
         if (v.getId() == R.id.utilities_listView) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            menu.setHeaderTitle(utilities.get(info.position).toString());
+
+            menu.setHeaderTitle("Type: " + utilities.getUtility(info.position).getGasType() + "\n" +
+                    "Period: " + utilities.getUtility(info.position).getStartDate() + " - " + utilities.getUtility(info.position).getEndDate());
+            ;
+
             String[] menuItems = getResources().getStringArray(R.array.menu);
             for (int i = 0; i < menuItems.length; i++) {
                 menu.add(Menu.NONE, i, i, menuItems[i]);
             }
         }
     }
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -130,13 +136,13 @@ public class SelectUtilities extends AppCompatActivity {
         String menuItemName = menuItems[menuItemIndex];
         int pos = info.position;
         if (menuItemName.equals("Edit")) {
-            Intent i=AddUtility.makeIntent(SelectUtilities.this);
-            i.putExtra(POS_TO_EDIT,pos);
+            Intent i = AddUtility.makeIntent(SelectUtilities.this);
+            i.putExtra(POS_TO_EDIT, pos);
             startActivityForResult(i, EDIT_UTILITY);
         } else if (menuItemName.equals("Delete")) {
-            Utility u = utilities.get(pos);
+            Utility u = utilities.getUtility(pos);
             Toast.makeText(SelectUtilities.this, "Removed Utility " + u.getName(), Toast.LENGTH_SHORT).show();
-            utilities.remove(u);
+            utilities.deleteUtility(pos);
             setupList();
         }
         return true;
@@ -157,14 +163,14 @@ public class SelectUtilities extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent Utilities2Add = AddUtility.makeIntent(SelectUtilities.this);
-                startActivityForResult(Utilities2Add,SELECT_UTILITY);
+                startActivityForResult(Utilities2Add, SELECT_UTILITY);
             }
         });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode) {
+        switch (requestCode) {
             case SELECT_UTILITY:
                 if (resultCode == RESULT_OK) {
                     UtilitySingleton utility2Load = UtilitySingleton.getInstance();
@@ -175,29 +181,28 @@ public class SelectUtilities extends AppCompatActivity {
                             utility2Load.getNum_poeople(),
                             utility2Load.getEmission(),
                             utility2Load.getStartDate(),
-                            utility2Load.getEndDate() );
-                    utilities.add(temp_utility);
+                            utility2Load.getEndDate());
+                    utilities.addUtility(temp_utility);
                     setupButtons();
                     setupList();
                     tipMaker();
-                }
-                else{
+                } else {
                     setupButtons();
                     setupList();
                 }
                 break;
             case EDIT_UTILITY:
-                if(resultCode==RESULT_OK) {
-                    int pos=data.getIntExtra(POS_TO_EDIT,0);
-                    Utility utilToEdit=utilities.get(pos);
+                if (resultCode == RESULT_OK) {
+                    int pos = data.getIntExtra(POS_TO_EDIT, 0);
+                    Utility utilToEdit = utilities.getUtility(pos);
                     UtilitySingleton utili = UtilitySingleton.getInstance();
-                    utilToEdit.setNumofPeople( utili.getNum_poeople());
-                    utilToEdit.setAmount( utili.getAmounts());
-                    utilToEdit.setGasType( utili.getGasType());
-                    utilToEdit.setName( utili.getName());
-                    utilToEdit.setEmission( utili.getEmission());
-                    utilToEdit.setStartDate( utili.getStartDate());
-                    utilToEdit.setEndDate( utili.getEndDate());
+                    utilToEdit.setNumofPeople(utili.getNum_poeople());
+                    utilToEdit.setAmount(utili.getAmounts());
+                    utilToEdit.setGasType(utili.getGasType());
+                    utilToEdit.setName(utili.getName());
+                    utilToEdit.setEmission(utili.getEmission());
+                    utilToEdit.setStartDate(utili.getStartDate());
+                    utilToEdit.setEndDate(utili.getEndDate());
 
                     setupList();
                     setupButtons();
@@ -208,7 +213,7 @@ public class SelectUtilities extends AppCompatActivity {
 
     private void tipMaker() {
         LayoutInflater inflater = LayoutInflater.from(this);
-        View tipView =inflater.inflate(R.layout.activity_tip_dialog, null);
+        View tipView = inflater.inflate(R.layout.activity_tip_dialog, null);
 
         TextView tipText = (TextView) tipView.findViewById(R.id.tip_text);
         tipText.setGravity(Gravity.CENTER);

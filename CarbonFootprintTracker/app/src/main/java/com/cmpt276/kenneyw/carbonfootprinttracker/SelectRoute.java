@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-import java.util.ArrayList;
 /*
 This Class stores a list of routes for perusal in a journey. Can add, edit and delete saved routes.
 Includes error checking of input, and user can go back to select car screen. Saving routes via shared prefs and
@@ -28,9 +27,10 @@ public class SelectRoute extends AppCompatActivity {
     public static final String HIGHWAY = "highway";
     public static final int REQUEST_ADD_ROUTE = 1;
     public static final int DATE_REQUESTED = 2;
-    ArrayList<Route> routes = new ArrayList<>();
     private static final String SHAREDPREF_SET = "CarbonFootprintTracker";
     private static final String SHAREDPREF_ITEM_AMOUNTOFROUTES = "AmountOfRoutes";
+    RouteCollection routes = new RouteCollection();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +40,7 @@ public class SelectRoute extends AppCompatActivity {
         setupBackButton();
         setupAddRouteButton();
     }
+
     private void setupAddRouteButton() {
         Button btn = (Button) findViewById(R.id.btn_add_route);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +51,7 @@ public class SelectRoute extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -62,7 +64,7 @@ public class SelectRoute extends AppCompatActivity {
                     int cityToAdd = data.getIntExtra("city", 0);
                     int highwayToAdd = data.getIntExtra("highway", 0);
                     Route r = new Route(nameToAdd, cityToAdd, highwayToAdd);
-                    routes.add(r);
+                    routes.addRoute(r);
                     setUpListView();
                     break;
                 }
@@ -79,8 +81,8 @@ public class SelectRoute extends AppCompatActivity {
                 }
         }
     }
-    private ArrayList<Route> LoadRoutes() {
-        ArrayList<Route> routes = new ArrayList<>();
+    private RouteCollection LoadRoutes() {
+        RouteCollection temp_routes = new RouteCollection();
         SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
         int routeAmt = pref.getInt(SHAREDPREF_ITEM_AMOUNTOFROUTES, 0);
         String routeName;
@@ -91,19 +93,19 @@ public class SelectRoute extends AppCompatActivity {
             routeHighway = pref.getInt(i + "highway", 0);
             routeName = pref.getString(i + "name", "No Name");
             Route newRoute = new Route(routeName, routeCity, routeHighway);
-            routes.add(newRoute);
+            temp_routes.addRoute(newRoute);
         }
-        return routes;
+        return temp_routes;
     }
     public void setUpListView() {
         ListView listForRoutes = (ListView) findViewById(R.id.listViewRoutes);
-        ArrayAdapter<Route> adapter = new ArrayAdapter<Route>(this, R.layout.layout_for_list, routes);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.layout_for_list, routes.getRoutesDescriptionsWithName());
         listForRoutes.setAdapter(adapter);
         listForRoutes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e(TAG, routes.get(position).toString() + " selected.");
-                Route r = routes.get(position);
+                Log.e(TAG, routes.getRoute(position).getRouteName() + " selected.");
+                Route r = routes.getRoute(position);
                 String nameToPass = r.getRouteName();
                 int cityToPass = r.getCityDistance();
                 int highwayToPass = r.getHighwayDistance();
@@ -126,7 +128,7 @@ public class SelectRoute extends AppCompatActivity {
                                     ContextMenu.ContextMenuInfo menuInfo) {
         if (v.getId() == R.id.listViewRoutes) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            menu.setHeaderTitle(routes.get(info.position).toString());
+            menu.setHeaderTitle(routes.getRoute(info.position).getRouteName());
             String[] menuItems = getResources().getStringArray(R.array.menu);
             for (int i = 0; i < menuItems.length; i++) {
                 menu.add(Menu.NONE, i, i, menuItems[i]);
@@ -143,16 +145,16 @@ public class SelectRoute extends AppCompatActivity {
         if (menuItemName.equals("Edit")) {
             launchEditFragment(pos);
         } else if (menuItemName.equals("Delete")) {
-            Route r = routes.get(pos);
+            Route r = routes.getRoute(pos);
             Toast.makeText(SelectRoute.this, "Removed Route " + r.getRouteName(), Toast.LENGTH_SHORT).show();
-            routes.remove(r);
+            routes.deleteRoute(pos);
             setUpListView();
         }
         return true;
     }
     private void launchEditFragment(int pos) {
-        Route r = routes.get(pos);
-        Toast.makeText(SelectRoute.this, "Enter new values for Route " + r.toString(), Toast.LENGTH_SHORT).show();
+        Route r = routes.getRoute(pos);
+        Toast.makeText(SelectRoute.this, "Enter new values for Route " + r.getRouteName(), Toast.LENGTH_SHORT).show();
         String nameToEdit = r.getRouteName();
         int cityToEdit = r.getCityDistance();
         int highwayToEdit = r.getHighwayDistance();
@@ -171,11 +173,11 @@ public class SelectRoute extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.clear();
-        int routeAmt = routes.size();
+        int routeAmt = routes.countRoutes();
         for (int i = 0; i < routeAmt; i++) {
-            editor.putString(i + NAME, routes.get(i).getRouteName());
-            editor.putInt(i + CITY, routes.get(i).getCityDistance());
-            editor.putInt(i + HIGHWAY, routes.get(i).getHighwayDistance());
+            editor.putString(i + NAME, routes.getRoute(i).getRouteName());
+            editor.putInt(i + CITY, routes.getRoute(i).getCityDistance());
+            editor.putInt(i + HIGHWAY, routes.getRoute(i).getHighwayDistance());
         }
         editor.putInt(SHAREDPREF_ITEM_AMOUNTOFROUTES, routeAmt);
         editor.apply();
@@ -204,8 +206,8 @@ public class SelectRoute extends AppCompatActivity {
     }
     public void changeRoute(int pos, String name, int city, int highway) {
         Log.i(TAG, "change Route got: " + name + " " + city + " " + highway);
-        routes.get(pos).setRouteName(name);
-        routes.get(pos).setCityDistance(city);
-        routes.get(pos).setHighwayDistance(highway);
+        routes.getRoute(pos).setRouteName(name);
+        routes.getRoute(pos).setCityDistance(city);
+        routes.getRoute(pos).setHighwayDistance(highway);
     }
 }
