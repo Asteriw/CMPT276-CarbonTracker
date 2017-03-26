@@ -36,19 +36,6 @@ public class RouteCollection {
         return routes.get(index);
     }
 
-    public String[] getRoutesDescriptions() {
-        String[] descriptions = new String[countRoutes()];
-        for (int i = 0; i < countRoutes(); i++) {
-            Route route = getRoute(i);
-            /*descriptions[i] = car.getMake() + " - " + TODO: CHANGE THIS DESCRIPTION
-                    car.getModel() + " - " +
-                    car.getYear() + " - " +
-                    car.getTransmission() + " - " +
-                    car.getLiterEngine() + "L";*/
-        }
-        return descriptions;
-    }
-
     public String[] getRoutesNames() {
         String[] descriptions = new String[countRoutes()];
         for (int i = 0; i < countRoutes(); i++) {
@@ -58,16 +45,12 @@ public class RouteCollection {
         return descriptions;
     }
 
-    public String[] getCarsDescriptionsWithName() {
+    public String[] getRoutesDescriptionsWithName() {
         String[] descriptions = new String[countRoutes()];
         for (int i = 0; i < countRoutes(); i++) {
-            Route car = getRoute(i);
-            /*descriptions[i] = car.getName() + " - " + TODO: CHANGE THIS DESCRIPTION
-                    car.getMake() + " - " +
-                    car.getModel() + " - " +
-                    car.getYear() + " - " +
-                    car.getTransmission() + " - " +
-                    car.getLiterEngine() + "L";*/
+            Route route = getRoute(i);
+            descriptions[i] = route.getRouteName() + ", City:" + route.getCityDistance() +
+                    ", Highway:" + route.getHighwayDistance() + ", Total: " + route.getTotalDistance();
         }
         return descriptions;
     }

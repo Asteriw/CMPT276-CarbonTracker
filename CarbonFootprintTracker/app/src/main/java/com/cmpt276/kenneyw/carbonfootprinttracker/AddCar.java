@@ -29,7 +29,7 @@ public class AddCar extends AppCompatActivity {
     String selectedYear;
     String selectedMake;
     String selectedModel;
-    CarCollection carList = new CarCollection();
+    CarCollection cars = new CarCollection();
     int pos;
 
     @Override
@@ -111,7 +111,7 @@ public class AddCar extends AppCompatActivity {
     //Calls the getTempCarList function in DatabaseAccess, which in turn returns all the values of matching database queries
     //if a List<String[]>, so that you can .get() and then reference like an array.
     private void makeCarList(String selectedYear, String selectedMake, String selectedModel){
-        carList = new CarCollection();
+        cars = new CarCollection();
         List<String[]> tempCarList = databaseAccess.getTempCarList(selectedYear, selectedMake, selectedModel);
         for(int i = 0; i<tempCarList.size(); i++){
             String[] carData = tempCarList.get(i);
@@ -135,7 +135,7 @@ public class AddCar extends AppCompatActivity {
                 car.setCityEmissions(Double.parseDouble(carData[4]));
                 car.setHighwayEmissions(Double.parseDouble(carData[5]));
             }
-            carList.addCar(car);
+            cars.addCar(car);
         }
         populateListView();
     }
@@ -143,7 +143,7 @@ public class AddCar extends AppCompatActivity {
     //Populates the listView with the values returned from makeCarList.
     private void populateListView() {
         ListView listView = (ListView) findViewById(R.id.car_listview);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.layout_for_list, carList.getCarsDescriptions());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.layout_for_list, cars.getCarsDescriptions());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -154,7 +154,7 @@ public class AddCar extends AppCompatActivity {
                     Toast.makeText(AddCar.this, R.string.error_toast, Toast.LENGTH_SHORT).show();
                 } else {
                     CarSingleton masterCar = CarSingleton.getInstance();
-                    Car tempCar = carList.getCar(position);
+                    Car tempCar = cars.getCar(position);
                     masterCar.setName(userInputName);
                     masterCar.setYear(tempCar.getYear());
                     masterCar.setCityEmissions(tempCar.getCityEmissions());

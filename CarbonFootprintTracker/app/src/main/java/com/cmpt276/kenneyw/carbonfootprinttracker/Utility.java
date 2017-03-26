@@ -91,7 +91,7 @@ public class Utility extends AppCompatActivity {
     }
 
     public String toString() {
-        return "Name: " + name +", Type: "+ gasType +", StartDate: " + startDate + ", EndDate: " + endDate;
+        return name +", "+ gasType +", " + startDate + ", " + endDate;
     }
 
 }
