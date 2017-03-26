@@ -7,13 +7,13 @@ package com.cmpt276.kenneyw.carbonfootprinttracker;
 public class Route {
 
     public Route() {
-        this.routeName = "Default Name";
+        this.routeName = "";
         this.cityDistance = 0;
         this.highwayDistance = 0;
         this.totalDistance = cityDistance + highwayDistance;
     }
 
-    public Route(String routeName, int cityDistance, int highwayDistance) {
+    public Route(String routeName, double cityDistance, double highwayDistance) {
         this.routeName = routeName;
         this.cityDistance = cityDistance;
         this.highwayDistance = highwayDistance;
@@ -28,15 +28,15 @@ public class Route {
         return routeName;
     }
 
-    public int getCityDistance() {
+    public double getCityDistance() {
         return cityDistance;
     }
 
-    public int getHighwayDistance() {
+    public double getHighwayDistance() {
         return highwayDistance;
     }
 
-    public int getTotalDistance() {
+    public double getTotalDistance() {
         return totalDistance;
     }
 
@@ -45,20 +45,20 @@ public class Route {
 
     }
 
-    public void setCityDistance(int cityDistance) {
+    public void setCityDistance(double cityDistance) {
         this.cityDistance = cityDistance;
         this.totalDistance = this.getCityDistance() + this.getHighwayDistance();
     }
 
-    public void setHighwayDistance(int highwayDistance) {
+    public void setHighwayDistance(double highwayDistance) {
         this.highwayDistance = highwayDistance;
         this.totalDistance = this.getCityDistance() + this.getHighwayDistance();
     }
 
     // Varaibles Declaration
     private String routeName;
-    private int highwayDistance;
-    private int cityDistance;
-    private int totalDistance;
+    private double highwayDistance;
+    private double cityDistance;
+    private double totalDistance;
 
 }

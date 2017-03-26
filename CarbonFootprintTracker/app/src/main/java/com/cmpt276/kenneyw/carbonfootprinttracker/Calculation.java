@@ -40,10 +40,7 @@ public class Calculation {
     final private static double gasoline_volume_in_kg_per_gallon = 8.89;
     final private static double diesel_volumne_in_kg_per_gallon = 10.16;
     final private static double mile_per_km = 0.621371;
-    final private static double kg_per_Gwh = 9000;
-    final private static double kg_per_GJ = 56.1;
     final private static double gwh_per_kwh = 1000000;
-    final private static double gj_per_j = 1000000000;
     final private static double kgCO2_per_Gwh = 9000;
     final private static double kgCO2_per_GJ = 56.1;
 
@@ -81,10 +78,15 @@ public class Calculation {
     }
 
 
-    private double doubleToTwoPlaces(double result_in_kg_CO2_per_litre) {
-        DecimalFormat df2 = new DecimalFormat("#.##");
-        result_in_kg_CO2_per_litre=Double.valueOf( df2.format(result_in_kg_CO2_per_litre) );
-        return result_in_kg_CO2_per_litre;
+    private double doubleToTwoPlaces(double result_in_kg_CO2) {
+        /*if(result_in_kg_CO2*8==0){return 0;}
+        DecimalFormat df2 = new DecimalFormat("#0.00");
+        result_in_kg_CO2= Double.parseDouble(df2.format(result_in_kg_CO2));
+        return result_in_kg_CO2;
+        result_in_kg_CO2 = result_in_kg_CO2 * 100;
+        result_in_kg_CO2 = (double)Math.round(result_in_kg_CO2);
+        result_in_kg_CO2 = result_in_kg_CO2/100;*/
+        return result_in_kg_CO2;
     }
 
     public double calculateCO2Diesel(double mpg, double distance)

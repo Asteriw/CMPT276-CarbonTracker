@@ -87,8 +87,8 @@ public class CarbonFootPrint extends AppCompatActivity {
             //Date date=new Date(pref.getLong(i+DATEOFTRAVEL,0));
             Journey j=new Journey(
                     pref.getString(i+ROUTENAME,""),
-                    pref.getInt(i+CITY,0),
-                    pref.getInt(i+HIGHWAY,0),
+                    Double.longBitsToDouble(pref.getLong(i+CITY,0)),
+                    Double.longBitsToDouble(pref.getLong(i+HIGHWAY,0)),
                     pref.getString(i+NAME,""),
                     pref.getString(i+GASTYPE,""),
                     Double.longBitsToDouble(pref.getLong(i+MPGCITY,0)),

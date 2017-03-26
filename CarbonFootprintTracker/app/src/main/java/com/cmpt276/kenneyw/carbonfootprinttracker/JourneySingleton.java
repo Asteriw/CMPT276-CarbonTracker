@@ -6,8 +6,8 @@ import java.util.Date;
 
 public class JourneySingleton extends AppCompatActivity {
     private String routeName;
-    private int cityDistance;
-    private int highwayDistance;
+    private double cityDistance;
+    private double highwayDistance;
     private String name;
     private String gasType;
     private double mpgCity;
@@ -38,11 +38,11 @@ public class JourneySingleton extends AppCompatActivity {
     }
 
 
-    public int getCityDistance() {
+    public double getCityDistance() {
         return cityDistance;
     }
 
-    public void setCityDistance(int cityDistance) {
+    public void setCityDistance(double cityDistance) {
         this.cityDistance = cityDistance;
     }
 
@@ -54,11 +54,11 @@ public class JourneySingleton extends AppCompatActivity {
         this.gasType = gasType;
     }
 
-    public int getHighwayDistance() {
+    public double getHighwayDistance() {
         return highwayDistance;
     }
 
-    public void setHighwayDistance(int highwayDistance) {
+    public void setHighwayDistance(double highwayDistance) {
         this.highwayDistance = highwayDistance;
     }
 

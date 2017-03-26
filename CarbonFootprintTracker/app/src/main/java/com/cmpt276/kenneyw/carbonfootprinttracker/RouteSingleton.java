@@ -26,15 +26,15 @@ public class RouteSingleton {
         return routeName;
     }
 
-    public int getCityDistance() {
+    public double getCityDistance() {
         return cityDistance;
     }
 
-    public int getHighwayDistance() {
+    public double getHighwayDistance() {
         return highwayDistance;
     }
 
-    public int getTotalDistance() {
+    public double getTotalDistance() {
         return totalDistance;
     }
 
@@ -43,20 +43,20 @@ public class RouteSingleton {
 
     }
 
-    public void setCityDistance(int cityDistance) {
+    public void setCityDistance(double cityDistance) {
         this.cityDistance = cityDistance;
         this.totalDistance=this.getCityDistance()+this.getHighwayDistance();
     }
 
-    public void setHighwayDistance(int highwayDistance) {
+    public void setHighwayDistance(double highwayDistance) {
         this.highwayDistance = highwayDistance;
         this.totalDistance=this.getCityDistance()+this.getHighwayDistance();
     }
 
     // Variables Declaration
     private String routeName;
-    private int highwayDistance;
-    private int cityDistance;
-    private int totalDistance;
+    private double highwayDistance;
+    private double cityDistance;
+    private double totalDistance;
 
 }

@@ -27,8 +27,8 @@ public class EditRouteFragment extends AppCompatDialogFragment {
         final EditText editHighway=(EditText)viewer.findViewById(R.id.editHighway);
 
         String nameToEdit=getArguments().getString("name");
-        int cityToEdit=getArguments().getInt("city");
-        int highwayToEdit=getArguments().getInt("highway");
+        double cityToEdit=getArguments().getDouble("city");
+        double highwayToEdit=getArguments().getDouble("highway");
 
         editName.setText(nameToEdit);
         editCity.setText(""+cityToEdit);
@@ -46,23 +46,46 @@ public class EditRouteFragment extends AppCompatDialogFragment {
                         String city=editCity.getText().toString();
                         String highway=editHighway.getText().toString();
 
-                        if(name.equals("")||city.equals("")||highway.equals("")){
-                            Toast.makeText(getActivity(),"Fields cannot be empty.",Toast.LENGTH_SHORT).show();
-                            break;
+                        if(name.equals("")){
+                            Toast.makeText(getActivity(),"Name cannot be empty",Toast.LENGTH_SHORT).show();
                         }
-                        else if(Integer.parseInt(city)<0||Integer.parseInt(highway)<0) {
-                            Toast.makeText(getActivity(),"Values cannot be negative.",Toast.LENGTH_SHORT).show();
-                            break;
+
+                        else if(city.equals("")) {
+                            if(highway.equals("")) {
+                                Toast.makeText(getActivity(), "Both Length fields cannot be empty", Toast.LENGTH_SHORT).show();
+                            }
+                            else if(Double.parseDouble(highway)<0){
+                                Toast.makeText(getActivity(),"Highway Length cannot be negative",Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                city="0";
+                                ((SelectRoute)getActivity()).changeRoute(pos,name,Double.parseDouble(city),Double.parseDouble(highway));
+                                ((SelectRoute)getActivity()).setUpListView();
+                            }
                         }
-                        Log.i(TAG,""+name+" "+city+ " "+highway);
-                        ((SelectRoute)getActivity()).changeRoute(pos,name,Integer.parseInt(city),Integer.parseInt(highway));
-                        ((SelectRoute)getActivity()).setUpListView();
+                        else if(highway.equals("")){
+                            if( Double.parseDouble(city)<0) {
+                                Toast.makeText(getActivity(), "City Length cannot be negative", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                highway="0";
+                                ((SelectRoute)getActivity()).changeRoute(pos,name,Double.parseDouble(city),Double.parseDouble(highway));
+                                ((SelectRoute)getActivity()).setUpListView();
+                            }
+                        }
+                        else if(Double.parseDouble(city)<0&&Double.parseDouble(highway)<0){
+                            Toast.makeText(getActivity(),"Length cannot be negative",Toast.LENGTH_SHORT).show();
+                        }
+
+                        else {
+                            ((SelectRoute) getActivity()).changeRoute(pos, name, Double.parseDouble(city), Double.parseDouble(highway));
+                            ((SelectRoute) getActivity()).setUpListView();
+                        }
+                        Log.i(TAG, "" + name + " " + city + " " + highway);
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
-
                         break;
                 }
-
             }
         };
         //build alert dialog

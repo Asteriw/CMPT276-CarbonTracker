@@ -25,6 +25,11 @@ public class EditDate extends AppCompatActivity {
 
         DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
         dp.init(2017, 0, 1, onDateChanged);
+        Year=2017;
+        Month=0;
+        Day=1;
+        date_in_str=Month+1 + "/" + Day + "/" + Year;
+
         setupButtons();
     }
     private void setupButtons() {
