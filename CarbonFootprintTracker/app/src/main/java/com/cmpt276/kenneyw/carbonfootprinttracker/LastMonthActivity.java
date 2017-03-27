@@ -87,6 +87,57 @@ public class LastMonthActivity extends AppCompatActivity {
 
     private void setUpArrays() {
         entries = new ArrayList<>();
+
+        while(!date_in_str.equals(prev_date_in_str)){
+            for (int i = 0; i < journeyAmt; i++) {
+                if(journeys.getJourney(i).getDateString().equals(date_in_str)){
+                    entriesSize++;
+                    entries.add(new PieEntry((float) journeys.getJourney(i).getTotalEmissions(),
+                            journeys.getJourney(i).getName()));
+                }
+            }
+            Day-=1;
+            Date date=new Date(Year,Month,Day);
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
+            date_in_str=df.format(date);
+            Log.i(TAG,"Prev date is : "+date_in_str);
+        }
+        whatDayIsIt();
+        for(int i=0;i<utilityAmt;i++){
+            if(
+                    isBetween(date_in_str,utilities.getUtility(i).getStartDate(),utilities.getUtility(i).getEndDate())
+                    ||
+                    isBetween(prev_date_in_str,utilities.getUtility(i).getStartDate(),utilities.getUtility(i).getEndDate())){
+                entriesSize++;
+
+
+                if(isBefore(utilities.getUtility(i).getEndDate(),date_in_str)){
+                    String[] first = prev_date_in_str.split("/");
+                    String[] last = utilities.getUtility(i).getStartDate().split("/");
+                    long numDays=countDays(first,last);
+                    entries.add(new PieEntry((float)
+                            utilities.getUtility(i).getEmission() / utilities.getUtility(i).getNumofPeople() / numDays,
+                            utilities.getUtility(i).getName()));
+                }
+                else if(isBefore(prev_date_in_str,utilities.getUtility(i).getStartDate())){
+                    String[] first = utilities.getUtility(i).getEndDate().split("/");
+                    String[] last = date_in_str.split("/");
+                    long numDays=countDays(first,last);
+                    entries.add(new PieEntry((float)
+                            utilities.getUtility(i).getEmission() / utilities.getUtility(i).getNumofPeople() / numDays,
+                            utilities.getUtility(i).getName()));
+                }
+                else {
+                    String[] first = utilities.getUtility(i).getStartDate().split("/");
+                    String[] last = utilities.getUtility(i).getEndDate().split("/");
+                    long numDays=countDays(first,last);
+                    entries.add(new PieEntry((float)
+                            utilities.getUtility(i).getEmission() / utilities.getUtility(i).getNumofPeople() / numDays,
+                            utilities.getUtility(i).getName()));
+                }
+            }
+        }
+        /*
         String[] first = prev_date_in_str.split("/");
         String[] last = date_in_str.split("/");
         amtDays=countDays(first,last);
@@ -102,6 +153,7 @@ public class LastMonthActivity extends AppCompatActivity {
                     isBetween(utilities.getUtility(i).getStartDate(),prev_date_in_str,date_in_str)
                     ||
                     isBetween(utilities.getUtility(i).getEndDate(),prev_date_in_str,date_in_str)) {
+
                 String[] firstone = utilities.getUtility(i).getStartDate().split("/");
                 String[] lastone = utilities.getUtility(i).getEndDate().split("/");
                 long numDays=countDays(firstone,lastone);
@@ -109,7 +161,7 @@ public class LastMonthActivity extends AppCompatActivity {
                         utilities.getUtility(i).getEmission()/utilities.getUtility(i).getNumofPeople()/numDays,
                         utilities.getUtility(i).getName()));
             }
-        }
+        }*/
     }
 
     private void setUpPieChart() {
@@ -169,6 +221,7 @@ public class LastMonthActivity extends AppCompatActivity {
         long timeTwo = dateTwo.getTime();
         long oneDay = 1000 * 60 * 60 * 24;
         long delta = (timeTwo - timeOne) / oneDay;
+        Log.i(TAG,"delta between 2 dates is: "+delta);
         return delta;
     }
 
@@ -176,6 +229,7 @@ public class LastMonthActivity extends AppCompatActivity {
         String[] checkdate = date.split("/");
         String[] first = firstDate.split("/");
         String[] last = lastDate.split("/");
+        Log.i(TAG,"Checked date: "+date);
         return (
                 //year
                 Integer.parseInt(checkdate[2]) <= Integer.parseInt(last[2])
@@ -187,6 +241,18 @@ public class LastMonthActivity extends AppCompatActivity {
                         && Integer.parseInt(checkdate[1]) <= Integer.parseInt(last[1])
                         && Integer.parseInt(checkdate[1]) >= Integer.parseInt(first[1])
         );
+
+    }
+
+    private boolean isBefore(String firstDate, String lastDate){
+        String[] last = lastDate.split("/");
+        String[] first = firstDate.split("/");
+        Date d1=new Date(Integer.parseInt(last[2]),Integer.parseInt(last[0]),Integer.parseInt(last[1]));
+        Date d2=new Date(Integer.parseInt(first[2]),Integer.parseInt(first[0]),Integer.parseInt(first[1]));
+        if(d1.before(d2)) {
+            return true;
+        }
+        return false;
     }
 
     private UtilitiesCollection loadUtilities() {
