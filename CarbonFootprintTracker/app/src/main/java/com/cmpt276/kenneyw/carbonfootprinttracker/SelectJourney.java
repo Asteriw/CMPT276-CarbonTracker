@@ -229,6 +229,7 @@ public class SelectJourney extends AppCompatActivity {
     private String tipTextSelector() {
         TipHelperSingleton tipHelper = TipHelperSingleton.getInstance();
         tipHelper.setTipIndexTravel();
+        //if utility bills exist, etc etc
         if (tipHelper.spiceTimer() == 1) {
             properTipIndex = tipHelper.checkRepeatTracker(tipHelper.spiceMaker());
             tipString = tipArray[properTipIndex];

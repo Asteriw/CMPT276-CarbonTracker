@@ -182,7 +182,7 @@ public class SelectUtilities extends AppCompatActivity {
                     utilities.addUtility(temp_utility);
                     setupButtons();
                     setupList();
-                    tipMaker();
+                    //tipMaker();
                 } else {
                     setupButtons();
                     setupList();
@@ -208,7 +208,7 @@ public class SelectUtilities extends AppCompatActivity {
         }
     }
 
-    private void tipMaker() {
+    /*private void tipMaker() {
         LayoutInflater inflater = LayoutInflater.from(this);
         View tipView = inflater.inflate(R.layout.activity_tip_dialog, null);
 
@@ -227,23 +227,40 @@ public class SelectUtilities extends AppCompatActivity {
         builder.setNegativeButton("Ok", null);
         AlertDialog tipDialog = builder.create();
         tipDialog.show();
-    }
+    }*/
 
     //Avoids tips that have been shown in the last 7
     //Picks relevant tips, using userdata
-    private String tipTextSelector() {
+    /*private String tipTextSelector() {
         TipHelperSingleton tipHelper = TipHelperSingleton.getInstance();
-        tipHelper.setTipIndexUtil();
-        if (tipHelper.spiceTimer() == 1) {
-            properTipIndex = tipHelper.checkRepeatTracker(tipHelper.spiceMaker());
+        if utilities were made() {
+            tipHelper.setTipIndexUtil();
+            if (tipHelper.spiceTimerUtility() == 1) {
+                if no journeys exist, no more tips.
+                tipHelper.setTipIndexTravel();
+                properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
+                tipString = tipArray[properTipIndex];
+                return tipString;
+            }
+            properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
             tipString = tipArray[properTipIndex];
-            return tipString;
         }
-        properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
-        tipString = tipArray[properTipIndex];
+
+        if electrics were made() {
+            tipHelper.setTipIndexUtil();
+            if (tipHelper.spiceTimerUtility() == 1) {
+                if no journeys exist, no more tips.
+                tipHelper.setTipIndexTravel();
+                properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
+                tipString = tipArray[properTipIndex];
+                return tipString;
+            }
+            properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
+            tipString = tipArray[properTipIndex];
+        }
 
         return tipString;
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

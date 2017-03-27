@@ -7,6 +7,8 @@ public class TipHelperSingleton {
     private int[] repeatTracker;
     private int tipIndex;
     private int noCycleCounter;
+    private int moreThanFourUtil;
+    private int moreThanFourElec;
     private static TipHelperSingleton helperInstance = null;
     private String currentMode;
 
@@ -16,6 +18,8 @@ public class TipHelperSingleton {
         currentMode = "Travel";
         repeatTracker = new int[16];
         noCycleCounter = 0;
+        moreThanFourUtil = 0;
+        moreThanFourElec = 0;
 
     }
 
@@ -30,13 +34,22 @@ public class TipHelperSingleton {
     }
 
     public void setTipIndexUtil() {
-        if (currentMode.equals("Travel"))  {
+        if (currentMode.equals("Travel") || currentMode.equals("Electric"))  {
             this.tipIndex = 8;
-            Log.i("TIPS", "what tips am I showing?"+tipIndex);
             currentMode = "Utility";
         }
         else {
             Log.i("TIPS", "Already showing utility tips");
+        }
+    }
+
+    public void setTipIndexElec() {
+        if (currentMode.equals("Travel") || currentMode.equals("Utility"))  {
+            this.tipIndex = 13;
+            currentMode = "Electric";
+        }
+        else {
+            Log.i("TIPS", "Already showing electric tips");
         }
     }
 
@@ -76,14 +89,30 @@ public class TipHelperSingleton {
         return 0;
     }
 
+    public int spiceTimerUtility() {
+        moreThanFourUtil++;
+        if (moreThanFourUtil >= 4) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public int spiceTimerElectric() {
+        moreThanFourUtil++;
+        if (moreThanFourElec >= 4) {
+            return 1;
+        }
+        return 0;
+    }
+
     public int spiceMaker() {
         int spicyTip = 69;
-        if (currentMode == "Travel") {
-            spicyTip = 8;
+        /*if util or elec exist, use a different one.
+            //spicyTip = 8;
         }
-        else if (currentMode == "Utility") {
+        else {
             spicyTip = 0;
-        }
+        }*/
         return spicyTip;
     }
 
