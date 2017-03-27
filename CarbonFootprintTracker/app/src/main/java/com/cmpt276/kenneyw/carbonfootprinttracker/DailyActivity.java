@@ -104,7 +104,7 @@ public class DailyActivity extends AppCompatActivity {
         chart.setCenterTextColor(Color.DKGRAY);
         chart.setDescription(null);
         chart.getLegend().setEnabled(true);
-        chart.setVisibility(View.INVISIBLE);
+        chart.setVisibility(View.VISIBLE);
         chart.invalidate();
     }
 
