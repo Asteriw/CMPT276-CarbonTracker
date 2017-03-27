@@ -32,6 +32,7 @@ public class Utility extends AppCompatActivity {
         this.startDate = startDate;
         this.endDate = endDate;
         this.numofPeople = num_people;
+
     }
 
     public String getName() {

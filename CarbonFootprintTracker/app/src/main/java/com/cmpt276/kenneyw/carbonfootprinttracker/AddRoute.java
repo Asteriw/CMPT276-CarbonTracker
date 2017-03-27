@@ -47,9 +47,10 @@ public class AddRoute extends AppCompatActivity {
                     }
                     else{
                         Intent intent=new Intent();
-                        double cit=0;
+                        editCity.setText("0");
+                        String cit=editCity.getText().toString();
                         intent.putExtra("name",nameToAdd);
-                        intent.putExtra("city",cit);
+                        intent.putExtra("city",Double.parseDouble(cit));
                         intent.putExtra("highway",Double.parseDouble(highwayToAdd));
                         setResult(RESULT_OK,intent);
                         finish();
@@ -64,10 +65,11 @@ public class AddRoute extends AppCompatActivity {
                     }
                     else{
                         Intent intent=new Intent();
-                        double hig=0;
+                        editHighway.setText("0");
+                        String high=editHighway.getText().toString();
                         intent.putExtra("name",nameToAdd);
                         intent.putExtra("city",Double.parseDouble(cityToAdd));
-                        intent.putExtra("highway",hig);
+                        intent.putExtra("highway",Double.parseDouble(high));
                         setResult(RESULT_OK,intent);
                         finish();
                     }

@@ -7,14 +7,27 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 
 public class DataActivityPicker extends AppCompatActivity{
+
+    public static final String DATE_IN_STR = "dateInStr";
+    public static final String DAY = "day";
+    public static final String MONTH = "month";
+    public static final String YEAR = "year";
+    String date_in_str;
+    int Year;
+    int Month;
+    int Day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_data);
         setupButtons();
+        DatePicker dp = (DatePicker) findViewById(R.id.datePicker2);
+        dp.init(2017, 0, 1, onDateChanged);
+
     }
 
     private void setupButtons() {
@@ -25,23 +38,39 @@ public class DataActivityPicker extends AppCompatActivity{
                 finish();
             }
         });
-        Button journeys = (Button) findViewById(R.id.choose_journeys_data);
-        journeys.setOnClickListener(new View.OnClickListener() {
+
+        Button lastmonth=(Button)findViewById(R.id.last_28_days_data);
+        lastmonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent FootPrintMenu2Journey = CarbonFootPrint.makeIntent(DataActivityPicker.this);
-                startActivity(FootPrintMenu2Journey);
+                Intent lastmonthintent=LastMonthActivity.makeIntent(DataActivityPicker.this);
+                startActivity(lastmonthintent);
             }
         });
-        Button utilities = (Button) findViewById(R.id.choose_utilities_data);
-        utilities.setOnClickListener(new View.OnClickListener() {
+        Button lastyear = (Button) findViewById(R.id.last_365_days_data);
+        lastyear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent FootPrintMenu2Utility = UtilitiesFootPrint.makeIntent(DataActivityPicker.this);
-                startActivity(FootPrintMenu2Utility);
+                Intent lastyearintent = LastYearActivity.makeIntent(DataActivityPicker.this);
+                startActivity(lastyearintent);
             }
         });
     }
+    DatePicker.OnDateChangedListener onDateChanged = new DatePicker.OnDateChangedListener() {
+        @Override
+        public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            date_in_str = monthOfYear+1 + "/" + dayOfMonth + "/" + year;
+            Year=year;
+            Month=monthOfYear+1;
+            Day=dayOfMonth;
+            Intent i=DailyActivity.makeIntent(DataActivityPicker.this);
+            i.putExtra(DATE_IN_STR,date_in_str);
+            i.putExtra(DAY,Day);
+            i.putExtra(MONTH,Month);
+            i.putExtra(YEAR,Year);
+            startActivity(i);
+        }
+    };
     public static Intent makeIntent(Context context) {
         return new Intent(context, DataActivityPicker.class);
     }

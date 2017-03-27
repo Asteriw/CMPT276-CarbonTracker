@@ -29,7 +29,6 @@ public class EditDate extends AppCompatActivity {
         Month=0;
         Day=1;
         date_in_str=Month+1 + "/" + Day + "/" + Year;
-
         setupButtons();
     }
     private void setupButtons() {

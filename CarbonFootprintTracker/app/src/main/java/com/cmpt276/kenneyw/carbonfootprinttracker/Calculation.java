@@ -91,10 +91,12 @@ public class Calculation {
 
     public double calculateCO2Diesel(double mpg, double distance)
     {
+        if(distance==0||Double.isInfinite(distance)){return 0;}
         return calculate_C02_Emission_of_Diesel(mpg,distance);
     }
     public double calculateCO2Gasoline(double mpg, double distance)
     {
+        if(distance==0||Double.isInfinite(distance)){return 0;}
         return calculate_CO2_Emission_of_Gasoline(mpg,distance);
     }
 }

@@ -14,20 +14,29 @@
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:text="@string/see_my_utilities_data"
+        android:text="@string/last_365"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="11dp"
-        android:id="@+id/choose_utilities_data"
+        android:id="@+id/last_365_days_data"
         android:layout_above="@+id/choose_cancel_button"
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:text="@string/see_my_journeys_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="11dp"
-        android:id="@+id/choose_journeys_data"
-        android:layout_above="@+id/choose_utilities_data"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/last_28_days_data"
+        android:layout_above="@+id/last_365_days_data"
+        android:layout_centerHorizontal="true"
+        android:text="@string/last_28" />
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="11dp"
+        android:id="@+id/datePicker2"
+        android:layout_above="@+id/last_28_days_data"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp" />
 </RelativeLayout>

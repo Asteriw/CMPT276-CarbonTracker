@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,11 +22,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 public class SelectUtilities extends AppCompatActivity {
 
-    public static final int SELECT_UTILITY = 1;
+    public static final int ADD_UTILITY = 1;
     private static final String TAG = "CarbonFootprintTracker";
     private static final String SHAREDPREF_SET = "CarbonFootprintTrackerUtilities";
     private static final String SHAREDPREF_ITEM_AMOUNTOFUTILITIES = "AmountOfUtilities";
@@ -163,7 +160,7 @@ public class SelectUtilities extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent Utilities2Add = AddUtility.makeIntent(SelectUtilities.this);
-                startActivityForResult(Utilities2Add, SELECT_UTILITY);
+                startActivityForResult(Utilities2Add, ADD_UTILITY);
             }
         });
     }
@@ -171,7 +168,7 @@ public class SelectUtilities extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case SELECT_UTILITY:
+            case ADD_UTILITY:
                 if (resultCode == RESULT_OK) {
                     UtilitySingleton utility2Load = UtilitySingleton.getInstance();
                     Utility temp_utility = new Utility(
