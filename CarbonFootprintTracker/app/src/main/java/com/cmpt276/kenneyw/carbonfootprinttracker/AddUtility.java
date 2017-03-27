@@ -172,10 +172,12 @@ public class AddUtility extends AppCompatActivity {
 
                 Calculation calculation = new Calculation();
                 if ( utility_type.equals("Electricity") ) {
-                    new_utility.setEmission(calculation.calculate_CO2_Emission_of_Electricity(Double.parseDouble(editAmount.getText().toString())));
+                    new_utility.setEmission(calculation.calculate_CO2_Emission_of_Electricity
+                            (Double.parseDouble(editAmount.getText().toString())));
                 }
                 else{
-                    new_utility.setEmission( calculation.calculate_CO2_Emission_of_Natural_Gas( Double.parseDouble(editAmount.getText().toString()) ));
+                    new_utility.setEmission( calculation.calculate_CO2_Emission_of_Natural_Gas
+                            ( Double.parseDouble(editAmount.getText().toString()) ));
                 }
 
                 new_utility.setGasType(utility_type);

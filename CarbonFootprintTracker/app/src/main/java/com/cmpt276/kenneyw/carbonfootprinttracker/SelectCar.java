@@ -289,45 +289,6 @@ public class SelectCar extends AppCompatActivity {
                     setCarList();
                 }
                 break;
-            /*case BIKE_SELECTED:
-                if(resultCode==RESULT_OK){
-                    Intent i=new Intent();
-                    setResult(RESULT_OK,i);
-                    saveCars();
-                    finish();
-                }
-                else{
-                    setupAddCarButton();
-                    setupBackButton();
-                    setCarList();
-                }
-                break;
-            case BUS_SELECTED:
-                if(resultCode==RESULT_OK){
-                    Intent i=new Intent();
-                    setResult(RESULT_OK,i);
-                    saveCars();
-                    finish();
-                }
-                else{
-                    setupAddCarButton();
-                    setupBackButton();
-                    setCarList();
-                }
-                break;
-            case SKYTRAIN_SELECTED:
-                if(resultCode==RESULT_OK){
-                    Intent i=new Intent();
-                    setResult(RESULT_OK,i);
-                    saveCars();
-                    finish();
-                }
-                else{
-                    setupAddCarButton();
-                    setupBackButton();
-                    setCarList();
-                }
-                break;*/
         }
     }
     public void onBackPressed() {
