@@ -38,17 +38,51 @@ public class AddRoute extends AppCompatActivity {
                     Toast.makeText(AddRoute.this,"Name cannot be empty",Toast.LENGTH_SHORT).show();
                 }
 
-                else if(cityToAdd.equals("") || highwayToAdd.equals("")) {
-                    Toast.makeText(AddRoute.this,"Length cannot be empty",Toast.LENGTH_SHORT).show();
+                else if(cityToAdd.equals("")) {
+                    if(highwayToAdd.equals("")) {
+                        Toast.makeText(AddRoute.this, "Both Length fields cannot be empty", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(Double.parseDouble(highwayToAdd)<0){
+                        Toast.makeText(AddRoute.this,"Highway Length cannot be negative",Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Intent intent=new Intent();
+                        editCity.setText("0");
+                        String cit=editCity.getText().toString();
+                        intent.putExtra("name",nameToAdd);
+                        intent.putExtra("city",Double.parseDouble(cit));
+                        intent.putExtra("highway",Double.parseDouble(highwayToAdd));
+                        setResult(RESULT_OK,intent);
+                        finish();
+                    }
                 }
-                else if(Integer.parseInt(cityToAdd)<0||Integer.parseInt(highwayToAdd)<0){
+                else if(highwayToAdd.equals("")){
+                    if(cityToAdd.equals("")){
+                        Toast.makeText(AddRoute.this, "Both Length fields cannot be empty", Toast.LENGTH_SHORT).show();
+                    }
+                    else if( Double.parseDouble(cityToAdd)<0) {
+                        Toast.makeText(AddRoute.this, "City Length cannot be negative", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Intent intent=new Intent();
+                        editHighway.setText("0");
+                        String high=editHighway.getText().toString();
+                        intent.putExtra("name",nameToAdd);
+                        intent.putExtra("city",Double.parseDouble(cityToAdd));
+                        intent.putExtra("highway",Double.parseDouble(high));
+                        setResult(RESULT_OK,intent);
+                        finish();
+                    }
+                }
+                else if(Double.parseDouble(cityToAdd)<0&&Double.parseDouble(highwayToAdd)<0){
                     Toast.makeText(AddRoute.this,"Length cannot be negative",Toast.LENGTH_SHORT).show();
                 }
+
                 else{
                     Intent intent=new Intent();
                     intent.putExtra("name",nameToAdd);
-                    intent.putExtra("city",Integer.parseInt(cityToAdd));
-                    intent.putExtra("highway",Integer.parseInt(highwayToAdd));
+                    intent.putExtra("city",Double.parseDouble(cityToAdd));
+                    intent.putExtra("highway",Double.parseDouble(highwayToAdd));
                     setResult(RESULT_OK,intent);
                     finish();
                 }

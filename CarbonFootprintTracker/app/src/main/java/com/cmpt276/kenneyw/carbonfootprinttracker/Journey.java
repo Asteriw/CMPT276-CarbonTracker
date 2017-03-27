@@ -9,8 +9,8 @@ import java.util.Date;
      */
 public class Journey extends AppCompatActivity {
     private String routeName;
-    private int cityDistance;
-    private int highwayDistance;
+    private double cityDistance;
+    private double highwayDistance;
     private String name;
     private String gasType;
     private double mpgCity;
@@ -23,7 +23,7 @@ public class Journey extends AppCompatActivity {
     private boolean Skytrain;
     public static final double KWH_PER_KM = 6.848;
     public static final int CO2_PER_KWH = 9;
-    public Journey(String routeName, int cityDistance, int highwayDistance,
+    public Journey(String routeName, double cityDistance, double highwayDistance,
                    String carName, String gasType, double mpgCity, double mpgHighway, double literEngine,
                    String dateString,boolean bus,boolean bike,boolean skytrain){
         this.routeName=routeName;
@@ -63,21 +63,26 @@ public class Journey extends AppCompatActivity {
         }
         //<--From: http://ctrf.ca/wp-content/uploads/2015/05/CTRF2015NguyenSangOramPerlTransportationEnvironment.pdf-->
         else if(this.Skytrain){
-            totalEmissions= KWH_PER_KM * (this.cityDistance+this.highwayDistance) * CO2_PER_KWH;
+            totalEmissions= KWH_PER_KM * (this.cityDistance+this.highwayDistance) * CO2_PER_KWH; //divide by number of ppl
         }
         return doubleToTwoPlaces(totalEmissions);
     }
     private double doubleToTwoPlaces(double result_in_kg_CO2) {
-        DecimalFormat df2 = new DecimalFormat("#.##");
-        result_in_kg_CO2=Double.valueOf(df2.format(result_in_kg_CO2));
+        /*if(result_in_kg_CO2*8==0){return 0;}
+        DecimalFormat df2 = new DecimalFormat("#0.00");
+        result_in_kg_CO2= Double.parseDouble(df2.format(result_in_kg_CO2));
+        return result_in_kg_CO2;
+        result_in_kg_CO2 = result_in_kg_CO2 * 100;
+        result_in_kg_CO2 = (double)Math.round(result_in_kg_CO2);
+        result_in_kg_CO2 = result_in_kg_CO2/100;*/
         return result_in_kg_CO2;
     }
     public String getDateString() {return dateString;}
     public void setDateString(String dateString) {this.dateString = dateString;}
-    public int getCityDistance() {
+    public double getCityDistance() {
         return cityDistance;
     }
-    public void setCityDistance(int cityDistance) {
+    public void setCityDistance(double cityDistance) {
         this.cityDistance = cityDistance;
     }
     public String getGasType() {
@@ -86,10 +91,10 @@ public class Journey extends AppCompatActivity {
     public void setGasType(String gasType) {
         this.gasType = gasType;
     }
-    public int getHighwayDistance() {
+    public double getHighwayDistance() {
         return highwayDistance;
     }
-    public void setHighwayDistance(int highwayDistance) {
+    public void setHighwayDistance(double highwayDistance) {
         this.highwayDistance = highwayDistance;
     }
     public double getLiterEngine() {

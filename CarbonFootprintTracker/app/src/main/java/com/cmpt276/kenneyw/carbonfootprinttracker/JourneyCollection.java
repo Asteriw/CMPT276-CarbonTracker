@@ -49,7 +49,7 @@ public class JourneyCollection extends AppCompatActivity{
         String[] descriptions = new String[countJourneys()];
         for (int i = 0; i < countJourneys(); i++) {
             Journey journey = getJourney(i);
-            descriptions[i] = "Journey [" + journey.getName() +"]" + " created on " +
+            descriptions[i] = "" + journey.getName() +" - " + journey.getRouteName() + " - "+
                     journey.getDateString() ;
         }
         return descriptions;

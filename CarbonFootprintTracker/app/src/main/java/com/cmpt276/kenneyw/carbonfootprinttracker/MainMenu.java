@@ -37,8 +37,8 @@ public class MainMenu extends AppCompatActivity {
         footprint_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent MainMenu2CarbonFootPrint = DataActivityPicker.makeIntent(MainMenu.this);
-                startActivity(MainMenu2CarbonFootPrint);
+                Intent MainMenu2DataActivityPicker = DataActivityPicker.makeIntent(MainMenu.this);
+                startActivity(MainMenu2DataActivityPicker);
             }
         });
         // directs to "Utility Bill" screen

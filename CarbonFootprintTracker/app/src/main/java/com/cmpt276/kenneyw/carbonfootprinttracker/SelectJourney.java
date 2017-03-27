@@ -74,8 +74,8 @@ public class SelectJourney extends AppCompatActivity {
             //Date date=new Date(pref.getLong(i+DATEOFTRAVEL,0));
             Journey j=new Journey(
                     pref.getString(i+ROUTENAME,""),
-                    pref.getInt(i+CITY,0),
-                    pref.getInt(i+HIGHWAY,0),
+                    Double.longBitsToDouble(pref.getLong(i+CITY,0)),
+                    Double.longBitsToDouble(pref.getLong(i+HIGHWAY,0)),
                     pref.getString(i+NAME,""),
                     pref.getString(i+GASTYPE,""),
                     Double.longBitsToDouble(pref.getLong(i+MPGCITY,0)),
@@ -104,8 +104,8 @@ public class SelectJourney extends AppCompatActivity {
             editor.putString(i+ GASTYPE, journeys.getJourney(i).getGasType());
             editor.putLong(i+MPGCITY,Double.doubleToRawLongBits(journeys.getJourney(i).getMpgCity()));
             editor.putLong(i+ MPGHIGHWAY,Double.doubleToRawLongBits(journeys.getJourney(i).getMpgHighway()));
-            editor.putInt(i+CITY, journeys.getJourney(i).getCityDistance());
-            editor.putInt(i+HIGHWAY, journeys.getJourney(i).getHighwayDistance());
+            editor.putLong(i+CITY, Double.doubleToRawLongBits(journeys.getJourney(i).getCityDistance()));
+            editor.putLong(i+HIGHWAY,  Double.doubleToRawLongBits(journeys.getJourney(i).getHighwayDistance()));
             editor.putLong(i+LITERENGINE,Double.doubleToRawLongBits(journeys.getJourney(i).getLiterEngine()));
             editor.putString(i+DATESTRING, journeys.getJourney(i).getDateString());
             editor.putLong(i+TOTALEMISSIONS,Double.doubleToRawLongBits(journeys.getJourney(i).getTotalEmissions()));
@@ -163,13 +163,13 @@ public class SelectJourney extends AppCompatActivity {
             AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo)menuInfo;
 
             if (journeys.getJourney(info.position).isBike()){
-                menu.setHeaderTitle("Transporation method: " + "Bike" + "\n"  + "Route Name: " + journeys.getJourney(info.position).getRouteName());
+                menu.setHeaderTitle("Transportation method: " + "Bike" + "\n"  + "Route Name: " + journeys.getJourney(info.position).getRouteName());
             }else if ( journeys.getJourney(info.position).isBus()){
-                menu.setHeaderTitle("Transporation method: " + "Bus" + "\n"  + "Route Name: " + journeys.getJourney(info.position).getRouteName());
+                menu.setHeaderTitle("Transportation method: " + "Bus" + "\n"  + "Route Name: " + journeys.getJourney(info.position).getRouteName());
             }else if ( journeys.getJourney(info.position).isSkytrain() ){
-                menu.setHeaderTitle("Transporation method: " + "Skytrain" + "\n"  + "Route Name: " + journeys.getJourney(info.position).getRouteName());
+                menu.setHeaderTitle("Transportation method: " + "Skytrain" + "\n"  + "Route Name: " + journeys.getJourney(info.position).getRouteName());
             }else {
-                menu.setHeaderTitle("Transporation method: Car" + "\n" + "Route Name: " + journeys.getJourney(info.position).getRouteName());
+                menu.setHeaderTitle("Transportation method: Car" + "\n" + "Route Name: " + journeys.getJourney(info.position).getRouteName());
             }
 
             String[] menuItems= getResources().getStringArray(R.array.menu);
@@ -256,7 +256,7 @@ public class SelectJourney extends AppCompatActivity {
                             finalCar.getCityEmissions(),finalCar.getHighwayEmissions(),
                             finalCar.getLiterEngine(),finalDate.getDateString(),
                             finalCar.getBus(),finalCar.getWalk(),finalCar.getSkytrain());
-                    finalJourney.setTotalEmissions(finalJourney.CalculateTotalEmissions());
+                    //finalJourney.setTotalEmissions(finalJourney.CalculateTotalEmissions());
                     journeys.addJourney(finalJourney);
                     setupAddJourneyButton();
                     setupBackButton();
