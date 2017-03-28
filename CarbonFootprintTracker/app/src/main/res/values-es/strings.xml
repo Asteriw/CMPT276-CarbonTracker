@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">"Rastreador de carbono"</string>
+    <string name="view_carbon_footprint">"Ver huella del carbono"</string>
+    <string name="create_a_new_journey">"Crear un nuevo viaje"</string>
+    <string name="add_a_new_journey">"Añadir un nuevo viaje"</string>
+    <string name="save">"Guardar ruta"</string>
+    <string name="edit">"Editar"</string>
+    <string name="delete">"Borrar"</string>
+    <string name="start">"Inicio"</string>
+    <string name="add_a_new_car">"Añadir un nuevo coche"</string>
+    <string name="nick_name">"Nombre:"</string>
+    <string name="name">"Nombre"</string>
+    <string name="year">"Año"</string>
+    <string name="model">"Modelo"</string>
+    <string name="make">"Marca"</string>
+    <string name="cancel">"Cancelar"</string>
+    <string name="ok">"Bien"</string>
+    <string name="back">"Atrás"</string>
+    <string name="distance">"Distancia"</string>
+    <string name="nick_name_for_route">"Nombre para la Ruta"</string>
+    <string name="city_distance_in_km">"Distancia en ciudad en KM"</string>
+    <string name="high_way_distance_in_km">"Distancia en carretera en KM"</string>
+    <string name="highway_km">"Carretera (km):"</string>
+    <string name="city_km">"Ciudad (km):"</string>
+    <string name="switch_view">"Cambie Vista"</string>
+    <string name="nickname_for_car">"Apodo para el coche"</string>
+    <string name="km_driven_in_city">"KM recorrido en la ciudad:"</string>
+    <string name="km_driven_on_highway">"KM recorrido en la carretera:"</string>
+    <string name="route_name">"Nombre Ruta"</string>
+    <string name="add_a_new_route">"Añade una nueva ruta"</string>
+    <string name="add_route">"Añadir ruta"</string>
+    <string name="error_toast">"Nombre su coche antes de añadir a su colección"</string>
+    <string name="authors_text">"Autores: Equipo Honeydew"</string>
+    <string name="car_logo">"el logo de coches"</string>
+    <string name="start_button">"Botón de inicio"</string>
+    <string name="add_utility">"Añadir Utilidad"</string>
+    <string-array name="menu">
+        <item>"Editar"</item>
+        <item>"Borrar"</item>
+    </string-array>
+    <string name="initial_date">"Fecha Inicial"</string>
+    <string name="new_date">"Nueva fecha"</string>
+    <string name="amount">"Cantidad"</string>
+    <string name="number_of_people">"Número de Personas"</string>
+    <string name="select_type">"Seleccionar Tipo"</string>
+    <string name="electricity">"Electricidad"</string>
+    <string name="natural_gas">"Gas natural"</string>
+    <string name="format_dd_mm_yyyy">"Formato: dd / mm / aaaa"</string>
+    <string name="final_date">"Fecha final:"</string>
+    <string name="see_my_utilities_data">"Ver Mi Herramientas de datos"</string>
+    <string name="see_my_journeys_data">"Ver Mis datos Journeys"</string>
+    <string name="note_for_units">"Unidades: GJ de gas natural, de kwh de electricidad"</string>
+    <string name="next_tip">"Sugerencia siguiente"</string>
+    <string name="close_tips">"Cerrar"</string>
+    <string name="last_28">"Los datos de los últimos 28 días"</string>
+    <string name="last_365">"Los datos correspondientes a los últimos 365 días"</string>
+    <string-array name="tips_array">
+        <item>"Compartir el viaje con los viajeros que comparten viajes similares a los suyos."</item>
+        <item>"Si buscan obtener un coche nuevo, tomar en consideración la eficiencia del combustible al momento de elegir qué vehículo va a obtener."</item>
+        <item>"Si es posible, tomar un autobús en vez de un taxi o de otras formas de transporte de un solo pasajero."</item>
+        <item>"Trate de evitar que parar y acelerar tanto como sea posible durante la conducción."</item>
+        <item>"Si en el tráfico, apagar el motor si ralentí durante largos períodos de tiempo."</item>
+        <item>"Trate de tomar el camino más directo hacia su destino para evitar que toman desvíos que se sumarán a la longitud de su viaje."</item>
+        <item>"Si va distancias cortas, considere caminar, andar en bicicleta, u otras formas de transporte de emisiones cero."</item>
+        <item>"Asegúrese de que sus ruedas están completamente inflados, como neumáticos más planas aumentan en gran medida sus emisiones."</item>
+        <item>"Tomar duchas más cortas puede ayudar a reducir en gran medida la cantidad de agua caliente que consume, lo que reducirá su huella de carbono."</item>
+        <item>"Lavar la ropa en agua fría reducirá la cantidad de agua caliente innecesaria que utilice."</item>
+        <item>"Apagar la calefacción en los meses más cálidos disminuirá drásticamente la cantidad de gas que se utiliza para la calefacción."</item>
+        <item>"Ponga una sudadera en lugar de subir la calefacción cuando hace frío."</item>
+        <item>"El uso de bombillas fluorescentes compactas reducirá en su factura de electricidad y también aumentar el brillo de las habitaciones que están tratando a la luz!"</item>
+        <item>"Desconectando los aparatos eléctricos que no están en uso reducirá la cantidad de electricidad que utiliza ambiente."</item>
+        <item>"Durante los meses más cálidos, colgar la ropa a secar en lugar de utilizar una máquina de secado para reducir su factura de electricidad."</item>
+        <item>"Si se va de vacaciones, apagar la calefacción en su casa y poner el calentador de agua del ajuste de \"vacaciones\" si es posible."</item>
+    </string-array>
+
+</resources>

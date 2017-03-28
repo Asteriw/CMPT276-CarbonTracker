@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">Traqueur de Carbone</string>
+    <string name="view_carbon_footprint">Voire enprente de carbone</string>
+    <string name="create_a_new_journey">Créer un voyage</string>
+    <string name="add_a_new_journey">Ajouter un voyage</string>
+    <string name="save">Sauvegarder route</string>
+    <string name="edit">Modifier</string>
+    <string name="delete_route">Supprimer</string>
+    <string name="start">Commencer</string>
+    <string name="add_a_new_car">Ajouter une voiture</string>
+    <string name="nick_name">Surnom:</string>
+    <string name="name">Nom</string>
+    <string name="year">Année</string>
+    <string name="model">Marque</string>
+    <string name="make">Modèle</string>
+    <string name="cancel">Annuler</string>
+    <string name="ok">D\'accord</string>
+    <string name="back">Arrière</string>
+    <string name="distance">Distance</string>
+    <string name="nick_name_for_route">Surnom pour route</string>
+    <string name="city_distance_in_km">Distance dans la ville en KM</string>
+    <string name="high_way_distance_in_km">Distance sur l\'autoroute en KM</string>
+    <string name="highway_km">Autoroute (km):</string>
+    <string name="city_km">Ville (km):</string>
+    <string name="switch_view">Changer de vue</string>
+    <string name="nickname_for_car">Surnom pour voiture:</string>
+    <string name="km_driven_in_city">KM parcouru dans la ville:</string>
+    <string name="km_driven_on_highway">KM parcouru sur l\'autoroute:</string>
+    <string name="route_name">Nom du parcours:</string>
+    <string name="add_a_new_route">Ajouter une nouvelle route</string>
+    <string name="add_route">Ajouter une route</string>
+    <string name="error_toast">Donner un nom a votre voiture avant de l\'ajouter a votre collection</string>
+    <string name="car_logo">Logo de voiture</string>
+    <string name="authors_text">Auteurs: Équipe Honeydew</string>
+    <string name="add_utility">Ajouter un utilitaire</string>
+    <string-array name="menu">
+        <item>Modifier</item>
+        <item>Supprimer</item>
+    </string-array>
+    <string name="initial_date">Date initiale:</string>
+    <string name="new_date">Nouvelle date</string>
+    <string name="amount">Montant:</string>
+    <string name="number_of_people">Nombre de persons:</string>
+    <string name="select_type">Sélectionner un type:</string>
+    <string name="electricity">Électricité</string>
+    <string name="natural_gas">Gaz naturelle</string>
+    <string name="format_dd_mm_yyyy">Format: jj/mm/aaaa</string>
+    <string name="final_date">Date finale:</string>
+    <string name="see_my_utilities_data">Voire mes données d\'utilitées</string>
+    <string name="see_my_journeys_data">Voire mes données de parcours</string>
+    <string name="note_for_units">Unitées: Gj pour le gaz naturel, kWh pour l\'électricité</string>
+    <string name="next_tip">Prochain conseil</string>
+    <string name="close_tips">Fermer</string>
+    <string name="last_28">Données des dernières 28 jours</string>
+    <string name="last_365">Données de l\'année passé</string>
+    <string-array name="tips_array">
+        <item>Carpool with commuters that share similar trips to yours.</item>
+        <item>If looking to get a new car, take into consideration fuel efficiency when choosing which vehicle to get.</item>
+        <item>If possible, take a bus instead of a taxi or other forms of single-passenger transportation.</item>
+        <item>Try to prevent stopping and accelerating as much as you can when driving.</item>
+        <item>If in traffic, turn off your engine if idling for long periods of time.</item>
+        <item>Try to take the most direct path to your destination to avoid taking detours that will add to your trip length.</item>
+        <item>If going short distances, consider walking, biking, or other forms of zero-emission transportation.</item>
+        <item>Make sure your wheels are fully inflated, as flatter tires greatly increase your emissions.</item>
+        <item>Taking shorter showers can help greatly reduce the amount of hot water you consume, which will reduce your carbon footprint.</item>
+        <item>Washing clothes in cold water will reduce the amount of unnecessary hot water you use.</item>
+        <item>Turning off heating in the warmer months will drastically decrease the amount of gas used for heating.</item>
+        <item>Put a sweatshirt on instead of turning up the heat when cold.</item>
+        <item>Using compact fluorescent light bulbs will cut down on your electric bill and also increase the brightness of the rooms you are trying to light!</item>
+        <item>Unplugging electrical appliances that are not in use will reduce the amount of ambient electricity you use.</item>
+        <item>During the warmer months, hang your clothes up to dry instead of using a drying machine to cut down on your electric bill.</item>
+        <item>If going on vacation, turn off the heating in your house and put your water heater on "vacation" setting if possible.</item>
+    </string-array>
+
+</resources>
