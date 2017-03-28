@@ -54,6 +54,12 @@
     <string name="close_tips">Close</string>
     <string name="last_28">Data for last 28 Days</string>
     <string name="last_365">Data for last 365 days</string>
+    <string name="add_a_utility_bill">Add a Utility Bill</string>
+    <string name="add_start_date">Add Start Date</string>
+    <string name="add_end_date">Add END DATE</string>
+    <string name="walk_bike">Walk/Bike</string>
+    <string name="skytrain">Skytrain</string>
+    <string name="bus">Bus</string>
     <string-array name="tips_array">
         <item>Carpool with commuters that share similar trips to yours.</item>
         <item>If looking to get a new car, take into consideration fuel efficiency when choosing which vehicle to get.</item>

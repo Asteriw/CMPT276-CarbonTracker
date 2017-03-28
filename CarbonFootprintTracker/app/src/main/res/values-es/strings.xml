@@ -54,6 +54,12 @@
     <string name="close_tips">"Cerrar"</string>
     <string name="last_28">"Los datos de los últimos 28 días"</string>
     <string name="last_365">"Los datos correspondientes a los últimos 365 días"</string>
+    <string name="add_a_utility_bill">Agregar una factura de servicios</string>
+    <string name="add_start_date">Añadir Fecha de inicio</string>
+    <string name="add_end_date">Añadir fecha de finalización</string>
+    <string name="walk_bike">Caminar/Bicicleta</string>
+    <string name="skytrain">Skytrain</string>
+    <string name="bus">Autobus</string>
     <string-array name="tips_array">
         <item>"Compartir el viaje con los viajeros que comparten viajes similares a los suyos."</item>
         <item>"Si buscan obtener un coche nuevo, tomar en consideración la eficiencia del combustible al momento de elegir qué vehículo va a obtener."</item>

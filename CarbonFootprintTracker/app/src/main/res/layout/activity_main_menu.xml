@@ -54,7 +54,7 @@
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:text="Add a Utility Bill"
+        android:text="@string/add_a_utility_bill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/utility_add_button"

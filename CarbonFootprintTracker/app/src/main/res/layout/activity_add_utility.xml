@@ -124,7 +124,7 @@
                 android:layout_centerHorizontal="true" />
 
             <Button
-                android:text="Add Start Date"
+                android:text="@string/add_start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/startdate_btn"
@@ -134,7 +134,7 @@
                 android:layout_alignStart="@+id/nickname" />
 
             <Button
-                android:text="Add END DATE"
+                android:text="@string/add_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/enddate_btn"
