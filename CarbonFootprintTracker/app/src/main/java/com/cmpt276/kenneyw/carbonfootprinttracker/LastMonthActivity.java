@@ -87,21 +87,26 @@ public class LastMonthActivity extends AppCompatActivity {
 
     private void setUpArrays() {
         entries = new ArrayList<>();
+        String[] firstjourn = prev_date_in_str.split("/");
+        String[] lastjourn = date_in_str.split("/");
+        long datesbetween=countDays(firstjourn,lastjourn);
 
-        while(!date_in_str.equals(prev_date_in_str)){
+        while(datesbetween>0){
             for (int i = 0; i < journeyAmt; i++) {
                 if(journeys.getJourney(i).getDateString().equals(date_in_str)){
                     entriesSize++;
-                    entries.add(new PieEntry((float) journeys.getJourney(i).getTotalEmissions(),
+                    entries.add(new PieEntry( (float) journeys.getJourney(i).getTotalEmissions(),
                             journeys.getJourney(i).getName()));
                 }
             }
-            Day-=1;
-            Date date=new Date(Year,Month,Day);
+            Day--;
+            Date date = new Date(Year,Month,Day);
             DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
-            date_in_str=df.format(date);
-            Log.i(TAG,"Prev date is : "+date_in_str);
+            date_in_str = df.format(date);
+            datesbetween--;
+            Log.i(TAG,"Prev date is : "+ date_in_str);
         }
+
         whatDayIsIt();
         for(int i=0;i<utilityAmt;i++){
             if(
@@ -165,6 +170,7 @@ public class LastMonthActivity extends AppCompatActivity {
     }
 
     private void setUpPieChart() {
+
         dataSet = new PieDataSet(entries, "");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         dataSet.setValueLineColor(Color.TRANSPARENT);
@@ -191,13 +197,14 @@ public class LastMonthActivity extends AppCompatActivity {
         Date date=new Date();
 
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
-        date_in_str=df.format(date);
-        Log.i(TAG,"date is: "+date_in_str);
+        date_in_str = df.format(date);
+        Log.i(TAG,"date is: " + date_in_str);
 
         String[] checkdate = date_in_str.split("/");
         Month=Integer.parseInt(checkdate[0]);
         Day=Integer.parseInt(checkdate[1]);
         Year=Integer.parseInt(checkdate[2]);
+        Log.i(TAG,"date is: " + Month + "/" + Day + "/" + Year);
     }
 
     private void whatDayIsThirtyDaysPrevious(){
@@ -206,6 +213,7 @@ public class LastMonthActivity extends AppCompatActivity {
         Date date=new Date();
         date.setMonth( date.getMonth() - 1 );
         prev_date_in_str=df.format(date);
+        //Log.i(TAG,"date is in WhatDay: " + date_in_str);
         Log.i(TAG,"date is: "+prev_date_in_str);
 
         String[] prevcheckdate = prev_date_in_str.split("/");
