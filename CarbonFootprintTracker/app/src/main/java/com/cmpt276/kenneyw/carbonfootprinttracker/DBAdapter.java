@@ -35,7 +35,7 @@ public class DBAdapter extends AppCompatActivity{
     public static final String KEY_TABLE1_HIGHWAY = "highwayEmissions";
     public static final String KEY_TABLE1_CITY = "cityEmissions";
     public static final String KEY_TABLE1_YEAR = "year";
-    public static final String KEY_TABLE1_TRANSMISSION = "transmissions";
+    public static final String KEY_TABLE1_TRANSMISSION = "transmission";
     public static final String KEY_TABLE1_LITERENGINE = "literDisplacement";
     public static final String KEY_TABLE1_GASTYPE = "gasType";
     public static final String KEY_TABLE1_HIDDEN = "hidden";
@@ -61,16 +61,20 @@ public class DBAdapter extends AppCompatActivity{
     public static final String KEY_TABLE2_JOURNEYNAME = "journeyName";
     public static final String KEY_TABLE2_CARNAME = "carName";
     public static final String KEY_TABLE2_ROUTENAME = "routeName";
+    public static final String KEY_TABLE2_DATE = "date";
+    public static final String KEY_TABLE2_CO2 = "CO2";
     public static final String KEY_TABLE2_HIDDEN = "hidden";
 
     public static final String[] ALL_KEYS_TABLE2 = new String[]
             {KEY_ROWID, KEY_TABLE2_JOURNEYNAME,
-            KEY_TABLE2_ROUTENAME, KEY_TABLE2_CARNAME, KEY_TABLE2_HIDDEN};
+            KEY_TABLE2_ROUTENAME, KEY_TABLE2_CARNAME, KEY_TABLE2_CO2, KEY_TABLE2_HIDDEN};
 
     public static final int COL_TABLE2_JOURNEYNAME = 1;
     public static final int COL_TABLE2_CARNAME = 2;
     public static final int COL_TABLE2_ROUTENAME = 3;
-    public static final int COL_TABLE2_HIDDEN = 4;
+    public static final int COL_TABLE2_DATE = 4;
+    public static final int COL_TABLE2_CO2 = 5;
+    public static final int COL_TABLE2_HIDDEN = 6;
 
     //ROUTES
     public static final String KEY_TABLE3_ROUTENAME = "routeName";
@@ -88,9 +92,9 @@ public class DBAdapter extends AppCompatActivity{
     public static final int COL_TABLE3_HIDDEN = 4;
 
     //UTILITIES
-    public static final String KEY_TABLE4_UTILITYNAME = "routeName";
-    public static final String KEY_TABLE4_GASTYPE = "cityKM";
-    public static final String KEY_TABLE4_AMOUNT = "highwayKM";
+    public static final String KEY_TABLE4_UTILITYNAME = "utilityName";
+    public static final String KEY_TABLE4_GASTYPE = "gasType";
+    public static final String KEY_TABLE4_AMOUNT = "amount";
     public static final String KEY_TABLE4_EMISSIONS = "emissions";
     public static final String KEY_TABLE4_NUMBEROFPEOPLE = "numberOfPeople";
     public static final String KEY_TABLE4_STARTDATE = "startDate";
@@ -134,13 +138,13 @@ public class DBAdapter extends AppCompatActivity{
                     // NOTE: All must be comma separated (end of line!) Last one must have NO comma!!
                     + KEY_TABLE1_CARNAME + " text not null, "
                     + KEY_TABLE1_CARMAKE + " text not null, "
-                    + KEY_TABLE1_CARMODEL + " text not null,"
-                    + KEY_TABLE1_HIGHWAY + " real not null,"
-                    + KEY_TABLE1_CITY + " real not null,"
-                    + KEY_TABLE1_YEAR + " integer not null,"
-                    + KEY_TABLE1_TRANSMISSION + " text not null,"
-                    + KEY_TABLE1_LITERENGINE + " real not null,"
-                    + KEY_TABLE1_GASTYPE + " text not null,"
+                    + KEY_TABLE1_CARMODEL + " text not null, "
+                    + KEY_TABLE1_HIGHWAY + " real not null, "
+                    + KEY_TABLE1_CITY + " real not null, "
+                    + KEY_TABLE1_YEAR + " integer not null, "
+                    + KEY_TABLE1_TRANSMISSION + " text not null, "
+                    + KEY_TABLE1_LITERENGINE + " real not null, "
+                    + KEY_TABLE1_GASTYPE + " text not null, "
                     + KEY_TABLE1_HIDDEN + " integer not null"
                     // Rest  of creation:
                     + ");";
@@ -159,7 +163,9 @@ public class DBAdapter extends AppCompatActivity{
                     // NOTE: All must be comma separated (end of line!) Last one must have NO comma!!
                     + KEY_TABLE2_JOURNEYNAME + " text not null, "
                     + KEY_TABLE2_CARNAME + " text not null, "
-                    + KEY_TABLE2_ROUTENAME + " text not null,"
+                    + KEY_TABLE2_ROUTENAME + " text not null, "
+                    + KEY_TABLE2_DATE + " text not null, "
+                    + KEY_TABLE2_CO2 + " real not null, "
                     + KEY_TABLE2_HIDDEN + " integer not null"
                     // Rest  of creation:
                     + ");";
@@ -178,7 +184,7 @@ public class DBAdapter extends AppCompatActivity{
                     // NOTE: All must be comma separated (end of line!) Last one must have NO comma!!
                     + KEY_TABLE3_ROUTENAME+ " text not null, "
                     + KEY_TABLE3_HIGHWAYKM + " real not null, "
-                    + KEY_TABLE3_CITYKM + " real not null,"
+                    + KEY_TABLE3_CITYKM + " real not null, "
                     + KEY_TABLE3_HIDDEN + " integer not null"
                     // Rest  of creation:
                     + ");";
@@ -197,11 +203,11 @@ public class DBAdapter extends AppCompatActivity{
                     // NOTE: All must be comma separated (end of line!) Last one must have NO comma!!
                     + KEY_TABLE4_UTILITYNAME+ " text not null, "
                     + KEY_TABLE4_GASTYPE + " text not null, "
-                    + KEY_TABLE4_AMOUNT + " real not null,"
-                    + KEY_TABLE4_EMISSIONS + " real not null"
-                    + KEY_TABLE4_NUMBEROFPEOPLE + " integer not null"
-                    + KEY_TABLE4_STARTDATE + " text not null"
-                    + KEY_TABLE4_ENDDATE + " text not null"
+                    + KEY_TABLE4_AMOUNT + " real not null, "
+                    + KEY_TABLE4_EMISSIONS + " real not null, "
+                    + KEY_TABLE4_NUMBEROFPEOPLE + " integer not null, "
+                    + KEY_TABLE4_STARTDATE + " text not null, "
+                    + KEY_TABLE4_ENDDATE + " text not null, "
                     + KEY_TABLE4_HIDDEN + " integer not null"
                     // Rest  of creation:
                     + ");";
@@ -256,7 +262,7 @@ public class DBAdapter extends AppCompatActivity{
     }
 
     public long insertUserJourneysRow(String journeyName, String carName, String routeName,
-                                int hidden) {
+                                      String date, double co2, int hidden) {
 		/*
 		 * CHANGE 3:
 		 */
@@ -265,6 +271,8 @@ public class DBAdapter extends AppCompatActivity{
         initialValues.put(KEY_TABLE2_JOURNEYNAME, journeyName);
         initialValues.put(KEY_TABLE2_CARNAME, carName);
         initialValues.put(KEY_TABLE2_ROUTENAME, routeName);
+        initialValues.put(KEY_TABLE2_DATE, date);
+        initialValues.put(KEY_TABLE2_CO2, co2);
         initialValues.put(KEY_TABLE2_HIDDEN, hidden);
         // Insert it into the database.
         return db.insert(DATABASE_TABLE2, null, initialValues);
@@ -470,7 +478,7 @@ public class DBAdapter extends AppCompatActivity{
     }
 
     public boolean updateUserJourneyRow(long rowId, String journeyName, String carName, String routeName,
-                                        int hidden) {
+                                        String date, double co2, int hidden) {
         String where = KEY_ROWID + "=" + rowId;
 		/*
 		 * CHANGE 4:
@@ -480,6 +488,8 @@ public class DBAdapter extends AppCompatActivity{
         newValues.put(KEY_TABLE2_JOURNEYNAME, journeyName);
         newValues.put(KEY_TABLE2_CARNAME, carName);
         newValues.put(KEY_TABLE2_ROUTENAME, routeName);
+        newValues.put(KEY_TABLE2_DATE, date);
+        newValues.put(KEY_TABLE2_CO2, co2);
         newValues.put(KEY_TABLE2_HIDDEN, hidden);
 
         // Insert it into the database.
@@ -541,6 +551,7 @@ public class DBAdapter extends AppCompatActivity{
 
         @Override
         public void onCreate(SQLiteDatabase _db) {
+            Log.i(TAG, "Generating database for the first time!");
             _db.execSQL(DATABASE_CREATE_SQL_TABLE1);
             _db.execSQL(DATABASE_CREATE_SQL_TABLE2);
             _db.execSQL(DATABASE_CREATE_SQL_TABLE3);
