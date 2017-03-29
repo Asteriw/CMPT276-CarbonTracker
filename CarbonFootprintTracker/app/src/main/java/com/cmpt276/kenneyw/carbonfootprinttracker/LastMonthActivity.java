@@ -12,9 +12,12 @@ import android.view.View;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.DateFormat;
@@ -88,7 +91,6 @@ public class LastMonthActivity extends AppCompatActivity {
     ArrayList<Entry> userAxis=new ArrayList<>();
     ArrayList<Entry> averageCanadianAxis=new ArrayList<>();
     ArrayList<Entry> ParisAccordAxis=new ArrayList<>();
-
 
     int utilityAmt;
     int journeyAmt;
@@ -269,7 +271,7 @@ public class LastMonthActivity extends AppCompatActivity {
         chart.setCenterTextColor(Color.DKGRAY);
         chart.setDescription(null);
         chart.getLegend().setEnabled(true);
-        chart.setVisibility(View.INVISIBLE);
+        chart.setVisibility(View.VISIBLE);
         chart.invalidate();
     }
 
@@ -277,7 +279,7 @@ public class LastMonthActivity extends AppCompatActivity {
         //set date of today and month previous correctly
         whatDayIsIt();
         whatDayIsThirtyDaysPrevious();
-        xAxis.add(0,date_in_str);
+        //xAxis.add(0,date_in_str);
         //get number of days between these 2 dates
         String[] firstjourn = prev_date_in_str.split("/");
         String[] lastjourn = date_in_str.split("/");
@@ -292,21 +294,59 @@ public class LastMonthActivity extends AppCompatActivity {
                 }
             }
             for(int k=0;k<utilityAmt;k++){
-                String[] firstU = utilities.getUtility(i).getStartDate().split("/");
-                String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+                String[] firstU = utilities.getUtility(k).getStartDate().split("/");
+                String[] lastU = utilities.getUtility(k).getEndDate().split("/");
                 long numDaysForUtility=countDays(firstU,lastU);
 
                 if(isBetween(date_in_str,utilities.getUtility(k).getStartDate(),utilities.getUtility(k).getEndDate()));{
                     ems+=utilities.getUtility(k).getEmission()/numDaysForUtility/utilities.getUtility(k).getNumofPeople();
                 }
             }
-            userAxis.add(new Entry((float)ems,i));
-            ParisAccordAxis.add(new Entry((float) PARISACCORDCO2PERCAPITA,i));
+            userAxis.add(new Entry(i,(float)ems));
+            ParisAccordAxis.add(new Entry(i,(float) PARISACCORDCO2PERCAPITA));
+
+            Date nextDate=new Date(Year,Month,Day-1);
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
+            date_in_str=df.format(nextDate);
+
+            Date myDate = null;
+            try {
+                myDate = df.parse(date_in_str);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            // Use the Calendar class to subtract one day
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(myDate);
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+
+            // Use the date formatter to produce a formatted date string
+            Date previousDate = calendar.getTime();
+            String result = df.format(previousDate);
+
+            Log.d(TAG,"SIMPLE DATE FORMAT METHOD: "+date_in_str);
+            Log.d(TAG,"CALENDAR METHOD: "+result);
+
         }
     }
 
     private void setUpLineGraph() {
+        lineChart=(LineChart)findViewById(R.id.lineChartM);
+        ArrayList<ILineDataSet> dataSet = new ArrayList<>();
 
+        LineDataSet lds1=new LineDataSet(userAxis,"Your Data");
+        lds1.setDrawCircles(false);
+        lds1.setColor(Color.RED);
+
+        LineDataSet lds2=new LineDataSet(ParisAccordAxis,"Canada paris accord goal");
+        lds2.setDrawCircles(false);
+        lds2.setColor(Color.GREEN);
+
+        dataSet.add(lds1);
+        dataSet.add(lds2);
+        LineData d=new LineData(dataSet);
+        lineChart.setData(new LineData(dataSet));
+        lineChart.setVisibleXRangeMaximum(31f);
     }
 
     private UtilitiesCollection loadUtilities() {
