@@ -9,20 +9,34 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+/*
+Activity for checking User's previous month data from Journeys and Utilities.
+Gets today's date, get's the date for exactly one month previous, and the number of days in between
+    i.e. March 27th to Feb 27th -> 31 days
+Goes through all journeys, sees if the date of journey is between these two dates, if so adds it to entries array
+Goes through all utilities, covers 4 possibilities of start and end dates being within and outside of the two above dates.
 
+ */
 public class LastMonthActivity extends AppCompatActivity {
+    //calculated as: 30% 2005 Daily CO2 Emission in Canada divided by Population in 2005
+    //<--Canada goals - 30% of 2005 level emissions-->
+    public static final double PARISACCORDCO2PERCAPITA = 19.04;
 
     String date_in_str;
     int Year;
@@ -62,111 +76,177 @@ public class LastMonthActivity extends AppCompatActivity {
     public static final String BUS = "bus";
     public static final String BIKE = "bike";
     public static final String SKYTRAIN = "skytrain";
-
+    //for pie chart
     PieChart chart;
     List<PieEntry> entries;
     PieDataSet dataSet;
     PieData data;
 
+    //for line graph
+    LineChart lineChart;
+    ArrayList<String> xAxis=new ArrayList<>();
+    ArrayList<Entry> userAxis=new ArrayList<>();
+    ArrayList<Entry> averageCanadianAxis=new ArrayList<>();
+    ArrayList<Entry> ParisAccordAxis=new ArrayList<>();
+
+
     int utilityAmt;
     int journeyAmt;
     int entriesSize=0;
-    long amtDays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_last_month);
+
         utilities=loadUtilities();
         journeys=loadJourneys();
+
         whatDayIsIt();
         whatDayIsThirtyDaysPrevious();
         setUpArrays();
         setUpPieChart();
+        setUpLineGraphData();
+        setUpLineGraph();
+    }
+
+    private void whatDayIsIt() {
+        Date date=new Date();
+
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
+        date_in_str = df.format(date);
+        String[] checkdate = date_in_str.split("/");
+        Month=Integer.parseInt(checkdate[0]);
+        Day=Integer.parseInt(checkdate[1]);
+        Year=Integer.parseInt(checkdate[2]);
+
+        Log.i(TAG,"Today's date is: " + date_in_str);
+    }
+
+    private void whatDayIsThirtyDaysPrevious(){
+
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
+        Date date=new Date();
+        date.setMonth( date.getMonth() - 1 );
+        prev_date_in_str=df.format(date);
+        String[] prevcheckdate = prev_date_in_str.split("/");
+        prev_Month=Integer.parseInt(prevcheckdate[0]);
+        prev_Day=Integer.parseInt(prevcheckdate[1]);
+        prev_Year=Integer.parseInt(prevcheckdate[2]);
+
+        Log.i(TAG,"A month ago's date is: "+prev_date_in_str);
     }
 
     private void setUpArrays() {
         entries = new ArrayList<>();
+
         String[] firstjourn = prev_date_in_str.split("/");
         String[] lastjourn = date_in_str.split("/");
         long datesbetween=countDays(firstjourn,lastjourn);
+        for (int i = 0; i < journeyAmt; i++) {
 
-        while(datesbetween>0){
-            for (int i = 0; i < journeyAmt; i++) {
-                if(journeys.getJourney(i).getDateString().equals(date_in_str)){
-                    entriesSize++;
-                    entries.add(new PieEntry( (float) journeys.getJourney(i).getTotalEmissions(),
-                            journeys.getJourney(i).getName()));
-                }
-            }
-            Day--;
-            Date date = new Date(Year,Month,Day);
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
-            date_in_str = df.format(date);
-            datesbetween--;
-            Log.i(TAG,"Prev date is : "+ date_in_str);
-        }
-
-        whatDayIsIt();
-        for(int i=0;i<utilityAmt;i++){
-            if(
-                    isBetween(date_in_str,utilities.getUtility(i).getStartDate(),utilities.getUtility(i).getEndDate())
-                    ||
-                    isBetween(prev_date_in_str,utilities.getUtility(i).getStartDate(),utilities.getUtility(i).getEndDate())){
-                entriesSize++;
-
-
-                if(isBefore(utilities.getUtility(i).getEndDate(),date_in_str)){
-                    String[] first = prev_date_in_str.split("/");
-                    String[] last = utilities.getUtility(i).getStartDate().split("/");
-                    long numDays=countDays(first,last);
-                    entries.add(new PieEntry((float)
-                            utilities.getUtility(i).getEmission() / utilities.getUtility(i).getNumofPeople() / numDays,
-                            utilities.getUtility(i).getName()));
-                }
-                else if(isBefore(prev_date_in_str,utilities.getUtility(i).getStartDate())){
-                    String[] first = utilities.getUtility(i).getEndDate().split("/");
-                    String[] last = date_in_str.split("/");
-                    long numDays=countDays(first,last);
-                    entries.add(new PieEntry((float)
-                            utilities.getUtility(i).getEmission() / utilities.getUtility(i).getNumofPeople() / numDays,
-                            utilities.getUtility(i).getName()));
-                }
-                else {
-                    String[] first = utilities.getUtility(i).getStartDate().split("/");
-                    String[] last = utilities.getUtility(i).getEndDate().split("/");
-                    long numDays=countDays(first,last);
-                    entries.add(new PieEntry((float)
-                            utilities.getUtility(i).getEmission() / utilities.getUtility(i).getNumofPeople() / numDays,
-                            utilities.getUtility(i).getName()));
-                }
-            }
-        }
-        /*
-        String[] first = prev_date_in_str.split("/");
-        String[] last = date_in_str.split("/");
-        amtDays=countDays(first,last);
-        for(int i=0;i<journeyAmt;i++){
-            if(isBetween(journeys.getJourney(i).getDateString(),prev_date_in_str,date_in_str)){
+            if (isBetween(journeys.getJourney(i).getDateString(), prev_date_in_str, date_in_str)) {
                 entriesSize++;
                 entries.add(new PieEntry((float) journeys.getJourney(i).getTotalEmissions(),
                         journeys.getJourney(i).getName()));
             }
         }
-        for(int i=0;i<utilityAmt;i++){
-            if(
-                    isBetween(utilities.getUtility(i).getStartDate(),prev_date_in_str,date_in_str)
-                    ||
-                    isBetween(utilities.getUtility(i).getEndDate(),prev_date_in_str,date_in_str)) {
 
-                String[] firstone = utilities.getUtility(i).getStartDate().split("/");
-                String[] lastone = utilities.getUtility(i).getEndDate().split("/");
-                long numDays=countDays(firstone,lastone);
+        for(int i=0;i<utilityAmt;i++){
+            if(     isBetween(date_in_str,utilities.getUtility(i).getStartDate(),utilities.getUtility(i).getEndDate())
+                    ||
+                    isBetween(prev_date_in_str,utilities.getUtility(i).getStartDate(),utilities.getUtility(i).getEndDate())){
+
+                entriesSize++;
+
+                if(isBefore(utilities.getUtility(i).getEndDate(),date_in_str)
+                    && isBefore(utilities.getUtility(i).getStartDate(),prev_date_in_str)){
+
+                    String[] firstU = utilities.getUtility(i).getStartDate().split("/");
+                    String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+                    long numDaysForUtility=countDays(firstU,lastU);
+
+                    String[] first = prev_date_in_str.split("/");
+                    String[] last = utilities.getUtility(i).getEndDate().split("/");
+                    long numDays=countDays(first,last);
+                    entries.add(new PieEntry((float)
+                            (utilities.getUtility(i).getEmission() /
+                                    utilities.getUtility(i).getNumofPeople() /
+                                        numDaysForUtility) * numDays,
+                            utilities.getUtility(i).getName()));
+                }
+                else if(isBefore(prev_date_in_str,utilities.getUtility(i).getStartDate())
+                        && isBefore(date_in_str,utilities.getUtility(i).getEndDate())){
+
+                    String[] firstU = utilities.getUtility(i).getStartDate().split("/");
+                    String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+                    long numDaysForUtility=countDays(firstU,lastU);
+
+                    String[] first = utilities.getUtility(i).getStartDate().split("/");
+                    String[] last = date_in_str.split("/");
+                    long numDays=countDays(first,last);
+                    entries.add(new PieEntry((float)
+                            (utilities.getUtility(i).getEmission() /
+                                    utilities.getUtility(i).getNumofPeople() /
+                                        numDaysForUtility) * numDays,
+                            utilities.getUtility(i).getName()));
+                }
+                else{
+                    entries.add(new PieEntry((float)
+                            utilities.getUtility(i).getEmission() /
+                                utilities.getUtility(i).getNumofPeople(),
+                            utilities.getUtility(i).getName()));
+                }
+            }
+            else{
+                String[] firstU = utilities.getUtility(i).getStartDate().split("/");
+                String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+                long numDaysForUtility=countDays(firstU,lastU);
                 entries.add(new PieEntry((float)
-                        utilities.getUtility(i).getEmission()/utilities.getUtility(i).getNumofPeople()/numDays,
+                        (utilities.getUtility(i).getEmission() /
+                                utilities.getUtility(i).getNumofPeople()/
+                                numDaysForUtility ) * datesbetween,
                         utilities.getUtility(i).getName()));
             }
-        }*/
+        }
+    }
+
+    private long countDays(String[] first, String[] last) {
+        Date dateOne=new Date(Integer.parseInt(first[2]), Integer.parseInt(first[0]),Integer.parseInt(first[1]));
+        Date dateTwo=new Date(Integer.parseInt(last[2]), Integer.parseInt(last[0]),Integer.parseInt(last[1]));
+        long timeOne = dateOne.getTime();
+        long timeTwo = dateTwo.getTime();
+        long oneDay = 1000 * 60 * 60 * 24;
+        long delta = (timeTwo - timeOne) / oneDay;
+        Log.i(TAG,"delta between 2 dates is: "+delta);
+        return delta;
+    }
+
+    private boolean isBetween(String date,String firstDate, String lastDate){
+        String[] checkdate = date.split("/");
+        String[] first = firstDate.split("/");
+        String[] last = lastDate.split("/");
+        Log.i(TAG,"Checked date: "+date);
+
+        Date date1=new Date(Integer.parseInt(first[2]),Integer.parseInt(first[0]),Integer.parseInt(first[1]));
+        Date date2=new Date(Integer.parseInt(last[2]),Integer.parseInt(last[0]),Integer.parseInt(last[1]));
+        Date datemid=new Date(Integer.parseInt(checkdate[2]),Integer.parseInt(checkdate[0]),Integer.parseInt(checkdate[1]));
+
+        if(datemid.before(date2)&&datemid.after(date1)){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isBefore(String firstDate, String lastDate){
+        String[] last = lastDate.split("/");
+        String[] first = firstDate.split("/");
+        Date d1=new Date(Integer.parseInt(last[2]),Integer.parseInt(last[0]),Integer.parseInt(last[1]));
+        Date d2=new Date(Integer.parseInt(first[2]),Integer.parseInt(first[0]),Integer.parseInt(first[1]));
+        if(d1.before(d2)) {
+            return true;
+        }
+        return false;
     }
 
     private void setUpPieChart() {
@@ -189,78 +269,44 @@ public class LastMonthActivity extends AppCompatActivity {
         chart.setCenterTextColor(Color.DKGRAY);
         chart.setDescription(null);
         chart.getLegend().setEnabled(true);
-        chart.setVisibility(View.VISIBLE);
+        chart.setVisibility(View.INVISIBLE);
         chart.invalidate();
     }
 
-    private void whatDayIsIt() {
-        Date date=new Date();
+    private void setUpLineGraphData() {
+        //set date of today and month previous correctly
+        whatDayIsIt();
+        whatDayIsThirtyDaysPrevious();
+        xAxis.add(0,date_in_str);
+        //get number of days between these 2 dates
+        String[] firstjourn = prev_date_in_str.split("/");
+        String[] lastjourn = date_in_str.split("/");
+        long datesbetween=countDays(firstjourn,lastjourn);
 
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
-        date_in_str = df.format(date);
-        Log.i(TAG,"date is: " + date_in_str);
+        //loop for each day in month. starting from today, ending at previous month
+        for (int i = 0; i < datesbetween; i++) {
+            double ems=0;
+            for (int j = 0; j < journeyAmt; j++) {
+                if(journeys.getJourney(j).getDateString().equals(date_in_str)){
+                    ems+=journeys.getJourney(j).getTotalEmissions();
+                }
+            }
+            for(int k=0;k<utilityAmt;k++){
+                String[] firstU = utilities.getUtility(i).getStartDate().split("/");
+                String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+                long numDaysForUtility=countDays(firstU,lastU);
 
-        String[] checkdate = date_in_str.split("/");
-        Month=Integer.parseInt(checkdate[0]);
-        Day=Integer.parseInt(checkdate[1]);
-        Year=Integer.parseInt(checkdate[2]);
-        Log.i(TAG,"date is: " + Month + "/" + Day + "/" + Year);
-    }
-
-    private void whatDayIsThirtyDaysPrevious(){
-
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
-        Date date=new Date();
-        date.setMonth( date.getMonth() - 1 );
-        prev_date_in_str=df.format(date);
-        //Log.i(TAG,"date is in WhatDay: " + date_in_str);
-        Log.i(TAG,"date is: "+prev_date_in_str);
-
-        String[] prevcheckdate = prev_date_in_str.split("/");
-        prev_Month=Integer.parseInt(prevcheckdate[0]);
-        prev_Day=Integer.parseInt(prevcheckdate[1]);
-        prev_Year=Integer.parseInt(prevcheckdate[2]);
-    }
-
-    private long countDays(String[] first, String[] last) {
-        Date dateOne=new Date(Integer.parseInt(first[1]), Integer.parseInt(first[2]),Integer.parseInt(first[0]));
-        Date dateTwo=new Date(Integer.parseInt(last[1]), Integer.parseInt(last[2]),Integer.parseInt(last[0]));
-        long timeOne = dateOne.getTime();
-        long timeTwo = dateTwo.getTime();
-        long oneDay = 1000 * 60 * 60 * 24;
-        long delta = (timeTwo - timeOne) / oneDay;
-        Log.i(TAG,"delta between 2 dates is: "+delta);
-        return delta;
-    }
-
-    private boolean isBetween(String date,String firstDate, String lastDate){
-        String[] checkdate = date.split("/");
-        String[] first = firstDate.split("/");
-        String[] last = lastDate.split("/");
-        Log.i(TAG,"Checked date: "+date);
-        return (
-                //year
-                Integer.parseInt(checkdate[2]) <= Integer.parseInt(last[2])
-                        && Integer.parseInt(checkdate[2]) >= Integer.parseInt(first[2])
-                        //month
-                        && Integer.parseInt(checkdate[0]) <= Integer.parseInt(last[0])
-                        && Integer.parseInt(checkdate[0]) >= Integer.parseInt(first[0])
-                        //day
-                        && Integer.parseInt(checkdate[1]) <= Integer.parseInt(last[1])
-                        && Integer.parseInt(checkdate[1]) >= Integer.parseInt(first[1])
-        );
-
-    }
-
-    private boolean isBefore(String firstDate, String lastDate){
-        String[] last = lastDate.split("/");
-        String[] first = firstDate.split("/");
-        Date d1=new Date(Integer.parseInt(last[2]),Integer.parseInt(last[0]),Integer.parseInt(last[1]));
-        Date d2=new Date(Integer.parseInt(first[2]),Integer.parseInt(first[0]),Integer.parseInt(first[1]));
-        if(d1.before(d2)) {
-            return true;
+                if(isBetween(date_in_str,utilities.getUtility(k).getStartDate(),utilities.getUtility(k).getEndDate()));{
+                    ems+=utilities.getUtility(k).getEmission()/numDaysForUtility/utilities.getUtility(k).getNumofPeople();
+                }
+            }
+            userAxis.add(new Entry((float)ems,i));
+            ParisAccordAxis.add(new Entry((float) PARISACCORDCO2PERCAPITA,i));
         }
-        return false;
+    }
+
+    private void setUpLineGraph() {
+
     }
 
     private UtilitiesCollection loadUtilities() {
