@@ -10,11 +10,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.LastYearActivity">
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lineChartY"
+        android:layout_alignBottom="@+id/chart3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"> </com.github.mikephil.charting.charts.LineChart>
+
+    <Button
+        android:text="@string/switch_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/btnSwitchViewYearly" />
+
+    <Button
+        android:text="@string/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/btnBackYearly" />
+
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/chart3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        android:alpha="1" />
+        android:alpha="1"
+        android:layout_above="@+id/btnSwitchViewYearly"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

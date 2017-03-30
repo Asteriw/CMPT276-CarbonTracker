@@ -8,11 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.DateFormat;
@@ -23,6 +29,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class LastYearActivity extends AppCompatActivity {
+
+    public static final double PARISACCORDCO2PERCAPITA = 19.04;
 
     String date_in_str;
     int Year;
@@ -62,11 +70,18 @@ public class LastYearActivity extends AppCompatActivity {
     public static final String BUS = "bus";
     public static final String BIKE = "bike";
     public static final String SKYTRAIN = "skytrain";
-
+    //for pie chart
     PieChart chart;
     List<PieEntry> entries;
     PieDataSet dataSet;
     PieData data;
+
+    //for line graph
+    LineChart lineChart;
+    ArrayList<String> xAxis=new ArrayList<>();
+    ArrayList<Entry> userAxis=new ArrayList<>();
+    ArrayList<Entry> averageCanadianAxis=new ArrayList<>();
+    ArrayList<Entry> ParisAccordAxis=new ArrayList<>();
 
     int utilityAmt;
     int journeyAmt;
@@ -84,7 +99,33 @@ public class LastYearActivity extends AppCompatActivity {
         whatDayIs365DaysPrevious();
         setUpArrays();
         setUpPieChart();
+        setUpLineGraph();
+        setUpButtons();
 
+    }
+
+    private void setUpButtons() {
+        Button backbtn=(Button)findViewById(R.id.btnBackYearly);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        Button switchbtn= (Button) findViewById(R.id.btnSwitchViewYearly);
+        switchbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(lineChart.getVisibility() == View.VISIBLE && chart.getVisibility() == View.INVISIBLE) {
+                    chart.setVisibility(View.VISIBLE);
+                    lineChart.setVisibility(View.INVISIBLE);
+                } else {
+                    lineChart.setVisibility(View.VISIBLE);
+                    chart.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
 
     private void whatDayIsIt() {
@@ -99,14 +140,25 @@ public class LastYearActivity extends AppCompatActivity {
         Day=Integer.parseInt(checkdate[1]);
         Year=Integer.parseInt(checkdate[2]);
     }
+    private void whatDayIsThirtyDaysPrevious(){
 
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
+        Date date=new Date();
+        date.setMonth( date.getMonth() - 1 );
+        prev_date_in_str=df.format(date);
+        String[] prevcheckdate = prev_date_in_str.split("/");
+        prev_Month=Integer.parseInt(prevcheckdate[0]);
+        prev_Day=Integer.parseInt(prevcheckdate[1]);
+        prev_Year=Integer.parseInt(prevcheckdate[2]);
+
+        Log.i(TAG,"A month ago's date is: "+prev_date_in_str);
+    }
     private void whatDayIs365DaysPrevious() {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
         Date date=new Date();
         date.setYear( date.getYear() - 1 );
         prev_date_in_str=df.format(date);
         Log.i(TAG,"date is: "+prev_date_in_str);
-
         String[] prevcheckdate = prev_date_in_str.split("/");
         prev_Month=Integer.parseInt(prevcheckdate[0]);
         prev_Day=Integer.parseInt(prevcheckdate[1]);
@@ -115,26 +167,73 @@ public class LastYearActivity extends AppCompatActivity {
 
     private void setUpArrays() {
         entries = new ArrayList<>();
-        String[] first = prev_date_in_str.split("/");
-        String[] last = date_in_str.split("/");
-        amtDays=countDays(first,last);
-        for(int i=0;i<journeyAmt;i++){
-            if(isBetween(journeys.getJourney(i).getDateString(),prev_date_in_str,date_in_str)){
+
+        String[] firstjourn = prev_date_in_str.split("/");
+        String[] lastjourn = date_in_str.split("/");
+        long datesbetween=countDays(firstjourn,lastjourn);
+        for (int i = 0; i < journeyAmt; i++) {
+
+            if (isBetween(journeys.getJourney(i).getDateString(), prev_date_in_str, date_in_str)) {
                 entriesSize++;
                 entries.add(new PieEntry((float) journeys.getJourney(i).getTotalEmissions(),
                         journeys.getJourney(i).getName()));
             }
         }
+
         for(int i=0;i<utilityAmt;i++){
-            if(
-                    isBetween(utilities.getUtility(i).getStartDate(),prev_date_in_str,date_in_str)
-                            ||
-                            isBetween(utilities.getUtility(i).getEndDate(),prev_date_in_str,date_in_str)) {
-                String[] firstone = utilities.getUtility(i).getStartDate().split("/");
-                String[] lastone = utilities.getUtility(i).getEndDate().split("/");
-                long numDays=countDays(firstone,lastone);
+            if(     isBetween(date_in_str,utilities.getUtility(i).getStartDate(),utilities.getUtility(i).getEndDate())
+                    ||
+                    isBetween(prev_date_in_str,utilities.getUtility(i).getStartDate(),utilities.getUtility(i).getEndDate())){
+
+                entriesSize++;
+
+                if(isBefore(utilities.getUtility(i).getEndDate(),date_in_str)
+                        && isBefore(utilities.getUtility(i).getStartDate(),prev_date_in_str)){
+
+                    String[] firstU = utilities.getUtility(i).getStartDate().split("/");
+                    String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+                    long numDaysForUtility=countDays(firstU,lastU);
+
+                    String[] first = prev_date_in_str.split("/");
+                    String[] last = utilities.getUtility(i).getEndDate().split("/");
+                    long numDays=countDays(first,last);
+                    entries.add(new PieEntry((float)
+                            (utilities.getUtility(i).getEmission() /
+                                    utilities.getUtility(i).getNumofPeople() /
+                                    numDaysForUtility) * numDays,
+                            utilities.getUtility(i).getName()));
+                }
+                else if(isBefore(prev_date_in_str,utilities.getUtility(i).getStartDate())
+                        && isBefore(date_in_str,utilities.getUtility(i).getEndDate())){
+
+                    String[] firstU = utilities.getUtility(i).getStartDate().split("/");
+                    String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+                    long numDaysForUtility=countDays(firstU,lastU);
+
+                    String[] first = utilities.getUtility(i).getStartDate().split("/");
+                    String[] last = date_in_str.split("/");
+                    long numDays=countDays(first,last);
+                    entries.add(new PieEntry((float)
+                            (utilities.getUtility(i).getEmission() /
+                                    utilities.getUtility(i).getNumofPeople() /
+                                    numDaysForUtility) * numDays,
+                            utilities.getUtility(i).getName()));
+                }
+                else{
+                    entries.add(new PieEntry((float)
+                            utilities.getUtility(i).getEmission() /
+                            utilities.getUtility(i).getNumofPeople(),
+                            utilities.getUtility(i).getName()));
+                }
+            }
+            else{
+                String[] firstU = utilities.getUtility(i).getStartDate().split("/");
+                String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+                long numDaysForUtility=countDays(firstU,lastU);
                 entries.add(new PieEntry((float)
-                        utilities.getUtility(i).getEmission()/utilities.getUtility(i).getNumofPeople()/numDays,
+                        (utilities.getUtility(i).getEmission() /
+                                utilities.getUtility(i).getNumofPeople()/
+                                numDaysForUtility ) * datesbetween,
                         utilities.getUtility(i).getName()));
             }
         }
@@ -163,6 +262,26 @@ public class LastYearActivity extends AppCompatActivity {
         chart.invalidate();
     }
 
+    private void setUpLineGraph() {
+        lineChart=(LineChart)findViewById(R.id.lineChartM);
+        ArrayList<ILineDataSet> dataSet = new ArrayList<>();
+
+        LineDataSet lds1=new LineDataSet(userAxis,"Your Data");
+        lds1.setDrawCircles(false);
+        lds1.setColor(Color.RED);
+
+        LineDataSet lds2=new LineDataSet(ParisAccordAxis,"Canada paris accord goal");
+        lds2.setDrawCircles(false);
+        lds2.setColor(Color.GREEN);
+
+        dataSet.add(lds1);
+        dataSet.add(lds2);
+        LineData d=new LineData(dataSet);
+        lineChart.setData(new LineData(dataSet));
+        lineChart.setVisibleXRangeMaximum(31f);
+        lineChart.setVisibility(View.INVISIBLE);
+    }
+
     private long countDays(String[] first, String[] last) {
         Date dateOne=new Date(Integer.parseInt(first[1]), Integer.parseInt(first[2]),Integer.parseInt(first[0]));
         Date dateTwo=new Date(Integer.parseInt(last[1]), Integer.parseInt(last[2]),Integer.parseInt(last[0]));
@@ -172,22 +291,48 @@ public class LastYearActivity extends AppCompatActivity {
         long delta = (timeTwo - timeOne) / oneDay;
         return delta;
     }
+    public boolean isTheSame(String date1, String date2){
+        int check=0;
+        String onedate[]=date1.split("/");
+        String twodate[]=date2.split("/");
+        for(int i=0;i<3;i++){
+            if(Integer.parseInt(onedate[i])==Integer.parseInt(twodate[i])){
+                check+=1;
+            }
+        }
+        if(check==3){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     private boolean isBetween(String date,String firstDate, String lastDate){
         String[] checkdate = date.split("/");
         String[] first = firstDate.split("/");
         String[] last = lastDate.split("/");
-        return (
-                //year
-                Integer.parseInt(checkdate[2]) <= Integer.parseInt(last[2])
-                        && Integer.parseInt(checkdate[2]) >= Integer.parseInt(first[2])
-                        //month
-                        && Integer.parseInt(checkdate[0]) <= Integer.parseInt(last[0])
-                        && Integer.parseInt(checkdate[0]) >= Integer.parseInt(first[0])
-                        //day
-                        && Integer.parseInt(checkdate[1]) <= Integer.parseInt(last[1])
-                        && Integer.parseInt(checkdate[1]) >= Integer.parseInt(first[1])
-        );
+        Log.i(TAG,"Checked date: "+date);
+
+        Date date1=new Date(Integer.parseInt(first[2]),Integer.parseInt(first[0]),Integer.parseInt(first[1]));
+        Date date2=new Date(Integer.parseInt(last[2]),Integer.parseInt(last[0]),Integer.parseInt(last[1]));
+        Date datemid=new Date(Integer.parseInt(checkdate[2]),Integer.parseInt(checkdate[0]),Integer.parseInt(checkdate[1]));
+
+        if(datemid.before(date2)&&datemid.after(date1)){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isBefore(String firstDate, String lastDate){
+        String[] last = lastDate.split("/");
+        String[] first = firstDate.split("/");
+        Date d1=new Date(Integer.parseInt(last[2]),Integer.parseInt(last[0]),Integer.parseInt(last[1]));
+        Date d2=new Date(Integer.parseInt(first[2]),Integer.parseInt(first[0]),Integer.parseInt(first[1]));
+        if(d1.before(d2)) {
+            return true;
+        }
+        return false;
     }
 
     private UtilitiesCollection loadUtilities() {

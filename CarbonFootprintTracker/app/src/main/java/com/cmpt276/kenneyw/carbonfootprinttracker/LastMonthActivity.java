@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -110,6 +111,31 @@ public class LastMonthActivity extends AppCompatActivity {
         setUpPieChart();
         setUpLineGraphData();
         setUpLineGraph();
+        setUpButtons();
+    }
+
+    private void setUpButtons() {
+        Button backbtn=(Button)findViewById(R.id.btnBackMonthly);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        Button switchbtn= (Button) findViewById(R.id.btnSwitchViewMonthly);
+        switchbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(lineChart.getVisibility() == View.VISIBLE && chart.getVisibility() == View.INVISIBLE) {
+                    chart.setVisibility(View.VISIBLE);
+                    lineChart.setVisibility(View.INVISIBLE);
+                } else {
+                    lineChart.setVisibility(View.VISIBLE);
+                    chart.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
 
     private void whatDayIsIt() {
@@ -219,6 +245,7 @@ public class LastMonthActivity extends AppCompatActivity {
         long timeOne = dateOne.getTime();
         long timeTwo = dateTwo.getTime();
         long oneDay = 1000 * 60 * 60 * 24;
+        //1000 ms in s, 60 s in minute, 60 minutes in hour, 24 hours in day
         long delta = (timeTwo - timeOne) / oneDay;
         Log.i(TAG,"delta between 2 dates is: "+delta);
         return delta;
@@ -289,7 +316,7 @@ public class LastMonthActivity extends AppCompatActivity {
         for (int i = 0; i < datesbetween; i++) {
             double ems=0;
             for (int j = 0; j < journeyAmt; j++) {
-                if(journeys.getJourney(j).getDateString().equals(date_in_str)){
+                if(isTheSame(journeys.getJourney(j).getDateString(),date_in_str)){
                     ems+=journeys.getJourney(j).getTotalEmissions();
                 }
             }
@@ -305,14 +332,12 @@ public class LastMonthActivity extends AppCompatActivity {
             userAxis.add(new Entry(i,(float)ems));
             ParisAccordAxis.add(new Entry(i,(float) PARISACCORDCO2PERCAPITA));
 
-            Date nextDate=new Date(Year,Month,Day-1);
             DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
-            date_in_str=df.format(nextDate);
-
             Date myDate = null;
             try {
                 myDate = df.parse(date_in_str);
             } catch (ParseException e) {
+                Log.wtf(TAG,"Parse failed, should never happen");
                 e.printStackTrace();
             }
             // Use the Calendar class to subtract one day
@@ -322,11 +347,24 @@ public class LastMonthActivity extends AppCompatActivity {
 
             // Use the date formatter to produce a formatted date string
             Date previousDate = calendar.getTime();
-            String result = df.format(previousDate);
+            date_in_str = df.format(previousDate);
+        }
 
-            Log.d(TAG,"SIMPLE DATE FORMAT METHOD: "+date_in_str);
-            Log.d(TAG,"CALENDAR METHOD: "+result);
-
+    }
+    public boolean isTheSame(String date1, String date2){
+        int check=0;
+        String onedate[]=date1.split("/");
+        String twodate[]=date2.split("/");
+        for(int i=0;i<3;i++){
+            if(Integer.parseInt(onedate[i])==Integer.parseInt(twodate[i])){
+                check+=1;
+            }
+        }
+        if(check==3){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
@@ -347,6 +385,7 @@ public class LastMonthActivity extends AppCompatActivity {
         LineData d=new LineData(dataSet);
         lineChart.setData(new LineData(dataSet));
         lineChart.setVisibleXRangeMaximum(31f);
+        lineChart.setVisibility(View.INVISIBLE);
     }
 
     private UtilitiesCollection loadUtilities() {
