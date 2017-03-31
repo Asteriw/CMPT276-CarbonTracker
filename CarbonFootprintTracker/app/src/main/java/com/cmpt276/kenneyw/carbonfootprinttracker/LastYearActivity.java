@@ -11,18 +11,14 @@ import android.view.View;
 import android.widget.Button;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.DateFormat;
@@ -152,19 +148,20 @@ public class LastYearActivity extends AppCompatActivity {
 
         barChart = (BarChart) findViewById(R.id.barChart);
         BarData bd;
-        ArrayList<BarDataSet> dataSets = null;
-        entriesForAllMonth =new ArrayList<>();
+        ArrayList<BarEntry> valueSet = new ArrayList<>();;
+        ArrayList<BarDataSet> dataSets = new ArrayList<>();
+        entriesForAllMonth = new ArrayList<>();
 
         for(int counter=0;counter<12;counter++){
             //number of months to loop for
 
-            entriesSizeMonthly=0;
-            emsMonthly=new ArrayList<>();
-            namesMonthly=new ArrayList<>();
+            entriesSizeMonthly = 0;
+            emsMonthly = new ArrayList<>();
+            namesMonthly = new ArrayList<>();
 
             String[] firstjourn = prev_date_in_str.split("/");
             String[] lastjourn = date_in_str.split("/");
-            long datesbetween=countDays(firstjourn,lastjourn);
+            long datesbetween = countDays(firstjourn,lastjourn);
 
             //array lists for names and emissions, same index has emission data for same car name
             //(transportation mode included)
@@ -174,36 +171,54 @@ public class LastYearActivity extends AppCompatActivity {
             for (int i = 0; i < journeyAmt; i++) {
                 //if date is in current month
                 if (isBetween(journeys.getJourney(i).getDateString(), prev_date_in_str, date_in_str)) {
-                    String nameOfJourney=journeys.getJourney(i).getName();
+                    String nameOfJourney = journeys.getJourney(i).getName();
                     //if car is known in names arraylist
-                    if(names.contains(nameOfJourney)){
+                    if (names.contains(nameOfJourney)) {
                         //add emission data on that index
-                        for(int j=0;j<entriesSize;j++) {
-                            if(nameOfJourney.equals(names.get(j))) {
-                                ems.add(j,(float)journeys.getJourney(i).getTotalEmissions());
+                        for (int j = 0; j < entriesSize; j++) {
+                            if (nameOfJourney.equals(names.get(j))) {
+                                float em = ems.get(j);
+                                String na = names.get(j);
+                                names.remove(j);
+                                ems.remove(j);
+                                names.add(na);
+                                ems.add(em + (float) journeys.getJourney(i).getTotalEmissions());
+                                //ems.add(j,(float)journeys.getJourney(i).getTotalEmissions());
                             }
                         }
-                    }
-                    else {
+                    } else {
                         //else increment size, make new index to store that car
                         entriesSize++;
                         names.add(journeys.getJourney(i).getName());
                         //add emission data on that index
-                                ems.add(entriesSize-1,(float)journeys.getJourney(i).getTotalEmissions());
-                        }
-
-                    if(namesMonthly.contains(nameOfJourney)){
-                        for(int j=0;j<entriesSizeMonthly;j++) {
-                            if(nameOfJourney.equals(namesMonthly.get(j))) {
-                                emsMonthly.add(j,(float)journeys.getJourney(i).getTotalEmissions());
+                        for (int j = 0; j < entriesSize; j++) {
+                            if (nameOfJourney.equals(names.get(j))) {
+                                ems.add(j, (float) journeys.getJourney(i).getTotalEmissions());
                             }
                         }
-                    }
-                    else{
-                        entriesSizeMonthly++;
-                        namesMonthly.add(journeys.getJourney(i).getName());
-                        //add emission data on that index
-                        emsMonthly.add(entriesSizeMonthly-1,(float)journeys.getJourney(i).getTotalEmissions());
+
+                        if (namesMonthly.contains(nameOfJourney)) {
+                            for (int j = 0; j < entriesSizeMonthly; j++) {
+                                if (nameOfJourney.equals(namesMonthly.get(j))) {
+                                    float em = emsMonthly.get(j);
+                                    String na = namesMonthly.get(j);
+                                    namesMonthly.remove(j);
+                                    emsMonthly.remove(j);
+                                    namesMonthly.add(na);
+                                    emsMonthly.add(em + (float) journeys.getJourney(i).getTotalEmissions());
+                                }
+                            }
+                        } else {
+                            entriesSizeMonthly++;
+                            namesMonthly.add(journeys.getJourney(i).getName());
+                            //add emission data on that index
+                            for (int j = 0; j < entriesSize; j++) {
+                                if (nameOfJourney.equals(namesMonthly.get(j))) {
+                                    emsMonthly.add(j, (float) journeys.getJourney(i).getTotalEmissions());
+                                }
+                            }
+                            //emsMonthly.add(entriesSizeMonthly-1,(float)journeys.getJourney(i).getTotalEmissions());
+                        }
                     }
                 }
             }
@@ -250,7 +265,6 @@ public class LastYearActivity extends AppCompatActivity {
                         long numDays=countDays(first,last);
 
                         entriesSize++;
-
                         names.add(utilities.getUtility(i).getName());
                         ems.add((float)utilities.getUtility(i).getEmission() /
                                 utilities.getUtility(i).getNumofPeople() /
@@ -297,16 +311,16 @@ public class LastYearActivity extends AppCompatActivity {
 
             date_in_str=prev_date_in_str;
             whatDayIsThirtyDaysPreviousOfThis(date_in_str);
+            Log.i(TAG,"New date_in_str is: "+date_in_str);
+            Log.i(TAG,"New prev_date_in_str is: "+prev_date_in_str);
 
-            ArrayList<BarEntry> valueSet = new ArrayList<BarEntry>();
+
+            //what to do here?
+
             for(int i=0;i<entriesSizeMonthly;i++) {
                 BarEntry v1 = new BarEntry(counter,emsMonthly.get(i),namesMonthly.get(i));
                 valueSet.add(v1);
             }
-            BarDataSet bds=new BarDataSet(valueSet,"Month: "+counter);
-            dataSets.add(counter,bds);
-            bd=new BarData(bds);
-            barChart.setData(bd);
 
         }
         //For PieChart: All Months, Segregated Data according to transportation mode / name, and Utility name
@@ -314,6 +328,11 @@ public class LastYearActivity extends AppCompatActivity {
             totalems+=ems.get(i);
             entriesForAllMonth.add(i,new PieEntry(ems.get(i),names.get(i)));
         }
+        BarDataSet bds=new BarDataSet(valueSet,"Months");
+        dataSets.add(bds);
+        bd=new BarData(bds);
+        barChart.setData(bd);
+        barChart.setVisibility(View.INVISIBLE);
     }
 
     private void setUpPieChart() {

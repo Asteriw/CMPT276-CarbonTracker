@@ -19,14 +19,6 @@
         android:layout_alignParentStart="true"
         />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/lineChartY"
-        android:layout_alignBottom="@+id/chart3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"> </com.github.mikephil.charting.charts.LineChart>
-
     <Button
         android:text="@string/switch_view"
         android:layout_width="wrap_content"
