@@ -10,14 +10,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.LastYearActivity">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart"
+    <com.github.mikephil.charting.charts.LineChart
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/lineChartY"
         android:layout_alignBottom="@+id/chart3"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        />
+        android:layout_alignParentStart="true"> </com.github.mikephil.charting.charts.LineChart>
 
     <Button
         android:text="@string/switch_view"
@@ -46,5 +45,13 @@
         android:layout_above="@+id/btnSwitchViewYearly"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/routemode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnOrganizeY"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

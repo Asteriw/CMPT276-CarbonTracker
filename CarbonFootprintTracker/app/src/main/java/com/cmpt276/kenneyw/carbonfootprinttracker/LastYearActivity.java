@@ -10,15 +10,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.DateFormat;
@@ -27,10 +27,27 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+/*
+Activity for checking User's previous year data from Journeys and Utilities.
+Gets today's date, get's the date for exactly one month previous, and the number of days in between
+    i.e. March 27th to Feb 27th -> 31 days
+Goes through all journeys, sees if the date of journey is between these two dates, if so adds the car name or route name
+to the names arraylist. adds the corresponding emission data for related name in the same index in the ems arraylist
 
+Goes through all utilities, covers 4 possibilities of start and end dates being within and outside of the two above dates.
+if Utility is not in range, does not take data for pie chart
+
+For Line Graph, takes all emissions of one day, utilities (daily) emission and journey emission
+if no utility emission for day, stores average utility emission of all utilities
+
+Does the above procedure for last 12 months.
+
+ */
 public class LastYearActivity extends AppCompatActivity {
-
+    //calculated as: 30% of 2005 Daily CO2 Emission in Canada divided by Population in 2005
+    //<--Canada goals - 30% of 2005 level emissions-->
     public static final double PARISACCORDCO2PERCAPITA = 19.04;
+    public static final String AVERAGE_CHECKER = "average-------";
 
     String date_in_str;
     int Year;
@@ -75,22 +92,25 @@ public class LastYearActivity extends AppCompatActivity {
     PieChart chart;
     PieDataSet dataSet;
     PieData data;
-    int entriesSize=0;
+    int entrySize =0;
     List<PieEntry> entriesForAllMonth =new ArrayList<>();
     ArrayList<Float> ems=new ArrayList<>();
     ArrayList<String> names=new ArrayList<>();
 
-    //for bar chart
-    BarChart barChart;
-    int entriesSizeMonthly=0;
-    ArrayList<Float> emsMonthly=new ArrayList<>();
-    ArrayList<String> namesMonthly=new ArrayList<>();
+    //for line chart
+    LineChart lineChart;
+    ArrayList<Entry> userAxis=new ArrayList<>();
     ArrayList<Entry> averageCanadianAxis=new ArrayList<>();
     ArrayList<Entry> ParisAccordAxis=new ArrayList<>();
 
+    //data storage
+    float utilityAverage;
     int utilityAmt;
     int journeyAmt;
-    double totalems=0;
+    double [] totalems;
+
+    //check for route / car mode
+    boolean checkOrganization=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,15 +123,10 @@ public class LastYearActivity extends AppCompatActivity {
         whatDayIsThirtyDaysPrevious(0);
         setUpArrays();
         setUpPieChart();
-        setUpBarChart();
+        setUpLineChart();
         setUpButtons();
-
     }
 
-    private void setUpBarChart() {
-        barChart = (BarChart) findViewById(R.id.barChart);
-        barChart.setVisibility(View.INVISIBLE);
-    }
 
     private UtilitiesCollection loadUtilities() {
         UtilitiesCollection utils = new UtilitiesCollection();
@@ -149,10 +164,17 @@ public class LastYearActivity extends AppCompatActivity {
         return temp_journeys;
     }
 
+    //car mode, groups emissions with car names; utilities as normal
     private void setUpArrays() {
 
         entriesForAllMonth = new ArrayList<>();
-        totalems=0;
+        getUtilityAverage();
+        whatDayIsIt();
+        whatDayIsThirtyDaysPrevious(0);
+        ems=new ArrayList<>();
+        names=new ArrayList<>();
+        entrySize =0;
+        totalems=new double[12];
 
         for(int counter=0;counter<12;counter++){
             //number of months to loop for
@@ -171,7 +193,7 @@ public class LastYearActivity extends AppCompatActivity {
                     //if car is known in names arraylist
                     if (names.contains(nameOfJourney)) {
                         //add emission data on that index
-                        for (int j = 0; j < entriesSize; j++) {
+                        for (int j = 0; j < entrySize; j++) {
                             if (nameOfJourney.equals(names.get(j))) {
                                 float em = ems.get(j);
                                 String na = names.get(j);
@@ -184,10 +206,10 @@ public class LastYearActivity extends AppCompatActivity {
                         }
                     } else {
                         //else increment size, make new index to store that car
-                        entriesSize++;
+                        entrySize++;
                         names.add(journeys.getJourney(i).getName());
                         //add emission data on that index
-                        for (int j = 0; j < entriesSize; j++) {
+                        for (int j = 0; j < entrySize; j++) {
                             if (nameOfJourney.equals(names.get(j))) {
                                 ems.add(j, (float) journeys.getJourney(i).getTotalEmissions());
                             }
@@ -205,6 +227,8 @@ public class LastYearActivity extends AppCompatActivity {
                     if(isBefore(utilities.getUtility(i).getEndDate(),date_in_str)
                             && isBefore(utilities.getUtility(i).getStartDate(),prev_date_in_str)){
 
+                        Log.i(TAG,"end date before today, and start date before prev_date");
+
                         String[] firstU = utilities.getUtility(i).getStartDate().split("/");
                         String[] lastU = utilities.getUtility(i).getEndDate().split("/");
                         long numDaysForUtility=countDays(firstU,lastU);
@@ -213,15 +237,16 @@ public class LastYearActivity extends AppCompatActivity {
                         String[] last = utilities.getUtility(i).getEndDate().split("/");
                         long numDays=countDays(first,last);
 
-                        entriesSize++;
+                        entrySize++;
                         names.add(utilities.getUtility(i).getName());
                         ems.add((float)utilities.getUtility(i).getEmission() /
                                 utilities.getUtility(i).getNumofPeople() /
                                 numDaysForUtility * numDays);
                     }
-
                     else if(isBefore(prev_date_in_str,utilities.getUtility(i).getStartDate())
                             && isBefore(date_in_str,utilities.getUtility(i).getEndDate())){
+
+                        Log.i(TAG,"prev_date before start date, and today's date before end date");
 
                         String[] firstU = utilities.getUtility(i).getStartDate().split("/");
                         String[] lastU = utilities.getUtility(i).getEndDate().split("/");
@@ -231,48 +256,251 @@ public class LastYearActivity extends AppCompatActivity {
                         String[] last = date_in_str.split("/");
                         long numDays=countDays(first,last);
 
-                        entriesSize++;
+                        entrySize++;
                         names.add(utilities.getUtility(i).getName());
                         ems.add((float)utilities.getUtility(i).getEmission() /
                                 utilities.getUtility(i).getNumofPeople() /
                                 numDaysForUtility * numDays);
                     }
-
                     else{
-                        entriesSize++;
+
+                        Log.i(TAG,"Utitlity starts before prev_date and end after Today's date");
+
+                        String[] firstU = utilities.getUtility(i).getStartDate().split("/");
+                        String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+                        long numDaysForUtility=countDays(firstU,lastU);
+
+                        entrySize++;
                         names.add(utilities.getUtility(i).getName());
                         ems.add((float)utilities.getUtility(i).getEmission() /
-                        utilities.getUtility(i).getNumofPeople());
+                                utilities.getUtility(i).getNumofPeople()/
+                                numDaysForUtility * datesbetween);
                     }
                 }
+                else if(isBetween(utilities.getUtility(i).getStartDate(),prev_date_in_str,date_in_str)
+                        &&
+                        isBetween(utilities.getUtility(i).getEndDate(),prev_date_in_str,date_in_str)){
+                    Log.i(TAG,"start and end date within prev date and today");
 
-                else{
-                    String[] firstU = utilities.getUtility(i).getStartDate().split("/");
-                    String[] lastU = utilities.getUtility(i).getEndDate().split("/");
-                    long numDaysForUtility=countDays(firstU,lastU);
-                    entriesSize++;
+                    entrySize++;
                     names.add(utilities.getUtility(i).getName());
                     ems.add((float)utilities.getUtility(i).getEmission() /
-                            utilities.getUtility(i).getNumofPeople()/
-                            numDaysForUtility * datesbetween);
+                            utilities.getUtility(i).getNumofPeople());
+                }
+                else{
+                    //take avg of other dates... how?
+                    entrySize++;
+                    Log.i(TAG,"Taking average, no utility in range");
+                    names.add(AVERAGE_CHECKER);
+                    ems.add(utilityAverage);
                 }
             }
-            for(int j=0;j<entriesSize;j++){
-                totalems+=ems.get(j);
+
+            for(int j = 0; j< entrySize; j++){
+                totalems[counter]+=ems.get(j);
             }
             //entries.add(new Entry((float)totalems,"Month "+(12-counter+1)));
 
             date_in_str=prev_date_in_str;
             whatDayIsThirtyDaysPrevious(counter+1);
-            Log.i(TAG,"New date_in_str is: "+date_in_str);
-            Log.i(TAG,"New prev_date_in_str is: "+prev_date_in_str);
 
         }
         //For PieChart: All Months, Segregated Data according to transportation mode / name, and Utility name
-        for(int i=0;i<entriesSize;i++){
-            entriesForAllMonth.add(new PieEntry(ems.get(i),names.get(i)));
+        for(int i = 0; i< entrySize; i++){
+            if(!names.get(i).equals(AVERAGE_CHECKER)) {
+                entriesForAllMonth.add(new PieEntry(ems.get(i), names.get(i)));
+            }
+        }
+    }
+
+    //route mode, groups emissions with route names; utilities as normal
+    private void setUpArraysRouteWise() {
+
+        entriesForAllMonth = new ArrayList<>();
+        getUtilityAverage();
+        whatDayIsIt();
+        whatDayIsThirtyDaysPrevious(0);
+        ems=new ArrayList<>();
+        names=new ArrayList<>();
+        entrySize =0;
+        totalems=new double[12];
+
+        for(int counter=0;counter<12;counter++){
+
+            //number of months to loop for
+            String[] firstjourn = prev_date_in_str.split("/");
+            String[] lastjourn = date_in_str.split("/");
+            long datesbetween = countDays(firstjourn,lastjourn);
+
+            //array lists for names and emissions, same index has emission data for same car name
+            //(transportation mode included)
+
+            //loop for amount of journeys
+            for (int i = 0; i < journeyAmt; i++) {
+                //if date is in current month
+                if (isBetween(journeys.getJourney(i).getDateString(), prev_date_in_str, date_in_str)) {
+                    String nameOfJourney = journeys.getJourney(i).getRouteName();
+                    //if car is known in names arraylist
+                    if (names.contains(nameOfJourney)) {
+                        //add emission data on that index
+                        for (int j = 0; j < entrySize; j++) {
+                            if (nameOfJourney.equals(names.get(j))) {
+                                float em = ems.get(j);
+                                String na = names.get(j);
+                                names.remove(j);
+                                ems.remove(j);
+                                names.add(na);
+                                ems.add(em + (float) journeys.getJourney(i).getTotalEmissions());
+                                //ems.add(j,(float)journeys.getJourney(i).getTotalEmissions());
+                            }
+                        }
+                    } else {
+                        //else increment size, make new index to store that car
+                        entrySize++;
+                        names.add(journeys.getJourney(i).getRouteName());
+                        //add emission data on that index
+                        for (int j = 0; j < entrySize; j++) {
+                            if (nameOfJourney.equals(names.get(j))) {
+                                ems.add(j, (float) journeys.getJourney(i).getTotalEmissions());
+                            }
+                        }
+                    }
+                }
+            }
+
+            for(int i=0;i<utilityAmt;i++){
+
+                if(     isBetween(date_in_str,utilities.getUtility(i).getStartDate(),utilities.getUtility(i).getEndDate())
+                        ||
+                        isBetween(prev_date_in_str,utilities.getUtility(i).getStartDate(),utilities.getUtility(i).getEndDate())){
+
+                    if(isBefore(utilities.getUtility(i).getEndDate(),date_in_str)
+                            && isBefore(utilities.getUtility(i).getStartDate(),prev_date_in_str)){
+
+                        Log.i(TAG,"end date before today, and start date before prev_date");
+
+                        String[] firstU = utilities.getUtility(i).getStartDate().split("/");
+                        String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+                        long numDaysForUtility=countDays(firstU,lastU);
+
+                        String[] first = prev_date_in_str.split("/");
+                        String[] last = utilities.getUtility(i).getEndDate().split("/");
+                        long numDays=countDays(first,last);
+
+                        entrySize++;
+                        names.add(utilities.getUtility(i).getName());
+                        ems.add((float)utilities.getUtility(i).getEmission() /
+                                utilities.getUtility(i).getNumofPeople() /
+                                numDaysForUtility * numDays);
+                    }
+                    else if(isBefore(prev_date_in_str,utilities.getUtility(i).getStartDate())
+                            && isBefore(date_in_str,utilities.getUtility(i).getEndDate())){
+
+                        Log.i(TAG,"prev_date before start date, and today's date before end date");
+
+                        String[] firstU = utilities.getUtility(i).getStartDate().split("/");
+                        String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+                        long numDaysForUtility=countDays(firstU,lastU);
+
+                        String[] first = utilities.getUtility(i).getStartDate().split("/");
+                        String[] last = date_in_str.split("/");
+                        long numDays=countDays(first,last);
+
+                        entrySize++;
+                        names.add(utilities.getUtility(i).getName());
+                        ems.add((float)utilities.getUtility(i).getEmission() /
+                                utilities.getUtility(i).getNumofPeople() /
+                                numDaysForUtility * numDays);
+                    }
+                    else{
+
+                        Log.i(TAG,"Utitlity starts before prev_date and end after Today's date");
+
+                        String[] firstU = utilities.getUtility(i).getStartDate().split("/");
+                        String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+                        long numDaysForUtility=countDays(firstU,lastU);
+
+                        entrySize++;
+                        names.add(utilities.getUtility(i).getName());
+                        ems.add((float)utilities.getUtility(i).getEmission() /
+                                utilities.getUtility(i).getNumofPeople()/
+                                numDaysForUtility * datesbetween);
+                    }
+                }
+                else if(isBetween(utilities.getUtility(i).getStartDate(),prev_date_in_str,date_in_str)
+                        &&
+                        isBetween(utilities.getUtility(i).getEndDate(),prev_date_in_str,date_in_str)){
+                    Log.i(TAG,"start and end date within prev date and today");
+
+                    entrySize++;
+                    names.add(utilities.getUtility(i).getName());
+                    ems.add((float)utilities.getUtility(i).getEmission() /
+                            utilities.getUtility(i).getNumofPeople());
+                }
+                else{
+                    //take avg of other dates... how?
+                    entrySize++;
+                    Log.i(TAG,"Taking average, no utility in range");
+                    names.add(AVERAGE_CHECKER);
+                    ems.add(utilityAverage);
+                }
+            }
+
+            for(int j = 0; j< entrySize; j++){
+                totalems[counter]+=ems.get(j);
+            }
+            //entries.add(new Entry((float)totalems,"Month "+(12-counter+1)));
+            date_in_str=prev_date_in_str;
+            whatDayIsThirtyDaysPrevious(counter+1);
+
+        }
+        //For PieChart: All Months, Segregated Data according to transportation mode / name, and Utility name
+        for(int i = 0; i< entrySize; i++){
+            if(!names.get(i).equals(AVERAGE_CHECKER)) {
+                entriesForAllMonth.add(new PieEntry(ems.get(i), names.get(i)));
+            }
+        }
+    }
+
+    private void getUtilityAverage() {
+        float total=0;
+        for(int i=0;i<utilityAmt;i++){
+            String[] firstU = utilities.getUtility(i).getStartDate().split("/");
+            String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+            long numDaysForUtility=countDays(firstU,lastU);
+            total+=utilities.getUtility(i).getEmission()/utilities.getUtility(i).getNumofPeople()/numDaysForUtility;
+        }
+        total=total/utilityAmt;
+        utilityAverage=total;
+    }
+
+    private void setUpLineChart() {
+        lineChart=(LineChart)findViewById(R.id.lineChartY);
+        userAxis=new ArrayList<>();
+        ParisAccordAxis=new ArrayList<>();
+        for(int i=0;i<12;i++) {
+            userAxis.add(new Entry(i, (float) totalems[11-i]));
+        }
+        for(int i=0;i<12;i++){
+            ParisAccordAxis.add(new Entry(i, (float)PARISACCORDCO2PERCAPITA));
         }
 
+        ArrayList<ILineDataSet> lines = new ArrayList<> ();
+        LineDataSet lds1 = new LineDataSet(userAxis, "User Data");
+        lds1.setValueTextColor(Color.WHITE);
+        lds1.setColor(Color.WHITE);
+        LineDataSet lds2 = new LineDataSet(ParisAccordAxis, "Paris Accord Goal");
+        lds2.setValueTextColor(Color.GREEN);
+        lds2.setColor(Color.GREEN);
+        lines.add(lds1);
+        lines.add(lds2);
+
+        lineChart.setData(new LineData(lines));
+        lineChart.setVisibility(View.INVISIBLE);
+        lineChart.animateX(2000);
+        lineChart.animateY(2000);
+        lineChart.setHorizontalScrollBarEnabled(true);
+        lineChart.invalidate();
     }
 
     private void setUpPieChart() {
@@ -298,6 +526,8 @@ public class LastYearActivity extends AppCompatActivity {
         chart.invalidate();
     }
 
+    //date functions to handle date-strings and Dates
+    //today's date
     private void whatDayIsIt() {
         Date date=new Date();
 
@@ -310,6 +540,7 @@ public class LastYearActivity extends AppCompatActivity {
         Day=Integer.parseInt(checkdate[1]);
         Year=Integer.parseInt(checkdate[2]);
     }
+    //last month's date
     private void whatDayIsThirtyDaysPrevious(int i){
 
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
@@ -321,20 +552,8 @@ public class LastYearActivity extends AppCompatActivity {
         prev_Day=Integer.parseInt(prevcheckdate[1]);
         prev_Year=Integer.parseInt(prevcheckdate[2]);
     }
-    private void whatDayIsThirtyDaysPreviousOfThis(String date_in_str){
 
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
-        String[] dates=date_in_str.split("/");
-        Date date=new Date(Integer.parseInt(dates[2]),Integer.parseInt(dates[0]),Integer.parseInt(dates[1]));
-        date.setMonth( date.getMonth() - 1 );
-        Log.i(TAG,""+date.getYear()+" - "+date.getMonth()+" - "+date.getDay());
-        prev_date_in_str=df.format(date);
-        String[] prevcheckdate = prev_date_in_str.split("/");
-        prev_Month=Integer.parseInt(prevcheckdate[0]);
-        prev_Day=Integer.parseInt(prevcheckdate[1]);
-        prev_Year=Integer.parseInt(prevcheckdate[2]);
-    }
-
+    //how many dates in between, need to split with dateString.split("/") before calling
     private long countDays(String[] first, String[] last) {
         Date dateOne=new Date(Integer.parseInt(first[1]), Integer.parseInt(first[2]),Integer.parseInt(first[0]));
         Date dateTwo=new Date(Integer.parseInt(last[1]), Integer.parseInt(last[2]),Integer.parseInt(last[0]));
@@ -345,6 +564,7 @@ public class LastYearActivity extends AppCompatActivity {
         return delta;
     }
 
+    //Is the date between the firstdate and lastdate provided
     private boolean isBetween(String date,String firstDate, String lastDate){
         String[] checkdate = date.split("/");
         String[] first = firstDate.split("/");
@@ -361,6 +581,7 @@ public class LastYearActivity extends AppCompatActivity {
         return false;
     }
 
+    //is the firstdate before the lastdate provided
     private boolean isBefore(String firstDate, String lastDate){
         String[] last = lastDate.split("/");
         String[] first = firstDate.split("/");
@@ -385,17 +606,38 @@ public class LastYearActivity extends AppCompatActivity {
         switchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(barChart.getVisibility() == View.VISIBLE && chart.getVisibility() == View.INVISIBLE) {
+                if(lineChart.getVisibility() == View.VISIBLE && chart.getVisibility() == View.INVISIBLE) {
                     chart.setVisibility(View.VISIBLE);
-                    barChart.setVisibility(View.INVISIBLE);
+                    lineChart.setVisibility(View.INVISIBLE);
                 } else {
-                    barChart.setVisibility(View.VISIBLE);
+                    lineChart.setVisibility(View.VISIBLE);
                     chart.setVisibility(View.INVISIBLE);
                 }
             }
         });
+        final Button organizeBtn = (Button) findViewById(R.id.btnOrganizeY);
+        organizeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!checkOrganization){
+                    setUpArraysRouteWise();
+                    setUpPieChart();
+                    setUpLineChart();
+                    organizeBtn.setText(R.string.journeymode);
+                    lineChart.setVisibility(View.INVISIBLE);
+                    checkOrganization=true;
+                }
+                else{
+                    setUpArrays();
+                    setUpPieChart();
+                    setUpLineChart();
+                    organizeBtn.setText(R.string.routemode);
+                    lineChart.setVisibility(View.INVISIBLE);
+                    checkOrganization=false;
+                }
+            }
+        });
     }
-
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, LastYearActivity.class);
