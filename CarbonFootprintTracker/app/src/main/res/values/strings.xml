@@ -3,9 +3,9 @@
     <string name="view_carbon_footprint">View Carbon FootPrint</string>
     <string name="create_a_new_journey">Create a New Journey</string>
     <string name="add_a_new_journey">Add a New Journey</string>
-    <string name="save_route">Save Route</string>
-    <string name="edit_route">Edit</string>
-    <string name="delete_route">Delete</string>
+    <string name="save">Save Route</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
     <string name="start">Start</string>
     <string name="add_a_new_car">Add a New Car</string>
     <string name="nick_name">Nick Name:</string>
@@ -16,7 +16,6 @@
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
     <string name="back">Back</string>
-    <string name="nickname">NickName:</string>
     <string name="distance">Distance</string>
     <string name="nick_name_for_route">Nick Name for Route</string>
     <string name="city_distance_in_km">City Distance in KM</string>
@@ -28,23 +27,17 @@
     <string name="km_driven_in_city">KM Driven in City:</string>
     <string name="km_driven_on_highway">KM Driven on Highway:</string>
     <string name="route_name">Route Name:</string>
-    <string name="context_edit">Edit</string>
     <string name="add_a_new_route">Add a New Route</string>
-    <string name="context_delete">Delete</string>
     <string name="add_route">Add Route</string>
     <string name="error_toast">Please name your car before adding it to your collection</string>
-    <string name="btn_splash_start">start</string>
-    <string name="App_name">Carbon Tracker</string>
     <string name="authors_text">Authors: Team Honeydew</string>
-    <string name="car_logo">car_logo</string>
-    <string name="splashbackground">splashbackground</string>
-    <string name="startbutton">startbutton</string>
+    <string name="car_logo">Car Logo</string>
+    <string name="start_button">Start Button</string>
     <string name="add_utility">Add Utility</string>
     <string-array name="menu">
         <item>Edit</item>
         <item>Delete</item>
     </string-array>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="initial_date">Initial Date:</string>
     <string name="new_date">New Date</string>
     <string name="amount">Amount :</string>
@@ -63,6 +56,13 @@
     <string name="last_365">Data for last 365 days</string>
     <string name="routemode">Route Mode</string>
     <string name="journeymode">Journey Mode</string>
+    <string name="add_a_utility_bill">Add a Utility Bill</string>
+    <string name="add_start_date">Add Start Date</string>
+    <string name="add_end_date">Add END DATE</string>
+    <string name="walk_bike">Walk/Bike</string>
+    <string name="skytrain">Skytrain</string>
+    <string name="bus">Bus</string>
+
     <string-array name="tips_array">
         <item>Carpool with commuters that share similar trips to yours.</item>
         <item>If looking to get a new car, take into consideration fuel efficiency when choosing which vehicle to get.</item>
