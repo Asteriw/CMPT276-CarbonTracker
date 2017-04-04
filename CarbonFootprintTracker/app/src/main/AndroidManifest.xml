@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
-            android:name=".WelcomeScreen"
+            android:name=".ui.WelcomeScreen"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
@@ -19,22 +19,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainMenu"
+            android:name=".ui.MainMenu"
             android:configChanges="orientation|keyboardHidden" />
-        <activity android:name=".SelectCar" />
-        <activity android:name=".CarbonFootPrint" />
-        <activity android:name=".AddCar" />
-        <activity android:name=".SelectJourney" />
-        <activity android:name=".AddUtility" />
-        <activity android:name=".DataActivityPicker" />
-        <activity android:name=".SelectRoute" />
-        <activity android:name=".UtilitiesFootPrint" />
-        <activity android:name=".SelectUtilities" />
-        <activity android:name=".EditDate" />
-        <activity android:name=".AddRoute" />
-        <activity android:name=".LastMonthActivity" />
-        <activity android:name=".LastYearActivity" />
-        <activity android:name=".DailyActivity"></activity>
+        <activity android:name=".ui.SelectCar" />
+        <activity android:name=".ui.CarbonFootPrint" />
+        <activity android:name=".ui.SelectJourney" />
+        <activity android:name=".ui.AddUtility" />
+        <activity android:name=".ui.DataActivityPicker" />
+        <activity android:name=".ui.SelectRoute" />
+        <activity android:name=".ui.UtilitiesFootPrint" />
+        <activity android:name=".ui.SelectUtilities" />
+        <activity android:name=".ui.EditDate" />
+        <activity android:name=".ui.AddRoute" />
+        <activity android:name=".ui.LastMonthActivity" />
+        <activity android:name=".ui.LastYearActivity" />
+        <activity android:name=".ui.DailyActivity"></activity>
+        <activity android:name=".ui.AddCar" />
     </application>
 
 </manifest>
