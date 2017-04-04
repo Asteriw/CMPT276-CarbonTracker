@@ -62,7 +62,8 @@
     <string name="walk_bike">Walk/Bike</string>
     <string name="skytrain">Skytrain</string>
     <string name="bus">Bus</string>
-    <string name="information">information</string>
+    <string name="car_year">car_year</string>
+    <string name="icon">Icon</string>
 
     <string-array name="tips_array">
         <item>Carpool with commuters that share similar trips to yours.</item>

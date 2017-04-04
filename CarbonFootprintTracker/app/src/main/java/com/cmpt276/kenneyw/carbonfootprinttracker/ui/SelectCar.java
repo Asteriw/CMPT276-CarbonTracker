@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -243,19 +244,30 @@ public class SelectCar extends AppCompatActivity {
 
             Log.i("TEST", "SIZE OF myCars = " + myCars.countCars());
             Log.i("TEST", "ICONID = " + myCars.getCar(position).getIconID());
+
             // Find the car to work with
             Car currentCar = myCars.getCar(position);
-            // Set icon
-            //ImageView iconView = (ImageView) findViewById(R.id.icon_imageView); //<< PROBLEM
-            //iconView.setImageResource( currentCar.getIconID() );
-            // Set info
-            //TextView carInfo = (TextView) findViewById(R.id.txt_layout_carlist_with_icons);
-            //carInfo.setText( currentCar.toString() );
+            Log.i("TEST", "CurrentCar = " + currentCar.getName());
+
+            // Set icon and info
+            ImageView iconView = (ImageView) itemView.findViewById(R.id.icon_imageView); //<< PROBLEM
+            iconView.setImageResource( currentCar.getIconID() );
+
+            TextView carName = (TextView) itemView.findViewById(R.id.carlist_name);
+            carName.setText( currentCar.getName() );
+
+            TextView carMake = (TextView) itemView.findViewById(R.id.carlist_make);
+            carMake.setText( currentCar.getMake() );
+
+            TextView carModel = (TextView) itemView.findViewById(R.id.carlist_model);
+            carModel.setText( currentCar.getModel() );
+
+            TextView carYear = (TextView) itemView.findViewById(R.id.carlist_year);
+            carYear.setText( "" + currentCar.getYear() );
 
             return itemView;
         }
     }
-
 
     //Context Menu Code taken and modified from:
     //https://www.mikeplate.com/2010/01/21/show-a-context-menu-for-long-clicks-in-an-android-listview/

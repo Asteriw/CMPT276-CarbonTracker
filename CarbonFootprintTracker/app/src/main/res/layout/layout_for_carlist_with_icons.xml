@@ -1,33 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/carlist_with_icons_relativeLayout">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:id="@+id/txt_layout_carlist_with_icons"
-        android:hint="@string/information"
-        android:layout_marginLeft="13dp"
-        android:layout_marginStart="13dp"
-        android:layout_alignParentTop="true"
+        android:id="@+id/carlist_name"
+        android:hint="@string/name"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+        android:layout_alignTop="@+id/icon_imageView"
         android:layout_toRightOf="@+id/icon_imageView"
-        android:layout_toEndOf="@+id/icon_imageView"
-        android:layout_marginTop="11dp" />
+        android:layout_toEndOf="@+id/icon_imageView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/carlist_make"
+        android:textSize="10sp"
+        android:hint="car_make"
+        android:layout_below="@+id/carlist_name"
+        android:layout_alignLeft="@+id/carlist_name"
+        android:layout_alignStart="@+id/carlist_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/carlist_model"
+        android:hint="car_model"
+        android:textSize="10sp"
+        android:layout_below="@+id/carlist_make"
+        android:layout_alignLeft="@+id/carlist_make"
+        android:layout_alignStart="@+id/carlist_make" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/carlist_year"
+        android:hint="@string/car_year"
+        android:textSize="10sp"
+        android:layout_below="@+id/carlist_model"
+        android:layout_alignLeft="@+id/carlist_model"
+        android:layout_alignStart="@+id/carlist_model" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/car_icon_2"
         android:id="@+id/icon_imageView"
+        android:src="@drawable/car_icon_2"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_margin="5dp" />
+        android:layout_margin="10dp" />
 
 </RelativeLayout>

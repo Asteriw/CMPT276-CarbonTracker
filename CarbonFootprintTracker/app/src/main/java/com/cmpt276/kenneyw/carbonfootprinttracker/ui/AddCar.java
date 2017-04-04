@@ -10,13 +10,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.Car;
@@ -39,6 +43,7 @@ public class AddCar extends AppCompatActivity {
     CarCollection cars = new CarCollection();
     int pos;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +54,22 @@ public class AddCar extends AppCompatActivity {
             pos = i.getIntExtra(POS_EDIT, 0);
         }
         else{pos=0;}
+
+        // Code was retrieve from: http://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
+        // this hiades soft-keyboard after user enters a nickname for the car
+        EditText inputName = (EditText) findViewById(R.id.nick_name_from_user);
+        inputName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ( (actionId == EditorInfo.IME_ACTION_DONE) || ((event.getKeyCode() == KeyEvent.KEYCODE_ENTER) && (event.getAction() == KeyEvent.ACTION_DOWN ))){
+                    // Do stuff when user presses enter
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                }
+                return false;
+            }
+        });
+        // Hide keyboard on start
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         openDatabase();
         setupYearSpinner();
@@ -142,6 +163,7 @@ public class AddCar extends AppCompatActivity {
                 car.setCityEmissions(Double.parseDouble(carData[4]));
                 car.setHighwayEmissions(Double.parseDouble(carData[5]));
             }
+
             cars.addCar(car);
         }
         populateListView();
@@ -171,6 +193,8 @@ public class AddCar extends AppCompatActivity {
                     masterCar.setLiterEngine(tempCar.getLiterEngine());
                     masterCar.setTransmission(tempCar.getTransmission());
                     masterCar.setMake(tempCar.getMake());
+
+                    masterCar.setIconID(tempCar.getIconID());
 
                     Intent i=new Intent();
                     i.putExtra(POS_EDIT,pos);
