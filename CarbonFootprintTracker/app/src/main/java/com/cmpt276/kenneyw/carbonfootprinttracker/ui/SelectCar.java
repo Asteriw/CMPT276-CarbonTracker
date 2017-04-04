@@ -10,21 +10,28 @@ package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.Car;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.CarCollection;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.CarSingleton;
+
+import java.util.List;
 
 public class SelectCar extends AppCompatActivity {
     public static final int ROUTE_SELECTED = 4;
@@ -41,6 +48,7 @@ public class SelectCar extends AppCompatActivity {
     public static final String MAKE="Make";
     public static final String MODEL="Model";
     public static final String YEAR="Year";
+    public static final String ICONID="IconID";
     public static final String POS_FOR_EDIT_CAR = "posEdit";
     public static final String POSITION_FOR_EDIT_JOURNEY = "pos";
     CarCollection myCars = new CarCollection();
@@ -80,6 +88,7 @@ public class SelectCar extends AppCompatActivity {
                 finalCar.setSkytrain(true);
                 finalCar.setBus(false);
                 finalCar.setWalk(false);
+                finalCar.setIconID(R.drawable.train_icon);
                 Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
                 startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
             }
@@ -100,6 +109,7 @@ public class SelectCar extends AppCompatActivity {
                 finalCar.setSkytrain(false);
                 finalCar.setBus(true);
                 finalCar.setWalk(false);
+                finalCar.setIconID(R.drawable.bus_icon);
                 Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
                 startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
             }
@@ -120,6 +130,7 @@ public class SelectCar extends AppCompatActivity {
                 finalCar.setSkytrain(false);
                 finalCar.setBus(false);
                 finalCar.setWalk(true);
+                finalCar.setIconID(R.drawable.bike_icon);
                 Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
                 startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
             }
@@ -134,7 +145,8 @@ public class SelectCar extends AppCompatActivity {
                     Double.longBitsToDouble(pref.getLong(i+MPGHIGHWAY,0)),
                     Double.longBitsToDouble(pref.getLong(i+MPGCITY,0)),pref.getInt(i+YEAR,0),
                     pref.getString(i+TRANSMISSION,""),
-                    Double.longBitsToDouble(pref.getLong(i+LITERENGINE,0)),pref.getString(i+GASTYPE,""));
+                    Double.longBitsToDouble(pref.getLong(i+LITERENGINE,0)),pref.getString(i+GASTYPE,""),
+                    pref.getInt(i+ICONID,0));
             cars.addCar(car);
         }
         return cars;
@@ -154,6 +166,7 @@ public class SelectCar extends AppCompatActivity {
             editor.putLong(i+MPGCITY,Double.doubleToRawLongBits(myCars.getCar(i).getCityEmissions()));
             editor.putLong(i+MPGHIGHWAY,Double.doubleToRawLongBits(myCars.getCar(i).getHighwayEmissions()));
             editor.putLong(i+LITERENGINE,Double.doubleToRawLongBits(myCars.getCar(i).getLiterEngine()));
+            editor.putInt(i+ICONID, myCars.getCar(i).getIconID());
         }
         editor.putInt(SHAREDPREF_ITEM_AMOUNTOFCARS,carAmt);
         editor.apply();
@@ -184,10 +197,12 @@ public class SelectCar extends AppCompatActivity {
     }
     private void setCarList() {
         // Build Adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.layout_for_list, myCars.getCarsDescriptionsWithName());
+        //ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.layout_for_list, myCars.getCarsDescriptionsWithName());
+        ArrayAdapter<Car> adapter = new MyListAdapter();
         // Configure the list view
         ListView list = (ListView) findViewById(R.id.carlist);
         list.setAdapter(adapter);
+
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -204,12 +219,44 @@ public class SelectCar extends AppCompatActivity {
                 finalCar.setWalk(false);
                 finalCar.setBus(false);
                 finalCar.setSkytrain(false);
+                finalCar.setIconID(myCars.getCar(position).getIconID());
                 Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
                 startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
             }
         });
         registerForContextMenu(list);
     }
+
+    private class MyListAdapter extends ArrayAdapter<Car>{
+
+        public MyListAdapter(){
+            super(SelectCar.this, R.layout.layout_for_carlist_with_icons, myCars.returnCarArrays());
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent){
+            // Make sure we have a view to work with
+            View itemView = convertView;
+            if ( itemView == null){
+                itemView = getLayoutInflater().inflate(R.layout.layout_for_carlist_with_icons, parent, false);
+            }
+
+            Log.i("TEST", "SIZE OF myCars = " + myCars.countCars());
+            Log.i("TEST", "ICONID = " + myCars.getCar(position).getIconID());
+            // Find the car to work with
+            Car currentCar = myCars.getCar(position);
+            // Set icon
+            //ImageView iconView = (ImageView) findViewById(R.id.icon_imageView); //<< PROBLEM
+            //iconView.setImageResource( currentCar.getIconID() );
+            // Set info
+            //TextView carInfo = (TextView) findViewById(R.id.txt_layout_carlist_with_icons);
+            //carInfo.setText( currentCar.toString() );
+
+            return itemView;
+        }
+    }
+
+
     //Context Menu Code taken and modified from:
     //https://www.mikeplate.com/2010/01/21/show-a-context-menu-for-long-clicks-in-an-android-listview/
     @Override
@@ -272,7 +319,8 @@ public class SelectCar extends AppCompatActivity {
                             masterCar.getYear(),
                             masterCar.getTransmission(),
                             masterCar.getLiterEngine(),
-                            masterCar.getGasType()
+                            masterCar.getGasType(),
+                            masterCar.getIconID()
                     );
                     myCars.addCar(tempCar);}
                 setupAddCarButton();
@@ -290,7 +338,8 @@ public class SelectCar extends AppCompatActivity {
                             masterCar.getYear(),
                             masterCar.getTransmission(),
                             masterCar.getLiterEngine(),
-                            masterCar.getGasType()
+                            masterCar.getGasType(),
+                            masterCar.getIconID()
                     );
                     int position=data.getIntExtra(POS_FOR_EDIT_CAR,0);
                     myCars.changeCar(tempCar,position);

@@ -1,5 +1,7 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
+import com.cmpt276.kenneyw.carbonfootprinttracker.R;
+
 /**
  * Creates a CarSingleton. This is just like a normal car, expect there can be only one.
  * The singleton will keep it's values somewhat persistently.
@@ -21,7 +23,7 @@ public class CarSingleton extends Car {
         walk=false;
         bus=false;
         skytrain=false;
-
+        iconID = R.drawable.car_icon_2;
     }
 
     public static CarSingleton getInstance(){
@@ -95,6 +97,9 @@ public class CarSingleton extends Car {
         this.Emissions[1] = city;
     }
 
+    public int getIconID(){return iconID;}
+    public void setIconID(int iconId){ this.iconID = iconId;}
+
     public boolean getWalk(){
         return walk;
     }
@@ -125,4 +130,5 @@ public class CarSingleton extends Car {
     private boolean walk;
     private boolean bus;
     private boolean skytrain;
+    private int iconID;
 }
