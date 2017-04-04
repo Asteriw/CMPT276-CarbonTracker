@@ -128,7 +128,6 @@ public class DailyActivity extends AppCompatActivity {
                         utilities.getUtility(i).getName()));
             }
         }
-
     }
 
     private long countDays(String[] first, String[] last) {
@@ -140,8 +139,8 @@ public class DailyActivity extends AppCompatActivity {
         long delta = (timeTwo - timeOne) / oneDay;
         return delta;
     }
-    //check if date is between 2 dates (string); returns True / False
 
+    //check if date is between 2 dates (string); returns True / False
     private boolean isBetween(String date,String firstDate, String lastDate){
         String[] checkdate = date.split("/");
         String[] first = firstDate.split("/");

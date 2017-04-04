@@ -9,10 +9,24 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.DailyActivity">
+
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/chart1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        android:alpha="1" />
+        android:alpha="1"
+        android:layout_marginBottom="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnBackDaily"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
