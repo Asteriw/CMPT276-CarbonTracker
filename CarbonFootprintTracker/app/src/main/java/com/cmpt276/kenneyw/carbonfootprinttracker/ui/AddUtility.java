@@ -1,5 +1,11 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
+/**
+ *  AddUtility saves name, emissions, gasType, amount, the numberOfPeople in the household and a
+ *  start and end date as input by the user.
+ *  Also handles editing utilities. Passes saved utilities via singleton class: UtilitySingleton
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

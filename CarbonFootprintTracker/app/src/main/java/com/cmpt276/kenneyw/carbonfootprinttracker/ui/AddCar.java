@@ -1,5 +1,10 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
+/**
+*  Add Car saves nickname,make,model and year of a car user selects from cardb.db.zip
+*  Also handles editing cars. Passes saved car via singleton class: carSingleton
+*/
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,11 +27,6 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 
 import java.util.List;
 
-
-/*
-*  Add Car saves nickname,make,model and year of a car user selects from cardb.db.zip
-*  Also handles editing cars. Passes saved car via singleton class: carSingleton
-* */
 public class AddCar extends AppCompatActivity {
 
     public static final String POS_EDIT = "posEdit";

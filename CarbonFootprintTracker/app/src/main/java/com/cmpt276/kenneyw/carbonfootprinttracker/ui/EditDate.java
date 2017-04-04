@@ -1,4 +1,10 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
+
+/**
+ *Date Picker Activity, picks any day for corresponding journey
+ *saves year month and day for later use
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,11 +15,6 @@ import android.widget.DatePicker;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.DateSingleton;
-
-/*
-Date Picker Activity, picks any day for corresponding journey
-saves year month and day for later use
- */
 public class EditDate extends AppCompatActivity {
     String date_in_str;
     int Year;

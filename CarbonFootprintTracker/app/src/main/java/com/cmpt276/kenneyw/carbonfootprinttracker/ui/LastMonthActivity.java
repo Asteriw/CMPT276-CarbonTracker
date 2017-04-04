@@ -34,19 +34,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-/*
-Activity for checking User's previous month data from Journeys and Utilities.
-Gets today's date, get's the date for exactly one month previous, and the number of days in between
-    i.e. March 27th to Feb 27th -> 31 days
-Goes through all journeys, sees if the date of journey is between these two dates, if so adds the car name or route name
-to the names arraylist. adds the corresponding emission data for related name in the same index in the ems arraylist
-
-Goes through all utilities, covers 4 possibilities of start and end dates being within and outside of the two above dates.
-if Utility is not in range, does not take data for pie chart
-
-For Line Graph, takes all emissions of one day, utilities (daily) emission and journey emission
-if no utility emission for day, stores average utility emission of all utilities
-
+/**
+ *Activity for checking User's previous month data from Journeys and Utilities.
+ *Gets today's date, get's the date for exactly one month previous, and the number of days in between
+ *i.e. March 27th to Feb 27th -> 31 days
+ *Goes through all journeys, sees if the date of journey is between these two dates, if so adds the car name or route name
+ *to the names arraylist. adds the corresponding emission data for related name in the same index in the ems arraylist
+ *
+ *Goes through all utilities, covers 4 possibilities of start and end dates being within and outside of the two above dates.
+ *if Utility is not in range, does not take data for pie chart
+ *
+ *For Line Graph, takes all emissions of one day, utilities (daily) emission and journey emission
+ *if no utility emission for day, stores average utility emission of all utilities
+ *
  */
 public class LastMonthActivity extends AppCompatActivity {
     //calculated as: 30% of 2005 Daily CO2 Emission in Canada divided by Population in 2005

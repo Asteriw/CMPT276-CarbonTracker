@@ -1,4 +1,11 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
+
+/**
+ *The Fragment used to edit a route. Uses the RouteSingleton to return the values entered by the
+ * user to edit the route they've selected, and returns an intent to SelectRoute for it to detect
+ * how to respond in the case of a cancelled or successful edit.
+ */
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,7 +18,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
-
 
 public class EditRouteFragment extends AppCompatDialogFragment {
     private static final String TAG = "CarbonFootprintTracker";

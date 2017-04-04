@@ -1,4 +1,10 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
+
+/**
+ * A welcome screen with an animation. Cannot return to this screen without relaunching the app.
+ * Leads to main menu.
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

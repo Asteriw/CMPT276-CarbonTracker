@@ -1,4 +1,9 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
+
+/**
+ *  This class displays the calculation result of CO2 emission of a selected journey
+ */
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,9 +24,7 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 import org.w3c.dom.Text;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-/*
-*  This class displays the calculation result of CO2 emission of a selected journey
-* */
+
 public class CalculationDialog extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

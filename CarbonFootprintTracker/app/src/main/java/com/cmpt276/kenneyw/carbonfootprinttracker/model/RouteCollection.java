@@ -1,13 +1,12 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * DESCRIPTION:
  *  - Create a list of car and functions to access to cars in the list
  */
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RouteCollection {
     private List<Route> routes = new ArrayList<>();

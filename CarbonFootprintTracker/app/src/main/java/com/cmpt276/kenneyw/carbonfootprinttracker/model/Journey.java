@@ -3,10 +3,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.Calculation;
 
-/*
-    Stores a Journey, and calculates CO2 emitted via this Journey in constructor and in separate function
-    which is called when editing a pre-existing Journey.
-     */
+/**
+ *Stores a Journey, and calculates CO2 emitted via this Journey in constructor and in separate function
+ *which is called when editing a pre-existing Journey.
+ */
 public class Journey extends AppCompatActivity {
     private String routeName;
     private double cityDistance;

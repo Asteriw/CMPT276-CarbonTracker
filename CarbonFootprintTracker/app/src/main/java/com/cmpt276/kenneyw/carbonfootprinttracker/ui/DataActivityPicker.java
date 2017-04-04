@@ -1,5 +1,8 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
+/**
+ *
+ */
 
 import android.content.Context;
 import android.content.Intent;

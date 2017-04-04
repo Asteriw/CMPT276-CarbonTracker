@@ -1,4 +1,11 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
+
+/**
+ *This Class stores a list of routes for perusal in a journey. Can add, edit and delete saved routes.
+ *Includes error checking of input, and user can go back to select car screen. Saving routes via shared prefs and
+ *transferring to journey to save via singleton class: routeSingleton
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,17 +22,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.Route;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.RouteCollection;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.RouteSingleton;
 
-/*
-This Class stores a list of routes for perusal in a journey. Can add, edit and delete saved routes.
-Includes error checking of input, and user can go back to select car screen. Saving routes via shared prefs and
-transferring to journey to save via singleton class: routeSingleton
- */
 public class SelectRoute extends AppCompatActivity {
     private static final String TAG = "CarbonFootprintTracker";
     public static final String NAME = "name";

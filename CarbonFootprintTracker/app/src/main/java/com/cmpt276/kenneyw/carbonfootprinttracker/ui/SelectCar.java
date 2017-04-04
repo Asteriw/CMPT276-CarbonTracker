@@ -1,4 +1,12 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
+
+/**
+ *   This class shows the user a list of cars (with engine displacement in L and transmission)
+ *   When user clicks an item on the list, it directs the user to "Select Route" screen
+ *   User is allowed to add/edit/delete. Saves saved cars with Shared Prefs, might transfar db handling
+ *   to SQL. Handles Journey editing via smart intent passing.
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,12 +26,6 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.model.Car;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.CarCollection;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.CarSingleton;
 
-/*
-*   This class shows the user a list of cars (with engine displacement in L and transmission)
-*   When user clicks an item on the list, it directs the user to "Select Route" screen
-*   User is allowed to add/edit/delete. Saves saved cars with Shared Prefs, might transfar db handling
-*   to SQL. Handles Journey editing via smart intent passing.
-* */
 public class SelectCar extends AppCompatActivity {
     public static final int ROUTE_SELECTED = 4;
     public static final int CAR_ADDED=5;

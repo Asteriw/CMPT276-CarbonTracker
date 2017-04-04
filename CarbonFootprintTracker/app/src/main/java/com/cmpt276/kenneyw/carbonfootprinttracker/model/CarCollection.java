@@ -6,7 +6,9 @@ import java.util.List;
 
 /**
  * DESCRIPTION:
- *  - Create a list of car and functions to access to cars in the list
+ *  - Create a list of car and functions to access the cars in the list
+ *
+ *  This class contains all the functions necessary to manage collections of cars.
  */
 
 public class CarCollection extends Car {
@@ -17,7 +19,6 @@ public class CarCollection extends Car {
     }
 
     public void changeCar(Car car, int indexOfCarToEdit) {
-//        validateIndexWithException(indexOfCarToEdit);
         cars.get(indexOfCarToEdit).setName(car.getName());
         cars.get(indexOfCarToEdit).setMake(car.getMake());
         cars.get(indexOfCarToEdit).setModel(car.getModel());

@@ -1,5 +1,10 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
+/**
+ * Main menu. Is connected to the SelectJourney, CarbonFootprint and Utilities screens.
+ * Nothing too special.
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

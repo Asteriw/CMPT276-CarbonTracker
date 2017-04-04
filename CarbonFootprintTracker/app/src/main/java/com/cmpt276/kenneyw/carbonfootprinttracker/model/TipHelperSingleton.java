@@ -1,5 +1,11 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
+/**
+ * Creates a TipHelperSingleton. There can be only one.
+ * The singleton will keep it's values somewhat persistently, which is useful for future uses of the
+ * singleton
+ */
+
 import android.util.Log;
 
 public class TipHelperSingleton {

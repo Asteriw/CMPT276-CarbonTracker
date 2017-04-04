@@ -1,4 +1,10 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
+
+/**
+ *   This class displays a table or a pie chart of journeys user created.
+ *   User is allowed to switch view
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,11 +31,6 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-/*
-*   This class displays a table or a pie chart of journeys user created.
-*   User is allowed to switch view
-*
-* */
 public class CarbonFootPrint extends AppCompatActivity {
     private static int row_size; // must be consistent over every variable used for a pie chart/ table
     final static String column_1_header = "Date of Trip";

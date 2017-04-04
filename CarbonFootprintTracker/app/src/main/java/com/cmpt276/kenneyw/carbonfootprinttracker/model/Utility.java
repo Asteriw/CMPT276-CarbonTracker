@@ -1,5 +1,12 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
+/**
+ * DESCRIPTION:
+ * Creates a Utility user input. If user inputs an empty name, tells user to try again
+ * This class is extended by UtilityCollection and UtilitySingleton.
+ * Classes must be public to be used from the other package.
+ */
+
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.Date;

@@ -1,7 +1,8 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
 /**
- * Creates a CarSingleton
+ * Creates a CarSingleton. This is just like a normal car, expect there can be only one.
+ * The singleton will keep it's values somewhat persistently.
  */
 
 public class CarSingleton extends Car {

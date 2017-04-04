@@ -1,5 +1,9 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
+/**
+ * Shows the Carbon Footprint per day when selected in the datepicker on the carbon footprint screen
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;

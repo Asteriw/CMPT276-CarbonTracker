@@ -1,5 +1,11 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
+/**
+ * Creates a UtilitySingleton. This is just like a normal utility, expect there can be only one.
+ * The singleton will keep it's values somewhat persistently, which is useful for later referencing
+ * of it's values
+ */
+
 import android.support.v7.app.AppCompatActivity;
 
 public class UtilitySingleton extends AppCompatActivity {

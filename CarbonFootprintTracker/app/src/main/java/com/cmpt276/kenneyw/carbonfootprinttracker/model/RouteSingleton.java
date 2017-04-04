@@ -1,5 +1,10 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
+/**
+ * Creates a RouteSingleton. This is just like a normal route, expect there can be only one.
+ * The singleton will keep it's values somewhat persistently.
+ */
+
 public class RouteSingleton {
 
     private static RouteSingleton routeinstance = null;

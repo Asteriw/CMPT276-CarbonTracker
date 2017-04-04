@@ -1,4 +1,11 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
+
+/**
+ *This Class shows the user a list of saved journeys, and can add delete and edit journeys.
+ *User can also see CO2 emitted for chosen journey in a dialog. Saves journeys from route and car singletons, via shared preference.
+ *might transfer database mgmt. to SQL
+ */
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,7 +28,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import android.widget.TextView;
-
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.TipHelperSingleton;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.CarSingleton;
@@ -29,14 +35,8 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.model.DateSingleton;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.Journey;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.JourneyCollection;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.RouteSingleton;
-
 import java.util.Date;
 
-/*
-This Class shows the user a list of saved journies, and can add delete and edit journies.
-User can also see CO2 emitted for chosen journey in a dialog. Saves journies from route and car singletons, via shared preference.
-//might transfer database mgmt. to SQL
- */
 public class SelectJourney extends AppCompatActivity {
     private static final String TAG = "CarbonFootprintTracker";
     private static final int CAR_AND_ROUTE_SELECTED = 1;

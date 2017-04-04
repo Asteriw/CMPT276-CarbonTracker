@@ -1,7 +1,10 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
-/*
-Date Singleton for storing date in journey
+
+/**
+ * Creates a DateSingleton. There can be only one.
+ * The singleton will keep it's values somewhat persistently, which is useful for calls to it's values later.
  */
+
 import java.util.Date;
 public class DateSingleton {
     private static DateSingleton dateinstance = null;

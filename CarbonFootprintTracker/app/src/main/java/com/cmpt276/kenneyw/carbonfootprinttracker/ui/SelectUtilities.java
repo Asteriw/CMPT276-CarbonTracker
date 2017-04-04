@@ -1,5 +1,9 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
+/**
+ *This Class stores a list of utilities for user to see. Can add, edit and delete saved utilities.
+ *Includes error checking of input, and user can go back to main menu.
+ */
 
 import android.content.Context;
 import android.content.DialogInterface;

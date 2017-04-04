@@ -1,15 +1,16 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
+/**
+ * DESCRIPTION:
+ *  - Create a list of Journeys and functions to access to journeys in the list
+ */
+
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class JourneyCollection extends AppCompatActivity{
-    /**
- * DESCRIPTION:
- *  - Create a list of car and functions to access to cars in the list
- */
     private List<Journey> journeys = new ArrayList<>();
 
     public void addJourney(Journey journey){

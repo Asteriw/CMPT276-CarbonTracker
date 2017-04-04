@@ -1,9 +1,6 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
-import java.text.DecimalFormat;
-
-
-/*
+/**
 * CLASS DESCRIPTION:
 *  Compute CO2 generated on a journey by how much gas was used during the trip for the city and highway portion.
 *  Use the city08 and highway08 for miles per gallon of fuel. Only work with the primary fuel (ignore secondary fuels).
@@ -33,7 +30,7 @@ import java.text.DecimalFormat;
 * Time taken for 1 tree to absorb 1kg CO2 = ____
 * total time taken = kg CO2 * ____
 *
-* */
+*/
 
 public class Calculation {
 

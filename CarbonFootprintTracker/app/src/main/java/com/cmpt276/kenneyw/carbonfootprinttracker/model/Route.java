@@ -1,7 +1,7 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
 /**
- * This Class makes an Individual Route and has it's getters and setters and contructor
+ * This Class makes an Individual Route and has it's getters and setters and constructor
  */
 
 public class Route {

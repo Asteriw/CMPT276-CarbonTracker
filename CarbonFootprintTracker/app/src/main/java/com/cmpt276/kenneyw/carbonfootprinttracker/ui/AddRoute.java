@@ -1,5 +1,10 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
+/**
+ *  AddRoute saves cityKM, highwayKM and name of a route input by the user
+ *  Also handles editing routes. Passes saved routes via singleton class: RouteSingleton
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

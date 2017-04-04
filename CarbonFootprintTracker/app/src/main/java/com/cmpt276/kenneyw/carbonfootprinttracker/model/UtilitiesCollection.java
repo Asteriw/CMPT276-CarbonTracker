@@ -1,5 +1,12 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
+/**
+ * DESCRIPTION:
+ *  - Create a list of utilities and functions to access the utilities in the list
+ *
+ *  This class contains all the functions necessary to manage collections of utilities.
+ */
+
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;

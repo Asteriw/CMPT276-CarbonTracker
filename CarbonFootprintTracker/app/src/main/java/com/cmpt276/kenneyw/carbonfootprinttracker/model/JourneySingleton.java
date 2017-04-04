@@ -1,8 +1,14 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
+/**
+ * Creates a JourneySingleton. This is just like a normal journey, expect there can be only one.
+ * The singleton will keep it's values somewhat persistently.
+ */
+
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.Date;
+
 
 public class JourneySingleton extends AppCompatActivity {
     private String routeName;
