@@ -250,7 +250,7 @@ public class SelectCar extends AppCompatActivity {
             Log.i("TEST", "CurrentCar = " + currentCar.getName());
 
             // Set icon and info
-            ImageView iconView = (ImageView) itemView.findViewById(R.id.icon_imageView); //<< PROBLEM
+            ImageView iconView = (ImageView) itemView.findViewById(R.id.icon_imageView);
             iconView.setImageResource( currentCar.getIconID() );
 
             TextView carName = (TextView) itemView.findViewById(R.id.carlist_name);

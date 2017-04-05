@@ -32,7 +32,7 @@ public class Car{
         year = 0;
         transmission = "";
         literEngine = 0;
-        iconID = R.drawable.car_icon_2;
+        iconID = R.drawable.car_icon_2; // default icon
     }
 
     public double getLiterEngine() {
@@ -48,7 +48,6 @@ public class Car{
     public void setTransmission(String transmission) {
         this.transmission = transmission;
     }
-
 
     public String getGasType(){
         return gasType;
@@ -100,7 +99,19 @@ public class Car{
     }
 
     public int getIconID(){return iconID;}
-    public void setIconID(int iconId){ this.iconID = iconId;}
+    public void setIconID(int iconId){
+        if (iconId == R.drawable.car_icon_2)
+            this.iconID = R.drawable.car_icon_2;
+        else if (iconId == R.drawable.truck)
+            this.iconID = R.drawable.truck;
+        else if (iconId == R.drawable.modern)
+            this.iconID = R.drawable.modern;
+        else if (iconId == R.drawable.sport)
+            this.iconID = R.drawable.sport;
+        else{
+            this.iconID = R.drawable.classic;
+        }
+    }
 
     // Variables Declaration
     private String name;
