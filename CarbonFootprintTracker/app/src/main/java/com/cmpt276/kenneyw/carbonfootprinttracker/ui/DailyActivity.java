@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.Journey;
@@ -91,6 +92,17 @@ public class DailyActivity extends AppCompatActivity {
 
         setUpArrays();
         setUpPieChart();
+        setUpButtons();
+    }
+
+    private void setUpButtons() {
+        Button backbtn = (Button) findViewById(R.id.btnBackDaily);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void setUpPieChart() {
