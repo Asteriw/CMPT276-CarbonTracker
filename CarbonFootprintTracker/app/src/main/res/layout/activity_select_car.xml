@@ -24,15 +24,6 @@
         android:layout_alignParentStart="true"
         android:id="@+id/back_button_select_car" />
 
-    <Button
-        android:text="@string/walk_bike"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/back_button_select_car"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/btnWalk" />
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,14 +42,6 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/btnSkytrain" />
 
-    <Button
-        android:text="@string/bus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btnWalk"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/btnBus" />
-
     <TextView
         android:text="@string/list_of_cars"
         android:layout_width="wrap_content"
@@ -67,4 +50,35 @@
         android:textSize="24sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="@string/walk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnWalk"
+        android:layout_above="@+id/back_button_select_car"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/bike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bike_button"
+        android:layout_alignBaseline="@+id/btnWalk"
+        android:layout_alignBottom="@+id/btnWalk"
+        android:layout_toRightOf="@+id/back_button_select_car"
+        android:layout_toEndOf="@+id/back_button_select_car"
+        android:layout_marginLeft="2dp" />
+
+    <Button
+        android:text="@string/bus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnBus"
+        android:layout_alignBaseline="@+id/btnSkytrain"
+        android:layout_alignBottom="@+id/btnSkytrain"
+        android:layout_toLeftOf="@+id/btnSkytrain"
+        android:layout_toStartOf="@+id/btnSkytrain"
+        android:layout_marginRight="2dp" />
 </RelativeLayout>

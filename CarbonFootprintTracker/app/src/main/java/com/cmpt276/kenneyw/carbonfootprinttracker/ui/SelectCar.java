@@ -73,6 +73,7 @@ public class SelectCar extends AppCompatActivity {
         Button btnSkytrain=(Button)findViewById(R.id.btnSkytrain);
         Button btnBus=(Button)findViewById(R.id.btnBus);
         Button btnWalk=(Button)findViewById(R.id.btnWalk);
+        Button btnBike=(Button) findViewById(R.id.bike_button);
         btnSkytrain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +90,7 @@ public class SelectCar extends AppCompatActivity {
                 finalCar.setSkytrain(true);
                 finalCar.setBus(false);
                 finalCar.setWalk(false);
+                finalCar.setBike(false);
                 finalCar.setIconID(R.drawable.train_icon);
                 Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
                 startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
@@ -121,7 +123,7 @@ public class SelectCar extends AppCompatActivity {
                 CarSingleton finalCar=CarSingleton.getInstance();
                 finalCar.setMake("");
                 finalCar.setModel("");
-                finalCar.setName("Walk / Bike");
+                finalCar.setName("Walk");
                 finalCar.setYear(0);
                 finalCar.setCityEmissions(0);
                 finalCar.setHighwayEmissions(0);
@@ -131,11 +133,37 @@ public class SelectCar extends AppCompatActivity {
                 finalCar.setSkytrain(false);
                 finalCar.setBus(false);
                 finalCar.setWalk(true);
+                finalCar.setBike(false);
+                finalCar.setIconID(R.drawable.walk_icon);
+                Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
+                startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
+            }
+        });
+        btnBike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CarSingleton finalCar=CarSingleton.getInstance();
+                finalCar.setMake("");
+                finalCar.setModel("");
+                finalCar.setName("Bike");
+                finalCar.setYear(0);
+                finalCar.setCityEmissions(0);
+                finalCar.setHighwayEmissions(0);
+                finalCar.setLiterEngine(0);
+                finalCar.setGasType("");
+                finalCar.setTransmission("");
+                finalCar.setSkytrain(false);
+                finalCar.setBus(false);
+                finalCar.setWalk(true);
+                finalCar.setBike(true);
                 finalCar.setIconID(R.drawable.bike_icon);
                 Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
                 startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
             }
         });
+
+
+
     }
     public CarCollection loadCars() {
         CarCollection cars = new CarCollection();
@@ -220,6 +248,7 @@ public class SelectCar extends AppCompatActivity {
                 finalCar.setWalk(false);
                 finalCar.setBus(false);
                 finalCar.setSkytrain(false);
+                finalCar.setBike(false);
                 finalCar.setIconID(myCars.getCar(position).getIconID());
                 Intent SelectCar2SelectRoute = SelectRoute.makeIntent(SelectCar.this);
                 startActivityForResult(SelectCar2SelectRoute,ROUTE_SELECTED);
@@ -227,7 +256,7 @@ public class SelectCar extends AppCompatActivity {
         });
         registerForContextMenu(list);
     }
-
+    // Custom Adapter for carlist with icons
     private class MyListAdapter extends ArrayAdapter<Car>{
 
         public MyListAdapter(){

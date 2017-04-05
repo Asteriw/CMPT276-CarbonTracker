@@ -56,6 +56,10 @@ public class JourneyCollection extends AppCompatActivity{
         return descriptions;
     }
 
+    public List<Journey> returnJourneyList(){
+        return journeys;
+    }
+
     private void validateIndexWithException(int index) {
         if (index < 0 || index >= countJourneys()) {
             throw new IllegalArgumentException();

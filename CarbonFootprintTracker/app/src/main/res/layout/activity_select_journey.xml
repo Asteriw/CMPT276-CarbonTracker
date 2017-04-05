@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.SelectJourney">
 
+    <TextView
+        android:text="@string/list_of_journeys"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="24sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,8 +22,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/journeyList"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="70dp" />
+        android:layout_above="@+id/back_button_select_journey"
+        android:layout_marginTop="50dp" />
 
     <Button
         android:text="@string/back"

@@ -100,7 +100,7 @@
                     android:textColor="@android:color/holo_green_light" />
 
                 <TextView
-                    android:text="@string/http_www_flaticon_com_free_icon_taxi_89131"
+                    android:text="@string/http_www_flaticon_com_packs_transport_27"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
