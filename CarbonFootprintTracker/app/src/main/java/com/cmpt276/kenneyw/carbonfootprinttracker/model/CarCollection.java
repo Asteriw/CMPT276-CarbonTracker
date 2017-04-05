@@ -14,6 +14,9 @@ import java.util.List;
 public class CarCollection extends Car {
     private List<Car> cars = new ArrayList<>();
 
+    public List<Car> returnCarArrays(){
+        return cars;
+    }
     public void addCar(Car car){
         cars.add(car);
     }
@@ -28,6 +31,7 @@ public class CarCollection extends Car {
         cars.get(indexOfCarToEdit).setHighwayEmissions(car.getHighwayEmissions());
         cars.get(indexOfCarToEdit).setGasType(car.getGasType());
         cars.get(indexOfCarToEdit).setCityEmissions(car.getCityEmissions());
+        cars.get(indexOfCarToEdit).setIconID(car.getIconID());
     }
 
     public void deleteCar(int indexToDelete){
@@ -80,6 +84,14 @@ public class CarCollection extends Car {
         return descriptions;
     }
 
+    public int[] getIconIDs(){
+        int[] IDs = new int[countCars()];
+        for (int i =0; i < countCars(); i++){
+            Car car = getCar(i);
+            IDs[i] = car.getIconID();
+        }
+        return IDs;
+    }
     private void validateIndexWithException(int index) {
         if (index < 0 || index >= countCars()) {
             throw new IllegalArgumentException();

@@ -46,6 +46,8 @@ public class UtilitiesFootPrint extends AppCompatActivity{
     public static final String BUS = "bus";
     public static final String BIKE = "bike";
     public static final String SKYTRAIN = "skytrain";
+    public static final String WALK = "walk";
+    public static final String ICONID = "IconID";
 
     ArrayList<Journey> journeyArrayList=new ArrayList<>();
     ArrayList<Utility> utilities = new ArrayList<>();
@@ -90,7 +92,9 @@ public class UtilitiesFootPrint extends AppCompatActivity{
                     pref.getString(i+DATESTRING,""),
                     pref.getBoolean(i+BUS,false),
                     pref.getBoolean(i+BIKE,false),
-                    pref.getBoolean(i+SKYTRAIN,false));
+                    pref.getBoolean(i+SKYTRAIN,false),
+                    pref.getBoolean(i+WALK,false),
+                    pref.getInt(i+ICONID,0));
             journeyArrayList.add(j);
         }
         return journeyArrayList;

@@ -1,6 +1,7 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 import android.support.v7.app.AppCompatActivity;
 
+import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.Calculation;
 
 /**
@@ -8,6 +9,7 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.model.Calculation;
  *which is called when editing a pre-existing Journey.
  */
 public class Journey extends AppCompatActivity {
+    private int iconID;
     private String routeName;
     private double cityDistance;
     private double highwayDistance;
@@ -20,12 +22,13 @@ public class Journey extends AppCompatActivity {
     private double totalEmissions;
     private boolean Bike;
     private boolean Bus;
+    private boolean Walk;
     private boolean Skytrain;
     public static final double KWH_PER_KM = 6.848;
     public static final int CO2_PER_KWH = 9;
     public Journey(String routeName, double cityDistance, double highwayDistance,
                    String carName, String gasType, double mpgCity, double mpgHighway, double literEngine,
-                   String dateString,boolean bus,boolean bike,boolean skytrain){
+                   String dateString,boolean bus,boolean bike,boolean skytrain, boolean walk, int iconID){
         this.routeName=routeName;
         this.cityDistance = cityDistance;
         this.highwayDistance = highwayDistance;
@@ -37,13 +40,15 @@ public class Journey extends AppCompatActivity {
         this.dateString=dateString;
         this.Bus=bus;
         this.Bike=bike;
+        this.Walk=walk;
         this.Skytrain=skytrain;
         this.totalEmissions=CalculateTotalEmissions();
+        this.iconID = iconID;
     }
     public double CalculateTotalEmissions(){
         Calculation c=new Calculation();
         double totalEmissions=0;
-        if(!this.Bus && !this.Bike && !this.Skytrain )
+        if(!this.Bus && !this.Bike && !this.Skytrain && !this.Walk )
             switch(this.gasType) {
                 case "Premium":
                     totalEmissions += c.calculateCO2Diesel(mpgCity,cityDistance);
@@ -67,15 +72,9 @@ public class Journey extends AppCompatActivity {
         }
         return doubleToTwoPlaces(totalEmissions);
     }
+    // Return with 2 decimal places
     private double doubleToTwoPlaces(double result_in_kg_CO2) {
-        /*if(result_in_kg_CO2*8==0){return 0;}
-        DecimalFormat df2 = new DecimalFormat("#0.00");
-        result_in_kg_CO2= Double.parseDouble(df2.format(result_in_kg_CO2));
-        return result_in_kg_CO2;
-        result_in_kg_CO2 = result_in_kg_CO2 * 100;
-        result_in_kg_CO2 = (double)Math.round(result_in_kg_CO2);
-        result_in_kg_CO2 = result_in_kg_CO2/100;*/
-        return result_in_kg_CO2;
+        return Math.round(result_in_kg_CO2 * 100) /100 ;
     }
     public String getDateString() {return dateString;}
     public void setDateString(String dateString) {this.dateString = dateString;}
@@ -99,6 +98,9 @@ public class Journey extends AppCompatActivity {
     }
     public double getLiterEngine() {
         return literEngine;
+    }
+    public String getTotalDistanceToString(){
+        return "Total Distance: " + Math.round( (highwayDistance + cityDistance) *100)/100 + " km";
     }
     public void setLiterEngine(double literEngine) {
         this.literEngine = literEngine;
@@ -151,6 +153,38 @@ public class Journey extends AppCompatActivity {
     public void setSkytrain(boolean skytrain) {
         Skytrain = skytrain;
     }
+
+    public boolean isWalk(){return Walk;}
+    public void setWalk(boolean walk) {
+        Walk = walk;
+    }
+
+    public int getIconID(){
+        return this.iconID;
+    }
+    public void setIconID(int iconId){
+        if (iconId == R.drawable.car_icon_2)
+            this.iconID = R.drawable.car_icon_2;
+        else if (iconId == R.drawable.truck)
+            this.iconID = R.drawable.truck;
+        else if (iconId == R.drawable.modern)
+            this.iconID = R.drawable.modern;
+        else if (iconId == R.drawable.sport)
+            this.iconID = R.drawable.sport;
+        else if (iconId == R.drawable.classic)
+            this.iconID = R.drawable.classic;
+
+        else if (iconId == R.drawable.bike_icon)
+            this.iconID = R.drawable.bike_icon;
+        else if (iconId == R.drawable.bus_icon)
+            this.iconID = R.drawable.bus_icon;
+        else if (iconId == R.drawable.train_icon)
+            this.iconID = R.drawable.train_icon;
+        else{
+            this.iconID = R.drawable.walk_icon;
+        }
+    }
+
     public String toString() {
         return
                 name+
