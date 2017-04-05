@@ -37,8 +37,6 @@ public class AboutFragment extends AppCompatDialogFragment {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        break;
                 }
             }
         };
@@ -48,7 +46,6 @@ public class AboutFragment extends AppCompatDialogFragment {
                 .setTitle("About")
                 .setView(viewer)
                 .setPositiveButton(android.R.string.ok, listener)
-                .setNegativeButton(android.R.string.cancel, listener)
                 .create();
     }
 }

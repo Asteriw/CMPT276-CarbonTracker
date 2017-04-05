@@ -4,7 +4,7 @@
     android:id="@+id/activity_select_car"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.SelectCar">
+    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.SelectCar">
 
     <Button
         android:text="@string/add_a_new_car"
@@ -39,7 +39,8 @@
         android:id="@+id/carlist"
         android:layout_above="@+id/btnWalk"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp" />
 
     <Button
         android:text="@string/skytrain"
@@ -57,4 +58,13 @@
         android:layout_alignTop="@+id/btnWalk"
         android:layout_centerHorizontal="true"
         android:id="@+id/btnBus" />
+
+    <TextView
+        android:text="@string/list_of_cars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="24sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

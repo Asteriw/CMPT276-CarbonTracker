@@ -91,38 +91,33 @@ public class AddCar extends AppCompatActivity {
 
     private void setupIconSpinner() {
         Spinner iconSpinner = (Spinner) findViewById(R.id.iconSpinner);
+        String [] iconTypes = {"Regular Car", "Modern Car", "Classic Car", "Sport Car", "Truck"};
 
-        ArrayList<Integer> iconList = new ArrayList<>();
-        iconList.add(R.drawable.car_icon_2);
-        iconList.add(R.drawable.modern);
-        iconList.add(R.drawable.classic);
-        iconList.add(R.drawable.sport);
-        iconList.add(R.drawable.truck);
-
-        ArrayAdapter<Integer> iconAdapter = new ArrayAdapter<Integer>(this, R.layout.support_simple_spinner_dropdown_item, iconList);
+        ArrayAdapter<String> iconAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, iconTypes);
         iconSpinner.setAdapter(iconAdapter);
         iconSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0){
-                    Toast.makeText(getApplicationContext(), "Car selected", Toast.LENGTH_SHORT).show();
+                if (position == 0) {
+                   // Toast.makeText(getApplicationContext(), "Car selected", Toast.LENGTH_SHORT).show();
                     selectIconID = R.drawable.car_icon_2;
-                }else if (position == 1){
-                    Toast.makeText(getApplicationContext(), "Modern selected", Toast.LENGTH_SHORT).show();
+                } else if (position == 1) {
+                    //Toast.makeText(getApplicationContext(), "Modern selected", Toast.LENGTH_SHORT).show();
                     selectIconID = R.drawable.modern;
-                }else if (position == 2){
-                    Toast.makeText(getApplicationContext(), "Classic selected", Toast.LENGTH_SHORT).show();
+                } else if (position == 2) {
+                    //Toast.makeText(getApplicationContext(), "Classic selected", Toast.LENGTH_SHORT).show();
                     selectIconID = R.drawable.classic;
-                }else if (position == 3){
-                    Toast.makeText(getApplicationContext(), "Sport selected", Toast.LENGTH_SHORT).show();
+                } else if (position == 3) {
+                    //Toast.makeText(getApplicationContext(), "Sport selected", Toast.LENGTH_SHORT).show();
                     selectIconID = R.drawable.sport;
-                }else if (position == 4){
-                    Toast.makeText(getApplicationContext(), "Truck selected", Toast.LENGTH_SHORT).show();
+                } else if (position == 4) {
+                    //Toast.makeText(getApplicationContext(), "Truck selected", Toast.LENGTH_SHORT).show();
                     selectIconID = R.drawable.truck;
-                }else{
+                } else {
                     // do nothing
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
