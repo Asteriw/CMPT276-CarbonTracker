@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textColor="@color/orange"
-        android:elevation="2dp"
         tools:elevation="2dp"
         android:id="@+id/Splash_Title"
         android:textSize="45sp"
