@@ -99,19 +99,19 @@ public class AddCar extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-                    Toast.makeText(getApplicationContext(), "Car selected", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Car selected", Toast.LENGTH_SHORT).show();
                     selectIconID = R.drawable.car_icon_2;
                 } else if (position == 1) {
-                    Toast.makeText(getApplicationContext(), "Modern selected", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Modern selected", Toast.LENGTH_SHORT).show();
                     selectIconID = R.drawable.modern;
                 } else if (position == 2) {
-                    Toast.makeText(getApplicationContext(), "Classic selected", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Classic selected", Toast.LENGTH_SHORT).show();
                     selectIconID = R.drawable.classic;
                 } else if (position == 3) {
-                    Toast.makeText(getApplicationContext(), "Sport selected", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Sport selected", Toast.LENGTH_SHORT).show();
                     selectIconID = R.drawable.sport;
                 } else if (position == 4) {
-                    Toast.makeText(getApplicationContext(), "Truck selected", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Truck selected", Toast.LENGTH_SHORT).show();
                     selectIconID = R.drawable.truck;
                 } else {
                     // do nothing
@@ -212,6 +212,7 @@ public class AddCar extends AppCompatActivity {
                 car.setCityEmissions(Double.parseDouble(carData[4]));
                 car.setHighwayEmissions(Double.parseDouble(carData[5]));
             }
+            cars.setIconID(selectIconID);
             cars.addCar(car);
         }
         populateListView();
