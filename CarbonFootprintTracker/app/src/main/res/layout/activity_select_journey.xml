@@ -4,7 +4,8 @@
     android:id="@+id/activity_add_journey"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.SelectJourney">
+    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.SelectJourney"
+    android:background="@drawable/image1">
 
     <TextView
         android:text="@string/list_of_journeys"
@@ -13,7 +14,8 @@
         android:layout_marginTop="10dp"
         android:textSize="24sp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textStyle="normal|bold|italic" />
 
     <ListView
         android:layout_width="match_parent"
@@ -23,7 +25,12 @@
         android:layout_alignParentStart="true"
         android:id="@+id/journeyList"
         android:layout_above="@+id/back_button_select_journey"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp" />
 
     <Button
         android:text="@string/back"
@@ -33,7 +40,8 @@
         android:layout_alignBaseline="@+id/add_a_new_journey_button"
         android:layout_alignBottom="@+id/add_a_new_journey_button"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textStyle="normal|bold" />
 
     <Button
         android:text="@string/add_a_new_journey"
@@ -42,6 +50,7 @@
         android:id="@+id/add_a_new_journey_button"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textStyle="normal|bold" />
 
 </RelativeLayout>

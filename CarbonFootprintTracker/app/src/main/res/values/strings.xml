@@ -79,8 +79,8 @@
     <string name="car_model">car_model</string>
     <string name="list_of_cars">List of Cars</string>
     <string name="list_of_routes">List of Routes</string>
-    <string name="walk">walk</string>
-    <string name="bike">bike</string>
+    <string name="walk">Walk</string>
+    <string name="bike">Bike</string>
     <string name="list_of_journeys">List of Journeys</string>
     <string name="http_www_flaticon_com_packs_transport_27">http://www.flaticon.com/packs/transport-27</string>
     <string name="welcome">Welcome</string>
