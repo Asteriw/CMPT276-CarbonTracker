@@ -87,6 +87,9 @@
     <string name="loading">Loading...</string>
     <string name="splash_background_image">splash_background_image</string>
     <string name="list_of_utilities">List of Utilities</string>
+    <string name="graph">Graph</string>
+    <string name="utility">Utility</string>
+    <string name="journey">Journey</string>
 
     <string-array name="tips_array">
         <item>Carpool with commuters that share similar trips to yours.</item>

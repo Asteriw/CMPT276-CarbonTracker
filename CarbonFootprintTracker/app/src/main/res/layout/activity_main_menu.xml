@@ -5,70 +5,124 @@
     android:id="@+id/activity_main_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/image4"
+    android:background="@drawable/image1"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.MainMenu">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/utility_add_button"
+                android:src="@drawable/utility_icon"
+                android:layout_weight="1"
+                android:background="@android:color/transparent" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/create_a_new_journey_button"
+                android:layout_weight="1"
+                android:src="@drawable/journey_icon"
+                android:background="@android:color/transparent" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/view_cabon_footprint_button"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/graph_icon" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/about_btn"
+                android:layout_weight="1"
+                android:src="@drawable/help_icon"
+                android:background="@android:color/transparent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:text="@string/journey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.76"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_green_light"
+                android:textStyle="normal|bold|italic"
+                android:textAllCaps="true" />
+
+            <TextView
+                android:text="@string/utility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.96"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textStyle="normal|bold|italic"
+                android:textColor="@android:color/holo_green_light" />
+
+            <TextView
+                android:text="@string/graph"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.04"
+                android:textAlignment="center"
+                android:textStyle="normal|bold|italic"
+                android:textAllCaps="true"
+                android:textColor="@android:color/holo_green_light" />
+
+            <TextView
+                android:text="@string/about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.08"
+                android:textAlignment="center"
+                android:textStyle="normal|bold|italic"
+                android:textAllCaps="true"
+                android:textColor="@android:color/holo_green_light" />
+        </LinearLayout>
+
+    </LinearLayout>
+
     <TextView
+        android:text="Main Menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="@color/orange"
-        tools:elevation="2dp"
-        android:id="@+id/Splash_Title"
-        android:textSize="45sp"
-        android:shadowDx="4"
-        android:shadowDy="4"
-        android:shadowRadius="5"
-        android:shadowColor="@color/black"
+        android:layout_marginTop="105dp"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="40sp"
         android:textStyle="normal|bold"
-        android:layout_marginBottom="41dp"
-        android:layout_above="@+id/car_logo"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="@string/add_a_utility_bill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/utility_add_button"
-        android:layout_above="@+id/view_cabon_footprint_button"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="@string/create_a_new_journey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/create_a_new_journey_button"
-        android:layout_above="@+id/utility_add_button"
+        android:textAllCaps="false"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/car_logo"
-        app:srcCompat="@drawable/car_icon"
-        android:id="@+id/car_logo"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:paddingRight="30dp" />
-
-    <Button
-        android:text="@string/view_carbon_footprint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/view_cabon_footprint_button"
-        android:layout_above="@+id/about_btn"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="@string/about"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/about_btn"
-        android:layout_marginBottom="45dp"
+        app:srcCompat="@drawable/menu_icon"
+        android:id="@+id/mainmeu_plane"
+        android:layout_marginBottom="69dp"
+        android:layout_marginLeft="39dp"
+        android:layout_marginStart="39dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
