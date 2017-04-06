@@ -17,6 +17,10 @@ public class TipHelperSingleton {
     private int moreThanFourElec;
     private static TipHelperSingleton helperInstance = null;
     private String currentMode;
+    private int NatGasDaily;
+    private int NatGasMonthly;
+    private int ElecDaily;
+    private int ElecMonthly;
 
     private TipHelperSingleton() {
 
@@ -30,7 +34,7 @@ public class TipHelperSingleton {
     }
 
     public void setTipIndexTravel() {
-        if (currentMode.equals("Utility")) {
+        if (currentMode.equals("Utility") || currentMode.equals("Electric")) {
             this.tipIndex = 0;
             currentMode = "Travel";
         }

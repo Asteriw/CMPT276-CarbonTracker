@@ -37,6 +37,7 @@ public class SelectUtilities extends AppCompatActivity {
     public static final int ADD_UTILITY = 1;
     private static final String TAG = "CarbonFootprintTracker";
     private static final String SHAREDPREF_SET = "CarbonFootprintTrackerUtilities";
+    private static final String SHAREDPREF_ITEM_AMOUNTOFJOURNEYS = "AmountOfJourneys";
     private static final String SHAREDPREF_ITEM_AMOUNTOFUTILITIES = "AmountOfUtilities";
     private static final String NAME = "name";
     private static final String GASTYPE = "gasType";
@@ -192,7 +193,7 @@ public class SelectUtilities extends AppCompatActivity {
                     utilities.addUtility(temp_utility);
                     setupButtons();
                     setupList();
-                    //tipMaker();
+                    tipMaker();
                 } else {
                     setupButtons();
                     setupList();
@@ -218,7 +219,7 @@ public class SelectUtilities extends AppCompatActivity {
         }
     }
 
-    /*private void tipMaker() {
+    private void tipMaker() {
         LayoutInflater inflater = LayoutInflater.from(this);
         View tipView = inflater.inflate(R.layout.activity_tip_dialog, null);
 
@@ -237,40 +238,55 @@ public class SelectUtilities extends AppCompatActivity {
         builder.setNegativeButton("Ok", null);
         AlertDialog tipDialog = builder.create();
         tipDialog.show();
-    }*/
+    }
 
     //Avoids tips that have been shown in the last 7
     //Picks relevant tips, using userdata
-    /*private String tipTextSelector() {
+    private String tipTextSelector() {
         TipHelperSingleton tipHelper = TipHelperSingleton.getInstance();
-        if utilities were made() {
+        UtilitySingleton utilHelper = UtilitySingleton.getInstance();
+        if (utilHelper.getGasType() == "Natural Gas") {
             tipHelper.setTipIndexUtil();
             if (tipHelper.spiceTimerUtility() == 1) {
-                if no journeys exist, no more tips.
-                tipHelper.setTipIndexTravel();
-                properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
-                tipString = tipArray[properTipIndex];
-                return tipString;
+                SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+                int journeyNum = pref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
+                if (journeyNum > 0) {
+                    tipHelper.setTipIndexTravel();
+                    properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
+                    tipString = tipArray[properTipIndex];
+                    return tipString;
+                }
+                else {
+                    tipString = getString(R.string.noTips);
+                    return tipString;
+                }
             }
             properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
             tipString = tipArray[properTipIndex];
         }
 
-        if electrics were made() {
-            tipHelper.setTipIndexUtil();
-            if (tipHelper.spiceTimerUtility() == 1) {
-                if no journeys exist, no more tips.
-                tipHelper.setTipIndexTravel();
-                properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
-                tipString = tipArray[properTipIndex];
-                return tipString;
+        if (utilHelper.getGasType() == "Electricity") {
+            tipHelper.setTipIndexElec();
+            if (tipHelper.spiceTimerElectric() == 1) {
+                SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+                int journeyNum = pref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
+                if (journeyNum > 0) {
+                    tipHelper.setTipIndexTravel();
+                    properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
+                    tipString = tipArray[properTipIndex];
+                    return tipString;
+                }
+                else {
+                    tipString = getString(R.string.noTips);
+                    return tipString;
+                }
             }
             properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
             tipString = tipArray[properTipIndex];
         }
 
         return tipString;
-    }*/
+    }
 
     @Override
     public void onBackPressed() {
