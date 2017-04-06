@@ -16,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 
@@ -26,15 +27,7 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         setupButtons();
-        setupAnimation();
     }
-
-    private void setupAnimation() {
-        ImageView paper_plane = (ImageView) findViewById(R.id.mainmeu_plane);
-        Animation flyingAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flying);
-        paper_plane.startAnimation(flyingAnimation);
-    }
-
     private void setupButtons() {
         // directs to "SelectJourney" screen
         ImageButton journey_button = (ImageButton) findViewById(R.id.create_a_new_journey_button);
@@ -74,7 +67,6 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
-
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, MainMenu.class);

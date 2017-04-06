@@ -8,11 +8,24 @@
     android:background="@drawable/image1"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.MainMenu">
 
+    <TextView
+        android:text="@string/main_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="105dp"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="40sp"
+        android:textStyle="normal|bold"
+        android:textAllCaps="false"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/mainmenu_tittle" />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="170dp">
+        android:layout_marginTop="180dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -22,17 +35,17 @@
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/utility_add_button"
-                android:src="@drawable/utility_icon"
+                android:id="@+id/create_a_new_journey_button"
                 android:layout_weight="1"
+                android:src="@drawable/journey_icon"
                 android:background="@android:color/transparent" />
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/create_a_new_journey_button"
+                android:id="@+id/utility_add_button"
+                android:src="@drawable/utility_icon"
                 android:layout_weight="1"
-                android:src="@drawable/journey_icon"
                 android:background="@android:color/transparent" />
 
             <ImageButton
@@ -64,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.76"
                 android:textAlignment="center"
-                android:textColor="@android:color/holo_green_light"
+                android:textColor="@android:color/holo_green_dark"
                 android:textStyle="normal|bold|italic"
                 android:textAllCaps="true" />
 
@@ -76,7 +89,7 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textStyle="normal|bold|italic"
-                android:textColor="@android:color/holo_green_light" />
+                android:textColor="@android:color/holo_green_dark" />
 
             <TextView
                 android:text="@string/graph"
@@ -86,7 +99,7 @@
                 android:textAlignment="center"
                 android:textStyle="normal|bold|italic"
                 android:textAllCaps="true"
-                android:textColor="@android:color/holo_green_light" />
+                android:textColor="@android:color/holo_green_dark" />
 
             <TextView
                 android:text="@string/about"
@@ -96,33 +109,9 @@
                 android:textAlignment="center"
                 android:textStyle="normal|bold|italic"
                 android:textAllCaps="true"
-                android:textColor="@android:color/holo_green_light" />
+                android:textColor="@android:color/holo_green_dark" />
         </LinearLayout>
 
     </LinearLayout>
-
-    <TextView
-        android:text="Main Menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="105dp"
-        android:textColor="@android:color/holo_green_dark"
-        android:textSize="40sp"
-        android:textStyle="normal|bold"
-        android:textAllCaps="false"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/menu_icon"
-        android:id="@+id/mainmeu_plane"
-        android:layout_marginBottom="69dp"
-        android:layout_marginLeft="39dp"
-        android:layout_marginStart="39dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

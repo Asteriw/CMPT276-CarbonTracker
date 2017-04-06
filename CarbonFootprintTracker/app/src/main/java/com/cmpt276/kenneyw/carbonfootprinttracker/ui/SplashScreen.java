@@ -37,10 +37,11 @@ public class SplashScreen extends AppCompatActivity {
         TextView lordingText= (TextView) findViewById(R.id.SplashLoading);
         TextView welcomeText = (TextView) findViewById(R.id.SplashWelcome);
         Animation fading = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade);
+        Animation blinking = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
         appNameText.startAnimation(fading);
         authorNameText.startAnimation(fading);
         lordingText.startAnimation(fading);
-        welcomeText.startAnimation(fading);
+        welcomeText.startAnimation(blinking);
     }
 
     private void setupSplashScreen() {

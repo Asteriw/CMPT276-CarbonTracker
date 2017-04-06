@@ -90,6 +90,9 @@
     <string name="graph">Graph</string>
     <string name="utility">Utility</string>
     <string name="journey">Journey</string>
+    <string name="http_grassdepartment_com_unityas_wp_content_uploads_2015_05_bg32_jpg">http://grassdepartment.com/unityas/wp-content/uploads/2015/05/bg32.jpg</string>
+    <string name="http_www_imgbase_info_images_safe_wallpapers_miscellaneous_8_bit_47432_8_bit_8_bit_cityscape_jpg">http://www.imgbase.info/images/safe-wallpapers/miscellaneous/8_bit/47432_8_bit_8_bit_cityscape.jpg</string>
+    <string name="main_menu">Main Menu</string>
 
     <string-array name="tips_array">
         <item>Carpool with commuters that share similar trips to yours.</item>
