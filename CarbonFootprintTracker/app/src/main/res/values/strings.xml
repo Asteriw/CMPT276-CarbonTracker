@@ -64,6 +64,8 @@
     <string name="bus">Bus</string>
     <string name="settings">Settings</string>
     <string name="treeSetting">Show emission units as KG</string>
+    <string name="co2emissionresult">CO2 Emission Result</string>
+    <string name="kgco2">" Kg of CO2"</string>
 
     <string-array name="tips_array">
         <item>Carpool with commuters that share similar trips to yours.</item>

@@ -47,7 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
                 SharedPreferences pref=getSharedPreferences(SETTING,MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
                 editor.clear();
-                editor.putBoolean("treeSetting",treeSwitch.isChecked());
+                editor.putBoolean(TREESETTING,treeSwitch.isChecked());
                 editor.apply();
                 finish();
             }

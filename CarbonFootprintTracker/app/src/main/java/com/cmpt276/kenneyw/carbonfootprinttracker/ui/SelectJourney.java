@@ -108,10 +108,7 @@ public class SelectJourney extends AppCompatActivity {
         }
         return temp_journeys;
     }
-    private String dateToString(Date date) {
-        SimpleDateFormat dateformatter = new SimpleDateFormat("MMMM dd, yyyy");
-        return dateformatter.format(date);
-    }
+
     private void saveJourneys() {
         SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
         SharedPreferences.Editor editor=pref.edit();
@@ -166,7 +163,7 @@ public class SelectJourney extends AppCompatActivity {
                 FragmentManager manager=getSupportFragmentManager();
                 CalculationDialog dialog = new CalculationDialog();
                 Bundle bundle =new Bundle();
-                bundle.putBoolean("treeSetting",setting);
+                bundle.putBoolean(TREESETTING,setting);
                 bundle.putDouble("CO2", journeys.getJourney(position).getTotalEmissions());
                 dialog.setArguments(bundle);
                 dialog.show(manager,"CalculateDialog");

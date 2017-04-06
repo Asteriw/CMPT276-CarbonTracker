@@ -33,6 +33,7 @@ import java.text.DecimalFormat;
 public class CalculationDialog extends AppCompatDialogFragment {
 
     public static final double TIMEFOR100TREES = 2.8;
+    public static final String TREESETTING = "TreeSetting";
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -40,12 +41,12 @@ public class CalculationDialog extends AppCompatDialogFragment {
         View viewer = LayoutInflater.from(getActivity()).inflate(R.layout.activity_calculation_dialog, null);
         TextView txtCO2=(TextView) viewer.findViewById(R.id.calculation_result_dialog);
         Double CO2=getArguments().getDouble("CO2");
-        boolean setting=getArguments().getBoolean("treeSetting",false);
+        boolean setting=getArguments().getBoolean(TREESETTING,false);
         if (setting) {
             txtCO2.setText("It will take " + CO2* TIMEFOR100TREES + " days for 100 trees to absorb");
         }
         else{
-            txtCO2.setText("    " + CO2 + " Kg of CO2");
+            txtCO2.setText("    " + CO2 + getString(R.string.kgco2));
         }
 
         txtCO2.setTextSize(20);
@@ -62,7 +63,7 @@ public class CalculationDialog extends AppCompatDialogFragment {
         };
         //build alert dialog
         return new AlertDialog.Builder(getActivity())
-                .setTitle("CO2 Emission Result")
+                .setTitle(R.string.co2emissionresult)
                 .setView(viewer)
                 .setPositiveButton(android.R.string.ok, listener)
                 .create();
