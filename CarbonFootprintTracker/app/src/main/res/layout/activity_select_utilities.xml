@@ -4,7 +4,7 @@
     android:id="@+id/activity_select_utilities"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.SelectUtilities">
+    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.SelectUtilities">
 
     <ListView
         android:layout_width="match_parent"

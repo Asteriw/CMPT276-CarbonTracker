@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.EditDate">
+    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.EditDate">
     <Button
         android:text="@string/ok"
         android:layout_width="wrap_content"

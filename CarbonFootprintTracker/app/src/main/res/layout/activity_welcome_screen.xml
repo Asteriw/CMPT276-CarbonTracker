@@ -6,10 +6,10 @@
     android:theme="@style/Theme.AppCompat.NoActionBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.WelcomeScreen">
+    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.WelcomeScreen">
 
     <Button
-        android:text="@string/btn_splash_start"
+        android:text="@string/start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -34,7 +34,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/App_name"
+        android:text="@string/app_name"
         android:elevation="2dp"
         tools:elevation="2dp"
         android:id="@+id/Splash_Title"
