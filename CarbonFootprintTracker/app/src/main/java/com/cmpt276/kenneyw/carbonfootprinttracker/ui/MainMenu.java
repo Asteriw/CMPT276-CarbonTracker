@@ -51,6 +51,15 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(MainMenu2Utilities);
             }
         });
+        //directs to Settings screen
+        Button settings_button = (Button) findViewById(R.id.btnSettings);
+        settings_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent MainMenu2Settings = SettingsActivity.makeIntent(MainMenu.this);
+                startActivity(MainMenu2Settings);
+            }
+        });
     }
 
     public static Intent makeIntent(Context context) {

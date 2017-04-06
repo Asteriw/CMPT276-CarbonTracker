@@ -1,7 +1,9 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
 /**
- *
+ * Provides a screen to either choose a date to view activity input by user for that date,
+ * or activity for the last month,
+ * or activity for the last year.
  */
 
 import android.content.Context;
@@ -34,7 +36,6 @@ public class DataActivityPicker extends AppCompatActivity{
         setContentView(R.layout.activity_choose_data);
         setupButtons();
         setupDatePicker();
-
     }
 
     private void setupDatePicker() {

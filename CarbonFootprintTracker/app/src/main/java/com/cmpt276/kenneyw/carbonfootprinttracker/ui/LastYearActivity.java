@@ -119,6 +119,10 @@ public class LastYearActivity extends AppCompatActivity {
     //check for route / car mode
     boolean checkOrganization=false;
 
+    public static final String SETTING = "CarbonFootprintTrackerSettings";
+    public static final String TREESETTING = "TreeSetting";
+    boolean setting=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,12 +132,17 @@ public class LastYearActivity extends AppCompatActivity {
         journeys=loadJourneys();
         whatDayIsIt();
         whatDayIsThirtyDaysPrevious(0);
+        getSetting();
         setUpArrays();
         setUpPieChart();
         setUpLineChart();
         setUpButtons();
     }
 
+    private void getSetting() {
+        SharedPreferences pref=getSharedPreferences(SETTING,MODE_PRIVATE);
+        setting=pref.getBoolean(TREESETTING,false);
+    }
 
     private UtilitiesCollection loadUtilities() {
         UtilitiesCollection utils = new UtilitiesCollection();
@@ -303,6 +312,12 @@ public class LastYearActivity extends AppCompatActivity {
                 }
             }
 
+            if(setting) {
+                for (int i = 0; i < entrySize; i++) {
+                    ems.set(i, ems.get(i) * 2.8f);
+                }
+            }
+
             for(int j = 0; j< entrySize; j++){
                 totalems[counter]+=ems.get(j);
             }
@@ -453,6 +468,12 @@ public class LastYearActivity extends AppCompatActivity {
                 }
             }
 
+            if(setting) {
+                for (int i = 0; i < entrySize; i++) {
+                    ems.set(i, ems.get(i) * 2.8f);
+                }
+            }
+
             for(int j = 0; j< entrySize; j++){
                 totalems[counter]+=ems.get(j);
             }
@@ -467,18 +488,6 @@ public class LastYearActivity extends AppCompatActivity {
                 entriesForAllMonth.add(new PieEntry(ems.get(i), names.get(i)));
             }
         }
-    }
-
-    private void getUtilityAverage() {
-        float total=0;
-        for(int i=0;i<utilityAmt;i++){
-            String[] firstU = utilities.getUtility(i).getStartDate().split("/");
-            String[] lastU = utilities.getUtility(i).getEndDate().split("/");
-            long numDaysForUtility=countDays(firstU,lastU);
-            total+=utilities.getUtility(i).getEmission()/utilities.getUtility(i).getNumofPeople()/numDaysForUtility;
-        }
-        total=total/utilityAmt;
-        utilityAverage=total;
     }
 
     private void setUpLineChart() {
@@ -531,6 +540,18 @@ public class LastYearActivity extends AppCompatActivity {
         chart.getLegend().setEnabled(true);
         chart.setVisibility(View.VISIBLE);
         chart.invalidate();
+    }
+
+    private void getUtilityAverage() {
+        float total=0;
+        for(int i=0;i<utilityAmt;i++){
+            String[] firstU = utilities.getUtility(i).getStartDate().split("/");
+            String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+            long numDaysForUtility=countDays(firstU,lastU);
+            total+=utilities.getUtility(i).getEmission()/utilities.getUtility(i).getNumofPeople()/numDaysForUtility;
+        }
+        total=total/utilityAmt;
+        utilityAverage=total;
     }
 
     //date functions to handle date-strings and Dates

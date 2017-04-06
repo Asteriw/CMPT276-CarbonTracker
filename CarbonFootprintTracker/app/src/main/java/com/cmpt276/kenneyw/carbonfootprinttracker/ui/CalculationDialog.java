@@ -2,6 +2,11 @@ package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
 /**
  *  This class displays the calculation result of CO2 emission of a selected journey
+ * Units must be in Time taken for 10 Trees to absorb the KG of CO2 or in KG
+ * 13 kg CO2 absorbed by 1 tree in 1 year,
+ * Time taken for 1 tree to absorb 1kg CO2 = 28 days
+ * Time taken for 10 trees to absorb 1kg CO2 = 2.8 days
+ * total time taken = kg CO2 * 2.8 Days
  */
 
 import android.app.Dialog;
@@ -26,13 +31,23 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 public class CalculationDialog extends AppCompatDialogFragment {
+
+    public static final double TIMEFOR100TREES = 2.8;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         //create view
         View viewer = LayoutInflater.from(getActivity()).inflate(R.layout.activity_calculation_dialog, null);
         TextView txtCO2=(TextView) viewer.findViewById(R.id.calculation_result_dialog);
         Double CO2=getArguments().getDouble("CO2");
-        txtCO2.setText("    " + CO2 + " Kg of CO2");
+        boolean setting=getArguments().getBoolean("treeSetting",false);
+        if (setting) {
+            txtCO2.setText("It will take " + CO2* TIMEFOR100TREES + " days for 100 trees to absorb");
+        }
+        else{
+            txtCO2.setText("    " + CO2 + " Kg of CO2");
+        }
+
         txtCO2.setTextSize(20);
         txtCO2.setTextColor(Color.rgb(255,178,102));
         //create button listeners

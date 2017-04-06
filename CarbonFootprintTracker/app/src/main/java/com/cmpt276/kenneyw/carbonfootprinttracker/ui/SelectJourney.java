@@ -62,17 +62,29 @@ public class SelectJourney extends AppCompatActivity {
     int properTipIndex;
     String[] tipArray;
 
+    public static final String SETTING = "CarbonFootprintTrackerSettings";
+    public static final String TREESETTING = "TreeSetting";
+    boolean setting=false;
+
     JourneyCollection journeys = new JourneyCollection();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_journey);
+        getSetting();
         journeys = loadJourneys();
         tipArray = getResources().getStringArray(R.array.tips_array);
         setupAddJourneyButton();
         setupBackButton();
         setJourneyList();
+
     }
+
+    private void getSetting() {
+        SharedPreferences pref=getSharedPreferences(SETTING,MODE_PRIVATE);
+        setting=pref.getBoolean(TREESETTING,false);
+    }
+
     public JourneyCollection loadJourneys() {
         JourneyCollection temp_journeys =new JourneyCollection();
         SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET,MODE_PRIVATE);
@@ -154,6 +166,7 @@ public class SelectJourney extends AppCompatActivity {
                 FragmentManager manager=getSupportFragmentManager();
                 CalculationDialog dialog = new CalculationDialog();
                 Bundle bundle =new Bundle();
+                bundle.putBoolean("treeSetting",setting);
                 bundle.putDouble("CO2", journeys.getJourney(position).getTotalEmissions());
                 dialog.setArguments(bundle);
                 dialog.show(manager,"CalculateDialog");

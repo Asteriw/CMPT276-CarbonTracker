@@ -60,4 +60,14 @@
         android:id="@+id/utility_add_button"
         android:layout_above="@+id/view_cabon_footprint_button"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="@string/settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/utility_add_button"
+        android:layout_toStartOf="@+id/utility_add_button"
+        android:layout_marginTop="32dp"
+        android:id="@+id/btnSettings" />
 </RelativeLayout>

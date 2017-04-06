@@ -78,6 +78,10 @@ public class DailyActivity extends AppCompatActivity {
     int journeyAmt;
     int entriesSize=0;
 
+    public static final String SETTING = "CarbonFootprintTrackerSettings";
+    public static final String TREESETTING = "TreeSetting";
+    boolean setting=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,9 +94,15 @@ public class DailyActivity extends AppCompatActivity {
         utilities=loadUtilities();
         journeys=loadJourneys();
 
+        getSetting();
         setUpArrays();
         setUpPieChart();
         setUpButtons();
+    }
+
+    private void getSetting() {
+        SharedPreferences pref=getSharedPreferences(SETTING,MODE_PRIVATE);
+        setting=pref.getBoolean(TREESETTING,false);
     }
 
     private void setUpButtons() {
@@ -103,6 +113,41 @@ public class DailyActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void setUpArrays() {
+        entries = new ArrayList<>();
+        for (int i = 0; i < journeyAmt; i++) {
+            if(journeys.getJourney(i).getDateString().equals(date_in_str)){
+                entriesSize++;
+                if(setting){
+                    entries.add(new PieEntry((float) journeys.getJourney(i).getTotalEmissions()*2.8f,
+                            journeys.getJourney(i).getName()));
+                }
+                else{
+                    entries.add(new PieEntry((float) journeys.getJourney(i).getTotalEmissions(),
+                            journeys.getJourney(i).getName()));
+                }
+            }
+        }
+        for(int i=0;i<utilityAmt;i++){
+            if(isBetween(date_in_str,utilities.getUtility(i).getStartDate(),utilities.getUtility(i).getEndDate())){
+                entriesSize++;
+                String[] first = utilities.getUtility(i).getStartDate().split("/");
+                String[] last = utilities.getUtility(i).getEndDate().split("/");
+                long numDays=countDays(first,last);
+                if(setting){
+                    entries.add(new PieEntry((float)(
+                            utilities.getUtility(i).getEmission() / utilities.getUtility(i).getNumofPeople() / numDays * 2.8f),
+                            utilities.getUtility(i).getName()));
+                }
+                else {
+                    entries.add(new PieEntry((float)(
+                            utilities.getUtility(i).getEmission() / utilities.getUtility(i).getNumofPeople() / numDays),
+                            utilities.getUtility(i).getName()));
+                }
+            }
+        }
     }
 
     private void setUpPieChart() {
@@ -126,28 +171,6 @@ public class DailyActivity extends AppCompatActivity {
         chart.getLegend().setEnabled(true);
         chart.setVisibility(View.VISIBLE);
         chart.invalidate();
-    }
-
-    private void setUpArrays() {
-        entries = new ArrayList<>();
-        for (int i = 0; i < journeyAmt; i++) {
-            if(journeys.getJourney(i).getDateString().equals(date_in_str)){
-                entriesSize++;
-                entries.add(new PieEntry((float) journeys.getJourney(i).getTotalEmissions(),
-                        journeys.getJourney(i).getName()));
-            }
-        }
-        for(int i=0;i<utilityAmt;i++){
-            if(isBetween(date_in_str,utilities.getUtility(i).getStartDate(),utilities.getUtility(i).getEndDate())){
-                entriesSize++;
-                String[] first = utilities.getUtility(i).getStartDate().split("/");
-                String[] last = utilities.getUtility(i).getEndDate().split("/");
-                long numDays=countDays(first,last);
-                entries.add(new PieEntry((float)
-                        utilities.getUtility(i).getEmission()/utilities.getUtility(i).getNumofPeople()/numDays,
-                        utilities.getUtility(i).getName()));
-            }
-        }
     }
 
     private long countDays(String[] first, String[] last) {
