@@ -1,5 +1,7 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
+import android.content.SharedPreferences;
+
 /**
 * CLASS DESCRIPTION:
 *  Compute CO2 generated on a journey by how much gas was used during the trip for the city and highway portion.
@@ -18,7 +20,6 @@ package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 * (from user)                      (from CSV)                     (Result)
 *
 *   User interface is metric: Litres and Kilometers
-*   L is the engine displacement of a selected car, rerad from CSV.
 *   city08 and higway08 are used for miles per gallon of fuel. Only focus on the primary fuel.
 *
 *
@@ -26,9 +27,11 @@ package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 *  Negative values are not allowed.
 *
 * NEW CONSTRAINT:
-* Units must be in Time taken for 1 Tree to absorb the KG of CO2
-* Time taken for 1 tree to absorb 1kg CO2 = ____
-* total time taken = kg CO2 * ____
+* Units must be in Time taken for 10 Trees to absorb the KG of CO2
+ * 13 kg CO2 absorbed by 1 tree in 1 year,
+* Time taken for 1 tree to absorb 1kg CO2 = 28 days
+* Time taken for 10 trees to absorb 1kg CO2 = 2.8 days
+* total time taken = kg CO2 * 2.8 Days
 *
 */
 
