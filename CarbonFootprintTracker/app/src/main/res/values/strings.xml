@@ -61,7 +61,12 @@
     <string name="add_end_date">Add END DATE</string>
     <string name="walk_bike">Walk/Bike</string>
     <string name="skytrain">Skytrain</string>
+    <string name="notification_title">Carbon Footprint Tracker</string>
+    <string name="notification_text">Add a journey to record your footprint!</string>
     <string name="bus">Bus</string>
+    <string name="notification_text_bills" formatted="false">You haven\'t entered any utilities in %1$d months, would you like to enter one?</string>
+    <string name="notification_text_journeys" formatted="false">You entered %1$d journeys today, would you like to add any more?</string>
+    <string name="notification_text_journeys_more_than_one" formatted="false">You entered %1$d journeys today, would you like to add any more?</string>
 
     <string-array name="tips_array">
         <item>Carpool with commuters that share similar trips to yours.</item>
