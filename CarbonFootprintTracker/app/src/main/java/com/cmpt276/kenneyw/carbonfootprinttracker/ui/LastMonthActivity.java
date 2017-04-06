@@ -91,7 +91,8 @@ public class LastMonthActivity extends AppCompatActivity {
     public static final String BUS = "bus";
     public static final String BIKE = "bike";
     public static final String SKYTRAIN = "skytrain";
-
+    public static final String WALK = "walk";
+    public static final String ICONID = "IconID";
     //for pie chart
     PieChart chart;
     List<PieEntry> entries;
@@ -631,7 +632,9 @@ public class LastMonthActivity extends AppCompatActivity {
                     pref.getString(i+DATESTRING,""),
                     pref.getBoolean(i+BUS,false),
                     pref.getBoolean(i+BIKE,false),
-                    pref.getBoolean(i+SKYTRAIN,false));
+                    pref.getBoolean(i+SKYTRAIN,false),
+                    pref.getBoolean(i+WALK,false),
+                    pref.getInt(i+ICONID,0));
             temp_journeys.addJourney(j);
         }
         return temp_journeys;
