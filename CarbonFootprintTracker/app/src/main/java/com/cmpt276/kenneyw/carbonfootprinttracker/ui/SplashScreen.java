@@ -5,6 +5,9 @@ import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -25,6 +28,19 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
         setupSplashScreen();
+        setupFadeTextAnimation();
+    }
+
+    private void setupFadeTextAnimation() {
+        TextView appNameText = (TextView) findViewById(R.id.Splash_Title);
+        TextView authorNameText = (TextView) findViewById(R.id.SplashAuthor);
+        TextView lordingText= (TextView) findViewById(R.id.SplashLoading);
+        TextView welcomeText = (TextView) findViewById(R.id.SplashWelcome);
+        Animation fading = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade);
+        appNameText.startAnimation(fading);
+        authorNameText.startAnimation(fading);
+        lordingText.startAnimation(fading);
+        welcomeText.startAnimation(fading);
     }
 
     private void setupSplashScreen() {
