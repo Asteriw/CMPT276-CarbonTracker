@@ -24,7 +24,7 @@ public class CarSingleton extends Car {
         bike=false;
         bus=false;
         skytrain=false;
-        iconID = R.drawable.car_icon_2;
+        iconID = 0;
     }
 
     public static CarSingleton getInstance(){
@@ -100,26 +100,7 @@ public class CarSingleton extends Car {
 
     public int getIconID(){return iconID;}
     public void setIconID(int iconId){
-        if (iconId == R.drawable.car_icon_2)
-            this.iconID = R.drawable.car_icon_2;
-        else if (iconId == R.drawable.truck)
-            this.iconID = R.drawable.truck;
-        else if (iconId == R.drawable.modern)
-            this.iconID = R.drawable.modern;
-        else if (iconId == R.drawable.sport)
-            this.iconID = R.drawable.sport;
-        else if (iconId == R.drawable.classic)
-            this.iconID = R.drawable.classic;
-
-        else if (iconId == R.drawable.bike_icon)
-            this.iconID = R.drawable.bike_icon;
-        else if (iconId == R.drawable.walk_icon)
-            this.iconID = R.drawable.walk_icon;
-        else if (iconId == R.drawable.bus_icon)
-            this.iconID = R.drawable.bus_icon;
-        else{
-            this.iconID = R.drawable.train_icon;
-        }
+        this.iconID = iconId;
     }
 
     public boolean getWalk(){
