@@ -53,6 +53,7 @@ public class SelectJourney extends AppCompatActivity {
     public static final String DATESTRING="dateString";
     public static final String LITERENGINE="literEngine";
     public static final String TOTALEMISSIONS ="totalEmissions";
+    public static final String ADDEDTODAY ="addedToday";
     public static final String BUS = "bus";
     public static final String BIKE = "bike";
     public static final String SKYTRAIN = "skytrain";
@@ -269,6 +270,7 @@ public class SelectJourney extends AppCompatActivity {
                     setupBackButton();
                     setJourneyList();
                     tipMaker();
+                    saveAddedToday();
                 }
                 else{
                     Log.i(TAG,"User Cancelled");
@@ -309,6 +311,17 @@ public class SelectJourney extends AppCompatActivity {
                 break;
         }
     }
+
+    private void saveAddedToday() {
+        SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        int amountAddedToday = pref.getInt(ADDEDTODAY, 0);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        editor.putInt(ADDEDTODAY, amountAddedToday+1);
+        Log.i("TAG", "Amount added today: "+amountAddedToday+1);
+        editor.apply();
+    }
+
     public void onBackPressed() {
         saveJourneys();
         finish();

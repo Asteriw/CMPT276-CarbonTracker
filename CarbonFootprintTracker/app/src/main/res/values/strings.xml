@@ -62,10 +62,12 @@
     <string name="walk_bike">Walk/Bike</string>
     <string name="skytrain">Skytrain</string>
     <string name="notification_title">Carbon Footprint Tracker</string>
-    <string name="notification_text">Add a journey to record your footprint!</string>
+    <string name="notification_text">Add a journey or utility to start tracking your Carbon Footprint!</string>
     <string name="bus">Bus</string>
-    <string name="notification_text_bills" formatted="false">You haven\'t entered any utilities in %1$d months, would you like to enter one?</string>
-    <string name="notification_text_journeys" formatted="false">You entered %1$d journeys today, would you like to add any more?</string>
+    <string name="notification_text_bills_monthly">You haven\'t entered any utilities in a while, would you like to enter one?</string>
+    <string name="notification_text_bills">You haven\'t entered any utilities yet, would you like to enter one to track your household Carbon Footprint?</string>
+    <string name="notification_text_journeys">You haven't added any journeys yet, add some to start tracking your commuter Carbon Footprint.</string>
+    <string name="notification_text_journeys_none_today">You haven't added any journeys today, would you like to add one?</string>
     <string name="notification_text_journeys_more_than_one" formatted="false">You entered %1$d journeys today, would you like to add any more?</string>
 
     <string-array name="tips_array">

@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
+import com.cmpt276.kenneyw.carbonfootprinttracker.model.DailyReset;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.NotificationReceiver;
 
 public class WelcomeScreen extends AppCompatActivity {
@@ -52,7 +53,7 @@ public class WelcomeScreen extends AppCompatActivity {
         calendar.set(Calendar.HOUR_OF_DAY, 23);
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);
-        Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
+        Intent intent = new Intent(getApplicationContext(), DailyReset.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
