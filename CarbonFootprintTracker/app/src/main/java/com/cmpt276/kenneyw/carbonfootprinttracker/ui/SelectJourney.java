@@ -354,6 +354,7 @@ public class SelectJourney extends AppCompatActivity {
         int journeyNum = kpref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
         SharedPreferences kpref2 = getSharedPreferences(SHAREDPREF_SET2, MODE_PRIVATE);
         int utilityNum = kpref2.getInt(SHAREDPREF_ITEM_AMOUNTOFUTILITIES, 0);
+        getSetting();
         tipHelper.setTipIndexTravel();
         if (utilityNum > 0) {
             if (tipHelper.spiceTimer() == 1) {
@@ -363,20 +364,23 @@ public class SelectJourney extends AppCompatActivity {
                 if (tipHelper.getLastUtil().equals("Electricity")) {
                     tipHelper.setTipIndexElec();
                 }
-                Log.i("tipss", ""+tipHelper.getLastUtil());
                 properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
                 tipData = tipHelper.tipDataFetcher(properTipIndex);
+                if (setting) {
+                    tipData = tipData*2;
+                }
                 tipString = String.format(tipArray[properTipIndex], tipData);
                 return tipString;
             }
         }
-        Log.i("tipsss", ""+tipHelper.getLastUtil());
-        Log.i("tipssz", ""+utilityNum);
         properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
         Journey jTip = journeys.getJourney(journeyNum-1);
         tipHelper.setJourneyEmission(jTip.getTotalEmissions());
         tipHelper.setJourneyDist(jTip.getCityDistance() + jTip.getHighwayDistance());
         tipData = tipHelper.tipDataFetcher(properTipIndex);
+        if (setting) {
+            tipData = tipData*2;
+        }
         tipString = String.format(tipArray[properTipIndex], tipData);
 
         saveTips();

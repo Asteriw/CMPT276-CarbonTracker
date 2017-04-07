@@ -287,6 +287,7 @@ public class SelectUtilities extends AppCompatActivity {
     private String tipTextSelector() {
         TipHelperSingleton tipHelper = TipHelperSingleton.getInstance();
         UtilitySingleton utilHelper = UtilitySingleton.getInstance();
+        getSetting();
         if (utilHelper.getGasType().equals("Natural Gas")) {
             tipHelper.setTipIndexUtil();
             if (tipHelper.spiceTimerUtility() == 1) {
@@ -309,6 +310,9 @@ public class SelectUtilities extends AppCompatActivity {
             tipHelper.setnGasAmount(utilHelper.getAmounts());
             tipHelper.setnGasEmission(utilHelper.getEmission());
             tipData = tipHelper.tipDataFetcher(properTipIndex);
+            if (setting) {
+                tipData = tipData*2;
+            }
             tipString = String.format(tipArray[properTipIndex], tipData);
         }
 
@@ -334,6 +338,9 @@ public class SelectUtilities extends AppCompatActivity {
             tipHelper.setElecAmount(utilHelper.getAmounts());
             tipHelper.setElecEmission(utilHelper.getEmission());
             tipData = tipHelper.tipDataFetcher(properTipIndex);
+            if (setting) {
+                tipData = tipData*2;
+            }
             tipString = String.format(tipArray[properTipIndex], tipData);
         }
 
