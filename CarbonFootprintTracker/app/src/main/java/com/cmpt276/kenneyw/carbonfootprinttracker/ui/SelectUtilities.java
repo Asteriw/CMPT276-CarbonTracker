@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
+import com.cmpt276.kenneyw.carbonfootprinttracker.model.Journey;
+import com.cmpt276.kenneyw.carbonfootprinttracker.model.JourneyCollection;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.TipHelperSingleton;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.UtilitiesCollection;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.Utility;
@@ -37,6 +40,8 @@ public class SelectUtilities extends AppCompatActivity {
     public static final int ADD_UTILITY = 1;
     private static final String TAG = "CarbonFootprintTracker";
     private static final String SHAREDPREF_SET = "CarbonFootprintTrackerUtilities";
+    private static final String SHAREDPREF_SET2 = "CarbonFootprintTrackerJournies";
+    private static final String SHAREDPREF_SET3 = "CarbonFootprintTrackerTips";
     private static final String SHAREDPREF_ITEM_AMOUNTOFJOURNEYS = "AmountOfJourneys";
     private static final String SHAREDPREF_ITEM_AMOUNTOFUTILITIES = "AmountOfUtilities";
     private static final String NAME = "name";
@@ -52,7 +57,16 @@ public class SelectUtilities extends AppCompatActivity {
     UtilitiesCollection utilities = new UtilitiesCollection();
     Intent intent;
 
+    public static final String tJEmission = "JEmission";
+    public static final String tJDist = "JDist";
+    public static final String tNGasAmount = "NGasAmount";
+    public static final String tNGasEmission = "NGasEmission";
+    public static final String tElecAmount = "ElecAmount";
+    public static final String tElecEmission = "ElecEmission";
+    public static final String tLastUtil = "LastUtil";
+
     String tipString;
+    int tipData;
     int properTipIndex;
     String[] tipArray;
 
@@ -94,6 +108,21 @@ public class SelectUtilities extends AppCompatActivity {
             editor.putLong(i + AMOUNT, Double.doubleToRawLongBits(utilities.getUtility(i).getAmount()));
         }
         editor.putInt(SHAREDPREF_ITEM_AMOUNTOFUTILITIES, utilityAmt);
+        editor.apply();
+    }
+
+    private void saveTips() {
+        SharedPreferences kprefsave = getSharedPreferences(SHAREDPREF_SET3, MODE_PRIVATE);
+        SharedPreferences.Editor editor = kprefsave.edit();
+        TipHelperSingleton tipHelper = TipHelperSingleton.getInstance();
+        editor.clear();
+        editor.putLong(tJEmission, Double.doubleToRawLongBits(tipHelper.getJourneyEmission()));
+        editor.putLong(tJDist, Double.doubleToRawLongBits(tipHelper.getJourneyDist()));
+        editor.putLong(tNGasAmount, Double.doubleToRawLongBits(tipHelper.getnGasAmount()));
+        editor.putLong(tNGasEmission, Double.doubleToRawLongBits(tipHelper.getnGasEmission()));
+        editor.putLong(tElecAmount, Double.doubleToRawLongBits(tipHelper.getElecAmount()));
+        editor.putLong(tElecEmission, Double.doubleToRawLongBits(tipHelper.getElecEmission()));
+        editor.putString(tLastUtil, tipHelper.getLastUtil());
         editor.apply();
     }
 
@@ -193,6 +222,7 @@ public class SelectUtilities extends AppCompatActivity {
                     utilities.addUtility(temp_utility);
                     setupButtons();
                     setupList();
+                    saveUtilities();
                     tipMaker();
                 } else {
                     setupButtons();
@@ -214,6 +244,7 @@ public class SelectUtilities extends AppCompatActivity {
 
                     setupList();
                     setupButtons();
+                    saveUtilities();
                 }
                 break;
         }
@@ -245,15 +276,17 @@ public class SelectUtilities extends AppCompatActivity {
     private String tipTextSelector() {
         TipHelperSingleton tipHelper = TipHelperSingleton.getInstance();
         UtilitySingleton utilHelper = UtilitySingleton.getInstance();
-        if (utilHelper.getGasType() == "Natural Gas") {
+        if (utilHelper.getGasType().equals("Natural Gas")) {
             tipHelper.setTipIndexUtil();
             if (tipHelper.spiceTimerUtility() == 1) {
-                SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
-                int journeyNum = pref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
+                SharedPreferences kpref = getSharedPreferences(SHAREDPREF_SET2, MODE_PRIVATE);
+                int journeyNum = kpref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
+                Log.i("nojourneys", "whelp"+journeyNum);
                 if (journeyNum > 0) {
                     tipHelper.setTipIndexTravel();
                     properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
-                    tipString = tipArray[properTipIndex];
+                    tipHelper.tipDataFetcher(properTipIndex);
+                    tipString = String.format(tipArray[properTipIndex], tipData);
                     return tipString;
                 }
                 else {
@@ -262,18 +295,23 @@ public class SelectUtilities extends AppCompatActivity {
                 }
             }
             properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
-            tipString = tipArray[properTipIndex];
+            tipHelper.setnGasAmount(utilHelper.getAmounts());
+            tipHelper.setnGasEmission(utilHelper.getEmission());
+            tipData = tipHelper.tipDataFetcher(properTipIndex);
+            tipString = String.format(tipArray[properTipIndex], tipData);
         }
 
-        if (utilHelper.getGasType() == "Electricity") {
+        if (utilHelper.getGasType().equals("Electricity")) {
             tipHelper.setTipIndexElec();
             if (tipHelper.spiceTimerElectric() == 1) {
-                SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
-                int journeyNum = pref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
+                SharedPreferences kpref = getSharedPreferences(SHAREDPREF_SET2, MODE_PRIVATE);
+                int journeyNum = kpref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
+                Log.i("nojourneys", "whelp"+journeyNum);
                 if (journeyNum > 0) {
                     tipHelper.setTipIndexTravel();
                     properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
-                    tipString = tipArray[properTipIndex];
+                    tipData = tipHelper.tipDataFetcher(properTipIndex);
+                    tipString = String.format(tipArray[properTipIndex], tipData);
                     return tipString;
                 }
                 else {
@@ -282,8 +320,14 @@ public class SelectUtilities extends AppCompatActivity {
                 }
             }
             properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
-            tipString = tipArray[properTipIndex];
+            tipHelper.setElecAmount(utilHelper.getAmounts());
+            tipHelper.setElecEmission(utilHelper.getEmission());
+            tipData = tipHelper.tipDataFetcher(properTipIndex);
+            tipString = String.format(tipArray[properTipIndex], tipData);
         }
+
+        tipHelper.setLastUtil(utilHelper.getGasType());
+        saveTips();
 
         return tipString;
     }

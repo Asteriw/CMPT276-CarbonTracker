@@ -8,6 +8,8 @@ package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
 import android.util.Log;
 
+import static java.lang.Math.ceil;
+
 public class TipHelperSingleton {
 
     private int[] repeatTracker;
@@ -17,10 +19,15 @@ public class TipHelperSingleton {
     private int moreThanFourElec;
     private static TipHelperSingleton helperInstance = null;
     private String currentMode;
-    private int NatGasDaily;
-    private int NatGasMonthly;
-    private int ElecDaily;
-    private int ElecMonthly;
+    private int tipData;
+    private double journeyEmission;
+    private double journeyDist;
+    private double nGasAmount;
+    private double nGasEmission;
+    private double elecAmount;
+    private double elecEmission;
+    private String lastUtil;
+
 
     private TipHelperSingleton() {
 
@@ -30,7 +37,71 @@ public class TipHelperSingleton {
         noCycleCounter = 0;
         moreThanFourUtil = 0;
         moreThanFourElec = 0;
+        tipData = 0;
+        journeyEmission = 0;
+        journeyDist = 0;
+        nGasAmount = 0;
+        nGasEmission = 0;
+        elecAmount = 0;
+        elecEmission = 0;
+        lastUtil = "";
 
+    }
+
+    public void setJourneyEmission(double emission) {
+        this.journeyEmission = emission;
+    }
+
+    public double getJourneyEmission() {
+        return journeyEmission;
+    }
+
+    public void setJourneyDist(double dist) {
+        this.journeyDist = dist;
+    }
+
+    public double getJourneyDist() {
+        return journeyDist;
+    }
+
+    public void setnGasAmount(double nGas) {
+        this.nGasAmount = nGas;
+    }
+
+    public double getnGasAmount() {
+        return nGasAmount;
+    }
+
+    public void setnGasEmission(double nGas) {
+        this.nGasEmission = nGas;
+    }
+
+    public double getnGasEmission() {
+        return nGasEmission;
+    }
+
+    public void setElecAmount(double elecAmount) {
+        this.elecAmount = elecAmount;
+    }
+
+    public double getElecAmount() {
+        return elecAmount;
+    }
+
+    public void setElecEmission(double elec) {
+        this.elecEmission = elec;
+    }
+
+    public double getElecEmission() {
+        return elecEmission;
+    }
+
+    public void setLastUtil(String lastUtil) {
+        this.lastUtil = lastUtil;
+    }
+
+    public String getLastUtil() {
+        return lastUtil;
     }
 
     public void setTipIndexTravel() {
@@ -55,7 +126,7 @@ public class TipHelperSingleton {
 
     public void setTipIndexElec() {
         if (currentMode.equals("Travel") || currentMode.equals("Utility"))  {
-            this.tipIndex = 13;
+            this.tipIndex = 12;
             currentMode = "Electric";
         }
         else {
@@ -90,7 +161,7 @@ public class TipHelperSingleton {
         if (noCycleCounter < 4) {
             noCycleCounter++;
         }
-        if (noCycleCounter == 4) {
+        if (noCycleCounter == 3) {
             noCycleCounter = 0;
             Log.i("Spicy!", ""+noCycleCounter);
             return 1;
@@ -100,30 +171,50 @@ public class TipHelperSingleton {
     }
 
     public int spiceTimerUtility() {
-        moreThanFourUtil++;
-        if (moreThanFourUtil >= 4) {
+        moreThanFourUtil = moreThanFourUtil+1;
+        if (moreThanFourUtil > 4) {
             return 1;
         }
         return 0;
     }
 
     public int spiceTimerElectric() {
-        moreThanFourUtil++;
-        if (moreThanFourElec >= 4) {
+        moreThanFourElec = moreThanFourElec+1;
+        if (moreThanFourElec > 4) {
             return 1;
         }
         return 0;
     }
 
-    public int spiceMaker() {
-        int spicyTip = 69;
-        /*if util or elec exist, use a different one.
-            //spicyTip = 8;
+    public int tipDataFetcher(int index) {
+        if (index == 0 || index == 1 || index == 2 || index == 3 || index == 4 || index == 6 || index == 7) {
+            tipData = (int) ceil(journeyEmission);
+            return tipData;
         }
-        else {
-            spicyTip = 0;
-        }*/
-        return spicyTip;
+        if (index == 5) {
+            tipData = (int) ceil(journeyDist);
+            return tipData;
+        }
+
+        if (index == 8 || index == 10) {
+            tipData = (int) ceil(nGasAmount);
+            return tipData;
+        }
+        if (index == 9 || index == 11) {
+            tipData = (int) ceil(nGasEmission);
+            return tipData;
+        }
+
+        if (index == 12 || index == 14) {
+            tipData = (int) ceil(elecEmission);
+            return tipData;
+        }
+        if (index == 13 || index == 15) {
+            tipData = (int) ceil(elecAmount);
+            return tipData;
+        }
+
+        return tipData;
     }
 
     public static TipHelperSingleton getInstance(){
