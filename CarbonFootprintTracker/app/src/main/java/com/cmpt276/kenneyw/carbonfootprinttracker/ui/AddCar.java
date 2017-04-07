@@ -99,7 +99,7 @@ public class AddCar extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-                   // Toast.makeText(getApplicationContext(), "Car selected", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Car selected", Toast.LENGTH_SHORT).show();
                     selectIconID = R.drawable.car_icon_2;
                 } else if (position == 1) {
                     //Toast.makeText(getApplicationContext(), "Modern selected", Toast.LENGTH_SHORT).show();
@@ -212,8 +212,7 @@ public class AddCar extends AppCompatActivity {
                 car.setCityEmissions(Double.parseDouble(carData[4]));
                 car.setHighwayEmissions(Double.parseDouble(carData[5]));
             }
-            car.setIconID(selectIconID);
-
+            cars.setIconID(selectIconID);
             cars.addCar(car);
         }
         populateListView();
@@ -243,7 +242,7 @@ public class AddCar extends AppCompatActivity {
                     masterCar.setLiterEngine(tempCar.getLiterEngine());
                     masterCar.setTransmission(tempCar.getTransmission());
                     masterCar.setMake(tempCar.getMake());
-                    masterCar.setIconID(tempCar.getIconID());
+                    masterCar.setIconID(selectIconID);
 
                     Intent i = new Intent();
                     i.putExtra(POS_EDIT, pos);

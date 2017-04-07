@@ -33,8 +33,9 @@
         <activity android:name=".ui.AddRoute" />
         <activity android:name=".ui.LastMonthActivity" />
         <activity android:name=".ui.LastYearActivity" />
-        <activity android:name=".ui.DailyActivity"></activity>
+        <activity android:name=".ui.DailyActivity" />
         <activity android:name=".ui.AddCar" />
+        <activity android:name=".ui.SettingsActivity"></activity>
     </application>
 
 </manifest>

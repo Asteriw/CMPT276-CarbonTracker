@@ -99,18 +99,9 @@ public class Car{
     }
 
     public int getIconID(){return iconID;}
+
     public void setIconID(int iconId){
-        if (iconId == R.drawable.car_icon_2)
-            this.iconID = R.drawable.car_icon_2;
-        else if (iconId == R.drawable.truck)
-            this.iconID = R.drawable.truck;
-        else if (iconId == R.drawable.modern)
-            this.iconID = R.drawable.modern;
-        else if (iconId == R.drawable.sport)
-            this.iconID = R.drawable.sport;
-        else{
-            this.iconID = R.drawable.classic;
-        }
+        this.iconID = iconId;
     }
 
     // Variables Declaration
