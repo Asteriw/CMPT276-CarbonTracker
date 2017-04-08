@@ -1,11 +1,9 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
-
 /**
  * This Class shows the user a list of saved journeys, and can add delete and edit journeys.
  * User can also see CO2 emitted for chosen journey in a dialog. Saves journeys from route and car singletons, via shared preference.
  * might transfer database mgmt. to SQL
  */
-
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,11 +28,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
-
 import android.widget.TextView;
-
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.Car;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.TipHelperSingleton;
@@ -44,9 +39,7 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.model.Journey;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.JourneyCollection;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.RouteSingleton;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.UtilitySingleton;
-
 import java.util.Date;
-
 public class SelectJourney extends AppCompatActivity {
     private static final String TAG = "CarbonFootprintTracker";
     private static final int CAR_AND_ROUTE_SELECTED = 1;
@@ -66,14 +59,12 @@ public class SelectJourney extends AppCompatActivity {
     public static final String DATESTRING = "dateString";
     public static final String LITERENGINE = "literEngine";
     public static final String TOTALEMISSIONS = "totalEmissions";
-    public static final String ADDEDTODAY = "addedToday";
     public static final String BUS = "bus";
     public static final String BIKE = "bike";
     public static final String SKYTRAIN = "skytrain";
     public static final String WALK = "walk";
     public static final String POSITION_FOR_EDIT_JOURNEY = "pos";
     public static final String ICONID = "IconID";
-
     public static final String tJEmission = "JEmission";
     public static final String tJDist = "JDist";
     public static final String tNGasAmount = "NGasAmount";
@@ -81,19 +72,14 @@ public class SelectJourney extends AppCompatActivity {
     public static final String tElecAmount = "ElecAmount";
     public static final String tElecEmission = "ElecEmission";
     public static final String tLastUtil = "LastUtil";
-
-
     String tipString;
     int tipData;
     int properTipIndex;
     String[] tipArray;
-
     public static final String SETTING = "CarbonFootprintTrackerSettings";
     public static final String TREESETTING = "TreeSetting";
-    boolean setting = false;
-
+    boolean setting=false;
     JourneyCollection journeys = new JourneyCollection();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,23 +89,18 @@ public class SelectJourney extends AppCompatActivity {
         tipArray = getResources().getStringArray(R.array.tips_array);
         setupAddJourneyButton();
         setJourneyList();
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
-
     @Override
-    public boolean onSupportNavigateUp() {
-        saveJourneys();
-        finish();
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
         return true;
     }
 
     private void getSetting() {
-        SharedPreferences pref = getSharedPreferences(SETTING, MODE_PRIVATE);
-        setting = pref.getBoolean(TREESETTING, false);
+        SharedPreferences pref=getSharedPreferences(SETTING,MODE_PRIVATE);
+        setting=pref.getBoolean(TREESETTING,false);
     }
-
     public JourneyCollection loadJourneys() {
         JourneyCollection temp_journeys = new JourneyCollection();
         SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
@@ -146,12 +127,10 @@ public class SelectJourney extends AppCompatActivity {
         }
         return temp_journeys;
     }
-
     private String dateToString(Date date) {
         SimpleDateFormat dateformatter = new SimpleDateFormat("MMMM dd, yyyy");
         return dateformatter.format(date);
     }
-
     private void saveJourneys() {
         SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
@@ -177,7 +156,6 @@ public class SelectJourney extends AppCompatActivity {
         editor.putInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, journeyAmt);
         editor.apply();
     }
-
     private void saveTips() {
         SharedPreferences kprefsave = getSharedPreferences(SHAREDPREF_SET3, MODE_PRIVATE);
         SharedPreferences.Editor editor = kprefsave.edit();
@@ -204,11 +182,9 @@ public class SelectJourney extends AppCompatActivity {
             }
         });
     }
-
     private void setJourneyList() {
         ArrayAdapter<Journey> adapter = new MyListAdapter();
         ListView list = (ListView) findViewById(R.id.journeyList);
-
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -217,7 +193,7 @@ public class SelectJourney extends AppCompatActivity {
                 FragmentManager manager = getSupportFragmentManager();
                 CalculationDialog dialog = new CalculationDialog();
                 Bundle bundle = new Bundle();
-                bundle.putBoolean(TREESETTING, setting);
+                bundle.putBoolean(TREESETTING,setting);
                 bundle.putDouble("CO2", journeys.getJourney(position).getTotalEmissions());
                 dialog.setArguments(bundle);
                 dialog.show(manager, "CalculateDialog");
@@ -225,14 +201,10 @@ public class SelectJourney extends AppCompatActivity {
         });
         registerForContextMenu(list);
     }
-
-
     private class MyListAdapter extends ArrayAdapter<Journey> {
-
         public MyListAdapter() {
             super(SelectJourney.this, R.layout.layout_for_carlist_with_icons, journeys.returnJourneyList());
         }
-
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             // Make sure we have a view to work with
@@ -243,24 +215,20 @@ public class SelectJourney extends AppCompatActivity {
             // Find the journey to work with
             Journey currentJourney = journeys.getJourney(position);
             Log.i("TEST", "currentJourney = " + currentJourney.getName());
-
             // Set icon and info
             ImageView iconView = (ImageView) itemView.findViewById(R.id.icon_imageView);
             iconView.setImageResource(currentJourney.getIconID());
-
             // Custom setting for Journey, car name = route name
             TextView carName = (TextView) itemView.findViewById(R.id.carlist_name);
             carName.setText(currentJourney.getRouteName());
-
             // Custom setting for Journey, car name = total distance travelled
             TextView carMake = (TextView) itemView.findViewById(R.id.carlist_make);
             carMake.setText(currentJourney.getTotalDistanceToString());
-
-            if (currentJourney.isBus() || currentJourney.isWalk() || currentJourney.isBike() || currentJourney.isSkytrain()) {
+            if ( currentJourney.isBus() || currentJourney.isWalk() || currentJourney.isBike() || currentJourney.isSkytrain()){
                 // Custom setting for Journey, carModel = gas type
                 TextView carModel = (TextView) itemView.findViewById(R.id.carlist_model);
                 carModel.setText(currentJourney.getName());
-            } else {
+            }else {
                 // Custom setting for Journey, carModel = gas type
                 TextView carModel = (TextView) itemView.findViewById(R.id.carlist_model);
                 carModel.setText(currentJourney.getGasType());
@@ -268,12 +236,9 @@ public class SelectJourney extends AppCompatActivity {
             // Custom setting for Journey, car year = journey date
             TextView carYear = (TextView) itemView.findViewById(R.id.carlist_year);
             carYear.setText(currentJourney.getDateString());
-
             return itemView;
         }
     }
-
-
     //Context Menu Code taken and modified from:
     //https://www.mikeplate.com/2010/01/21/show-a-context-menu-for-long-clicks-in-an-android-listview/
     @Override
@@ -281,7 +246,6 @@ public class SelectJourney extends AppCompatActivity {
                                     ContextMenu.ContextMenuInfo menuInfo) {
         if (v.getId() == R.id.journeyList) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-
             if (journeys.getJourney(info.position).isBike()) {
                 menu.setHeaderTitle("Transportation method: " + "Bike" + "\n" + "Route Name: " + journeys.getJourney(info.position).getRouteName());
             } else if (journeys.getJourney(info.position).isBus()) {
@@ -293,14 +257,12 @@ public class SelectJourney extends AppCompatActivity {
             } else {
                 menu.setHeaderTitle("Transportation method: Car" + "\n" + "Route Name: " + journeys.getJourney(info.position).getRouteName());
             }
-
             String[] menuItems = getResources().getStringArray(R.array.menu);
             for (int i = 0; i < menuItems.length; i++) {
                 menu.add(Menu.NONE, i, i, menuItems[i]);
             }
         }
     }
-
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -320,7 +282,6 @@ public class SelectJourney extends AppCompatActivity {
         }
         return true;
     }
-
     //Creates an Alert Dialog using a the custom layout activity_tip_dialog
     //Clicking next tip will create a new Alert Dialog with a new message
     //The message is set by running the tipTextSelector method, which avoids repeats and selects
@@ -328,7 +289,6 @@ public class SelectJourney extends AppCompatActivity {
     private void tipMaker() {
         LayoutInflater inflater = LayoutInflater.from(this);
         View tipView = inflater.inflate(R.layout.activity_tip_dialog, null);
-
         TextView tipText = (TextView) tipView.findViewById(R.id.tip_text);
         tipText.setGravity(Gravity.CENTER);
         tipText.setText(tipTextSelector());
@@ -345,7 +305,6 @@ public class SelectJourney extends AppCompatActivity {
         AlertDialog tipDialog = builder.create();
         tipDialog.show();
     }
-
     //Avoids tips that have been shown in the last 7
     //Picks relevant tips, using userdata
     private String tipTextSelector() {
@@ -367,27 +326,24 @@ public class SelectJourney extends AppCompatActivity {
                 properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
                 tipData = tipHelper.tipDataFetcher(properTipIndex);
                 if (setting) {
-                    tipData = tipData * 2;
+                    tipData = tipData*2;
                 }
                 tipString = String.format(tipArray[properTipIndex], tipData);
                 return tipString;
             }
         }
         properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
-        Journey jTip = journeys.getJourney(journeyNum - 1);
+        Journey jTip = journeys.getJourney(journeyNum-1);
         tipHelper.setJourneyEmission(jTip.getTotalEmissions());
         tipHelper.setJourneyDist(jTip.getCityDistance() + jTip.getHighwayDistance());
         tipData = tipHelper.tipDataFetcher(properTipIndex);
         if (setting) {
-            tipData = tipData * 2;
+            tipData = tipData*2;
         }
         tipString = String.format(tipArray[properTipIndex], tipData);
-
         saveTips();
-
         return tipString;
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -415,7 +371,6 @@ public class SelectJourney extends AppCompatActivity {
                     setJourneyList();
                     saveJourneys();
                     tipMaker();
-                    saveAddedToday();
                 } else {
                     Log.i(TAG, "User Cancelled");
                     setupAddJourneyButton();
@@ -454,22 +409,10 @@ public class SelectJourney extends AppCompatActivity {
                 break;
         }
     }
-
-    private void saveAddedToday() {
-        SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
-        int amountAddedToday = pref.getInt(ADDEDTODAY, 0);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.clear();
-        editor.putInt(ADDEDTODAY, amountAddedToday + 1);
-        Log.i("TAG", "Amount added today: " + amountAddedToday + 1);
-        editor.apply();
-    }
-
     public void onBackPressed() {
         saveJourneys();
         finish();
     }
-
     public static Intent makeIntent(Context context) {
         return new Intent(context, SelectJourney.class);
     }
