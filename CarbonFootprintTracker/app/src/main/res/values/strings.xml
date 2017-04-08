@@ -62,7 +62,7 @@
     <string name="notification_text">Add a journey or utility to start tracking your Carbon Footprint!</string>
     <string name="bus">Bus</string>
     <string name="settings">Settings</string>
-    <string name="treeSetting">Show emission units as KG</string>
+    <string name="treeSetting">Show emission units as amount of days it would take for 10 trees to process</string>
     <string name="co2emissionresult">CO2 Emission Result</string>
     <string name="kgco2">" Kg of CO2"</string>
     <string name="car_year">car_year</string>

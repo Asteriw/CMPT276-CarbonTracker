@@ -1,5 +1,9 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
+/**
+ * Allows user to choose the unit displayed to them, in human ready units or in kg of C02
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;

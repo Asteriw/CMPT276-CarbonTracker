@@ -64,7 +64,7 @@
     <string name="notification_text">"Añadir un viaje o una utilidad para iniciar el seguimiento de su huella de carbono!"</string>
     <string name="bus">"Locomoción"</string>
     <string name="settings">"Ajustes"</string>
-    <string name="treeSetting">"Mostrar unidades de emisión como KG"</string>
+    <string name="treeSetting">"Muestre las unidades de emisión como la cantidad de días que tardaría 10 árboles en procesar"</string>
     <string name="co2emissionresult">"Resultado de emisión de CO2"</string>
     <string name="kgco2">" Kg de CO2"</string>
     <string name="car_year">"car_year"</string>

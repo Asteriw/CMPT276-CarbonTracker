@@ -20,7 +20,7 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.DailyReset;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.NotificationReceiver;
 
-/*
+/**
 *   This class creates a spalsh screen with a progress bar
 * Code for spalsh screen wwas retrieved from :http://abhiandroid.com/ui/progressbar
  */

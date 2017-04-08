@@ -1,5 +1,10 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
+/**
+ * This function is called every night at midnight and resets the amount of journeys counter for the
+ * next day
+ */
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

@@ -1,5 +1,11 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.model;
 
+/**
+ * This class is called every night at 9pm and manages which notification that is to be sent to the
+ * user. Pulls variables from sharedpreferences and uses them to judge which one to show and adds
+ * values if necessary.
+ */
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -22,8 +28,6 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.ui.SelectUtilities;
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
-
-
 public class NotificationReceiver extends BroadcastReceiver {
     private static final String SHAREDPREF_SET = "CarbonFootprintTrackerJournies";
     private static final String SHAREDPREF_ITEM_AMOUNTOFJOURNEYS = "AmountOfJourneys";
@@ -45,7 +49,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         journeysAmount = preferences.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
         journeysTodayAmount = preferences.getInt(ADDEDTODAY, 0);
         utilitiesAmount = preferences.getInt(SHAREDPREF_ITEM_AMOUNTOFUTILITIES, 0);
-        utilitiesMonthAmount = preferences.getInt(SHAREDPREF_ITEM_AMOUNTOFUTILITIES, 0); //TODO
+        utilitiesMonthAmount = preferences.getInt(SHAREDPREF_ITEM_AMOUNTOFUTILITIES, 0);
 
         if (journeysAmount == 0 && utilitiesAmount == 0){
            showDefaultNotification(context);
@@ -99,7 +103,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         notificationManager.notify(0, notification);
     }
 
-    public void showMonthlyBillsNotification(Context context) {//TODO
+    public void showMonthlyBillsNotification(Context context) {
         Intent intent = new Intent(context, SelectUtilities.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
@@ -107,7 +111,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         Notification notification = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.car_notification)
                 .setContentTitle(r.getString(R.string.notification_title))
-                .setContentText(r.getString(R.string.notification_text_bills_monthly)) //TODO: is this good enough?
+                .setContentText(r.getString(R.string.notification_text_bills_monthly))
                 .setContentIntent(pi)
                 .setSound(alarmSound)
                 .setAutoCancel(true)

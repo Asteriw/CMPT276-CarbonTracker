@@ -33,12 +33,10 @@
         </activity>
 
         <activity android:name=".ui.SelectCar" />
-        <activity android:name=".ui.CarbonFootPrint" />
         <activity android:name=".ui.SelectJourney" />
         <activity android:name=".ui.AddUtility" />
         <activity android:name=".ui.DataActivityPicker" />
         <activity android:name=".ui.SelectRoute" />
-        <activity android:name=".ui.UtilitiesSingleDayFootPrint" />
         <activity android:name=".ui.SelectUtilities" />
         <activity android:name=".ui.EditDate" />
         <activity android:name=".ui.AddRoute" />

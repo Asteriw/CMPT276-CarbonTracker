@@ -64,7 +64,7 @@
     <string name="notification_text">"Ajouter un voyage ou utilitaire pour commencer le suivi de votre empreinte carbone!"</string>
     <string name="bus">"bus"</string>
     <string name="settings">"Paramètres"</string>
-    <string name="treeSetting">"Afficher les unités d'émission en KG"</string>
+    <string name="treeSetting">"Montrer les unités d'émission comme quantité de jours qu'il faudrait pour 10 arbres pour traiter les émissions"</string>
     <string name="co2emissionresult">"Résultat d'émission en CO2"</string>
     <string name="kgco2">" Kg de CO2"</string>
     <string name="car_year">"car_year"</string>
