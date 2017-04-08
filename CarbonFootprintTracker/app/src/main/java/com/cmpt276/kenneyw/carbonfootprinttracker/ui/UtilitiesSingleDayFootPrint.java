@@ -18,17 +18,17 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.model.Utility;
 
 import java.util.ArrayList;
 
-public class UtilitiesFootPrint extends AppCompatActivity{
+public class UtilitiesSingleDayFootPrint extends AppCompatActivity {
 
     private static final String TAG = "CarbonFootprintTracker";
     private static final String SHAREDPREF_SET_UTIL = "CarbonFootprintTrackerUtilities";
     private static final String SHAREDPREF_ITEM_AMOUNTOFUTILITIES = "AmountOfUtilities";
-    private static final String UTILNAME ="name";
-    private static final String GASTYPE="gasType";
-    private static final String AMOUNT="amount";
-    private static final String NUMPEOPLE="numofPeople";
-    private static final String STARTDATE="startDate";
-    private static final String ENDDATE="endDate";
+    private static final String UTILNAME = "name";
+    private static final String GASTYPE = "gasType";
+    private static final String AMOUNT = "amount";
+    private static final String NUMPEOPLE = "numofPeople";
+    private static final String STARTDATE = "startDate";
+    private static final String ENDDATE = "endDate";
     private static final String EMISSION = "emission";
 
     private static final String SHAREDPREF_SET_JOURNEY = "CarbonFootprintTrackerJournies";
@@ -37,26 +37,28 @@ public class UtilitiesFootPrint extends AppCompatActivity{
     public static final String ROUTENAME = "routeName";
     public static final String CITY = "city";
     public static final String HIGHWAY = "highway";
-    public static final String GASTYPE_JOURNEY="gasType";
-    public static final String MPGCITY="mpgCity";
-    public static final String MPGHIGHWAY="mpgHighway";
-    public static final String DATESTRING="dateString";
-    public static final String LITERENGINE="literEngine";
-    public static final String TOTALEMISSIONS ="totalEmissions";
+    public static final String GASTYPE_JOURNEY = "gasType";
+    public static final String MPGCITY = "mpgCity";
+    public static final String MPGHIGHWAY = "mpgHighway";
+    public static final String DATESTRING = "dateString";
+    public static final String LITERENGINE = "literEngine";
+    public static final String TOTALEMISSIONS = "totalEmissions";
     public static final String BUS = "bus";
     public static final String BIKE = "bike";
     public static final String SKYTRAIN = "skytrain";
     public static final String WALK = "walk";
     public static final String ICONID = "IconID";
 
-    ArrayList<Journey> journeyArrayList=new ArrayList<>();
+    ArrayList<Journey> journeyArrayList = new ArrayList<>();
     ArrayList<Utility> utilities = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_utilities_footprint);
+        setContentView(R.layout.activity_utilities_singleday_footprint);
         setupButton();
+        utilities = loadUtilities();
+        journeyArrayList = loadJourneys();
         utilities=loadUtilities();
         journeyArrayList=loadJourneys();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -82,46 +84,45 @@ public class UtilitiesFootPrint extends AppCompatActivity{
     }
 
     public ArrayList<Journey> loadJourneys() {
-        ArrayList<Journey> journeyArrayList=new ArrayList<>();
-        SharedPreferences pref=getSharedPreferences(SHAREDPREF_SET_JOURNEY,MODE_PRIVATE);
-        int journeyAmt=pref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS,0);
-        for(int i=0;i<journeyAmt;i++){
+        ArrayList<Journey> journeyArrayList = new ArrayList<>();
+        SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET_JOURNEY, MODE_PRIVATE);
+        int journeyAmt = pref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
+        for (int i = 0; i < journeyAmt; i++) {
             //Date date=new Date(pref.getLong(i+DATEOFTRAVEL,0));
-            Journey j=new Journey(
-                    pref.getString(i+ROUTENAME,""),
-                    Double.longBitsToDouble(pref.getLong(i+CITY,0)),
-                    Double.longBitsToDouble(pref.getLong(i+HIGHWAY,0)),
-                    pref.getString(i+NAME,""),
-                    pref.getString(i+GASTYPE_JOURNEY,""),
-                    Double.longBitsToDouble(pref.getLong(i+MPGCITY,0)),
-                    Double.longBitsToDouble(pref.getLong(i+MPGHIGHWAY,0)),
-                    Double.longBitsToDouble(pref.getLong(i+LITERENGINE,0)),
-                    pref.getString(i+DATESTRING,""),
-                    pref.getBoolean(i+BUS,false),
-                    pref.getBoolean(i+BIKE,false),
-                    pref.getBoolean(i+SKYTRAIN,false),
-                    pref.getBoolean(i+WALK,false),
-                    pref.getInt(i+ICONID,0));
+            Journey j = new Journey(
+                    pref.getString(i + ROUTENAME, ""),
+                    Double.longBitsToDouble(pref.getLong(i + CITY, 0)),
+                    Double.longBitsToDouble(pref.getLong(i + HIGHWAY, 0)),
+                    pref.getString(i + NAME, ""),
+                    pref.getString(i + GASTYPE_JOURNEY, ""),
+                    Double.longBitsToDouble(pref.getLong(i + MPGCITY, 0)),
+                    Double.longBitsToDouble(pref.getLong(i + MPGHIGHWAY, 0)),
+                    Double.longBitsToDouble(pref.getLong(i + LITERENGINE, 0)),
+                    pref.getString(i + DATESTRING, ""),
+                    pref.getBoolean(i + BUS, false),
+                    pref.getBoolean(i + BIKE, false),
+                    pref.getBoolean(i + SKYTRAIN, false),
+                    pref.getBoolean(i + WALK, false),
+                    pref.getInt(i + ICONID, 0));
             journeyArrayList.add(j);
         }
         return journeyArrayList;
     }
 
     private void setupButton() {
-        Button back = (Button) findViewById(R.id.utilities_back);
-        back.setOnClickListener(new View.OnClickListener() {
+        Button back_btn = (Button) findViewById(R.id.utility_footprint_back);
+        back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Intent UtilitiesSingleDayFootprint2CarbonFootPrint = CarbonFootPrint.makeIntent(UtilitiesSingleDayFootPrint.this);
+                //startActivity(UtilitiesSingleDayFootprint2CarbonFootPrint);
                 finish();
             }
         });
-
-
-
     }
 
 
     public static Intent makeIntent(Context context) {
-        return new Intent(context, UtilitiesFootPrint.class);
+        return new Intent(context, UtilitiesSingleDayFootPrint.class);
     }
 }

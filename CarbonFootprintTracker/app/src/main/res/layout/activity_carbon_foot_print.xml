@@ -4,86 +4,95 @@
     android:id="@+id/activity_carbon_foot_print"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.CarbonFootPrint">
+    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.CarbonFootPrint"
+    android:background="@drawable/image4">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/back_button_carbon_foot_print"
-        android:id="@+id/content_layout">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/journey_table"
-                    tools:ignore="UselessParent">
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        tools:ignore="UselessLeaf" />
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        tools:ignore="UselessLeaf" />
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        tools:ignore="UselessLeaf" />
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        tools:ignore="UselessLeaf" />
-                </TableLayout>
-            </LinearLayout>
-        </ScrollView>
+        android:layout_margin="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/piechart_layout"
             android:layout_above="@+id/back_button_carbon_foot_print"
-            tools:ignore="NotSibling">
+            android:id="@+id/content_layout">
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/chart"
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/journey_table"
+                        tools:ignore="UselessParent">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:ignore="UselessLeaf" />
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:ignore="UselessLeaf" />
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:ignore="UselessLeaf" />
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:ignore="UselessLeaf" />
+                    </TableLayout>
+                </LinearLayout>
+            </ScrollView>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clickable="true"
-                android:alpha="1" />
+                android:id="@+id/piechart_layout"
+                android:layout_above="@+id/back_button_carbon_foot_print"
+                tools:ignore="NotSibling">
 
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:alpha="1" />
+
+            </RelativeLayout>
         </RelativeLayout>
+
+        <Button
+            android:text="@string/switch_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switchview_button_carbon_foot_print"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textStyle="normal|bold" />
+
+        <Button
+            android:text="@string/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/back_button_carbon_foot_print"
+            tools:ignore="RelativeOverlap"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textStyle="normal|bold" />
     </RelativeLayout>
-
-    <Button
-        android:text="@string/switch_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/switchview_button_carbon_foot_print"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="@string/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/back_button_carbon_foot_print"
-        tools:ignore="RelativeOverlap"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

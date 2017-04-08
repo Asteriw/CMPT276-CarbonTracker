@@ -14,7 +14,8 @@
         android:layout_marginStart="17dp"
         android:layout_alignTop="@+id/icon_imageView"
         android:layout_toRightOf="@+id/icon_imageView"
-        android:layout_toEndOf="@+id/icon_imageView" />
+        android:layout_toEndOf="@+id/icon_imageView"
+        android:textStyle="normal|bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,7 +25,8 @@
         android:hint="@string/car_make"
         android:layout_below="@+id/carlist_name"
         android:layout_alignLeft="@+id/carlist_name"
-        android:layout_alignStart="@+id/carlist_name" />
+        android:layout_alignStart="@+id/carlist_name"
+        android:textStyle="normal|bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,7 +36,8 @@
         android:textSize="10sp"
         android:layout_below="@+id/carlist_make"
         android:layout_alignLeft="@+id/carlist_make"
-        android:layout_alignStart="@+id/carlist_make" />
+        android:layout_alignStart="@+id/carlist_make"
+        android:textStyle="normal|bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +47,8 @@
         android:textSize="10sp"
         android:layout_below="@+id/carlist_model"
         android:layout_alignLeft="@+id/carlist_model"
-        android:layout_alignStart="@+id/carlist_model" />
+        android:layout_alignStart="@+id/carlist_model"
+        android:textStyle="normal|bold" />
 
     <ImageView
         android:layout_width="wrap_content"

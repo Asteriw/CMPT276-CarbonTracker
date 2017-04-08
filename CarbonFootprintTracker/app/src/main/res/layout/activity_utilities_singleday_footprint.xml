@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.UtilitiesSingleDayFootPrint"
+    android:layout_margin="10dp">
 
     <Button
         android:text="@string/back"
@@ -9,5 +13,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/utilities_back" />
+        android:id="@+id/utility_footprint_back"
+        android:textStyle="normal|bold" />
 </RelativeLayout>

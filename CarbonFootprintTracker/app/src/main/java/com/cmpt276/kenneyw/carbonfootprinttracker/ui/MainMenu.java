@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,7 +49,6 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         setupButtons();
-        setupAnimation();
         loadTips();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -72,15 +72,9 @@ public class MainMenu extends AppCompatActivity {
         tipHelper.setLastUtil(kpref.getString(tLastUtil, ""));
     }
 
-    // Fade carlogo in the MainMenu Screen
-    private void setupAnimation(){
-        ImageView myImageView = (ImageView) findViewById(R.id.car_logo);
-        Animation carAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade);
-        myImageView.startAnimation(carAnimation);
-    }
     private void setupButtons() {
         // directs to "SelectJourney" screen
-        Button journey_button = (Button) findViewById(R.id.create_a_new_journey_button);
+        ImageButton journey_button = (ImageButton) findViewById(R.id.create_a_new_journey_button);
         journey_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +83,7 @@ public class MainMenu extends AppCompatActivity {
             }
         });
         // directs to "CarbonFootPrint" screen
-        Button footprint_button = (Button) findViewById(R.id.view_cabon_footprint_button);
+        ImageButton footprint_button = (ImageButton) findViewById(R.id.view_cabon_footprint_button);
         footprint_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +92,7 @@ public class MainMenu extends AppCompatActivity {
             }
         });
         // directs to "Utility Bill" screen
-        Button utility_button = (Button) findViewById(R.id.utility_add_button);
+        ImageButton utility_button = (ImageButton) findViewById(R.id.utility_add_button);
         utility_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +101,7 @@ public class MainMenu extends AppCompatActivity {
             }
         });
         // directs to "About" screen
-        Button about_button = (Button) findViewById(R.id.about_btn);
+        ImageButton about_button = (ImageButton) findViewById(R.id.about_btn);
         about_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +110,7 @@ public class MainMenu extends AppCompatActivity {
                 dialog.show(manager, "About");
             }
         });
+
         //directs to Settings screen
         Button settings_button = (Button) findViewById(R.id.btnSettings);
         settings_button.setOnClickListener(new View.OnClickListener() {

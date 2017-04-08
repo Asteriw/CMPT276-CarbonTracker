@@ -675,7 +675,7 @@ public class LastYearActivity extends AppCompatActivity {
                     setUpArraysRouteWise();
                     setUpPieChart();
                     setUpLineChart();
-                    organizeBtn.setText(R.string.journeymode);
+                    organizeBtn.setText(R.string.change_mode);
                     lineChart.setVisibility(View.INVISIBLE);
                     checkOrganization=true;
                 }
@@ -683,7 +683,7 @@ public class LastYearActivity extends AppCompatActivity {
                     setUpArrays();
                     setUpPieChart();
                     setUpLineChart();
-                    organizeBtn.setText(R.string.routemode);
+                    organizeBtn.setText(R.string.change_mode);
                     lineChart.setVisibility(View.INVISIBLE);
                     checkOrganization=false;
                 }

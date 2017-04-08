@@ -9,27 +9,36 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
-        android:immersive="true">
+        android:immersive="true"
+        android:hardwareAccelerated="false"
+        android:fullBackupContent="true"
+        android:largeHeap="true">
         <activity
-            android:name=".ui.WelcomeScreen"
+            android:name=".ui.SplashScreen"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.MainMenu"
-            android:configChanges="orientation|keyboardHidden" />
+            android:configChanges="orientation|keyboardHidden" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
+
         <activity android:name=".ui.SelectCar" />
         <activity android:name=".ui.CarbonFootPrint" />
         <activity android:name=".ui.SelectJourney" />
         <activity android:name=".ui.AddUtility" />
         <activity android:name=".ui.DataActivityPicker" />
         <activity android:name=".ui.SelectRoute" />
-        <activity android:name=".ui.UtilitiesFootPrint" />
+        <activity android:name=".ui.UtilitiesSingleDayFootPrint" />
         <activity android:name=".ui.SelectUtilities" />
         <activity android:name=".ui.EditDate" />
         <activity android:name=".ui.AddRoute" />

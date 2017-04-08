@@ -5,81 +5,131 @@
     android:id="@+id/activity_main_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/image4"
+    android:background="@drawable/image1"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.MainMenu">
 
-    <Button
-        android:text="@string/view_carbon_footprint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/view_cabon_footprint_button"
-        android:layout_marginBottom="31dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
     <TextView
+        android:text="@string/main_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="@color/orange"
-        android:elevation="2dp"
-        tools:elevation="2dp"
-        android:id="@+id/Splash_Title"
-        android:textSize="45sp"
-        android:shadowDx="4"
-        android:shadowDy="4"
-        android:shadowRadius="5"
-        android:shadowColor="@color/black"
+        android:layout_marginTop="105dp"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="40sp"
         android:textStyle="normal|bold"
-        android:layout_marginBottom="41dp"
-        android:layout_above="@+id/car_logo"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="@string/add_a_utility_bill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/utility_add_button"
-        android:layout_above="@+id/view_cabon_footprint_button"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="@string/create_a_new_journey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/create_a_new_journey_button"
-        android:layout_above="@+id/utility_add_button"
-        android:layout_centerHorizontal="true" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/car_logo"
-        app:srcCompat="@drawable/car_icon"
-        android:id="@+id/car_logo"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:paddingRight="30dp" />
-
-    <Button
-        android:text="@string/about"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/about_btn"
-        android:layout_marginBottom="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="@string/settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:textAllCaps="false"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/utility_add_button"
-        android:layout_toStartOf="@+id/utility_add_button"
-        android:layout_marginTop="32dp"
-        android:id="@+id/btnSettings" />
+        android:layout_centerHorizontal="true"
+        android:id="@+id/mainmenu_tittle" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/create_a_new_journey_button"
+                android:layout_weight="1"
+                android:src="@drawable/journey_icon"
+                android:background="@android:color/transparent" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/utility_add_button"
+                android:src="@drawable/utility_icon"
+                android:layout_weight="1"
+                android:background="@android:color/transparent" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/view_cabon_footprint_button"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/graph_icon" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/about_btn"
+                android:layout_weight="1"
+                android:src="@drawable/help_icon"
+                android:background="@android:color/transparent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:text="@string/journey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.76"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_green_dark"
+                android:textStyle="normal|bold|italic"
+                android:textAllCaps="true" />
+
+            <TextView
+                android:text="@string/utility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.96"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textStyle="normal|bold|italic"
+                android:textColor="@android:color/holo_green_dark" />
+
+            <TextView
+                android:text="@string/graph"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.04"
+                android:textAlignment="center"
+                android:textStyle="normal|bold|italic"
+                android:textAllCaps="true"
+                android:textColor="@android:color/holo_green_dark" />
+
+            <TextView
+                android:text="@string/about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.08"
+                android:textAlignment="center"
+                android:textStyle="normal|bold|italic"
+                android:textAllCaps="true"
+                android:textColor="@android:color/holo_green_dark" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.76">
+
+            <Button
+                android:text="@string/settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/utility_add_button"
+                android:layout_toStartOf="@+id/utility_add_button"
+                android:layout_marginTop="32dp"
+                android:id="@+id/btnSettings"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>

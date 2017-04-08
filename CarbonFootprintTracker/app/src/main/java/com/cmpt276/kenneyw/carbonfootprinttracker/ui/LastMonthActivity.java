@@ -174,14 +174,14 @@ public class LastMonthActivity extends AppCompatActivity {
                 if(!checkOrganization){
                     setUpRouteWiseArrays();
                     setUpPieChart();
-                    organizeBtn.setText(R.string.journeymode);
+                    organizeBtn.setText(R.string.change_mode);
                     lineChart.setVisibility(View.INVISIBLE);
                     checkOrganization=true;
                 }
                 else{
                     setUpArrays();
                     setUpPieChart();
-                    organizeBtn.setText(R.string.routemode);
+                    organizeBtn.setText(R.string.change_mode);
                     lineChart.setVisibility(View.INVISIBLE);
                     checkOrganization=false;
                 }
