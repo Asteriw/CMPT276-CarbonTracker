@@ -61,6 +61,7 @@ public class CalculationDialog extends AppCompatDialogFragment {
                 }
             }
         };
+
         //build alert dialog
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.co2emissionresult)
@@ -68,4 +69,5 @@ public class CalculationDialog extends AppCompatDialogFragment {
                 .setPositiveButton(android.R.string.ok, listener)
                 .create();
     }
+
 }

@@ -83,7 +83,6 @@ public class SelectUtilities extends AppCompatActivity {
         setupList();
         tipArray = getResources().getStringArray(R.array.tips_array);
         setupButtons();
-        hideNavBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -91,13 +90,6 @@ public class SelectUtilities extends AppCompatActivity {
     public boolean onSupportNavigateUp(){
         onBackPressed();
         return true;
-    }
-
-    private void hideNavBar() {
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
 
     private void getSetting() {

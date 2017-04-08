@@ -4,7 +4,6 @@
     android:id="@+id/activity_select_car"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="50dp"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.SelectCar">
 
     <Button
