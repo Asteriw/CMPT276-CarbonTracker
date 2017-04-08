@@ -4,55 +4,59 @@
     android:id="@+id/activity_settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.SettingsActivity">
+    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.SettingsActivity"
+    android:background="@drawable/image2">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp"
-        android:id="@+id/txtSettings"
-        android:text="@string/settings"
-        android:textStyle="normal|bold"
-        android:textSize="24sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
 
-    <TextView
-        android:text="@string/treeSetting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
-        android:id="@+id/txtTreeOrNotSetting"
-        android:layout_below="@+id/txtSettings"
-        android:layout_toStartOf="@+id/switchTree"
-        android:layout_toLeftOf="@+id/switchTree" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnOkSettings"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/check_icon"
+            android:background="@android:color/transparent" />
 
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="27dp"
-        android:layout_marginStart="27dp"
-        android:id="@+id/switchTree"
-        android:layout_alignBaseline="@+id/txtTreeOrNotSetting"
-        android:layout_alignBottom="@+id/txtTreeOrNotSetting"
-        android:layout_toRightOf="@+id/txtSettings"
-        android:layout_toEndOf="@+id/txtSettings" />
+        <TextView
+            android:text="@string/treeSetting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:id="@+id/txtTreeOrNotSetting"
+            android:layout_below="@+id/txtSettings"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textColor="@android:color/holo_orange_dark"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp" />
 
-    <Button
-        android:text="@string/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/btnBackSettings" />
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switchTree"
+            android:layout_below="@+id/txtTreeOrNotSetting"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="38dp" />
 
-    <Button
-        android:text="@android:string/ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btnBackSettings"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/btnOkSettings" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:id="@+id/txtSettings"
+            android:text="@string/settings"
+            android:textStyle="normal|bold|italic"
+            android:textSize="45sp"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
 </RelativeLayout>

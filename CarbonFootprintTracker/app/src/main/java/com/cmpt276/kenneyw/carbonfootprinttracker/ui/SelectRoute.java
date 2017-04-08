@@ -1,9 +1,9 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
 /**
- *This Class stores a list of routes for perusal in a journey. Can add, edit and delete saved routes.
- *Includes error checking of input, and user can go back to select car screen. Saving routes via shared prefs and
- *transferring to journey to save via singleton class: routeSingleton
+ * This Class stores a list of routes for perusal in a journey. Can add, edit and delete saved routes.
+ * Includes error checking of input, and user can go back to select car screen. Saving routes via shared prefs and
+ * transferring to journey to save via singleton class: routeSingleton
  */
 
 import android.content.Context;
@@ -20,8 +20,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.Route;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.RouteCollection;
@@ -44,14 +46,16 @@ public class SelectRoute extends AppCompatActivity {
         routes = LoadRoutes();
         setContentView(R.layout.activity_select_route);
         setUpListView();
-        setupBackButton();
         setupAddRouteButton();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
-    public boolean onSupportNavigateUp(){
-        onBackPressed();
+    public boolean onSupportNavigateUp() {
+        saveRoutes();
+        Intent i = new Intent();
+        setResult(RESULT_CANCELED, i);
+        finish();
         return true;
     }
 
@@ -75,7 +79,7 @@ public class SelectRoute extends AppCompatActivity {
                     break;
                 } else {
                     String nameToAdd = data.getStringExtra(NAME);
-                    double cityToAdd = data.getDoubleExtra( CITY, 0);
+                    double cityToAdd = data.getDoubleExtra(CITY, 0);
                     double highwayToAdd = data.getDoubleExtra(HIGHWAY, 0);
                     Route r = new Route(nameToAdd, cityToAdd, highwayToAdd);
                     routes.addRoute(r);
@@ -84,18 +88,18 @@ public class SelectRoute extends AppCompatActivity {
                     break;
                 }
             case DATE_REQUESTED:
-                if(resultCode==RESULT_CANCELED){
+                if (resultCode == RESULT_CANCELED) {
                     Log.i(TAG, "User Cancelled Date picker");
                     break;
-                }
-                else{
-                    Intent i=new Intent();
-                    setResult(RESULT_OK,i);
+                } else {
+                    Intent i = new Intent();
+                    setResult(RESULT_OK, i);
                     finish();
                     break;
                 }
         }
     }
+
     private RouteCollection LoadRoutes() {
         RouteCollection temp_routes = new RouteCollection();
         SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
@@ -112,6 +116,7 @@ public class SelectRoute extends AppCompatActivity {
         }
         return temp_routes;
     }
+
     public void setUpListView() {
         ListView listForRoutes = (ListView) findViewById(R.id.listViewRoutes);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.layout_for_list, routes.getRoutesDescriptionsWithName());
@@ -136,6 +141,7 @@ public class SelectRoute extends AppCompatActivity {
         });
         registerForContextMenu(listForRoutes);
     }
+
     //Context Menu Code taken and modified from:
     //https://www.mikeplate.com/2010/01/21/show-a-context-menu-for-long-clicks-in-an-android-listview/
     @Override
@@ -150,6 +156,7 @@ public class SelectRoute extends AppCompatActivity {
             }
         }
     }
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -167,6 +174,7 @@ public class SelectRoute extends AppCompatActivity {
         }
         return true;
     }
+
     private void launchEditFragment(int pos) {
         Route r = routes.getRoute(pos);
         Toast.makeText(SelectRoute.this, "Enter new values for Route " + r.getRouteName(), Toast.LENGTH_SHORT).show();
@@ -184,6 +192,7 @@ public class SelectRoute extends AppCompatActivity {
         dialog.show(manager, "EditRouteDialog");
         Log.i(TAG, "Launched Dialog Fragment");
     }
+
     public void saveRoutes() {
         SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
@@ -197,18 +206,7 @@ public class SelectRoute extends AppCompatActivity {
         editor.putInt(SHAREDPREF_ITEM_AMOUNTOFROUTES, routeAmt);
         editor.apply();
     }
-    private void setupBackButton() {
-        Button back_button = (Button) findViewById(R.id.back_button_select_route);
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveRoutes();
-                Intent i = new Intent();
-                setResult(RESULT_CANCELED, i);
-                finish();
-            }
-        });
-    }
+
     @Override
     public void onBackPressed() {
         saveRoutes();
@@ -216,9 +214,11 @@ public class SelectRoute extends AppCompatActivity {
         setResult(RESULT_CANCELED, i);
         finish();
     }
+
     public static Intent makeIntent(Context context) {
         return new Intent(context, SelectRoute.class);
     }
+
     public void changeRoute(int pos, String name, double city, double highway) {
         Log.i(TAG, "change Route got: " + name + " " + city + " " + highway);
         routes.getRoute(pos).setRouteName(name);

@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:layout_margin="10dp">
 
-        <Button
+        <ImageButton
             android:text="@string/ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -16,17 +16,9 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:textStyle="normal|bold" />
-
-        <Button
-            android:text="@string/cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/utility_add_cancel"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textStyle="normal|bold" />
+            android:textStyle="normal|bold"
+            android:background="@android:color/transparent"
+            android:src="@drawable/add_icon" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -36,7 +28,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="20dp">
 
 
             <LinearLayout
@@ -51,10 +43,9 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginTop="15dp"
                     android:id="@+id/selecttpye"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black" />
 
                 <RadioGroup
                     android:id="@+id/radioUtility"
@@ -104,7 +95,8 @@
                             android:layout_width="166dp"
                             android:layout_height="wrap_content"
                             android:id="@+id/amount"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            android:textColor="@color/black" />
 
                         <EditText
                             android:layout_width="match_parent"
@@ -142,7 +134,8 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
 
                         <TextView
                             android:text="@string/number_of_people"
@@ -152,7 +145,8 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true"
                             android:id="@+id/num_of_people"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            android:textColor="@color/black" />
 
                         <EditText
                             android:layout_width="wrap_content"
@@ -173,14 +167,16 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
 
                         <TextView
                             android:text="@string/nick_name"
                             android:layout_width="167dp"
                             android:layout_height="wrap_content"
                             android:id="@+id/nickname"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            android:textColor="@color/black" />
 
                         <EditText
                             android:layout_width="wrap_content"
@@ -200,7 +196,8 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
 
                         <Button
                             android:text="@string/add_start_date"
@@ -221,7 +218,8 @@
                             android:layout_centerHorizontal="true"
                             android:textStyle="normal|bold"
                             android:textColor="@android:color/background_light"
-                            android:textAllCaps="true" />
+                            android:textAllCaps="true"
+                            android:layout_marginLeft="30dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -250,7 +248,8 @@
                             android:layout_centerHorizontal="true"
                             android:textStyle="normal|bold"
                             android:textAllCaps="true"
-                            android:textColor="@android:color/background_light" />
+                            android:textColor="@android:color/background_light"
+                            android:layout_marginLeft="30dp" />
                     </LinearLayout>
 
                 </LinearLayout>

@@ -1,7 +1,7 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
 /**
- *  This class displays the calculation result of CO2 emission of a selected journey
+ * This class displays the calculation result of CO2 emission of a selected journey
  * Units must be in Time taken for 10 Trees to absorb the KG of CO2 or in KG
  * 13 kg CO2 absorbed by 1 tree in 1 year,
  * Time taken for 1 tree to absorb 1kg CO2 = 28 days
@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 
 import org.w3c.dom.Text;
+
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
@@ -39,18 +40,17 @@ public class CalculationDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         //create view
         View viewer = LayoutInflater.from(getActivity()).inflate(R.layout.activity_calculation_dialog, null);
-        TextView txtCO2=(TextView) viewer.findViewById(R.id.calculation_result_dialog);
-        Double CO2=getArguments().getDouble("CO2");
-        boolean setting=getArguments().getBoolean(TREESETTING,false);
+        TextView txtCO2 = (TextView) viewer.findViewById(R.id.calculation_result_dialog);
+        Double CO2 = getArguments().getDouble("CO2");
+        boolean setting = getArguments().getBoolean(TREESETTING, false);
         if (setting) {
-            txtCO2.setText("It will take " + CO2* TIMEFOR100TREES + " days for 100 trees to absorb");
-        }
-        else{
+            txtCO2.setText("It will take " + CO2 * TIMEFOR100TREES + " days for 100 trees to absorb");
+        } else {
             txtCO2.setText("    " + CO2 + getString(R.string.kgco2));
         }
 
         txtCO2.setTextSize(20);
-        txtCO2.setTextColor(Color.rgb(255,178,102));
+        txtCO2.setTextColor(Color.rgb(255, 178, 102));
         //create button listeners
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override

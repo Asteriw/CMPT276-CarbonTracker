@@ -1,9 +1,9 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
 /**
- *  AddUtility saves name, emissions, gasType, amount, the numberOfPeople in the household and a
- *  start and end date as input by the user.
- *  Also handles editing utilities. Passes saved utilities via singleton class: UtilitySingleton
+ * AddUtility saves name, emissions, gasType, amount, the numberOfPeople in the household and a
+ * start and end date as input by the user.
+ * Also handles editing utilities. Passes saved utilities via singleton class: UtilitySingleton
  */
 
 import android.content.Context;
@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -43,16 +44,18 @@ public class AddUtility extends AppCompatActivity {
     int startYear;
     int endYear;
     int pos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_utility);
 
-        Intent i=getIntent();
-        if(i.hasExtra("POS")) {
+        Intent i = getIntent();
+        if (i.hasExtra("POS")) {
             pos = i.getIntExtra(POS_TO_EDIT, 0);
+        } else {
+            pos = 0;
         }
-        else{pos=0;}
 
         setupButton();
         setupRadioButtons();
@@ -60,8 +63,10 @@ public class AddUtility extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp(){
-        onBackPressed();
+    public boolean onSupportNavigateUp() {
+        Intent i = new Intent();
+        setResult(RESULT_CANCELED, i);
+        finish();
         return true;
     }
 
@@ -79,17 +84,7 @@ public class AddUtility extends AppCompatActivity {
     }
 
     private void setupButton() {
-        Button cancel_button = (Button) findViewById(R.id.utility_add_cancel);
-        cancel_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent();
-                setResult(RESULT_CANCELED, i);
-                finish();
-            }
-        });
-
-        Button ok_button = (Button) findViewById(R.id.ok_button_add_utility);
+        ImageButton ok_button = (ImageButton) findViewById(R.id.ok_button_add_utility);
         ok_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +114,7 @@ public class AddUtility extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case START_DATE_CHOOSE:
-                if(resultCode==RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     DateSingleton startdate = DateSingleton.getInstance();
                     startDate = startdate.getDateString(); // string;
                     startDay = startdate.getDay();
@@ -131,7 +126,7 @@ public class AddUtility extends AppCompatActivity {
                 setupButton();
                 break;
             case END_DATE_CHOOSE:
-                if(resultCode==RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     DateSingleton finalDate = DateSingleton.getInstance();
                     endDate = finalDate.getDateString(); // string;
                     endDay = finalDate.getDay();
@@ -188,21 +183,20 @@ public class AddUtility extends AppCompatActivity {
                 new_utility.setName(editNickname.getText().toString());
 
                 Calculation calculation = new Calculation();
-                if ( utility_type.equals("Electricity") ) {
+                if (utility_type.equals("Electricity")) {
                     new_utility.setEmission(calculation.calculate_CO2_Emission_of_Electricity
                             (Double.parseDouble(editAmount.getText().toString())));
-                }
-                else{
-                    new_utility.setEmission( calculation.calculate_CO2_Emission_of_Natural_Gas
-                            ( Double.parseDouble(editAmount.getText().toString()) ));
+                } else {
+                    new_utility.setEmission(calculation.calculate_CO2_Emission_of_Natural_Gas
+                            (Double.parseDouble(editAmount.getText().toString())));
                 }
 
                 new_utility.setGasType(utility_type);
                 Log.i("AddUtility", "Singleton = " + new_utility.getName());
                 Log.i("AddUtility", "Singleton = " + new_utility.getGasType());
-                Log.i("AddUtility","Singleton = " + new_utility.getEmission());
+                Log.i("AddUtility", "Singleton = " + new_utility.getEmission());
                 Intent i = new Intent();
-                i.putExtra(POS_TO_EDIT,pos);
+                i.putExtra(POS_TO_EDIT, pos);
                 setResult(RESULT_OK, i);
                 finish();
             }

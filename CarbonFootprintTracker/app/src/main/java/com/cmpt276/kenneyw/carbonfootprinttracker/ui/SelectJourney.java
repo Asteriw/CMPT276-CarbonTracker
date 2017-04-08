@@ -66,7 +66,7 @@ public class SelectJourney extends AppCompatActivity {
     public static final String DATESTRING = "dateString";
     public static final String LITERENGINE = "literEngine";
     public static final String TOTALEMISSIONS = "totalEmissions";
-    public static final String ADDEDTODAY ="addedToday";
+    public static final String ADDEDTODAY = "addedToday";
     public static final String BUS = "bus";
     public static final String BIKE = "bike";
     public static final String SKYTRAIN = "skytrain";
@@ -90,7 +90,7 @@ public class SelectJourney extends AppCompatActivity {
 
     public static final String SETTING = "CarbonFootprintTrackerSettings";
     public static final String TREESETTING = "TreeSetting";
-    boolean setting=false;
+    boolean setting = false;
 
     JourneyCollection journeys = new JourneyCollection();
 
@@ -102,7 +102,6 @@ public class SelectJourney extends AppCompatActivity {
         journeys = loadJourneys();
         tipArray = getResources().getStringArray(R.array.tips_array);
         setupAddJourneyButton();
-        setupBackButton();
         setJourneyList();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -110,14 +109,15 @@ public class SelectJourney extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp(){
-        onBackPressed();
+    public boolean onSupportNavigateUp() {
+        saveJourneys();
+        finish();
         return true;
     }
 
     private void getSetting() {
-        SharedPreferences pref=getSharedPreferences(SETTING,MODE_PRIVATE);
-        setting=pref.getBoolean(TREESETTING,false);
+        SharedPreferences pref = getSharedPreferences(SETTING, MODE_PRIVATE);
+        setting = pref.getBoolean(TREESETTING, false);
     }
 
     public JourneyCollection loadJourneys() {
@@ -193,17 +193,6 @@ public class SelectJourney extends AppCompatActivity {
         editor.apply();
     }
 
-    private void setupBackButton() {
-        Button back_button = (Button) findViewById(R.id.back_button_select_journey);
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveJourneys();
-                finish();
-            }
-        });
-    }
-
     private void setupAddJourneyButton() {
         // Directs to "Select Car" Screen
         Button journey_button = (Button) findViewById(R.id.add_a_new_journey_button);
@@ -228,7 +217,7 @@ public class SelectJourney extends AppCompatActivity {
                 FragmentManager manager = getSupportFragmentManager();
                 CalculationDialog dialog = new CalculationDialog();
                 Bundle bundle = new Bundle();
-                bundle.putBoolean(TREESETTING,setting);
+                bundle.putBoolean(TREESETTING, setting);
                 bundle.putDouble("CO2", journeys.getJourney(position).getTotalEmissions());
                 dialog.setArguments(bundle);
                 dialog.show(manager, "CalculateDialog");
@@ -267,11 +256,11 @@ public class SelectJourney extends AppCompatActivity {
             TextView carMake = (TextView) itemView.findViewById(R.id.carlist_make);
             carMake.setText(currentJourney.getTotalDistanceToString());
 
-            if ( currentJourney.isBus() || currentJourney.isWalk() || currentJourney.isBike() || currentJourney.isSkytrain()){
+            if (currentJourney.isBus() || currentJourney.isWalk() || currentJourney.isBike() || currentJourney.isSkytrain()) {
                 // Custom setting for Journey, carModel = gas type
                 TextView carModel = (TextView) itemView.findViewById(R.id.carlist_model);
                 carModel.setText(currentJourney.getName());
-            }else {
+            } else {
                 // Custom setting for Journey, carModel = gas type
                 TextView carModel = (TextView) itemView.findViewById(R.id.carlist_model);
                 carModel.setText(currentJourney.getGasType());
@@ -378,19 +367,19 @@ public class SelectJourney extends AppCompatActivity {
                 properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
                 tipData = tipHelper.tipDataFetcher(properTipIndex);
                 if (setting) {
-                    tipData = tipData*2;
+                    tipData = tipData * 2;
                 }
                 tipString = String.format(tipArray[properTipIndex], tipData);
                 return tipString;
             }
         }
         properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
-        Journey jTip = journeys.getJourney(journeyNum-1);
+        Journey jTip = journeys.getJourney(journeyNum - 1);
         tipHelper.setJourneyEmission(jTip.getTotalEmissions());
         tipHelper.setJourneyDist(jTip.getCityDistance() + jTip.getHighwayDistance());
         tipData = tipHelper.tipDataFetcher(properTipIndex);
         if (setting) {
-            tipData = tipData*2;
+            tipData = tipData * 2;
         }
         tipString = String.format(tipArray[properTipIndex], tipData);
 
@@ -423,7 +412,6 @@ public class SelectJourney extends AppCompatActivity {
                     //finalJourney.setTotalEmissions(finalJourney.CalculateTotalEmissions());
                     journeys.addJourney(finalJourney);
                     setupAddJourneyButton();
-                    setupBackButton();
                     setJourneyList();
                     saveJourneys();
                     tipMaker();
@@ -431,7 +419,6 @@ public class SelectJourney extends AppCompatActivity {
                 } else {
                     Log.i(TAG, "User Cancelled");
                     setupAddJourneyButton();
-                    setupBackButton();
                     setJourneyList();
                 }
                 break;
@@ -458,12 +445,10 @@ public class SelectJourney extends AppCompatActivity {
                     j.setIconID(finalCar.getIconID());
                     j.setTotalEmissions(j.CalculateTotalEmissions());
                     setupAddJourneyButton();
-                    setupBackButton();
                     setJourneyList();
                     saveJourneys();
                 } else {
                     setupAddJourneyButton();
-                    setupBackButton();
                     setJourneyList();
                 }
                 break;
@@ -475,8 +460,8 @@ public class SelectJourney extends AppCompatActivity {
         int amountAddedToday = pref.getInt(ADDEDTODAY, 0);
         SharedPreferences.Editor editor = pref.edit();
         editor.clear();
-        editor.putInt(ADDEDTODAY, amountAddedToday+1);
-        Log.i("TAG", "Amount added today: "+amountAddedToday+1);
+        editor.putInt(ADDEDTODAY, amountAddedToday + 1);
+        Log.i("TAG", "Amount added today: " + amountAddedToday + 1);
         editor.apply();
     }
 

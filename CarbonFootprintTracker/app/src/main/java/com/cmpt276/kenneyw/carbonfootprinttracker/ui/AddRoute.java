@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
@@ -22,20 +23,20 @@ public class AddRoute extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_route);
-        setupCancelButton();
         setupOKButton();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public boolean onSupportNavigateUp(){
-        onBackPressed();
+        Intent intent=new Intent();
+        setResult(RESULT_CANCELED,intent);
+        finish();
         return true;
     }
 
     private void setupOKButton() {
-
-        Button okBtn=(Button)findViewById(R.id.btn_ok_addroute);
+        ImageButton okBtn=(ImageButton)findViewById(R.id.btn_ok_addroute);
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,19 +102,6 @@ public class AddRoute extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void setupCancelButton() {
-        Button cancelBtn=(Button)findViewById(R.id.btn_cancel_addroute);
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent();
-                setResult(RESULT_CANCELED,intent);
-                finish();
-            }
-        });
-
     }
 
     public static Intent makeIntent(Context context) {

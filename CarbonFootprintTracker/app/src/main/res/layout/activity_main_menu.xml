@@ -8,24 +8,11 @@
     android:background="@drawable/image1"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.MainMenu">
 
-    <TextView
-        android:text="@string/main_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="105dp"
-        android:textColor="@android:color/holo_green_dark"
-        android:textSize="40sp"
-        android:textStyle="normal|bold"
-        android:textAllCaps="false"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/mainmenu_tittle" />
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="180dp">
+        android:layout_marginTop="150dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -77,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.76"
                 android:textAlignment="center"
-                android:textColor="@android:color/holo_green_dark"
+                android:textColor="@color/black"
                 android:textStyle="normal|bold|italic"
                 android:textAllCaps="true" />
 
@@ -89,7 +76,7 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textStyle="normal|bold|italic"
-                android:textColor="@android:color/holo_green_dark" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:text="@string/graph"
@@ -99,7 +86,7 @@
                 android:textAlignment="center"
                 android:textStyle="normal|bold|italic"
                 android:textAllCaps="true"
-                android:textColor="@android:color/holo_green_dark" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:text="@string/about"
@@ -109,27 +96,68 @@
                 android:textAlignment="center"
                 android:textStyle="normal|bold|italic"
                 android:textAllCaps="true"
-                android:textColor="@android:color/holo_green_dark" />
+                android:textColor="@color/black" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.76">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp">
 
-            <Button
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:text="@string/settings"
+                    android:layout_width="94dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/utility_add_button"
+                    android:layout_toStartOf="@+id/utility_add_button"
+                    android:id="@+id/btnSettings"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/setting_icon" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp">
+
+            <TextView
                 android:text="@string/settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/utility_add_button"
-                android:layout_toStartOf="@+id/utility_add_button"
-                android:layout_marginTop="32dp"
-                android:id="@+id/btnSettings"
-                android:layout_weight="1" />
+                android:layout_weight="0.12"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textStyle="normal|bold|italic"
+                android:textAllCaps="true"
+                android:id="@+id/textView"
+                android:layout_marginTop="5dp" />
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:text="@string/main_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:textColor="@color/black"
+        android:textSize="40sp"
+        android:textStyle="normal|bold"
+        android:textAllCaps="false"
+        android:id="@+id/mainmenu_tittle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

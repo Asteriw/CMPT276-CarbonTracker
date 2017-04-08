@@ -19,7 +19,7 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class DataActivityPicker extends AppCompatActivity{
+public class DataActivityPicker extends AppCompatActivity {
 
     public static final String DATE_IN_STR = "dateInStr";
     public static final String DAY = "day";
@@ -31,12 +31,22 @@ public class DataActivityPicker extends AppCompatActivity{
     int Day;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_data);
         setupButtons();
         setupDatePicker();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent i = new Intent();
+        setResult(RESULT_CANCELED, i);
+        finish();
+        return true;
+    }
+
 
     private void setupDatePicker() {
         DatePicker dp = (DatePicker) findViewById(R.id.datePicker2);
@@ -45,19 +55,11 @@ public class DataActivityPicker extends AppCompatActivity{
     }
 
     private void setupButtons() {
-        Button cancel = (Button) findViewById(R.id.choose_cancel_button);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        Button lastmonth=(Button)findViewById(R.id.last_28_days_data);
+        Button lastmonth = (Button) findViewById(R.id.last_28_days_data);
         lastmonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent lastmonthintent= LastMonthActivity.makeIntent(DataActivityPicker.this);
+                Intent lastmonthintent = LastMonthActivity.makeIntent(DataActivityPicker.this);
                 startActivity(lastmonthintent);
             }
         });
@@ -70,21 +72,23 @@ public class DataActivityPicker extends AppCompatActivity{
             }
         });
     }
+
     DatePicker.OnDateChangedListener onDateChanged = new DatePicker.OnDateChangedListener() {
         @Override
         public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            date_in_str = monthOfYear+1 + "/" + dayOfMonth + "/" + year;
-            Year=year;
-            Month=monthOfYear+1;
-            Day=dayOfMonth;
-            Intent i=DailyActivity.makeIntent(DataActivityPicker.this);
-            i.putExtra(DATE_IN_STR,date_in_str);
-            i.putExtra(DAY,Day);
-            i.putExtra(MONTH,Month);
-            i.putExtra(YEAR,Year);
+            date_in_str = monthOfYear + 1 + "/" + dayOfMonth + "/" + year;
+            Year = year;
+            Month = monthOfYear + 1;
+            Day = dayOfMonth;
+            Intent i = DailyActivity.makeIntent(DataActivityPicker.this);
+            i.putExtra(DATE_IN_STR, date_in_str);
+            i.putExtra(DAY, Day);
+            i.putExtra(MONTH, Month);
+            i.putExtra(YEAR, Year);
             startActivity(i);
         }
     };
+
     public static Intent makeIntent(Context context) {
         return new Intent(context, DataActivityPicker.class);
     }

@@ -21,8 +21,8 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.model.DailyReset;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.NotificationReceiver;
 
 /**
-*   This class creates a spalsh screen with a progress bar
-* Code for spalsh screen wwas retrieved from :http://abhiandroid.com/ui/progressbar
+ * This class creates a spalsh screen with a progress bar
+ * Code for spalsh screen wwas retrieved from :http://abhiandroid.com/ui/progressbar
  */
 
 public class SplashScreen extends AppCompatActivity {
@@ -41,6 +41,8 @@ public class SplashScreen extends AppCompatActivity {
         dailyChanger();
         notificationSpawner();
     }
+
+    // This function checks every month to see if utilites are updated
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void monthlyChanger() {
         Calendar calendar = Calendar.getInstance();
@@ -48,40 +50,38 @@ public class SplashScreen extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);
         Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
+    // This function checks every day to see if utilites are updated
     private void dailyChanger() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 23);
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);
         Intent intent = new Intent(getApplicationContext(), DailyReset.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
-    private void notificationSpawner(){
+    private void notificationSpawner() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 21);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
-
-
-
     private void setupFadeTextAnimation() {
         TextView appNameText = (TextView) findViewById(R.id.Splash_Title);
         TextView authorNameText = (TextView) findViewById(R.id.SplashAuthor);
-        TextView lordingText= (TextView) findViewById(R.id.SplashLoading);
+        TextView lordingText = (TextView) findViewById(R.id.SplashLoading);
         TextView welcomeText = (TextView) findViewById(R.id.SplashWelcome);
         Animation fading = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade);
         Animation blinking = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);

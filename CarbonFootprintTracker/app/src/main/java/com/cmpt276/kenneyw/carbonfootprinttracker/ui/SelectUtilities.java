@@ -1,8 +1,8 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
 /**
- *This Class stores a list of utilities for user to see. Can add, edit and delete saved utilities.
- *Includes error checking of input, and user can go back to main menu.
+ * This Class stores a list of utilities for user to see. Can add, edit and delete saved utilities.
+ * Includes error checking of input, and user can go back to main menu.
  */
 
 import android.content.Context;
@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,7 +73,7 @@ public class SelectUtilities extends AppCompatActivity {
 
     public static final String SETTING = "CarbonFootprintTrackerSettings";
     public static final String TREESETTING = "TreeSetting";
-    boolean setting=false;
+    boolean setting = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,14 +88,15 @@ public class SelectUtilities extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp(){
+    public boolean onSupportNavigateUp() {
+        saveUtilities();
         finish();
         return true;
     }
 
     private void getSetting() {
-        SharedPreferences pref=getSharedPreferences(SETTING,MODE_PRIVATE);
-        setting=pref.getBoolean(TREESETTING,false);
+        SharedPreferences pref = getSharedPreferences(SETTING, MODE_PRIVATE);
+        setting = pref.getBoolean(TREESETTING, false);
     }
 
     private UtilitiesCollection loadUtilities() {
@@ -154,7 +156,7 @@ public class SelectUtilities extends AppCompatActivity {
                 FragmentManager manager = getSupportFragmentManager();
                 CalculationDialog dialog = new CalculationDialog();
                 Bundle bundle = new Bundle();
-                bundle.putBoolean("treeSetting",setting);
+                bundle.putBoolean("treeSetting", setting);
                 bundle.putDouble("CO2", utilities.getUtility(position).getEmission());
                 dialog.setArguments(bundle);
                 dialog.show(manager, "CalculateDialog");
@@ -204,16 +206,7 @@ public class SelectUtilities extends AppCompatActivity {
     }
 
     private void setupButtons() {
-        Button backButton = (Button) findViewById(R.id.utility_back);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveUtilities();
-                finish();
-            }
-        });
-
-        Button addButton = (Button) findViewById(R.id.add_utility);
+        ImageButton addButton = (ImageButton) findViewById(R.id.add_utility);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -301,15 +294,14 @@ public class SelectUtilities extends AppCompatActivity {
             if (tipHelper.spiceTimerUtility() == 1) {
                 SharedPreferences kpref = getSharedPreferences(SHAREDPREF_SET2, MODE_PRIVATE);
                 int journeyNum = kpref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
-                Log.i("nojourneys", "whelp"+journeyNum);
+                Log.i("nojourneys", "whelp" + journeyNum);
                 if (journeyNum > 0) {
                     tipHelper.setTipIndexTravel();
                     properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
                     tipHelper.tipDataFetcher(properTipIndex);
                     tipString = String.format(tipArray[properTipIndex], tipData);
                     return tipString;
-                }
-                else {
+                } else {
                     tipString = getString(R.string.noTips);
                     return tipString;
                 }
@@ -319,7 +311,7 @@ public class SelectUtilities extends AppCompatActivity {
             tipHelper.setnGasEmission(utilHelper.getEmission());
             tipData = tipHelper.tipDataFetcher(properTipIndex);
             if (setting) {
-                tipData = tipData*2;
+                tipData = tipData * 2;
             }
             tipString = String.format(tipArray[properTipIndex], tipData);
         }
@@ -329,15 +321,14 @@ public class SelectUtilities extends AppCompatActivity {
             if (tipHelper.spiceTimerElectric() == 1) {
                 SharedPreferences kpref = getSharedPreferences(SHAREDPREF_SET2, MODE_PRIVATE);
                 int journeyNum = kpref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
-                Log.i("nojourneys", "whelp"+journeyNum);
+                Log.i("nojourneys", "whelp" + journeyNum);
                 if (journeyNum > 0) {
                     tipHelper.setTipIndexTravel();
                     properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
                     tipData = tipHelper.tipDataFetcher(properTipIndex);
                     tipString = String.format(tipArray[properTipIndex], tipData);
                     return tipString;
-                }
-                else {
+                } else {
                     tipString = getString(R.string.noTips);
                     return tipString;
                 }
@@ -347,7 +338,7 @@ public class SelectUtilities extends AppCompatActivity {
             tipHelper.setElecEmission(utilHelper.getEmission());
             tipData = tipHelper.tipDataFetcher(properTipIndex);
             if (setting) {
-                tipData = tipData*2;
+                tipData = tipData * 2;
             }
             tipString = String.format(tipArray[properTipIndex], tipData);
         }

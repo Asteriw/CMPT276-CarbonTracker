@@ -12,14 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,7 +28,6 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.model.CarSingleton;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.DatabaseAccess;
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AddCar extends AppCompatActivity {
@@ -75,18 +71,18 @@ public class AddCar extends AppCompatActivity {
         });
         // Hide keyboard on start
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
         openDatabase();
         setupYearSpinner();
-        setupBackButton();
         setupIconSpinner();
         populateListView();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
-    public boolean onSupportNavigateUp(){
-        onBackPressed();
+    public boolean onSupportNavigateUp() {
+        Intent i = new Intent();
+        setResult(RESULT_CANCELED, i);
+        finish();
         return true;
     }
 
@@ -98,7 +94,7 @@ public class AddCar extends AppCompatActivity {
 
     private void setupIconSpinner() {
         Spinner iconSpinner = (Spinner) findViewById(R.id.iconSpinner);
-        String [] iconTypes = {"Regular Car", "Modern Car", "Classic Car", "Sport Car", "Truck"};
+        String[] iconTypes = {"Regular Car", "Modern Car", "Classic Car", "Sport Car", "Truck"};
 
         ArrayAdapter<String> iconAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, iconTypes);
         iconSpinner.setAdapter(iconAdapter);
@@ -278,19 +274,6 @@ public class AddCar extends AppCompatActivity {
     private void openDatabase() {
         databaseAccess = DatabaseAccess.getInstance(this);
         databaseAccess.open();
-    }
-
-    //Setups up back button. Did you expect anything else?
-    private void setupBackButton() {
-        Button back_button = (Button) findViewById(R.id.cancel_button_add_car);
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent();
-                setResult(RESULT_CANCELED, i);
-                finish();
-            }
-        });
     }
 
     public static Intent makeIntent(Context context) {

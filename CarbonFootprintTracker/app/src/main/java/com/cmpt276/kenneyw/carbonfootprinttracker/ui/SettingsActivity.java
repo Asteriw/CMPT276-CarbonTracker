@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Switch;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
@@ -19,7 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public static final String SETTING = "CarbonFootprintTrackerSettings";
     public static final String TREESETTING = "TreeSetting";
-    boolean setting=false;
+    boolean setting = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,33 +33,26 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp(){
+    public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
 
     private void getSetting() {
-        SharedPreferences pref=getSharedPreferences(SETTING,MODE_PRIVATE);
-        setting=pref.getBoolean(TREESETTING,false);
+        SharedPreferences pref = getSharedPreferences(SETTING, MODE_PRIVATE);
+        setting = pref.getBoolean(TREESETTING, false);
     }
 
     private void setUpButtons() {
-        Button backbtn = (Button) findViewById(R.id.btnBackSettings);
-        backbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        Button okbtn= (Button) findViewById(R.id.btnOkSettings);
+        ImageButton okbtn = (ImageButton) findViewById(R.id.btnOkSettings);
         okbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Switch treeSwitch = (Switch) findViewById(R.id.switchTree);
-                SharedPreferences pref=getSharedPreferences(SETTING,MODE_PRIVATE);
+                SharedPreferences pref = getSharedPreferences(SETTING, MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
                 editor.clear();
-                editor.putBoolean(TREESETTING,treeSwitch.isChecked());
+                editor.putBoolean(TREESETTING, treeSwitch.isChecked());
                 editor.apply();
                 finish();
             }
@@ -67,10 +61,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void setUpSwitcher() {
         Switch treeSwitch = (Switch) findViewById(R.id.switchTree);
-        if(setting){
+        if (setting) {
             treeSwitch.setChecked(true);
-        }
-        else{
+        } else {
             treeSwitch.setChecked(false);
         }
     }

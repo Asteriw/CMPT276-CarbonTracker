@@ -3,7 +3,7 @@ package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 /**
  * Main menu. Is connected to the SelectJourney, CarbonFootprint and Utilities screens.
  * Nothing too special.
- *
+ * <p>
  * Car icon taken from: https://thenounproject.com/term/car/72/
  * Open source.
  */
@@ -54,7 +54,7 @@ public class MainMenu extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp(){
+    public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
@@ -112,7 +112,7 @@ public class MainMenu extends AppCompatActivity {
         });
 
         //directs to Settings screen
-        Button settings_button = (Button) findViewById(R.id.btnSettings);
+        ImageButton settings_button = (ImageButton) findViewById(R.id.btnSettings);
         settings_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

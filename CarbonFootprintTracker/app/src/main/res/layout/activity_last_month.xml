@@ -55,16 +55,6 @@
             android:layout_alignParentEnd="true" />
 
         <Button
-            android:text="@string/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnBackMonthly"
-            android:textStyle="normal|bold"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <Button
             android:text="@string/change_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
