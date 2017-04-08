@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cmpt276.kenneyw.carbonfootprinttracker">
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
 
     <application
         android:allowBackup="true"
@@ -37,6 +38,7 @@
         <activity android:name=".ui.DailyActivity" />
         <activity android:name=".ui.AddCar" />
         <activity android:name=".ui.SettingsActivity"></activity>
+        <receiver android:name=".model.NotificationReceiver"/>
     </application>
 
 </manifest>

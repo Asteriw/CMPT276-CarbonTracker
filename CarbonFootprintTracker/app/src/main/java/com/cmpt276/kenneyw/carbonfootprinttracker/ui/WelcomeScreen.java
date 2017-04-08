@@ -5,8 +5,13 @@ package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
  * Leads to main menu.
  */
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.icu.util.Calendar;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +22,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
+import com.cmpt276.kenneyw.carbonfootprinttracker.model.DailyReset;
+import com.cmpt276.kenneyw.carbonfootprinttracker.model.NotificationReceiver;
 
 public class WelcomeScreen extends AppCompatActivity {
     @Override
@@ -25,6 +32,9 @@ public class WelcomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_welcome_screen);
         setupButton();
         setupAnimation();
+        notificationSpawner();
+        dailyChanger();
+        monthlyChanger();
         hideNavBar();
     }
     private void hideNavBar() {
@@ -36,6 +46,29 @@ public class WelcomeScreen extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
+
+    private void monthlyChanger() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+    }
+
+    private void dailyChanger() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        Intent intent = new Intent(getApplicationContext(), DailyReset.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+    }
+
     private void setupAnimation() {
         ImageView car = (ImageView) findViewById(R.id.splashcar);
         TranslateAnimation slide = new TranslateAnimation(-400f, 1400f, -20f, -20f);
@@ -56,6 +89,18 @@ public class WelcomeScreen extends AppCompatActivity {
             }
         });
     }
+
+    private void notificationSpawner(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 21);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+    }
+
     public static Intent makeIntent(Context context) {
         return new Intent(context, WelcomeScreen.class);
     }

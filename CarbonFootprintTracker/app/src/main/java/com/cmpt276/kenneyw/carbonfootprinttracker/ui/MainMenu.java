@@ -3,16 +3,24 @@ package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 /**
  * Main menu. Is connected to the SelectJourney, CarbonFootprint and Utilities screens.
  * Nothing too special.
+ *
+ * Car icon taken from: https://thenounproject.com/term/car/72/
+ * Open source.
  */
 
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
