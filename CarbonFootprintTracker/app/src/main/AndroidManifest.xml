@@ -37,7 +37,7 @@
         <activity android:name=".ui.AddUtility" />
         <activity android:name=".ui.DataActivityPicker" />
         <activity android:name=".ui.SelectRoute" />
-        <activity android:name=".ui.UtilitiesFootPrint" />
+        <activity android:name=".ui.UtilitiesSingleDayFootPrint" />
         <activity android:name=".ui.SelectUtilities" />
         <activity android:name=".ui.EditDate" />
         <activity android:name=".ui.AddRoute" />

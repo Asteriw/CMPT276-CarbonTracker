@@ -76,13 +76,7 @@ public class Calculation {
 
 
     private double doubleToTwoPlaces(double result_in_kg_CO2) {
-        /*if(result_in_kg_CO2*8==0){return 0;}
-        DecimalFormat df2 = new DecimalFormat("#0.00");
-        result_in_kg_CO2= Double.parseDouble(df2.format(result_in_kg_CO2));
-        return result_in_kg_CO2;
-        result_in_kg_CO2 = result_in_kg_CO2 * 100;
-        result_in_kg_CO2 = (double)Math.round(result_in_kg_CO2);
-        result_in_kg_CO2 = result_in_kg_CO2/100;*/
+        result_in_kg_CO2 = Math.round(result_in_kg_CO2 * 100)/100;
         return result_in_kg_CO2;
     }
 

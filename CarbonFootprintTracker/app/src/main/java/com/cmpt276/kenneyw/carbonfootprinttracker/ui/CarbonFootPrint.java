@@ -155,6 +155,9 @@ public class CarbonFootPrint extends AppCompatActivity {
                 }
             }
         });
+
+
+
     }
     // Columns: date of trip, route name, distancee, vehicle name, CO2 emitted
     // Each column can be edited uniquely

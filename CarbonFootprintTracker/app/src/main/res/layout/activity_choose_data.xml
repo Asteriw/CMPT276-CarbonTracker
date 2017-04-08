@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/image4">
 
     <DatePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
         android:id="@+id/datePicker2"
         android:layout_above="@+id/last_28_days_data"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="11dp"
-        android:background="@android:color/darker_gray" />
+        android:background="@android:color/transparent"
+        android:layout_margin="20dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -20,7 +20,8 @@
         android:text="@string/last_28"
         android:layout_above="@+id/last_365_days_data"
         android:layout_alignRight="@+id/last_365_days_data"
-        android:layout_alignEnd="@+id/last_365_days_data" />
+        android:layout_alignEnd="@+id/last_365_days_data"
+        android:textStyle="normal|bold" />
 
     <Button
         android:text="@string/cancel"
@@ -29,7 +30,8 @@
         android:layout_marginBottom="22dp"
         android:id="@+id/choose_cancel_button"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textStyle="normal|bold" />
 
     <Button
         android:text="@string/last_365"
@@ -37,5 +39,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/last_365_days_data"
         android:layout_above="@+id/choose_cancel_button"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textStyle="normal|bold" />
 </RelativeLayout>
