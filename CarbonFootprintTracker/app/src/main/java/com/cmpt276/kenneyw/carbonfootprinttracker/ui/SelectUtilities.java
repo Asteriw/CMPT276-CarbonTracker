@@ -247,6 +247,7 @@ public class SelectUtilities extends AppCompatActivity {
                             utility2Load.getEndDate());
                     utilities.addUtility(temp_utility);
                     setupButtons();
+                    saveUtilities();
                     setupList();
                     saveUtilities();
                     tipMaker();
@@ -267,7 +268,7 @@ public class SelectUtilities extends AppCompatActivity {
                     utilToEdit.setEmission(utili.getEmission());
                     utilToEdit.setStartDate(utili.getStartDate());
                     utilToEdit.setEndDate(utili.getEndDate());
-
+                    saveUtilities();
                     setupList();
                     setupButtons();
                     saveUtilities();

@@ -15,6 +15,10 @@ import android.widget.DatePicker;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.DateSingleton;
+
+import java.util.Calendar;
+import java.util.Locale;
+
 public class EditDate extends AppCompatActivity {
     String date_in_str;
     int Year;
@@ -26,10 +30,11 @@ public class EditDate extends AppCompatActivity {
         setContentView(R.layout.activity_edit_date);
 
         DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
-        dp.init(2017, 0, 1, onDateChanged);
-        Year=2017;
-        Month=0;
-        Day=1;
+        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+        dp.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), onDateChanged);
+        Year=calendar.get(Calendar.YEAR);
+        Month=calendar.get(Calendar.MONTH)+1;
+        Day=calendar.get(Calendar.DAY_OF_MONTH);
         date_in_str=Month+1 + "/" + Day + "/" + Year;
         setupButtons();
         hideNavBar();

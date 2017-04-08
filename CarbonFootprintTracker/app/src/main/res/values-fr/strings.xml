@@ -5,7 +5,6 @@
     <string name="add_a_new_journey">Ajouter un voyage</string>
     <string name="save">Sauvegarder route</string>
     <string name="edit">Modifier</string>
-    <string name="delete_route">Supprimer</string>
     <string name="start">Commencer</string>
     <string name="add_a_new_car">Ajouter une voiture</string>
     <string name="nick_name">Surnom:</string>
@@ -56,7 +55,6 @@
     <string name="add_a_utility_bill">Ajouter une facture d\'utilitées</string>
     <string name="add_start_date">Ajouter date de commencement</string>
     <string name="add_end_date">Ajouter date de fin</string>
-    <string name="walk_bike">Marcher/Bicycle</string>
     <string name="skytrain">Skytrain</string>
     <string name="bus">Autobus</string>
     <string-array name="tips_array">
