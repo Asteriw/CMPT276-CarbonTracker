@@ -1,22 +1,28 @@
 package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
 
 /**
-*  Add Car saves nickname,make,model and year of a car user selects from cardb.db.zip
-*  Also handles editing cars. Passes saved car via singleton class: carSingleton
-*/
+ * Add Car saves nickname,make,model and year of a car user selects from cardb.db.zip
+ * Also handles editing cars. Passes saved car via singleton class: carSingleton
+ */
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.Car;
@@ -25,6 +31,7 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.model.CarSingleton;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.DatabaseAccess;
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddCar extends AppCompatActivity {
@@ -36,31 +43,103 @@ public class AddCar extends AppCompatActivity {
     String selectedYear;
     String selectedMake;
     String selectedModel;
+    int selectIconID;
     CarCollection cars = new CarCollection();
     int pos;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_car);
 
-        Intent i=getIntent();
-        if(i.hasExtra(POS_EDIT)) {
+        Intent i = getIntent();
+        if (i.hasExtra(POS_EDIT)) {
             pos = i.getIntExtra(POS_EDIT, 0);
+        } else {
+            pos = 0;
         }
-        else{pos=0;}
+
+        // Code was retrieve from: http://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
+        // this hiades soft-keyboard after user enters a nickname for the car
+        final EditText inputName = (EditText) findViewById(R.id.nick_name_from_user);
+        inputName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((actionId == EditorInfo.IME_ACTION_DONE) || ((event.getKeyCode() == KeyEvent.KEYCODE_ENTER) && (event.getAction() == KeyEvent.ACTION_DOWN))) {
+                    // Do stuff when user presses enter
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                }
+                return false;
+            }
+        });
+        // Hide keyboard on start
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         openDatabase();
         setupYearSpinner();
         setupBackButton();
+        setupIconSpinner();
         populateListView();
+        hideNavBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
-    protected void onDestroy(){//Last function to be called, is called before the Activity is closed.
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
+    }
+
+    private void hideNavBar() {
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
+    }
+
+    @Override
+    protected void onDestroy() {//Last function to be called, is called before the Activity is closed.
         super.onDestroy();
         closeDatabase();//Closes the database.
     }
+
+    private void setupIconSpinner() {
+        Spinner iconSpinner = (Spinner) findViewById(R.id.iconSpinner);
+        String [] iconTypes = {"Regular Car", "Modern Car", "Classic Car", "Sport Car", "Truck"};
+
+        ArrayAdapter<String> iconAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, iconTypes);
+        iconSpinner.setAdapter(iconAdapter);
+        iconSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    //Toast.makeText(getApplicationContext(), "Car selected", Toast.LENGTH_SHORT).show();
+                    selectIconID = R.drawable.car_icon_2;
+                } else if (position == 1) {
+                    //Toast.makeText(getApplicationContext(), "Modern selected", Toast.LENGTH_SHORT).show();
+                    selectIconID = R.drawable.modern;
+                } else if (position == 2) {
+                    //Toast.makeText(getApplicationContext(), "Classic selected", Toast.LENGTH_SHORT).show();
+                    selectIconID = R.drawable.classic;
+                } else if (position == 3) {
+                    //Toast.makeText(getApplicationContext(), "Sport selected", Toast.LENGTH_SHORT).show();
+                    selectIconID = R.drawable.sport;
+                } else if (position == 4) {
+                    //Toast.makeText(getApplicationContext(), "Truck selected", Toast.LENGTH_SHORT).show();
+                    selectIconID = R.drawable.truck;
+                } else {
+                    // do nothing
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
 
     private void setupYearSpinner() { //Sets up the year spinner. Changes the values of make spinner when user selects a year.
         Spinner yearSpinner = (Spinner) findViewById(R.id.year_spinner);
@@ -70,12 +149,14 @@ public class AddCar extends AppCompatActivity {
         yearSpinner.setOnItemSelectedListener(new yearSpinner());
         yearSpinner.setAdapter(yearAdapter);
     }
+
     private class yearSpinner implements AdapterView.OnItemSelectedListener {
-        public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             selectedYear = parent.getItemAtPosition(position).toString();
             setupMakeSpinner(selectedYear);
         }
-        public void onNothingSelected (AdapterView<?> parent) {
+
+        public void onNothingSelected(AdapterView<?> parent) {
         }
     }
 
@@ -87,12 +168,14 @@ public class AddCar extends AppCompatActivity {
         makeSpinner.setOnItemSelectedListener(new makeSpinner());
         makeSpinner.setAdapter(makeAdapter);
     }
+
     private class makeSpinner implements AdapterView.OnItemSelectedListener {
-        public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             selectedMake = parent.getItemAtPosition(position).toString();
             setupModelSpinner(selectedYear, selectedMake);
         }
-        public void onNothingSelected (AdapterView<?> parent) {
+
+        public void onNothingSelected(AdapterView<?> parent) {
         }
     }
 
@@ -104,23 +187,25 @@ public class AddCar extends AppCompatActivity {
         modelSpinner.setOnItemSelectedListener(new modelSpinner());
         modelSpinner.setAdapter(modelAdapter);
     }
+
     private class modelSpinner implements AdapterView.OnItemSelectedListener {
-        public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             selectedModel = parent.getItemAtPosition(position).toString();
             Log.i("This", selectedModel);
             makeCarList(selectedYear, selectedMake, selectedModel);
         }
-        public void onNothingSelected (AdapterView<?> parent) {
+
+        public void onNothingSelected(AdapterView<?> parent) {
         }
     }
 
     //Makes an instance of the DatabaseAccess class and queries the Database. This is the meat and potatoes of the whole class.
     //Calls the getTempCarList function in DatabaseAccess, which in turn returns all the values of matching database queries
     //if a List<String[]>, so that you can .get() and then reference like an array.
-    private void makeCarList(String selectedYear, String selectedMake, String selectedModel){
+    private void makeCarList(String selectedYear, String selectedMake, String selectedModel) {
         cars = new CarCollection();
         List<String[]> tempCarList = databaseAccess.getTempCarList(selectedYear, selectedMake, selectedModel);
-        for(int i = 0; i<tempCarList.size(); i++){
+        for (int i = 0; i < tempCarList.size(); i++) {
             String[] carData = tempCarList.get(i);
             Car car = new Car();
             car.setMake(carData[2]);
@@ -142,6 +227,7 @@ public class AddCar extends AppCompatActivity {
                 car.setCityEmissions(Double.parseDouble(carData[4]));
                 car.setHighwayEmissions(Double.parseDouble(carData[5]));
             }
+            cars.setIconID(selectIconID);
             cars.addCar(car);
         }
         populateListView();
@@ -154,10 +240,10 @@ public class AddCar extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 EditText inputName = (EditText) findViewById(R.id.nick_name_from_user);
                 String userInputName = inputName.getText().toString();
-                if (userInputName.matches("")){
+                if (userInputName.matches("")) {
                     Toast.makeText(AddCar.this, R.string.error_toast, Toast.LENGTH_SHORT).show();
                 } else {
                     CarSingleton masterCar = CarSingleton.getInstance();
@@ -171,10 +257,11 @@ public class AddCar extends AppCompatActivity {
                     masterCar.setLiterEngine(tempCar.getLiterEngine());
                     masterCar.setTransmission(tempCar.getTransmission());
                     masterCar.setMake(tempCar.getMake());
+                    masterCar.setIconID(selectIconID);
 
-                    Intent i=new Intent();
-                    i.putExtra(POS_EDIT,pos);
-                    setResult(RESULT_OK,i);
+                    Intent i = new Intent();
+                    i.putExtra(POS_EDIT, pos);
+                    setResult(RESULT_OK, i);
                     finish();
                 }
             }
@@ -187,7 +274,7 @@ public class AddCar extends AppCompatActivity {
         int factor = 100;
         value = value * factor;
         long tempValue = Math.round(value);
-        return (double) tempValue/factor;
+        return (double) tempValue / factor;
     }
 
     //Simple database close function.
@@ -207,8 +294,8 @@ public class AddCar extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent();
-                setResult(RESULT_CANCELED,i);
+                Intent i = new Intent();
+                setResult(RESULT_CANCELED, i);
                 finish();
             }
         });

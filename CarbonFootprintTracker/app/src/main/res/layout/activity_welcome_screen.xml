@@ -6,7 +6,7 @@
     android:theme="@style/Theme.AppCompat.NoActionBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.WelcomeScreen">
+    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.WelcomeScreen">
 
     <Button
         android:text="@string/start"
@@ -20,13 +20,13 @@
         tools:elevation="0dp" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         app:srcCompat="@drawable/image4"
+        android:scaleType="fitXY"
         android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:id="@+id/splashbackground"
-        android:adjustViewBounds="false"
         android:alpha="0.8"
         android:elevation="1dp"
         tools:elevation="1dp" />

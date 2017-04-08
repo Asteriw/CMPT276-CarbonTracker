@@ -4,7 +4,8 @@
     android:id="@+id/activity_select_car"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.SelectCar">
+    android:paddingTop="50dp"
+    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.SelectCar">
 
     <Button
         android:text="@string/add_a_new_car"
@@ -24,22 +25,14 @@
         android:layout_alignParentStart="true"
         android:id="@+id/back_button_select_car" />
 
-    <Button
-        android:text="@string/walk_bike"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/back_button_select_car"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/btnWalk" />
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/carlist"
         android:layout_above="@+id/btnWalk"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="50dp" />
 
     <Button
         android:text="@string/skytrain"
@@ -50,11 +43,43 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/btnSkytrain" />
 
+    <TextView
+        android:text="@string/list_of_cars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="24sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="@string/walk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnWalk"
+        android:layout_above="@+id/back_button_select_car"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/bike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bike_button"
+        android:layout_alignBaseline="@+id/btnWalk"
+        android:layout_alignBottom="@+id/btnWalk"
+        android:layout_toRightOf="@+id/back_button_select_car"
+        android:layout_toEndOf="@+id/back_button_select_car"
+        android:layout_marginLeft="2dp" />
+
     <Button
         android:text="@string/bus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btnWalk"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/btnBus" />
+        android:id="@+id/btnBus"
+        android:layout_alignBaseline="@+id/btnSkytrain"
+        android:layout_alignBottom="@+id/btnSkytrain"
+        android:layout_toLeftOf="@+id/btnSkytrain"
+        android:layout_toStartOf="@+id/btnSkytrain"
+        android:layout_marginRight="2dp" />
 </RelativeLayout>

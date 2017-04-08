@@ -4,42 +4,15 @@
     android:id="@+id/activity_add_car"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.AddCar">
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/nick_name_from_user"
-        android:hint="@string/nickname_for_car" />
-
-    <TextView
-        android:text="@string/nick_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/nick_name_text"
-        android:textSize="20sp"
-        android:layout_alignBaseline="@+id/nick_name_from_user"
-        android:layout_alignBottom="@+id/nick_name_from_user"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+    android:paddingTop="50dp"
+    tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.AddCar">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp">
-
-        <TextView
-            android:text="@string/year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/year_head"
-            android:textSize="20sp" />
+        android:layout_marginBottom="50dp"
+        android:id="@+id/relativeLayout2">
 
         <Spinner
             android:layout_width="match_parent"
@@ -65,36 +38,90 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
-        <TextView
-            android:text="@string/model"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/model_header"
-            android:textSize="20sp"
-            android:layout_below="@+id/make_spinner"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="30dp" />
-
-        <TextView
-            android:text="@string/make"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:id="@+id/make_head"
-            android:textSize="20sp"
-            android:layout_below="@+id/year_spinner"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/model_spinner"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/car_listview" />
+            android:id="@+id/car_listview"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:text="@string/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/relativeLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/add_car_icon_text"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/relativeLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="28dp"
+            android:spinnerMode="dialog"
+            android:id="@+id/iconSpinner" />
+
+        <TextView
+            android:text="@string/year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/year_head"
+            android:textSize="20sp"
+            android:layout_below="@+id/iconSpinner"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp" />
+
+        <TextView
+            android:text="@string/model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/model_header"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/make_spinner"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="@string/make"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:id="@+id/make_head"
+            android:textSize="20sp"
+            android:layout_below="@+id/year_spinner"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
     </RelativeLayout>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/nick_name_from_user"
+        android:hint="@string/nickname_for_car" />
+
+    <TextView
+        android:text="@string/nick_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nick_name_text"
+        android:textSize="20sp"
+        android:layout_alignBaseline="@+id/nick_name_from_user"
+        android:layout_alignBottom="@+id/nick_name_from_user"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="@string/cancel"

@@ -59,7 +59,6 @@
     <string name="add_a_utility_bill">Add a Utility Bill</string>
     <string name="add_start_date">Add Start Date</string>
     <string name="add_end_date">Add END DATE</string>
-    <string name="walk_bike">Walk/Bike</string>
     <string name="skytrain">Skytrain</string>
     <string name="notification_title">Carbon Footprint Tracker</string>
     <string name="notification_text">Add a journey or utility to start tracking your Carbon Footprint!</string>
@@ -69,24 +68,53 @@
     <string name="notification_text_journeys">You haven't added any journeys yet, add some to start tracking your commuter Carbon Footprint.</string>
     <string name="notification_text_journeys_none_today">You haven't added any journeys today, would you like to add one?</string>
     <string name="notification_text_journeys_more_than_one" formatted="false">You entered %1$d journeys today, would you like to add any more?</string>
+    <string name="settings">Settings</string>
+    <string name="treeSetting">Show emission units as KG</string>
+    <string name="co2emissionresult">CO2 Emission Result</string>
+    <string name="kgco2">" Kg of CO2"</string>
+    <string name="car_year">car_year</string>
+    <string name="icon">Icon</string>
+    <string name="about">About</string>
+    <string name="current_software_version">Current Software Version</string>
+    <string name="development_team">Development Team</string>
+    <string name="version_1_0_0">Version 1.0.0</string>
+    <string name="publish_year">Publish Year</string>
+    <string name="sources">Sources</string>
+    <string name="cmpt_276_honeydew">CMPT 276 HoneyDew</string>
+    <string name="_2017_spring_term">2017 Spring Term</string>
+    <string name="icons">Icons</string>
+    <string name="pictures">Pictures</string>
+    <string name="https_www_sfu_ca_computing_html">https://www.sfu.ca/computing.html</string>
+    <string name="sfu_cs_homepage">SFU CS HomePage</string>
+    <string name="links">Links</string>
+    <string name="car_make">car_make</string>
+    <string name="car_model">car_model</string>
+    <string name="list_of_cars">List of Cars</string>
+    <string name="list_of_routes">List of Routes</string>
+    <string name="walk">walk</string>
+    <string name="bike">bike</string>
+    <string name="list_of_journeys">List of Journeys</string>
+    <string name="http_www_flaticon_com_packs_transport_27">http://www.flaticon.com/packs/transport-27</string>
+    <string name="list_of_utilities">List of Utilities</string>
+    <string name="noTips">There are no more tips available. More tips will be made available if you add a Journey.</string>
 
     <string-array name="tips_array">
-        <item>Carpool with commuters that share similar trips to yours.</item>
-        <item>If looking to get a new car, take into consideration fuel efficiency when choosing which vehicle to get.</item>
-        <item>If possible, take a bus instead of a taxi or other forms of single-passenger transportation.</item>
-        <item>Try to prevent stopping and accelerating as much as you can when driving.</item>
-        <item>If in traffic, turn off your engine if idling for long periods of time.</item>
-        <item>Try to take the most direct path to your destination to avoid taking detours that will add to your trip length.</item>
-        <item>If going short distances, consider walking, biking, or other forms of zero-emission transportation.</item>
-        <item>Make sure your wheels are fully inflated, as flatter tires greatly increase your emissions.</item>
-        <item>Taking shorter showers can help greatly reduce the amount of hot water you consume, which will reduce your carbon footprint.</item>
-        <item>Washing clothes in cold water will reduce the amount of unnecessary hot water you use.</item>
-        <item>Turning off heating in the warmer months will drastically decrease the amount of gas used for heating.</item>
-        <item>Put a sweatshirt on instead of turning up the heat when cold.</item>
-        <item>Using compact fluorescent light bulbs will cut down on your electric bill and also increase the brightness of the rooms you are trying to light!</item>
-        <item>Unplugging electrical appliances that are not in use will reduce the amount of ambient electricity you use.</item>
-        <item>During the warmer months, hang your clothes up to dry instead of using a drying machine to cut down on your electric bill.</item>
-        <item>If going on vacation, turn off the heating in your house and put your water heater on "vacation" setting if possible.</item>
+        <item>On your last added journey, you had %1$dkg emissions. Carpool with commuters that share similar trips to yours.</item>
+        <item>On your last journey, your transport emitted %1$dkg. If looking to get a new car, take into consideration fuel efficiency when choosing which vehicle to get.</item>
+        <item>Your last trip emitted %1$dkg. When possible, take a bus instead of a taxi or other forms of single-passenger transportation.</item>
+        <item>You emitted %1$d kg of CO2 on your last journey. Try to prevent stopping and accelerating as much as you can when driving.</item>
+        <item>The emissions of your last journey was %1$dkg. If you drive and encounter traffic, turn off your engine to prevent idling for long periods of time.</item>
+        <item>On your last trip, you traveled %1$d kilometers. Try to plan trips beforehand take the most direct path to your destination to avoid taking detours that will add to your trip length.</item>
+        <item>Your last journey produced %1$dkg of emissions. If going short distances, consider walking, biking, or other forms of zero-emission transportation.</item>
+        <item>You emitted %1$dkg of CO2 on your last trip. If you drive, make sure your wheels are fully inflated, as flatter tires greatly increase your emissions.</item>
+        <item>On your last bill, you used %1$dGj of Natural Gas. Taking shorter showers can help greatly reduce the amount of hot water you use, which will reduce your carbon footprint.</item>
+        <item>You generated %1$dkg of CO2 over the period of your last bill. Washing clothes in cold water will reduce the amount of unnecessary hot water you use.</item>
+        <item>Your household used %1$dGj of Natural gas, according to your last entered Natural Gas bill. Turning off heating on warmer days will drastically decrease the amount of gas used for heating.</item>
+        <item>On your last entered bill, the usage of Natural Gas in your household generated %1$dkg of CO2. If it is cold, put on a sweatshirt instead of turning up the heat.</item>
+        <item>The Electricity used over the period of your last entered bill, generated %1$dkg of CO2. Using compact fluorescent light bulbs will cut down on your electric bill and also increase the brightness of the rooms you are trying to light!</item>
+        <item>On your most recent electric bill, you household used %1$dkwh of Electricity. Unplugging electrical appliances that are not in use will reduce the amount of ambient electricity you use.</item>
+        <item>Your usage of Electricity for your last entered bill, created %1$dkg of CO2. During the warmer months, hang your clothes up to dry instead of using a drying machine to cut down on your electric bill.</item>
+        <item>Your last bill shows that your household used %1$dkwh of Electricity over the entered period. When you go on a vacation, turn off the heating in your house and put your water heater on "vacation" setting if possible.</item>
     </string-array>
 
 </resources>

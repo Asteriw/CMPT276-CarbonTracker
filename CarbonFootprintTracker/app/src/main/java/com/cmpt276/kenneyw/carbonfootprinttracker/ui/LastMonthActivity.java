@@ -91,7 +91,8 @@ public class LastMonthActivity extends AppCompatActivity {
     public static final String BUS = "bus";
     public static final String BIKE = "bike";
     public static final String SKYTRAIN = "skytrain";
-
+    public static final String WALK = "walk";
+    public static final String ICONID = "IconID";
     //for pie chart
     PieChart chart;
     List<PieEntry> entries;
@@ -112,6 +113,10 @@ public class LastMonthActivity extends AppCompatActivity {
     int journeyAmt;
     boolean checkOrganization=false;
 
+    public static final String SETTING = "CarbonFootprintTrackerSettings";
+    public static final String TREESETTING = "TreeSetting";
+    boolean setting=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,13 +124,32 @@ public class LastMonthActivity extends AppCompatActivity {
 
         utilities=loadUtilities();
         journeys=loadJourneys();
-
+        getSetting();
         setUpArrays();
         setUpPieChart();
         setUpLineGraphData();
         setUpLineGraph();
         setUpButtons();
+        hideNavBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
+    }
+
+    private void hideNavBar() {
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
+    }
+
+    private void getSetting() {
+        SharedPreferences pref=getSharedPreferences(SETTING,MODE_PRIVATE);
+        setting=pref.getBoolean(TREESETTING,false);
     }
 
     private void setUpButtons() {
@@ -171,33 +195,6 @@ public class LastMonthActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void whatDayIsIt() {
-        Date date=new Date();
-
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
-        date_in_str = df.format(date);
-        String[] checkdate = date_in_str.split("/");
-        Month=Integer.parseInt(checkdate[0]);
-        Day=Integer.parseInt(checkdate[1]);
-        Year=Integer.parseInt(checkdate[2]);
-
-        Log.i(TAG,"Today's date is: " + date_in_str);
-    }
-
-    private void whatDayIsThirtyDaysPrevious(){
-
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
-        Date date=new Date();
-        date.setMonth( date.getMonth() - 1 );
-        prev_date_in_str=df.format(date);
-        String[] prevcheckdate = prev_date_in_str.split("/");
-        prev_Month=Integer.parseInt(prevcheckdate[0]);
-        prev_Day=Integer.parseInt(prevcheckdate[1]);
-        prev_Year=Integer.parseInt(prevcheckdate[2]);
-
-        Log.i(TAG,"A month ago's date is: "+prev_date_in_str);
     }
 
     private void setUpArrays() {
@@ -300,6 +297,12 @@ public class LastMonthActivity extends AppCompatActivity {
                 names.add(utilities.getUtility(i).getName());
                 ems.add(((float)utilities.getUtility(i).getEmission()
                                 / utilities.getUtility(i).getNumofPeople()));
+            }
+        }
+
+        if(setting) {
+            for (int i = 0; i < entrySize; i++) {
+                ems.set(i, ems.get(i) * 2.8f);
             }
         }
         for( int x=0;x<entrySize;x++) {
@@ -411,54 +414,15 @@ public class LastMonthActivity extends AppCompatActivity {
                                 / utilities.getUtility(i).getNumofPeople()));
             }
         }
+        for(int i=0;i<entrySize;i++){
+            if(setting){
+                ems.set(i,ems.get(i)*2.8f);
+            }
+        }
         for( int x=0;x<entrySize;x++) {
             entries.add(new PieEntry(ems.get(x),
                     names.get(x)));
         }
-    }
-
-
-    private void getUtilityAverage() {
-        float total=0;
-        for(int i=0;i<utilityAmt;i++){
-            String[] firstU = utilities.getUtility(i).getStartDate().split("/");
-            String[] lastU = utilities.getUtility(i).getEndDate().split("/");
-            long numDaysForUtility=countDays(firstU,lastU);
-            total+=utilities.getUtility(i).getEmission()/utilities.getUtility(i).getNumofPeople()/numDaysForUtility;
-        }
-        total=total/utilityAmt;
-        utilityAverage=total;
-    }
-
-    private long countDays(String[] first, String[] last) {
-        Date dateOne=new Date(Integer.parseInt(first[2]), Integer.parseInt(first[0]),Integer.parseInt(first[1]));
-        Date dateTwo=new Date(Integer.parseInt(last[2]), Integer.parseInt(last[0]),Integer.parseInt(last[1]));
-        long timeOne = dateOne.getTime();
-        long timeTwo = dateTwo.getTime();
-        long oneDay = 1000 * 60 * 60 * 24;
-        //1000 ms in s, 60 s in minute, 60 minutes in hour, 24 hours in day
-        return (timeTwo - timeOne) / oneDay;
-    }
-
-    private boolean isBetween(String date,String firstDate, String lastDate){
-        String[] checkdate = date.split("/");
-        String[] first = firstDate.split("/");
-        String[] last = lastDate.split("/");
-        Log.i(TAG,"Checked date: "+date);
-
-        Date date1=new Date(Integer.parseInt(first[2]),Integer.parseInt(first[0]),Integer.parseInt(first[1]));
-        Date date2=new Date(Integer.parseInt(last[2]),Integer.parseInt(last[0]),Integer.parseInt(last[1]));
-        Date datemid=new Date(Integer.parseInt(checkdate[2]),Integer.parseInt(checkdate[0]),Integer.parseInt(checkdate[1]));
-
-        return datemid.before(date2) && datemid.after(date1);
-    }
-
-    private boolean isBefore(String firstDate, String lastDate){
-        String[] last = lastDate.split("/");
-        String[] first = firstDate.split("/");
-        Date d1=new Date(Integer.parseInt(last[2]),Integer.parseInt(last[0]),Integer.parseInt(last[1]));
-        Date d2=new Date(Integer.parseInt(first[2]),Integer.parseInt(first[0]),Integer.parseInt(first[1]));
-        return d1.before(d2);
     }
 
     private void setUpPieChart() {
@@ -518,8 +482,14 @@ public class LastMonthActivity extends AppCompatActivity {
                     totalEmissions+=utilityAverage;
                 }
             }
-            userAxis.add(new Entry(i,totalEmissions));
-            ParisAccordAxis.add(new Entry(i,(float) PARISACCORDCO2PERCAPITA));
+            if(setting){
+                userAxis.add(new Entry(i, totalEmissions*2.8f));
+                ParisAccordAxis.add(new Entry(i, (float) PARISACCORDCO2PERCAPITA * 2.8f));
+            }
+            else {
+                userAxis.add(new Entry(i, totalEmissions));
+                ParisAccordAxis.add(new Entry(i, (float) PARISACCORDCO2PERCAPITA));
+            }
 
             DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
             Date myDate = null;
@@ -540,6 +510,94 @@ public class LastMonthActivity extends AppCompatActivity {
         }
     }
 
+    private void setUpLineGraph() {
+        lineChart=(LineChart)findViewById(R.id.lineChartM);
+        ArrayList<ILineDataSet> dataSet = new ArrayList<>();
+
+        LineDataSet lds1=new LineDataSet(userAxis,"Your Data");
+        lds1.setDrawCircles(false);
+        lds1.setColor(Color.WHITE);
+        lds1.setValueTextSize(9f);
+
+        LineDataSet lds2=new LineDataSet(ParisAccordAxis,"Canada paris accord goal");
+        lds2.setDrawCircles(false);
+        lds2.setColor(Color.GREEN);
+        lds2.setValueTextSize(9f);
+
+
+        dataSet.add(lds1);
+        dataSet.add(lds2);
+        lineChart.setData(new LineData(dataSet));
+        lineChart.setVisibleXRangeMaximum(31f);
+        lineChart.setVisibility(View.INVISIBLE);
+        lineChart.invalidate();
+    }
+
+    private void getUtilityAverage() {
+        float total=0;
+        for(int i=0;i<utilityAmt;i++){
+            String[] firstU = utilities.getUtility(i).getStartDate().split("/");
+            String[] lastU = utilities.getUtility(i).getEndDate().split("/");
+            long numDaysForUtility=countDays(firstU,lastU);
+            total+=utilities.getUtility(i).getEmission()/utilities.getUtility(i).getNumofPeople()/numDaysForUtility;
+        }
+        total=total/utilityAmt;
+        utilityAverage=total;
+    }
+
+    private void whatDayIsIt() {
+        Date date=new Date();
+
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
+        date_in_str = df.format(date);
+        String[] checkdate = date_in_str.split("/");
+        Month=Integer.parseInt(checkdate[0]);
+        Day=Integer.parseInt(checkdate[1]);
+        Year=Integer.parseInt(checkdate[2]);
+    }
+
+    private void whatDayIsThirtyDaysPrevious(){
+
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.CANADA);
+        Date date=new Date();
+        date.setMonth( date.getMonth() - 1 );
+        prev_date_in_str=df.format(date);
+        String[] prevcheckdate = prev_date_in_str.split("/");
+        prev_Month=Integer.parseInt(prevcheckdate[0]);
+        prev_Day=Integer.parseInt(prevcheckdate[1]);
+        prev_Year=Integer.parseInt(prevcheckdate[2]);
+    }
+
+    private long countDays(String[] first, String[] last) {
+        Date dateOne=new Date(Integer.parseInt(first[2]), Integer.parseInt(first[0]),Integer.parseInt(first[1]));
+        Date dateTwo=new Date(Integer.parseInt(last[2]), Integer.parseInt(last[0]),Integer.parseInt(last[1]));
+        long timeOne = dateOne.getTime();
+        long timeTwo = dateTwo.getTime();
+        long oneDay = 1000 * 60 * 60 * 24;
+        //1000 ms in s, 60 s in minute, 60 minutes in hour, 24 hours in day
+        return (timeTwo - timeOne) / oneDay;
+    }
+
+    private boolean isBetween(String date,String firstDate, String lastDate){
+        String[] checkdate = date.split("/");
+        String[] first = firstDate.split("/");
+        String[] last = lastDate.split("/");
+
+        Date date1=new Date(Integer.parseInt(first[2]),Integer.parseInt(first[0]),Integer.parseInt(first[1]));
+        Date date2=new Date(Integer.parseInt(last[2]),Integer.parseInt(last[0]),Integer.parseInt(last[1]));
+        Date datemid=new Date(Integer.parseInt(checkdate[2]),Integer.parseInt(checkdate[0]),Integer.parseInt(checkdate[1]));
+
+        return datemid.before(date2) && datemid.after(date1);
+    }
+
+    private boolean isBefore(String firstDate, String lastDate){
+        String[] last = lastDate.split("/");
+        String[] first = firstDate.split("/");
+        Date d1=new Date(Integer.parseInt(last[2]),Integer.parseInt(last[0]),Integer.parseInt(last[1]));
+        Date d2=new Date(Integer.parseInt(first[2]),Integer.parseInt(first[0]),Integer.parseInt(first[1]));
+        return d1.before(d2);
+    }
+
     public boolean isTheSame(String date1, String date2){
         int check=0;
         String onedate[]=date1.split("/");
@@ -550,31 +608,6 @@ public class LastMonthActivity extends AppCompatActivity {
             }
         }
         return check == 3;
-    }
-
-    private void setUpLineGraph() {
-        lineChart=(LineChart)findViewById(R.id.lineChartM);
-        ArrayList<ILineDataSet> dataSet = new ArrayList<>();
-
-        LineDataSet lds1=new LineDataSet(userAxis,"Your Data");
-        lds1.setDrawCircles(false);
-        lds1.setColor(Color.WHITE);
-        lds1.setValueTextColor(Color.WHITE);
-        lds1.setValueTextSize(9f);
-
-        LineDataSet lds2=new LineDataSet(ParisAccordAxis,"Canada paris accord goal");
-        lds2.setDrawCircles(false);
-        lds2.setColor(Color.GREEN);
-        lds2.setValueTextColor(Color.GREEN);
-        lds2.setValueTextSize(9f);
-
-
-        dataSet.add(lds1);
-        dataSet.add(lds2);
-        lineChart.setData(new LineData(dataSet));
-        lineChart.setVisibleXRangeMaximum(31f);
-        lineChart.setVisibility(View.INVISIBLE);
-        lineChart.invalidate();
     }
 
     private UtilitiesCollection loadUtilities() {
@@ -608,7 +641,9 @@ public class LastMonthActivity extends AppCompatActivity {
                     pref.getString(i+DATESTRING,""),
                     pref.getBoolean(i+BUS,false),
                     pref.getBoolean(i+BIKE,false),
-                    pref.getBoolean(i+SKYTRAIN,false));
+                    pref.getBoolean(i+SKYTRAIN,false),
+                    pref.getBoolean(i+WALK,false),
+                    pref.getInt(i+ICONID,0));
             temp_journeys.addJourney(j);
         }
         return temp_journeys;
