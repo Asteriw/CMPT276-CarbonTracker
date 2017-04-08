@@ -12,7 +12,7 @@
         android:immersive="true"
         android:hardwareAccelerated="false"
         android:fullBackupContent="true"
-        android:largeHeap="true>
+        android:largeHeap="true">
         <activity
             android:name=".ui.SplashScreen"
             android:configChanges="orientation|keyboardHidden"
