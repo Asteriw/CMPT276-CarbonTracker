@@ -65,14 +65,6 @@
         android:paddingRight="30dp" />
 
     <Button
-        android:text="@string/view_carbon_footprint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/view_cabon_footprint_button"
-        android:layout_above="@+id/about_btn"
-        android:layout_centerHorizontal="true" />
-
-    <Button
         android:text="@string/about"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
