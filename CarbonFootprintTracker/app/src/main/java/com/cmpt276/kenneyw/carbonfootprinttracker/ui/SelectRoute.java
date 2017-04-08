@@ -46,6 +46,13 @@ public class SelectRoute extends AppCompatActivity {
         setUpListView();
         setupBackButton();
         setupAddRouteButton();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
     }
 
     private void setupAddRouteButton() {
@@ -72,6 +79,7 @@ public class SelectRoute extends AppCompatActivity {
                     double highwayToAdd = data.getDoubleExtra(HIGHWAY, 0);
                     Route r = new Route(nameToAdd, cityToAdd, highwayToAdd);
                     routes.addRoute(r);
+                    saveRoutes();
                     setUpListView();
                     break;
                 }
@@ -167,8 +175,8 @@ public class SelectRoute extends AppCompatActivity {
         double highwayToEdit = r.getHighwayDistance();
         Bundle bundle = new Bundle();
         bundle.putString("name", nameToEdit);
-        bundle.putLong("city", Double.doubleToRawLongBits(cityToEdit));
-        bundle.putLong("highway", Double.doubleToRawLongBits(highwayToEdit));
+        bundle.putDouble("city", cityToEdit);
+        bundle.putDouble("highway", highwayToEdit);
         bundle.putInt("pos", pos);
         FragmentManager manager = getSupportFragmentManager();
         EditRouteFragment dialog = new EditRouteFragment();
@@ -176,7 +184,7 @@ public class SelectRoute extends AppCompatActivity {
         dialog.show(manager, "EditRouteDialog");
         Log.i(TAG, "Launched Dialog Fragment");
     }
-    private void saveRoutes() {
+    public void saveRoutes() {
         SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.clear();

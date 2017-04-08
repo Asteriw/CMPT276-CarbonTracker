@@ -87,6 +87,7 @@ public class EditRouteFragment extends AppCompatDialogFragment {
 
                         else {
                             ((SelectRoute) getActivity()).changeRoute(pos, name, Double.parseDouble(city), Double.parseDouble(highway));
+                            ((SelectRoute) getActivity()).saveRoutes();
                             ((SelectRoute) getActivity()).setUpListView();
                         }
                         Log.i(TAG, "" + name + " " + city + " " + highway);

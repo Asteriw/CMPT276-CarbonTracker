@@ -59,6 +59,15 @@ public class UtilitiesSingleDayFootPrint extends AppCompatActivity {
         setupButton();
         utilities = loadUtilities();
         journeyArrayList = loadJourneys();
+        utilities=loadUtilities();
+        journeyArrayList=loadJourneys();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
     }
 
     private ArrayList<Utility> loadUtilities() {

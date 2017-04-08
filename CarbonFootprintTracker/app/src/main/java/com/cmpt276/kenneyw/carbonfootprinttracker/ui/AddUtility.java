@@ -56,6 +56,13 @@ public class AddUtility extends AppCompatActivity {
 
         setupButton();
         setupRadioButtons();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
     }
 
     private void setupRadioButtons() {

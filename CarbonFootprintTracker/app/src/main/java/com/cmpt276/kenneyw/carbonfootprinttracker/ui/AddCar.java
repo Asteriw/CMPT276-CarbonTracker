@@ -81,6 +81,13 @@ public class AddCar extends AppCompatActivity {
         setupBackButton();
         setupIconSpinner();
         populateListView();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
     }
 
     @Override

@@ -68,6 +68,12 @@ public class SelectCar extends AppCompatActivity {
         setupBackButton();
         setCarList();
         setUpAlternateTransportationBtns();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
     }
     private void setUpAlternateTransportationBtns() {
         Button btnSkytrain=(Button)findViewById(R.id.btnSkytrain);
@@ -364,6 +370,7 @@ public class SelectCar extends AppCompatActivity {
                             masterCar.getIconID()
                     );
                     myCars.addCar(tempCar);}
+                saveCars();
                 setupAddCarButton();
                 setupBackButton();
                 setCarList();
@@ -384,6 +391,7 @@ public class SelectCar extends AppCompatActivity {
                     );
                     int position=data.getIntExtra(POS_FOR_EDIT_CAR,0);
                     myCars.changeCar(tempCar,position);
+                    saveCars();
                     setCarList();
                 }
                 break;

@@ -24,7 +24,13 @@ public class AddRoute extends AppCompatActivity {
         setContentView(R.layout.activity_add_route);
         setupCancelButton();
         setupOKButton();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
     }
 
     private void setupOKButton() {

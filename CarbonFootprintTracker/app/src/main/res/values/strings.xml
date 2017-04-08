@@ -58,7 +58,13 @@
     <string name="add_start_date">Add Start Date</string>
     <string name="add_end_date">Add END DATE</string>
     <string name="skytrain">Train</string>
+    <string name="notification_title">Carbon Footprint Tracker</string>
+    <string name="notification_text">Add a journey or utility to start tracking your Carbon Footprint!</string>
     <string name="bus">Bus</string>
+    <string name="settings">Settings</string>
+    <string name="treeSetting">Show emission units as KG</string>
+    <string name="co2emissionresult">CO2 Emission Result</string>
+    <string name="kgco2">" Kg of CO2"</string>
     <string name="car_year">car_year</string>
     <string name="icon">Icon</string>
     <string name="about">About</string>
@@ -95,24 +101,30 @@
     <string name="other_transportation">Other transportation</string>
     <string name="http_www_flaticon_com_packs_multimedia_rounded_icons">http://www.flaticon.com/packs/multimedia-rounded-icons</string>
     <string name="http_www_androidguys_com_2016_04_11_8_bit_wallpapers_youll_totally_want_for_your_android">http://www.androidguys.com/2016/04/11/8-bit-wallpapers-youll-totally-want-for-your-android/</string>
+    <string name="notification_text_bills_monthly">You haven\'t entered any utilities in a while, would you like to enter one?</string>
+    <string name="notification_text_bills">You haven\'t entered any utilities yet, would you like to enter one to track your household Carbon Footprint?</string>
+    <string name="notification_text_journeys">You haven\'t added any journeys yet, add some to start tracking your commuter Carbon Footprint.</string>
+    <string name="notification_text_journeys_none_today">You haven\'t added any journeys today, would you like to add one?</string>
+    <string name="notification_text_journeys_more_than_one" formatted="false">You entered %1$d journeys today, would you like to add any more?</string>
+    <string name="noTips">There are no more tips available. More tips will be made available if you add a Journey.</string>
 
     <string-array name="tips_array">
-        <item>Carpool with commuters that share similar trips to yours.</item>
-        <item>If looking to get a new car, take into consideration fuel efficiency when choosing which vehicle to get.</item>
-        <item>If possible, take a bus instead of a taxi or other forms of single-passenger transportation.</item>
-        <item>Try to prevent stopping and accelerating as much as you can when driving.</item>
-        <item>If in traffic, turn off your engine if idling for long periods of time.</item>
-        <item>Try to take the most direct path to your destination to avoid taking detours that will add to your trip length.</item>
-        <item>If going short distances, consider walking, biking, or other forms of zero-emission transportation.</item>
-        <item>Make sure your wheels are fully inflated, as flatter tires greatly increase your emissions.</item>
-        <item>Taking shorter showers can help greatly reduce the amount of hot water you consume, which will reduce your carbon footprint.</item>
-        <item>Washing clothes in cold water will reduce the amount of unnecessary hot water you use.</item>
-        <item>Turning off heating in the warmer months will drastically decrease the amount of gas used for heating.</item>
-        <item>Put a sweatshirt on instead of turning up the heat when cold.</item>
-        <item>Using compact fluorescent light bulbs will cut down on your electric bill and also increase the brightness of the rooms you are trying to light!</item>
-        <item>Unplugging electrical appliances that are not in use will reduce the amount of ambient electricity you use.</item>
-        <item>During the warmer months, hang your clothes up to dry instead of using a drying machine to cut down on your electric bill.</item>
-        <item>If going on vacation, turn off the heating in your house and put your water heater on "vacation" setting if possible.</item>
+        <item>On your last added journey, you had %1$dkg emissions. Carpool with commuters that share similar trips to yours.</item>
+        <item>On your last journey, your transport emitted %1$dkg. If looking to get a new car, take into consideration fuel efficiency when choosing which vehicle to get.</item>
+        <item>Your last trip emitted %1$dkg. When possible, take a bus instead of a taxi or other forms of single-passenger transportation.</item>
+        <item>You emitted %1$d kg of CO2 on your last journey. Try to prevent stopping and accelerating as much as you can when driving.</item>
+        <item>The emissions of your last journey was %1$dkg. If you drive and encounter traffic, turn off your engine to prevent idling for long periods of time.</item>
+        <item>On your last trip, you traveled %1$d kilometers. Try to plan trips beforehand take the most direct path to your destination to avoid taking detours that will add to your trip length.</item>
+        <item>Your last journey produced %1$dkg of emissions. If going short distances, consider walking, biking, or other forms of zero-emission transportation.</item>
+        <item>You emitted %1$dkg of CO2 on your last trip. If you drive, make sure your wheels are fully inflated, as flatter tires greatly increase your emissions.</item>
+        <item>On your last bill, you used %1$dGj of Natural Gas. Taking shorter showers can help greatly reduce the amount of hot water you use, which will reduce your carbon footprint.</item>
+        <item>You generated %1$dkg of CO2 over the period of your last bill. Washing clothes in cold water will reduce the amount of unnecessary hot water you use.</item>
+        <item>Your household used %1$dGj of Natural gas, according to your last entered Natural Gas bill. Turning off heating on warmer days will drastically decrease the amount of gas used for heating.</item>
+        <item>On your last entered bill, the usage of Natural Gas in your household generated %1$dkg of CO2. If it is cold, put on a sweatshirt instead of turning up the heat.</item>
+        <item>The Electricity used over the period of your last entered bill, generated %1$dkg of CO2. Using compact fluorescent light bulbs will cut down on your electric bill and also increase the brightness of the rooms you are trying to light!</item>
+        <item>On your most recent electric bill, you household used %1$dkwh of Electricity. Unplugging electrical appliances that are not in use will reduce the amount of ambient electricity you use.</item>
+        <item>Your usage of Electricity for your last entered bill, created %1$dkg of CO2. During the warmer months, hang your clothes up to dry instead of using a drying machine to cut down on your electric bill.</item>
+        <item>Your last bill shows that your household used %1$dkwh of Electricity over the entered period. When you go on a vacation, turn off the heating in your house and put your water heater on "vacation" setting if possible.</item>
     </string-array>
 
 </resources>

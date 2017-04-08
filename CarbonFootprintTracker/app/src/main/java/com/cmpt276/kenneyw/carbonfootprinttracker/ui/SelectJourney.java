@@ -6,10 +6,12 @@ package com.cmpt276.kenneyw.carbonfootprinttracker.ui;
  * might transfer database mgmt. to SQL
  */
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +43,7 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.model.DateSingleton;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.Journey;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.JourneyCollection;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.RouteSingleton;
+import com.cmpt276.kenneyw.carbonfootprinttracker.model.UtilitySingleton;
 
 import java.util.Date;
 
@@ -49,7 +52,10 @@ public class SelectJourney extends AppCompatActivity {
     private static final int CAR_AND_ROUTE_SELECTED = 1;
     private static final int EDIT_JOURNEY = 2;
     private static final String SHAREDPREF_SET = "CarbonFootprintTrackerJournies";
+    private static final String SHAREDPREF_SET2 = "CarbonFootprintTrackerUtilities";
+    private static final String SHAREDPREF_SET3 = "CarbonFootprintTrackerTips";
     private static final String SHAREDPREF_ITEM_AMOUNTOFJOURNEYS = "AmountOfJourneys";
+    private static final String SHAREDPREF_ITEM_AMOUNTOFUTILITIES = "AmountOfUtilities";
     public static final String NAME = "name";
     public static final String ROUTENAME = "routeName";
     public static final String CITY = "city";
@@ -60,6 +66,7 @@ public class SelectJourney extends AppCompatActivity {
     public static final String DATESTRING = "dateString";
     public static final String LITERENGINE = "literEngine";
     public static final String TOTALEMISSIONS = "totalEmissions";
+    public static final String ADDEDTODAY ="addedToday";
     public static final String BUS = "bus";
     public static final String BIKE = "bike";
     public static final String SKYTRAIN = "skytrain";
@@ -67,9 +74,23 @@ public class SelectJourney extends AppCompatActivity {
     public static final String POSITION_FOR_EDIT_JOURNEY = "pos";
     public static final String ICONID = "IconID";
 
+    public static final String tJEmission = "JEmission";
+    public static final String tJDist = "JDist";
+    public static final String tNGasAmount = "NGasAmount";
+    public static final String tNGasEmission = "NGasEmission";
+    public static final String tElecAmount = "ElecAmount";
+    public static final String tElecEmission = "ElecEmission";
+    public static final String tLastUtil = "LastUtil";
+
+
     String tipString;
+    int tipData;
     int properTipIndex;
     String[] tipArray;
+
+    public static final String SETTING = "CarbonFootprintTrackerSettings";
+    public static final String TREESETTING = "TreeSetting";
+    boolean setting=false;
 
     JourneyCollection journeys = new JourneyCollection();
 
@@ -77,11 +98,26 @@ public class SelectJourney extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_journey);
+        getSetting();
         journeys = loadJourneys();
         tipArray = getResources().getStringArray(R.array.tips_array);
         setupAddJourneyButton();
         setupBackButton();
         setJourneyList();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
+    }
+
+    private void getSetting() {
+        SharedPreferences pref=getSharedPreferences(SETTING,MODE_PRIVATE);
+        setting=pref.getBoolean(TREESETTING,false);
     }
 
     public JourneyCollection loadJourneys() {
@@ -142,6 +178,21 @@ public class SelectJourney extends AppCompatActivity {
         editor.apply();
     }
 
+    private void saveTips() {
+        SharedPreferences kprefsave = getSharedPreferences(SHAREDPREF_SET3, MODE_PRIVATE);
+        SharedPreferences.Editor editor = kprefsave.edit();
+        TipHelperSingleton tipHelper = TipHelperSingleton.getInstance();
+        editor.clear();
+        editor.putLong(tJEmission, Double.doubleToRawLongBits(tipHelper.getJourneyEmission()));
+        editor.putLong(tJDist, Double.doubleToRawLongBits(tipHelper.getJourneyDist()));
+        editor.putLong(tNGasAmount, Double.doubleToRawLongBits(tipHelper.getnGasAmount()));
+        editor.putLong(tNGasEmission, Double.doubleToRawLongBits(tipHelper.getnGasEmission()));
+        editor.putLong(tElecAmount, Double.doubleToRawLongBits(tipHelper.getElecAmount()));
+        editor.putLong(tElecEmission, Double.doubleToRawLongBits(tipHelper.getElecEmission()));
+        editor.putString(tLastUtil, tipHelper.getLastUtil());
+        editor.apply();
+    }
+
     private void setupBackButton() {
         Button back_button = (Button) findViewById(R.id.back_button_select_journey);
         back_button.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +228,7 @@ public class SelectJourney extends AppCompatActivity {
                 FragmentManager manager = getSupportFragmentManager();
                 CalculationDialog dialog = new CalculationDialog();
                 Bundle bundle = new Bundle();
+                bundle.putBoolean(TREESETTING,setting);
                 bundle.putDouble("CO2", journeys.getJourney(position).getTotalEmissions());
                 dialog.setArguments(bundle);
                 dialog.show(manager, "CalculateDialog");
@@ -309,14 +361,40 @@ public class SelectJourney extends AppCompatActivity {
     //Picks relevant tips, using userdata
     private String tipTextSelector() {
         TipHelperSingleton tipHelper = TipHelperSingleton.getInstance();
+        SharedPreferences kpref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        int journeyNum = kpref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
+        SharedPreferences kpref2 = getSharedPreferences(SHAREDPREF_SET2, MODE_PRIVATE);
+        int utilityNum = kpref2.getInt(SHAREDPREF_ITEM_AMOUNTOFUTILITIES, 0);
+        getSetting();
         tipHelper.setTipIndexTravel();
-        if (tipHelper.spiceTimer() == 1) {
-            properTipIndex = tipHelper.checkRepeatTracker(tipHelper.spiceMaker());
-            tipString = tipArray[properTipIndex];
-            return tipString;
+        if (utilityNum > 0) {
+            if (tipHelper.spiceTimer() == 1) {
+                if (tipHelper.getLastUtil().equals("Natural Gas")) {
+                    tipHelper.setTipIndexUtil();
+                }
+                if (tipHelper.getLastUtil().equals("Electricity")) {
+                    tipHelper.setTipIndexElec();
+                }
+                properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
+                tipData = tipHelper.tipDataFetcher(properTipIndex);
+                if (setting) {
+                    tipData = tipData*2;
+                }
+                tipString = String.format(tipArray[properTipIndex], tipData);
+                return tipString;
+            }
         }
         properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
-        tipString = tipArray[properTipIndex];
+        Journey jTip = journeys.getJourney(journeyNum-1);
+        tipHelper.setJourneyEmission(jTip.getTotalEmissions());
+        tipHelper.setJourneyDist(jTip.getCityDistance() + jTip.getHighwayDistance());
+        tipData = tipHelper.tipDataFetcher(properTipIndex);
+        if (setting) {
+            tipData = tipData*2;
+        }
+        tipString = String.format(tipArray[properTipIndex], tipData);
+
+        saveTips();
 
         return tipString;
     }
@@ -347,7 +425,9 @@ public class SelectJourney extends AppCompatActivity {
                     setupAddJourneyButton();
                     setupBackButton();
                     setJourneyList();
+                    saveJourneys();
                     tipMaker();
+                    saveAddedToday();
                 } else {
                     Log.i(TAG, "User Cancelled");
                     setupAddJourneyButton();
@@ -380,6 +460,7 @@ public class SelectJourney extends AppCompatActivity {
                     setupAddJourneyButton();
                     setupBackButton();
                     setJourneyList();
+                    saveJourneys();
                 } else {
                     setupAddJourneyButton();
                     setupBackButton();
@@ -387,6 +468,16 @@ public class SelectJourney extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    private void saveAddedToday() {
+        SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        int amountAddedToday = pref.getInt(ADDEDTODAY, 0);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        editor.putInt(ADDEDTODAY, amountAddedToday+1);
+        Log.i("TAG", "Amount added today: "+amountAddedToday+1);
+        editor.apply();
     }
 
     public void onBackPressed() {

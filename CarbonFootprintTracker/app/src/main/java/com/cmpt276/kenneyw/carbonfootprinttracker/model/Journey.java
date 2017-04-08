@@ -9,6 +9,12 @@ import com.cmpt276.kenneyw.carbonfootprinttracker.model.Calculation;
  *which is called when editing a pre-existing Journey.
  */
 public class Journey extends AppCompatActivity {
+    public static final int PEOPLE_PER_KM_SKYTRAIN = 360;   //CALCULATED AS:
+                                                            //average num. people per day / 24 hours * 1/average KPH
+                                                            //390600/24/45 = 360
+    //<--average KPH from: https://en.wikipedia.org/wiki/SkyTrain_(Vancouver)-->
+    //<--num people per day from: http://www.apta.com/resources/statistics/Documents/Ridership/2014-q4-ridership-APTA.pdf -->
+
     private int iconID;
     private String routeName;
     private double cityDistance;
@@ -68,7 +74,7 @@ public class Journey extends AppCompatActivity {
         }
         //<--From: http://ctrf.ca/wp-content/uploads/2015/05/CTRF2015NguyenSangOramPerlTransportationEnvironment.pdf-->
         else if(this.Skytrain){
-            totalEmissions= KWH_PER_KM * (this.cityDistance+this.highwayDistance) * CO2_PER_KWH; //divide by number of ppl
+            totalEmissions= KWH_PER_KM * (this.cityDistance+this.highwayDistance) * CO2_PER_KWH / PEOPLE_PER_KM_SKYTRAIN; //divide by number of ppl
         }
         return doubleToTwoPlaces(totalEmissions);
     }

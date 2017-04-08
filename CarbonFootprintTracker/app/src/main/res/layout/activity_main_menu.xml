@@ -8,6 +8,15 @@
     android:background="@drawable/image1"
     tools:context="com.cmpt276.kenneyw.carbonfootprinttracker.ui.MainMenu">
 
+    <Button
+        android:text="@string/view_carbon_footprint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_cabon_footprint_button"
+        android:layout_marginBottom="31dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:text="@string/main_menu"
         android:layout_width="wrap_content"
@@ -114,4 +123,13 @@
 
     </LinearLayout>
 
+    <Button
+        android:text="@string/settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/utility_add_button"
+        android:layout_toStartOf="@+id/utility_add_button"
+        android:layout_marginTop="32dp"
+        android:id="@+id/btnSettings" />
 </RelativeLayout>

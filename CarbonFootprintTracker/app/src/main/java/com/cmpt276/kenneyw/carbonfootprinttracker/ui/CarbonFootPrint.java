@@ -80,6 +80,12 @@ public class CarbonFootPrint extends AppCompatActivity {
         setupBackButton();
         updateChart();
         updateTable();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
     }
     public JourneyCollection loadJourneys(JourneyCollection journeys) {
         SharedPreferences pref = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
