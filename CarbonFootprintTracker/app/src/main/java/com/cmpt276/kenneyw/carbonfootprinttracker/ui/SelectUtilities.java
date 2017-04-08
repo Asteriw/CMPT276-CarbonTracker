@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cmpt276.kenneyw.carbonfootprinttracker.R;
+import com.cmpt276.kenneyw.carbonfootprinttracker.model.Journey;
+import com.cmpt276.kenneyw.carbonfootprinttracker.model.JourneyCollection;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.TipHelperSingleton;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.UtilitiesCollection;
 import com.cmpt276.kenneyw.carbonfootprinttracker.model.Utility;
@@ -37,6 +40,9 @@ public class SelectUtilities extends AppCompatActivity {
     public static final int ADD_UTILITY = 1;
     private static final String TAG = "CarbonFootprintTracker";
     private static final String SHAREDPREF_SET = "CarbonFootprintTrackerUtilities";
+    private static final String SHAREDPREF_SET2 = "CarbonFootprintTrackerJournies";
+    private static final String SHAREDPREF_SET3 = "CarbonFootprintTrackerTips";
+    private static final String SHAREDPREF_ITEM_AMOUNTOFJOURNEYS = "AmountOfJourneys";
     private static final String SHAREDPREF_ITEM_AMOUNTOFUTILITIES = "AmountOfUtilities";
     private static final String NAME = "name";
     private static final String GASTYPE = "gasType";
@@ -51,7 +57,16 @@ public class SelectUtilities extends AppCompatActivity {
     UtilitiesCollection utilities = new UtilitiesCollection();
     Intent intent;
 
+    public static final String tJEmission = "JEmission";
+    public static final String tJDist = "JDist";
+    public static final String tNGasAmount = "NGasAmount";
+    public static final String tNGasEmission = "NGasEmission";
+    public static final String tElecAmount = "ElecAmount";
+    public static final String tElecEmission = "ElecEmission";
+    public static final String tLastUtil = "LastUtil";
+
     String tipString;
+    int tipData;
     int properTipIndex;
     String[] tipArray;
 
@@ -68,6 +83,21 @@ public class SelectUtilities extends AppCompatActivity {
         setupList();
         tipArray = getResources().getStringArray(R.array.tips_array);
         setupButtons();
+        hideNavBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
+    }
+
+    private void hideNavBar() {
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
 
     private void getSetting() {
@@ -103,6 +133,21 @@ public class SelectUtilities extends AppCompatActivity {
             editor.putLong(i + AMOUNT, Double.doubleToRawLongBits(utilities.getUtility(i).getAmount()));
         }
         editor.putInt(SHAREDPREF_ITEM_AMOUNTOFUTILITIES, utilityAmt);
+        editor.apply();
+    }
+
+    private void saveTips() {
+        SharedPreferences kprefsave = getSharedPreferences(SHAREDPREF_SET3, MODE_PRIVATE);
+        SharedPreferences.Editor editor = kprefsave.edit();
+        TipHelperSingleton tipHelper = TipHelperSingleton.getInstance();
+        editor.clear();
+        editor.putLong(tJEmission, Double.doubleToRawLongBits(tipHelper.getJourneyEmission()));
+        editor.putLong(tJDist, Double.doubleToRawLongBits(tipHelper.getJourneyDist()));
+        editor.putLong(tNGasAmount, Double.doubleToRawLongBits(tipHelper.getnGasAmount()));
+        editor.putLong(tNGasEmission, Double.doubleToRawLongBits(tipHelper.getnGasEmission()));
+        editor.putLong(tElecAmount, Double.doubleToRawLongBits(tipHelper.getElecAmount()));
+        editor.putLong(tElecEmission, Double.doubleToRawLongBits(tipHelper.getElecEmission()));
+        editor.putString(tLastUtil, tipHelper.getLastUtil());
         editor.apply();
     }
 
@@ -204,6 +249,7 @@ public class SelectUtilities extends AppCompatActivity {
                     setupButtons();
                     saveUtilities();
                     setupList();
+                    saveUtilities();
                     tipMaker();
                 } else {
                     setupButtons();
@@ -225,6 +271,7 @@ public class SelectUtilities extends AppCompatActivity {
                     saveUtilities();
                     setupList();
                     setupButtons();
+                    saveUtilities();
                 }
                 break;
         }
@@ -255,14 +302,66 @@ public class SelectUtilities extends AppCompatActivity {
     //Picks relevant tips, using userdata
     private String tipTextSelector() {
         TipHelperSingleton tipHelper = TipHelperSingleton.getInstance();
-        tipHelper.setTipIndexUtil();
-        if (tipHelper.spiceTimer() == 1) {
-            properTipIndex = tipHelper.checkRepeatTracker(tipHelper.spiceMaker());
-            tipString = tipArray[properTipIndex];
-            return tipString;
+        UtilitySingleton utilHelper = UtilitySingleton.getInstance();
+        getSetting();
+        if (utilHelper.getGasType().equals("Natural Gas")) {
+            tipHelper.setTipIndexUtil();
+            if (tipHelper.spiceTimerUtility() == 1) {
+                SharedPreferences kpref = getSharedPreferences(SHAREDPREF_SET2, MODE_PRIVATE);
+                int journeyNum = kpref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
+                Log.i("nojourneys", "whelp"+journeyNum);
+                if (journeyNum > 0) {
+                    tipHelper.setTipIndexTravel();
+                    properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
+                    tipHelper.tipDataFetcher(properTipIndex);
+                    tipString = String.format(tipArray[properTipIndex], tipData);
+                    return tipString;
+                }
+                else {
+                    tipString = getString(R.string.noTips);
+                    return tipString;
+                }
+            }
+            properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
+            tipHelper.setnGasAmount(utilHelper.getAmounts());
+            tipHelper.setnGasEmission(utilHelper.getEmission());
+            tipData = tipHelper.tipDataFetcher(properTipIndex);
+            if (setting) {
+                tipData = tipData*2;
+            }
+            tipString = String.format(tipArray[properTipIndex], tipData);
         }
-        properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
-        tipString = tipArray[properTipIndex];
+
+        if (utilHelper.getGasType().equals("Electricity")) {
+            tipHelper.setTipIndexElec();
+            if (tipHelper.spiceTimerElectric() == 1) {
+                SharedPreferences kpref = getSharedPreferences(SHAREDPREF_SET2, MODE_PRIVATE);
+                int journeyNum = kpref.getInt(SHAREDPREF_ITEM_AMOUNTOFJOURNEYS, 0);
+                Log.i("nojourneys", "whelp"+journeyNum);
+                if (journeyNum > 0) {
+                    tipHelper.setTipIndexTravel();
+                    properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
+                    tipData = tipHelper.tipDataFetcher(properTipIndex);
+                    tipString = String.format(tipArray[properTipIndex], tipData);
+                    return tipString;
+                }
+                else {
+                    tipString = getString(R.string.noTips);
+                    return tipString;
+                }
+            }
+            properTipIndex = tipHelper.checkRepeatTracker(tipHelper.getTipIndex());
+            tipHelper.setElecAmount(utilHelper.getAmounts());
+            tipHelper.setElecEmission(utilHelper.getEmission());
+            tipData = tipHelper.tipDataFetcher(properTipIndex);
+            if (setting) {
+                tipData = tipData*2;
+            }
+            tipString = String.format(tipArray[properTipIndex], tipData);
+        }
+
+        tipHelper.setLastUtil(utilHelper.getGasType());
+        saveTips();
 
         return tipString;
     }

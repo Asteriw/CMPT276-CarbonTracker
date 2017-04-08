@@ -37,6 +37,19 @@ public class EditDate extends AppCompatActivity {
         Day=calendar.get(Calendar.DAY_OF_MONTH);
         date_in_str=Month+1 + "/" + Day + "/" + Year;
         setupButtons();
+        hideNavBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
+    }
+    private void hideNavBar() {
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
     private void setupButtons() {
         Button ok_button = (Button) findViewById(R.id.ok_button_edit_date);
