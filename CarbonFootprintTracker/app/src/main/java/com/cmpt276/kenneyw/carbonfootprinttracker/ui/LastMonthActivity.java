@@ -540,8 +540,6 @@ public class LastMonthActivity extends AppCompatActivity {
         Month=Integer.parseInt(checkdate[0]);
         Day=Integer.parseInt(checkdate[1]);
         Year=Integer.parseInt(checkdate[2]);
-
-        Log.i(TAG,"Today's date is: " + date_in_str);
     }
 
     private void whatDayIsThirtyDaysPrevious(){
@@ -554,8 +552,6 @@ public class LastMonthActivity extends AppCompatActivity {
         prev_Month=Integer.parseInt(prevcheckdate[0]);
         prev_Day=Integer.parseInt(prevcheckdate[1]);
         prev_Year=Integer.parseInt(prevcheckdate[2]);
-
-        Log.i(TAG,"A month ago's date is: "+prev_date_in_str);
     }
 
     private long countDays(String[] first, String[] last) {
@@ -572,7 +568,6 @@ public class LastMonthActivity extends AppCompatActivity {
         String[] checkdate = date.split("/");
         String[] first = firstDate.split("/");
         String[] last = lastDate.split("/");
-        Log.i(TAG,"Checked date: "+date);
 
         Date date1=new Date(Integer.parseInt(first[2]),Integer.parseInt(first[0]),Integer.parseInt(first[1]));
         Date date2=new Date(Integer.parseInt(last[2]),Integer.parseInt(last[0]),Integer.parseInt(last[1]));

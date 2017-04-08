@@ -364,6 +364,7 @@ public class SelectCar extends AppCompatActivity {
                             masterCar.getIconID()
                     );
                     myCars.addCar(tempCar);}
+                saveCars();
                 setupAddCarButton();
                 setupBackButton();
                 setCarList();
@@ -384,6 +385,7 @@ public class SelectCar extends AppCompatActivity {
                     );
                     int position=data.getIntExtra(POS_FOR_EDIT_CAR,0);
                     myCars.changeCar(tempCar,position);
+                    saveCars();
                     setCarList();
                 }
                 break;
